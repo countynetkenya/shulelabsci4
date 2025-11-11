@@ -22,7 +22,7 @@ The Foundation module seeds the cross-cutting infrastructure required by the Shu
 
 ## Quality Gates
 
-- Foundation services ship with a PHPUnit suite under `tests/ci4/Foundation`. Extend these tests when adding behaviour so CI enforces ledger balance, audit hash integrity, QR expiry rules, and tenant scoping.
+- Foundation services ship with a PHPUnit suite under `ci4/tests/Foundation`. Extend these tests when adding behaviour so CI enforces ledger balance, audit hash integrity, QR expiry rules, and tenant scoping.
 - GitHub Actions executes linting, PHPStan, PHPUnit, a migration dry-run, audit verification, backup self-tests, and a Docker image build on every push/PR to guard the immutable-audit contract.
 - The Docker baseline (`docker-compose.yml`) provisions php-fpm, nginx, MySQL, Redis, worker, and scheduler containers. Use the scheduler to run audit/backup checks and monthly restore drills (`scripts/backup/restore_drill.sh`).
 

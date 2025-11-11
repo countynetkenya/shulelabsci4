@@ -62,7 +62,7 @@ class Paths
      *
      * This variable must contain the name of your "tests" directory.
      */
-    public string $testsDirectory = __DIR__ . '/../../tests/ci4';
+    public string $testsDirectory = __DIR__ . '/../../tests';
 
     /**
      * ---------------------------------------------------------------
