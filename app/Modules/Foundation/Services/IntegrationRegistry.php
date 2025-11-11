@@ -161,9 +161,12 @@ class IntegrationRegistry
             ->getResultArray();
 
         foreach ($queued as $row) {
-            $claimed[] = $this->lockDispatch((int) $row['id']);
-            if (count($claimed) >= $limit) {
-                return $this->filterLocked($claimed);
+            $locked = $this->lockDispatch((int) $row['id']);
+            if ($locked !== null) {
+                $claimed[] = $locked;
+                if (count($claimed) >= $limit) {
+                    return $this->filterLocked($claimed);
+                }
             }
         }
 
@@ -192,9 +195,12 @@ class IntegrationRegistry
                 }
             }
 
-            $claimed[] = $this->lockDispatch((int) $row['id']);
-            if (count($claimed) >= $limit) {
-                break;
+            $locked = $this->lockDispatch((int) $row['id']);
+            if ($locked !== null) {
+                $claimed[] = $locked;
+                if (count($claimed) >= $limit) {
+                    break;
+                }
             }
         }
 
