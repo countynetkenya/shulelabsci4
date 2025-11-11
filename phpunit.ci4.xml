@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         bootstrap="../vendor/codeigniter4/framework/system/Test/bootstrap.php"
+         colors="true"
+         cacheResult="false"
+         failOnEmptyTestSuite="true"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         beStrictAboutCoversAnnotation="false">
+    <testsuites>
+        <testsuite name="CI4Foundation">
+            <directory suffix="Test.php">../tests/ci4</directory>
+        </testsuite>
+    </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">app/Modules/Foundation</directory>
+            <directory suffix=".php">app/Modules/Inventory</directory>
+            <directory suffix=".php">app/Modules/Library</directory>
+            <directory suffix=".php">app/Modules/Threads</directory>
+            <directory suffix=".php">app/Modules/Gamification</directory>
+            <directory suffix=".php">app/Modules/Hr</directory>
+            <directory suffix=".php">app/Modules/Learning</directory>
+            <directory suffix=".php">app/Modules/Mobile</directory>
+        </include>
+    </coverage>
+    <php>
+        <ini name="date.timezone" value="Africa/Nairobi"/>
+        <env name="CI_ENVIRONMENT" value="testing"/>
+        <env name="CI_DEBUG" value="1"/>
+    </php>
+</phpunit>
