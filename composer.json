@@ -31,11 +31,11 @@
     },
     "scripts": {
         "post-update-cmd": [
-            "CodeIgniter\\\\ComposerScripts::postUpdate",
+            "CodeIgniter\\ComposerScripts::postUpdate",
             "@composer dump-autoload"
         ],
         "post-install-cmd": [
-            "CodeIgniter\\\\ComposerScripts::postInstall",
+            "CodeIgniter\\ComposerScripts::postInstall",
             "@composer dump-autoload"
         ],
         "test": "phpunit --configuration=phpunit.ci4.xml",
