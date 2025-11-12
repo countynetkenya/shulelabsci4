@@ -98,3 +98,8 @@ class Paths
         return $candidates[0];
     }
 }
+
+// Added automatically for CodeIgniter 4.6+ support directory handling.
+if (! defined('SUPPORTPATH')) {
+    define('SUPPORTPATH', \dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . 'support' . DIRECTORY_SEPARATOR);
+}
