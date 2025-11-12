@@ -23,6 +23,12 @@ defined('APP_NAMESPACE') || define('APP_NAMESPACE', 'App');
  | The path that Composer's autoload file is expected to live. By default,
  | the vendor folder is in the Root directory, but you can customize that here.
  */
+defined('ROOTPATH') || define('ROOTPATH', realpath(__DIR__ . '/../../') . DIRECTORY_SEPARATOR);
+defined('APPPATH') || define('APPPATH', realpath(__DIR__ . '/..') . DIRECTORY_SEPARATOR);
+defined('WRITEPATH') || define('WRITEPATH', realpath(ROOTPATH . 'writable') . DIRECTORY_SEPARATOR);
+defined('TESTPATH') || define('TESTPATH', realpath(ROOTPATH . 'tests') . DIRECTORY_SEPARATOR);
+defined('SUPPORTPATH') || define('SUPPORTPATH', realpath(ROOTPATH . 'support') . DIRECTORY_SEPARATOR);
+
 defined('COMPOSER_PATH') || define('COMPOSER_PATH', ROOTPATH . 'vendor/autoload.php');
 
 /*

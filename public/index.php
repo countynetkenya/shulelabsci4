@@ -54,6 +54,36 @@ require FCPATH . '../app/Config/Paths.php';
 $paths = new Paths();
 
 // LOAD THE FRAMEWORK BOOTSTRAP FILE
-require $paths->systemDirectory . '/Boot.php';
+$bootPath = $paths->systemDirectory . '/Boot.php';
+
+if (! is_file($bootPath)) {
+    $message = <<<'HTML'
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Missing CodeIgniter System</title>
+        <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 2rem; line-height: 1.5; }
+            pre { background: #f6f6f6; padding: 1rem; border-radius: .5rem; overflow: auto; }
+        </style>
+    </head>
+    <body>
+        <h1>Framework bootstrap not found</h1>
+        <p>The CodeIgniter system directory could not be located at the expected path:</p>
+        <pre>%s</pre>
+        <p>Please ensure project dependencies are installed (for example by running <code>composer install</code>)
+        and that the <code>vendor/codeigniter4/framework</code> package is available.</p>
+    </body>
+</html>
+HTML;
+
+    header('HTTP/1.1 503 Service Unavailable', true, 503);
+    echo sprintf($message, htmlspecialchars($bootPath, ENT_QUOTES, 'UTF-8')) . PHP_EOL;
+
+    exit(1);
+}
+
+require $bootPath;
 
 exit(Boot::bootWeb($paths));
