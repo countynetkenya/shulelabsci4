@@ -1,5 +1,9 @@
 <?php
 
+require_once __DIR__ . '/KintGuard.php';
+
+$kintAvailable = kint_guard_detect_init_file() !== null;
+
 /*
  * The environment testing is reserved for PHPUnit testing. It has special
  * conditions built into the framework at various places to assist with that.
@@ -35,4 +39,8 @@ defined('SHOW_DEBUG_BACKTRACE') || define('SHOW_DEBUG_BACKTRACE', true);
  | the system. It's not widely used currently, and may not survive
  | release of the framework.
  */
-defined('CI_DEBUG') || define('CI_DEBUG', true);
+defined('CI_DEBUG') || define('CI_DEBUG', $kintAvailable);
+
+if (! $kintAvailable) {
+    kint_guard_register_fallback();
+}

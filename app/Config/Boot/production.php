@@ -1,5 +1,9 @@
 <?php
 
+require_once __DIR__ . '/KintGuard.php';
+
+$kintAvailable = kint_guard_detect_init_file() !== null;
+
 /*
  |--------------------------------------------------------------------------
  | ERROR DISPLAY
@@ -23,3 +27,7 @@ ini_set('display_errors', '0');
  | release of the framework.
  */
 defined('CI_DEBUG') || define('CI_DEBUG', false);
+
+if (! $kintAvailable) {
+    kint_guard_register_fallback();
+}
