@@ -14,12 +14,12 @@ class Routes
     public static function map(RouteCollection $routes): void
     {
         $routes->group('v2/system', static function (RouteCollection $routes): void {
-            $routes->get('health', 'Modules\\Foundation\\Controllers\\HealthController::index');
+            $routes->get('health', '\\Modules\\Foundation\\Controllers\\HealthController::index');
         });
 
         $routes->group('v2/operations', static function (RouteCollection $routes): void {
-            $routes->get('dashboard', 'Modules\\Foundation\\Controllers\\OperationsDashboardController::index');
-            $routes->get('mobile-snapshots', 'Modules\\Foundation\\Controllers\\OperationsDashboardController::mobileSnapshots');
+            $routes->get('dashboard', '\\Modules\\Foundation\\Controllers\\OperationsDashboardController::index');
+            $routes->get('mobile-snapshots', '\\Modules\\Foundation\\Controllers\\OperationsDashboardController::mobileSnapshots');
         });
     }
 }

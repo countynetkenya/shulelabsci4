@@ -35,7 +35,7 @@
             "@composer dump-autoload"
         ],
         "post-install-cmd": ["CodeIgniter\\ComposerScripts::postInstall", "@composer dump-autoload"],
-        "test": "phpunit --configuration=phpunit.ci4.xml",
+        "test": "@php vendor/bin/phpunit --configuration=phpunit.ci4.xml",
         "openapi:build": "vendor/bin/openapi --format yaml --output docs/openapi.yaml docs/openapi"
     },
     "config": {
