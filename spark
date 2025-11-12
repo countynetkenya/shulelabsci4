@@ -82,6 +82,20 @@ require FCPATH . '../app/Config/Paths.php';
 $paths = new Paths();
 
 // LOAD THE FRAMEWORK BOOTSTRAP FILE
-require $paths->systemDirectory . '/Boot.php';
+$bootPath = $paths->systemDirectory . '/Boot.php';
+
+if (! is_file($bootPath)) {
+    $message = sprintf(
+        "The CodeIgniter framework bootstrap file could not be found at %s.\n"
+        . "Please make sure project dependencies are installed (e.g. run 'composer install').\n",
+        $bootPath
+    );
+
+    fwrite(STDERR, $message);
+
+    exit(1);
+}
+
+require $bootPath;
 
 exit(Boot::bootSpark($paths));
