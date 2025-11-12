@@ -13,7 +13,7 @@ use Modules\Threads\Config\Routes as ThreadsRoutes;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Modules\\Foundation\\Controllers\\HealthController::index');
+$routes->get('/', '\\Modules\\Foundation\\Controllers\\HealthController::index');
 
 FoundationRoutes::map($routes);
 FinanceRoutes::map($routes);
