@@ -66,6 +66,17 @@ class Paths
 
     /**
      * ---------------------------------------------------------------
+     * SUPPORT DIRECTORY NAME
+     * ---------------------------------------------------------------
+     *
+     * This variable must contain the name of your "support" directory.
+     * The directory is used for files that assist in testing and
+     * development, and mirrors the structure of the `app` directory.
+     */
+    public string $supportDirectory = __DIR__ . '/../../support';
+
+    /**
+     * ---------------------------------------------------------------
      * VIEW DIRECTORY NAME
      * ---------------------------------------------------------------
      *
