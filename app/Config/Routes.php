@@ -13,7 +13,9 @@ use Modules\Threads\Config\Routes as ThreadsRoutes;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', '\\Modules\\Foundation\\Controllers\\HealthController::index');
+$routes->get('/', 'LoginController::index');
+$routes->get('/login', 'LoginController::index');
+$routes->post('/login', 'LoginController::authenticate');
 
 FoundationRoutes::map($routes);
 FinanceRoutes::map($routes);
