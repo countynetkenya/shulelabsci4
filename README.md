@@ -32,6 +32,17 @@ The helper scripts below are scoped so they work in both layouts.
    The setup script also ensures the writable folders exist with the correct
    permissions.
 
+### Login & logging defaults
+
+- Unauthenticated visitors are redirected to `/login`, which is served by
+  `App\Controllers\LoginController`. The controller also handles `POST /login`
+  submissions and logs each attempt so you can verify that logging works end to
+  end.
+- Log files are written to `writable/logs/`. The logger threshold defaults to 9
+  for non-production environments and 4 in production via
+  `app/Config/Logger.php`. Ensure the `writable/` directory remains writable by
+  the web server user in every environment.
+
 ## Database migrations & seeders
 
 All migration entry points live under `bin/migrate`:
