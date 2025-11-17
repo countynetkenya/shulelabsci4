@@ -32,6 +32,22 @@ The helper scripts below are scoped so they work in both layouts.
    The setup script also ensures the writable folders exist with the correct
    permissions.
 
+### Turnkey Ubuntu bootstrap
+
+On fresh Ubuntu 22.04+ hosts you can automate the full stack (APT packages,
+Composer dependencies, MySQL provisioning, and CI4 migrations) with:
+
+```bash
+bash scripts/setup-ubuntu.sh
+```
+
+Run the script as a regular sudo-enabled user (not root). Override the database
+defaults by exporting `DB_NAME`, `DB_USER`, `DB_PASS`, or `DB_HOST` before
+launching it. The script ensures the database exists, installs Composer
+dependencies, copies `.env` if needed, and finally executes
+`php bin/migrate/latest` so an existing schema is upgraded to the latest
+migrations automatically.
+
 ### Login & logging defaults
 
 - Unauthenticated visitors are redirected to `/login`, which is served by
