@@ -1,0 +1,14 @@
+# Composer dependencies
+vendor/
+
+# Environment files
+.env
+
+# Log files
+writable/logs/
+
+# Cache files
+writable/cache/
+
+# Session files
+writable/session/
