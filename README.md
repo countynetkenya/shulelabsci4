@@ -50,10 +50,14 @@ migrations automatically.
 
 ### Login & logging defaults
 
+- Authenticated sessions rely on the CI4-native session handler backed by the
+  `ci4_sessions` table. Run `php bin/migrate/latest` and (optionally)
+  `php spark db:seed AdminUserSeeder` to provision an initial `admin/admin123`
+  account locally.
 - Unauthenticated visitors are redirected to `/login`, which is served by
-  `App\Controllers\LoginController`. The controller also handles `POST /login`
-  submissions and logs each attempt so you can verify that logging works end to
-  end.
+  `App\Controllers\LoginController`. The controller validates credentials,
+  verifies password hashes, and stores the authenticated identity in the
+  session before redirecting users to the dashboard.
 - Log files are written to `writable/logs/`. The logger threshold defaults to 9
   for non-production environments and 4 in production via
   `app/Config/Logger.php`. Ensure the `writable/` directory remains writable by
@@ -104,3 +108,8 @@ The command writes `docs/openapi.yaml` in place.
   deployment.
 - Configure application secrets (.env values) for each environment and make sure
   they are stored securely (Vault, Doppler, etc.).
+- Review `docs/ci4-login-cutover.md` for the latest CI4-only deployment
+  guidance: authentication/session defaults, the remaining
+  implementation-plan gates before CI4 becomes the sole runtime, the `/v2`
+  cleanup checklist, and the solo-run activation + module smoke-test
+  workflows that apply to new deployments.
