@@ -19,7 +19,7 @@ audit logging.
 
 ## Routing
 
-- `POST /v2/library/documents` – register a new document and receive QR + Drive
+- `POST /library/documents` – register a new document and receive QR + Drive
   metadata in the response.
 
 Provide a concrete implementation of `libraryDriveAdapter` in the service

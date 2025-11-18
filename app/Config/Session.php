@@ -29,7 +29,7 @@ class Session extends BaseConfig
      *
      * The session cookie name, must contain only [0-9a-z_-] characters
      */
-    public string $cookieName = 'school';
+    public string $cookieName = 'ci4_session';
 
     /**
      * --------------------------------------------------------------------------
@@ -56,7 +56,7 @@ class Session extends BaseConfig
      *
      * IMPORTANT: You are REQUIRED to set a valid save path!
      */
-    public string $savePath = 'school_sessions';
+    public string $savePath = 'ci4_sessions';
 
     /**
      * --------------------------------------------------------------------------

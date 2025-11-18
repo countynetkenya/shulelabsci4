@@ -13,9 +13,11 @@ use Modules\Threads\Config\Routes as ThreadsRoutes;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'LoginController::index');
-$routes->get('/login', 'LoginController::index');
-$routes->post('/login', 'LoginController::authenticate');
+$routes->get('/', 'DashboardController::index', ['filter' => 'auth', 'as' => 'dashboard']);
+$routes->get('dashboard', 'DashboardController::index', ['filter' => 'auth']);
+$routes->get('login', 'LoginController::index', ['as' => 'login']);
+$routes->post('login', 'LoginController::authenticate');
+$routes->post('logout', 'LoginController::logout', ['filter' => 'auth', 'as' => 'logout']);
 
 FoundationRoutes::map($routes);
 FinanceRoutes::map($routes);

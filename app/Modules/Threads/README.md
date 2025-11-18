@@ -22,9 +22,9 @@ The Threads module delivers the event-driven collaboration backbone powering CFR
 
 ## Routing
 
-- `GET /v2/threads` – list threads with optional filtering by context.
-- `POST /v2/threads` – create a thread (with optional initial message).
-- `POST /v2/threads/{id}/messages` – append a message to an existing thread.
+- `GET /threads` – list threads with optional filtering by context.
+- `POST /threads` – create a thread (with optional initial message).
+- `POST /threads/{id}/messages` – append a message to an existing thread.
 
 Bind `threadsRepository` and `threadsEventBus` to production-ready services to
 persist and dispatch events at scale.
