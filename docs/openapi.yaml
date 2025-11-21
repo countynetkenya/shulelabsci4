@@ -1,0 +1,64 @@
+openapi: 3.0.0
+info:
+  title: 'Shulelabs ERP API'
+  description: 'Baseline API contract for Sprint 1 foundation endpoints'
+  version: 1.0.0
+servers:
+  -
+    url: /
+    description: 'Default application server'
+paths:
+  /api/v10/payment:
+    post:
+      tags:
+        - Payments
+      summary: 'Retrieve parent payment overview'
+      operationId: postPaymentOverview
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              properties:
+                studentitems:
+                  type: array
+                  items: { required: [studentID, amount], properties: { studentID: { type: integer, example: 101 }, amount: { type: number, format: float, example: 2000 } }, type: object }
+              type: object
+      responses:
+        '200':
+          description: Success
+  /api/v10/payment/save_payment:
+    post:
+      tags:
+        - Payments
+      summary: 'M-PESA STK Push'
+      operationId: postPaymentSavePayment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - phonenumber
+                - studentitems
+              properties:
+                phonenumber:
+                  description: 'Safaricom phone number'
+                  type: string
+                  example: '0720000000'
+                studentitems:
+                  description: 'List of student payment instructions in KSh'
+                  type: array
+                  items: { required: [studentID, amount], properties: { studentID: { type: integer, example: 101 }, amount: { type: number, format: float, example: 2000 } }, type: object }
+              type: object
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: 'Invalid phonenumber or student item'
+        '501':
+          description: 'The POST method is not found'
+tags:
+  -
+    name: Payments
+    description: Payments
