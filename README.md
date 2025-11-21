@@ -47,6 +47,10 @@ These wrappers call the `spark` CLI internally so the same commands work whether
 `ci4/` is embedded or standalone. Feel free to use `php spark …` directly if you
 prefer.
 
+**Note:** Module migrations (like Foundation) are discovered via symbolic links in
+`app/Modules/Database/Migrations/`. See [docs/MIGRATION_SYSTEM.md](docs/MIGRATION_SYSTEM.md)
+for technical details about the migration system configuration.
+
 ## Running the test suite
 
 Use the portable test runner to execute the PHPUnit suite:
