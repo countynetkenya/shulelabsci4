@@ -38,7 +38,7 @@ class IntegrationRegistry
      */
     public function registerDispatch(string $channel, string $idempotencyKey, array $payload, array $context): array
     {
-        $existing = $this->db->table('ci4_integration_dispatches')
+        $existing = $this->db->table('integration_dispatches')
             ->where('idempotency_key', $idempotencyKey)
             ->where('channel', $channel)
             ->get()
@@ -57,7 +57,7 @@ class IntegrationRegistry
             'queued_at'       => Time::now('UTC')->toDateTimeString(),
         ];
 
-        $this->db->table('ci4_integration_dispatches')->insert($record);
+        $this->db->table('integration_dispatches')->insert($record);
         $dispatchId = (int) $this->db->insertID();
 
         $this->auditService->recordEvent(
@@ -79,7 +79,7 @@ class IntegrationRegistry
      */
     public function markCompleted(int $dispatchId, array $context, array $response): void
     {
-        $builder = $this->db->table('ci4_integration_dispatches');
+        $builder = $this->db->table('integration_dispatches');
         $existing = $builder->where('id', $dispatchId)->get()->getFirstRow('array');
         if (! $existing) {
             throw new RuntimeException('Integration dispatch not found.');
@@ -92,7 +92,7 @@ class IntegrationRegistry
             'error_message'   => null,
         ];
 
-        $this->db->table('ci4_integration_dispatches')
+        $this->db->table('integration_dispatches')
             ->where('id', $dispatchId)
             ->set($update)
             ->update();
@@ -113,7 +113,7 @@ class IntegrationRegistry
      */
     public function markFailed(int $dispatchId, array $context, string $errorMessage, ?int $retryAfterSeconds = null): void
     {
-        $builder = $this->db->table('ci4_integration_dispatches');
+        $builder = $this->db->table('integration_dispatches');
         $existing = $builder->where('id', $dispatchId)->get()->getFirstRow('array');
         if (! $existing) {
             throw new RuntimeException('Integration dispatch not found.');
@@ -126,7 +126,7 @@ class IntegrationRegistry
             'retry_after'   => $retryAfterSeconds,
         ];
 
-        $this->db->table('ci4_integration_dispatches')
+        $this->db->table('integration_dispatches')
             ->where('id', $dispatchId)
             ->set($update)
             ->update();
@@ -152,7 +152,7 @@ class IntegrationRegistry
         }
 
         $claimed = [];
-        $queued = $this->db->table('ci4_integration_dispatches')
+        $queued = $this->db->table('integration_dispatches')
             ->where('channel', $channel)
             ->where('status', 'queued')
             ->orderBy('queued_at', 'ASC')
@@ -172,7 +172,7 @@ class IntegrationRegistry
             return $this->filterLocked($claimed);
         }
 
-        $failedRows = $this->db->table('ci4_integration_dispatches')
+        $failedRows = $this->db->table('integration_dispatches')
             ->where('channel', $channel)
             ->where('status', 'failed')
             ->orderBy('failed_at', 'ASC')
@@ -206,12 +206,12 @@ class IntegrationRegistry
      */
     private function lockDispatch(int $dispatchId): ?array
     {
-        $this->db->table('ci4_integration_dispatches')
+        $this->db->table('integration_dispatches')
             ->where('id', $dispatchId)
             ->set(['status' => 'processing'])
             ->update();
 
-        $fresh = $this->db->table('ci4_integration_dispatches')
+        $fresh = $this->db->table('integration_dispatches')
             ->where('id', $dispatchId)
             ->get()
             ->getFirstRow('array');

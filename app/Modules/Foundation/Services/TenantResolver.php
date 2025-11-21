@@ -103,7 +103,7 @@ class TenantResolver
      */
     private function fetchTenant(string $type, int|string $id): array
     {
-        $row = $this->db->table('ci4_tenant_catalog')
+        $row = $this->db->table('tenant_catalog')
             ->where('tenant_type', $type)
             ->where('id', $id)
             ->get()

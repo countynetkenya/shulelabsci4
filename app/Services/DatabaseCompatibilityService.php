@@ -76,7 +76,7 @@ class DatabaseCompatibilityService
         ];
 
         // Audit events table (from Foundation migrations)
-        $this->requiredTables['ci4_audit_events'] = [
+        $this->requiredTables['audit_events'] = [
             'columns' => [
                 'id' => ['type' => 'BIGINT', 'unsigned' => true, 'auto_increment' => true],
                 'event_key' => ['type' => 'VARCHAR', 'constraint' => 191],

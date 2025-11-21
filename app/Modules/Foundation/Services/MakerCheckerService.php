@@ -45,7 +45,7 @@ class MakerCheckerService
             'submitted_at'  => Time::now('UTC')->toDateTimeString(),
         ];
 
-        $this->db->table('ci4_maker_checker_requests')->insert($record);
+        $this->db->table('maker_checker_requests')->insert($record);
         $requestId = (int) $this->db->insertID();
 
         $this->auditService->recordEvent(
@@ -77,7 +77,7 @@ class MakerCheckerService
             'processed_at' => Time::now('UTC')->toDateTimeString(),
         ];
 
-        $this->db->table('ci4_maker_checker_requests')
+        $this->db->table('maker_checker_requests')
             ->where('id', $requestId)
             ->set($update)
             ->update();
@@ -110,7 +110,7 @@ class MakerCheckerService
             'rejection_reason' => $reason,
         ];
 
-        $this->db->table('ci4_maker_checker_requests')
+        $this->db->table('maker_checker_requests')
             ->where('id', $requestId)
             ->set($update)
             ->update();
@@ -129,7 +129,7 @@ class MakerCheckerService
      */
     private function fetchRequest(int $requestId): array
     {
-        $request = $this->db->table('ci4_maker_checker_requests')
+        $request = $this->db->table('maker_checker_requests')
             ->where('id', $requestId)
             ->get()
             ->getFirstRow('array');
