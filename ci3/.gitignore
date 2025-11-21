@@ -1,0 +1,61 @@
+*/config/development
+*/logs/*
+!*/logs/index.html
+*/cache/*
+!*/cache/index.html
+/uploads/
+/vendor/
+.phpunit.result.cache
+
+var/
+
+# Generated QuickBooks log bundle
+quickbooks-logs.zip
+
+# Prevent committing binary archives that break text-only publishing targets
+*.zip
+# Skip binary icon assets; use vector favicons instead
+*.ico
+
+# Node and Yarn artefacts generated while compiling the legacy asset bundles
+node_modules/
+.yarn/
+.pnp.cjs
+.pnp.loader.mjs
+.npm-cache/
+.cache/yarn/
+**/.DS_Store
+
+# --- Local & Runtime Config ---
+.env
+.env.*
+!.env.example
+/shared/
+/logs/
+/writable/
+/public/uploads/
+*.swp
+*.bak
+
+# --- System & IDE ---
+.DS_Store
+.idea/
+.vscode/
+
+# --- Local & Runtime Config ---
+.env
+.env.*
+!.env.example
+/shared/
+/logs/
+/writable/
+/public/uploads/
+*.swp
+*.bak
+
+# --- System & IDE ---
+.DS_Store
+.idea/
+.vscode/
+ci4/public/assets/inilabs/themes/
+ci4/public/assets/fonts/

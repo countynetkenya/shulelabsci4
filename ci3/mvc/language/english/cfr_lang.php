@@ -1,0 +1,32 @@
+<?php
+
+$lang['cfr_summary_heading'] = 'Engagement summary';
+$lang['cfr_alignment_score'] = 'Alignment index';
+$lang['cfr_engagement_score'] = 'Engagement score';
+$lang['cfr_okr_progress'] = 'OKR progress';
+$lang['cfr_recognition_rate'] = 'Recognition rate';
+$lang['cfr_feedback_rate'] = 'Feedback rate';
+$lang['cfr_threads_total'] = 'Threads';
+$lang['cfr_messages_total'] = 'Messages';
+$lang['cfr_recognitions_total'] = 'Recognitions';
+$lang['cfr_feedback_total'] = 'Feedback';
+$lang['cfr_conversations_total'] = 'Conversations';
+$lang['cfr_sentiment_positive'] = 'Positive';
+$lang['cfr_sentiment_neutral'] = 'Neutral';
+$lang['cfr_sentiment_negative'] = 'Negative';
+$lang['cfr_top_contributors'] = 'Top contributors';
+$lang['cfr_recent_activity'] = 'Recent activity';
+$lang['cfr_activity_empty'] = 'No CFR activity found for the selected range.';
+$lang['cfr_filters'] = 'Filters';
+$lang['cfr_filter_range'] = 'Activity range';
+$lang['cfr_apply_filters'] = 'Apply filters';
+$lang['cfr_type_conversation'] = 'Conversation';
+$lang['cfr_type_feedback'] = 'Feedback';
+$lang['cfr_type_recognition'] = 'Recognition';
+$lang['cfr_sentiment_positive_label'] = 'Positive';
+$lang['cfr_sentiment_neutral_label'] = 'Neutral';
+$lang['cfr_sentiment_negative_label'] = 'Negative';
+$lang['cfr_unknown_user'] = 'Unknown user';
+$lang['cfr_range_days'] = '%d days';
+$lang['cfr_range_all'] = 'All activity';
+$lang['cfr_updated_at'] = 'Last updated';

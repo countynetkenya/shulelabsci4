@@ -1,0 +1,28 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Resetpassword_m extends MY_Model {
+
+	function __construct() {
+		parent::__construct();
+	}
+
+	function get_username($table, $data=NULL) {
+		$schoolID = $data['schoolID'];
+		unset($data['schoolID']);
+		$query = $this->db->get_where($table, $data);
+		$this->db->where("FIND_IN_SET( '$schoolID' , schoolID) ");
+		return $query->result();
+	}
+
+	function hash($string) {
+		return parent::hash($string);
+	}
+
+	function update_resetpassword($table, $data=NULL, $array) {
+		$this->db->update($table, $data, $array);
+		return TRUE;
+	}
+}
+
+/* End of file classes_m.php */
+/* Location: .//D/xampp/htdocs/school/mvc/models/classes_m.php */

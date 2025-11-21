@@ -1,0 +1,310 @@
+<div class="box">
+    <div class="box-header bg-gray">
+        <h3 class="box-title text-navy"><i class="fa fa-clipboard"></i>
+        <?=$this->lang->line('remark_report_for')?> - <?=$this->lang->line('remark_tabulationsheet')?>
+        </h3>
+    </div><!-- /.box-header -->
+    <div id="printablediv">
+
+        <style type="text/css">
+            .maintabulationsheetreport table {
+                text-align: center;
+                width: 100%;
+                padding: 10px;
+            }
+
+            .maintabulationsheetreport table th {
+                padding: 2px;
+                border:1px solid #ddd;
+                text-align: center;
+                font-size: 10px;
+                min-height: 40px;
+                line-height: 15px;
+            }
+
+            .maintabulationsheetreport table td{
+                padding: 2px;
+                border:1px solid #ddd;
+                font-size: 10px;
+            }
+        </style>
+
+        <div class="box-body" style="margin-bottom: 50px;">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h5 class="pull-left">
+                                <?php
+                                    echo $this->lang->line('remark_class')." : ";
+                                    echo isset($classes[$classesID]) ? $classes[$classesID] : $this->lang->line('remark_all_class');
+                                ?>
+                            </h5>
+                            <h5 class="pull-right">
+                                <?php
+                                   echo $this->lang->line('remark_section')." : ";
+                                   echo isset($sections[$sectionID]) ? $sections[$sectionID] : $this->lang->line('remark_all_section');
+                                ?>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+
+                <?php if(customCompute($marks)) { ?>
+                    <div class="col-sm-12">
+                        <div class="maintabulationsheetreport">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2"><?=$this->lang->line('remark_name')?></th>
+                                        <th rowspan="2"><?=$this->lang->line('remark_registerno')?></th>
+                                        <th rowspan="2"><?=$this->lang->line('remark_form_teacher_remark')?></th>
+                                        <th rowspan="2"><?=$this->lang->line('remark_house_teacher_remark')?></th>
+                                        <th rowspan="2"><?=$this->lang->line('remark_principal_teacher_remark')?></th>
+                                        <?php if(customCompute($mandatorysubjects)) { foreach ($mandatorysubjects as $mandatorysubject) { ?>
+                                            <th colspan="<?=(customCompute($markpercentages) +1)?>"><?=$mandatorysubject->subject?></th>
+                                        <?php } } ?>
+
+                                        <?php if(customCompute($optionalsubjects)) { ?>
+                                            <th colspan="<?=(customCompute($markpercentages) +1) ?>">
+                                                <?php
+                                                    $i = 1;
+                                                    if(customCompute($optionalsubjects)) {
+                                                        foreach ($optionalsubjects as $optionalsubject) {
+                                                            $expSub = explode(' ', $optionalsubject->subject);
+                                                            if(customCompute($optionalsubjects) == $i) {
+                                                                echo $expSub[0];
+                                                            } else {
+                                                                echo $expSub[0].'/';
+                                                            }
+                                                            $i++;
+                                                    } } ?>
+                                            </th>
+                                        <?php } ?>
+                                        <th rowspan="2"><?=$this->lang->line('remark_gpa')?></th>
+                                    </tr>
+
+                                    <tr>
+                                        <?php if(customCompute($mandatorysubjects)) { foreach($mandatorysubjects as $mandatorysubject) {
+                                            if(customCompute($markpercentages)) { foreach ($markpercentages as $markpercentageID) { ?>
+                                                <th><?=isset($percentageArr[$markpercentageID]) ? $percentageArr[$markpercentageID]->markpercentagetype[0] : ''?></th>
+                                            <?php } } ?>
+                                            <th><?=$this->lang->line('remark_total')?></th>
+                                        <?php } } ?>
+
+                                        <?php if(customCompute($optionalsubjects)) { foreach ($optionalsubjects as $optionalsubject) {
+                                             if(customCompute($markpercentages)) { foreach ($markpercentages as $markpercentageID) { ?>
+                                                <th><?=isset($percentageArr[$markpercentageID]) ? $percentageArr[$markpercentageID]->markpercentagetype[0] : ''?></th>
+                                            <?php } } ?>
+                                        <?php break; } ?>
+                                            <th><?=$this->lang->line('remark_total')?></th>
+                                        <?php } ?>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php $studentCount = [];
+                                        if(customCompute($students)) { foreach($students as $student) { $totalGrade = 0; ?>
+                                        <tr>
+                                            <td><?=$student->srname?></td>
+                                            <td><?=$student->srstudentID?></td>
+                                            <td><textarea maxlength="160"><?=$remarks[$student->srstudentID]->form_teacher?></textarea></td>
+                                            <td><textarea maxlength="160"><?=$remarks[$student->srstudentID]->house_teacher?></textarea></td>
+                                            <td><textarea maxlength="160"><?=$remarks[$student->srstudentID]->principal_teacher?></textarea></td>
+                                            <?php if(customCompute($mandatorysubjects)) {
+                                                foreach ($mandatorysubjects as $mandatorysubject) {
+                                                    $subjectTotal         = 0;
+                                                    $optionalSubjectTotal = 0;
+                                                    $uniquepercentageArr  = isset($markpercentagesArr[$mandatorysubject->subjectID]) ? $markpercentagesArr[$mandatorysubject->subjectID] : [];
+                                                    $markpercentages      = $uniquepercentageArr[(($settingmarktypeID==4) || ($settingmarktypeID==6)) ? 'unique' : 'own'];
+                                                    $percentageMark       = 0;
+                                                    if(customCompute($markpercentages)) {
+                                                        foreach ($markpercentages as $markpercentageID) {
+                                                            $f = false;
+                                                            if(isset($uniquepercentageArr['own']) && in_array($markpercentageID, $uniquepercentageArr['own'])) {
+                                                                $f = true;
+                                                                $percentageMark   += isset($percentageArr[$markpercentageID]) ? $percentageArr[$markpercentageID]->percentage : 0;
+                                                            } ?>
+                                                    <td>
+                                                        <?php
+                                                            if(isset($marks[$student->srstudentID][$mandatorysubject->subjectID][$markpercentageID]) && $f) {
+                                                                if($marks[$student->srstudentID][$mandatorysubject->subjectID][$markpercentageID] > 0) {
+                                                                    echo $marks[$student->srstudentID][$mandatorysubject->subjectID][$markpercentageID];
+                                                                    $subjectTotal += $marks[$student->srstudentID][$mandatorysubject->subjectID][$markpercentageID];
+                                                                } else {
+                                                                    echo 0;
+                                                                }
+                                                            } else {
+                                                                echo 0;
+                                                            }
+                                                        ?>
+                                                    </td>
+                                                <?php } } ?>
+                                                <td>
+                                                    <?php
+                                                        echo $subjectTotal;
+                                                        $subjectTotal = markCalculationView($subjectTotal, $mandatorysubject->finalmark, $percentageMark);
+                                                        if(customCompute($grades)) {
+                                                            foreach ($grades as $grade) {
+                                                                if($grade->gradefrom <= $subjectTotal && $grade->gradeupto >= $subjectTotal) {
+                                                                    $totalGrade += $grade->point;
+                                                                    break;
+                                                                }
+                                                            }
+                                                        }
+                                                    ?>
+                                                </td>
+                                            <?php } } ?>
+
+                                            <?php if(customCompute($optionalsubjects)) { foreach ($optionalsubjects as $optionalsubject) {
+                                                if((int)$student->sroptionalsubjectID) {
+                                                    if($student->sroptionalsubjectID == $optionalsubject->subjectID) {
+                                                        $opuniquepercentageArr = [];
+                                                        $opuniquepercentageArr = isset($markpercentagesArr[$student->sroptionalsubjectID]) ? $markpercentagesArr[$student->sroptionalsubjectID] : [];
+
+                                                        $percentageMark  = 0;
+                                                        if(customCompute($markpercentages)) { foreach ($markpercentages as $markpercentageID) {
+                                                            $f = false;
+                                                            if(isset($opuniquepercentageArr['own']) && in_array($markpercentageID, $opuniquepercentageArr['own'])) {
+                                                                $f = true;
+                                                                $percentageMark   += isset($percentageArr[$markpercentageID]) ? $percentageArr[$markpercentageID]->percentage : 0;
+                                                            } ?>
+                                                            <td>
+                                                                <?php
+                                                                    if(isset($marks[$student->srstudentID][$optionalsubject->subjectID][$markpercentageID]) && $f) {
+                                                                        if($marks[$student->srstudentID][$optionalsubject->subjectID][$markpercentageID] > 0) {
+                                                                            echo $marks[$student->srstudentID][$optionalsubject->subjectID][$markpercentageID];
+                                                                            $optionalSubjectTotal += $marks[$student->srstudentID][$optionalsubject->subjectID][$markpercentageID];
+                                                                        } else {
+                                                                            echo 0;
+                                                                        }
+                                                                    } else {
+                                                                        echo 0;
+                                                                    }
+                                                                ?>
+                                                            </td>
+                                                            <?php $studentCount[$student->srstudentID] = TRUE;
+                                                        } } ?>
+                                                        <td>
+                                                            <?php
+                                                                echo $optionalSubjectTotal;
+                                                                $optionalSubjectTotal = markCalculationView($optionalSubjectTotal, $optionalsubject->finalmark, $percentageMark);
+                                                                if(customCompute($grades)) {
+                                                                    foreach ($grades as $grade) {
+                                                                        if($grade->gradefrom <= $optionalSubjectTotal && $grade->gradeupto >= $optionalSubjectTotal) {
+                                                                            $totalGrade += $grade->point;
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ?>
+                                                        </td>
+                                                <?php } } else {
+                                                    if(!isset($studentCount[$student->srstudentID])) {
+                                                        $studentCount[$student->srstudentID] = TRUE;
+                                                        if(customCompute($markpercentages)) { foreach ($markpercentages as $markpercentageID) { ?>
+                                                            <td><?php echo 0; ?></td>
+                                                        <?php } } ?>
+                                                        <td><?=0?></td>
+                                                <?php } } } } ?>
+
+                                            <td>
+                                                <?php
+                                                    $optSub = 0;
+                                                    $manSub = customCompute($mandatorysubjects);
+                                                    if($student->sroptionalsubjectID != 0) {
+                                                        $optSub = 1;
+                                                    }
+
+                                                    $avg      = 0;
+                                                    $totalSub = $manSub+$optSub;
+                                                    if($totalSub > 0) {
+                                                        $avg = ($totalGrade/$totalSub);
+                                                    }
+                                                    echo ini_round($avg);
+                                                ?>
+                                            </td>
+                                        </tr>
+                                    <?php } } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <br>
+                      <input id="addRemarkButton" type="button" class="btn btn-success" value="Submit">
+                    </div>
+                <?php } else { ?>
+                    <div class="col-sm-12">
+                        <br>
+                        <div class="callout callout-danger">
+                            <p><b class="text-info"><?=$this->lang->line('remark_data_not_found')?></b></p>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div><!-- row -->
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('.maintabulationsheetreport').mCustomScrollbar({
+        axis:"x"
+    });
+
+    $(document).on('click', '#addRemarkButton', function() {
+        var remarkitems = $('tbody tr').map(function(){
+            return { exam: $("#examID").val(), student: $(this).children().eq(1).html(), form_teacher : $(this).children().eq(2).children().val(), house_teacher: $(this).children().eq(3).children().val(), principal_teacher : $(this).children().eq(4).children().val() };
+        }).get();
+
+        remarkitems = JSON.stringify(remarkitems);
+        makingPostDataPreviousofAjaxCall(remarkitems);
+    });
+
+    function makingPostDataPreviousofAjaxCall(field) {
+        passData = {remarkitems : field};
+        ajaxCall(passData);
+    }
+
+    function ajaxCall(passData) {
+        $.ajax({
+            type: 'POST',
+            url: "<?=base_url('remark/add')?>",
+            data: passData,
+            dataType: "html",
+            success: function(data) {
+                var response = JSON.parse(data);
+                errrorLoader(response);
+            },
+            cache: false
+        });
+    }
+
+    function errrorLoader(response) {
+        if(response.status) {
+            window.location = "<?=base_url("remark/index")?>";
+        } else {
+            $('#addRemarkButton').removeAttr('disabled');
+            $.each(response.error, function(index, val) {
+                toastr["error"](val)
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "500",
+                    "hideDuration": "500",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+            });
+        }
+    }
+</script>

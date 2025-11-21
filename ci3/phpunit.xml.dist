@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         beStrictAboutCoversAnnotation="false">
+    <testsuites>
+        <testsuite name="Application">
+            <directory suffix="Test.php">tests</directory>
+            <exclude>ci4/tests</exclude>
+        </testsuite>
+    </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">application/Services</directory>
+            <directory suffix=".php">ci4/app/Modules/Foundation</directory>
+            <directory suffix=".php">ci4/app/Modules/Inventory</directory>
+            <directory suffix=".php">ci4/app/Modules/Library</directory>
+            <directory suffix=".php">ci4/app/Modules/Threads</directory>
+            <directory suffix=".php">ci4/app/Modules/Gamification</directory>
+            <directory suffix=".php">ci4/app/Modules/Hr</directory>
+            <directory suffix=".php">ci4/app/Modules/Learning</directory>
+            <directory suffix=".php">ci4/app/Modules/Mobile</directory>
+        </include>
+    </coverage>
+    <php>
+        <ini name="date.timezone" value="Africa/Nairobi"/>
+        <env name="CI_ENV" value="testing"/>
+    </php>
+</phpunit>

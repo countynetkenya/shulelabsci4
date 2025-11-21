@@ -1,0 +1,3 @@
+<?php
+$segments = ['migrate', 'status'];
+require __DIR__ . '/bootstrap.php';

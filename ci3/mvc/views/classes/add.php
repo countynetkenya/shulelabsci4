@@ -1,0 +1,141 @@
+
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title"><i class="fa fa-sitemap"></i> <?=$this->lang->line('panel_title')?></h3>
+
+
+        <ol class="breadcrumb">
+            <li><a href="<?=base_url("dashboard/index")?>"><i class="fa fa-laptop"></i> <?=$this->lang->line('menu_dashboard')?></a></li>
+            <li><a href="<?=base_url("classes/index")?>"></i> <?=$this->lang->line('menu_classes')?></a></li>
+            <li class="active"><?=$this->lang->line('menu_add')?> <?=$this->lang->line('menu_classes')?></li>
+        </ol>
+    </div><!-- /.box-header -->
+    <!-- form start -->
+    <div class="box-body">
+        <div class="row">
+            <div class="col-sm-10">
+                <form class="form-horizontal" role="form" method="post">
+
+                    <?php
+                        if(form_error('classes'))
+                            echo "<div class='form-group has-error' >";
+                        else
+                            echo "<div class='form-group' >";
+                    ?>
+                        <label for="classes" class="col-sm-2 control-label">
+                            <?=$this->lang->line("classes_name")?> <span class="text-red">*</span>
+                        </label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="classes" name="classes" value="<?=set_value('classes')?>" >
+                        </div>
+                        <span class="col-sm-4 control-label">
+                            <?php echo form_error('classes'); ?>
+                        </span>
+                    </div>
+
+                    <?php
+                        if(form_error('classes_code'))
+                            echo "<div class='form-group has-error' >";
+                        else
+                            echo "<div class='form-group' >";
+                    ?>
+                        <label for="classes_numeric" class="col-sm-2 control-label">
+                            <?=$this->lang->line("classes_code")?> <span class="text-red">*</span>
+                        </label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="classes_numeric" name="classes_code" value="<?=set_value('classes_code')?>" >
+                        </div>
+                        <span class="col-sm-4 control-label">
+                            <?php echo form_error('classes_code'); ?>
+                        </span>
+                    </div>
+
+					<?php
+                        if(form_error('division'))
+                            echo "<div class='form-group has-error' >";
+                        else
+                            echo "<div class='form-group' >";
+                    ?>
+                        <label for="division" class="col-sm-2 control-label">
+                            <?=$this->lang->line("division")?> <span class="text-red">*</span>
+                        </label>
+                        <div class="col-sm-6">
+                            <?php
+								                $array = array();
+                                $array[0] = $this->lang->line("select_division");
+                                
+                                foreach ($divisions as $division) {
+                                    $array[$division->divisionsID] = $division->divisions;
+                                }
+                                echo form_dropdown("divisionID", $array, set_value("divisionID"), "id='divisionID' class='form-control select2'");
+                            ?>
+                        </div>
+                        <span class="col-sm-4 control-label">
+                            <?php echo form_error('division'); ?>
+                        </span>
+                    </div>
+
+                    <?php
+                        if(form_error('teacherID'))
+                            echo "<div class='form-group has-error' >";
+                        else
+                            echo "<div class='form-group' >";
+                    ?>
+                        <label for="teacherID" class="col-sm-2 control-label">
+                            <?=$this->lang->line("teacher_name")?> <span class="text-red">*</span>
+                        </label>
+                        <div class="col-sm-6">
+
+                            <?php
+                                $array = array();
+                                $array[0] = $this->lang->line("classes_select_teacher");
+
+                                foreach ($teachers as $teacher) {
+                                    $array[$teacher->teacherID] = $teacher->name;
+                                }
+                                echo form_dropdown("teacherID", $array, set_value("teacherID"), "id='teacherID' class='form-control select2'");
+                            ?>
+                        </div>
+                        <span class="col-sm-4 control-label">
+                            <?php echo form_error('teacherID'); ?>
+                        </span>
+                    </div>
+
+                    <?php
+                        if(form_error('note'))
+                            echo "<div class='form-group has-error' >";
+                        else
+                            echo "<div class='form-group' >";
+                    ?>
+                        <label for="note" class="col-sm-2 control-label">
+                            <?=$this->lang->line("classes_note")?>
+                        </label>
+                        <div class="col-sm-6">
+                            <textarea class="form-control" style="resize:none;" id="note" name="note"><?=set_value('note')?></textarea>
+                        </div>
+                        <span class="col-sm-4 control-label">
+                            <?php echo form_error('note'); ?>
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-8">
+                            <input type="submit" class="btn btn-success" value="<?=$this->lang->line("add_class")?>" >
+                        </div>
+                    </div>
+
+                </form>
+                <?php if ($siteinfos->note==1) { ?>
+                    <div class="callout callout-danger">
+                        <p><b>Note:</b> Create a teacher before create a new class.</p>
+                    </div>
+                <?php } ?>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$( ".select2" ).select2( { placeholder: "", maximumSelectionSize: 6 } );
+</script>

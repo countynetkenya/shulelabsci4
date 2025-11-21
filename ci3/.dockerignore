@@ -1,0 +1,10 @@
+.git
+.gitignore
+.devcontainer
+node_modules
+vendor
+storage
+writable
+logs
+.env
+.DS_Store

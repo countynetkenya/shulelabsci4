@@ -1,0 +1,72 @@
+
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title"><i class="fa icon-credittypes"></i> <?=$this->lang->line('panel_title')?></h3>
+
+
+        <ol class="breadcrumb">
+            <li><a href="<?=base_url("dashboard/index")?>"><i class="fa fa-laptop"></i> <?=$this->lang->line('menu_dashboard')?></a></li>
+            <li class="active"><?=$this->lang->line('menu_paymenttypes')?></li>
+        </ol>
+    </div><!-- /.box-header -->
+    <!-- form start -->
+    <div class="box-body">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <?php if(permissionChecker('paymenttypes_add')) { ?>
+                    <h5 class="page-header">
+                        <a href="<?php echo base_url('paymenttypes/add') ?>">
+                            <i class="fa fa-plus"></i>
+                            <?=$this->lang->line('add_title')?>
+                        </a>
+                    </h5>
+                <?php } ?>
+
+                <div id="hide-table">
+                    <table id="example2" class="table table-striped table-bordered table-hover dataTable no-footer">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-2"><?=$this->lang->line('slno')?></th>
+                                <th class="col-sm-3"><?=$this->lang->line('paymenttypes_name')?></th>
+                                <th class="col-sm-3"><?=$this->lang->line('paymenttypes_note')?></th>
+                                <th class="col-sm-3"><?=$this->lang->line('paymenttypes_deposittoaccountref')?></th>
+                                <?php if(permissionChecker('paymenttypes_edit') || permissionChecker('paymenttypes_delete')) { ?>
+                                <th class="col-sm-2"><?=$this->lang->line('action')?></th>
+                                <?php } ?>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if(customCompute($paymenttypes)) {$i = 1; foreach($paymenttypes as $paymenttype) { ?>
+                                <tr>
+                                    <td data-title="<?=$this->lang->line('slno')?>">
+                                        <?php echo $i; ?>
+                                    </td>
+                                    <td data-title="<?=$this->lang->line('paymenttypes_name')?>">
+                                        <?php echo $paymenttype->paymenttypes; ?>
+                                    </td>
+
+                                    <td data-title="<?=$this->lang->line('paymenttypes_note')?>">
+                                        <?php echo $paymenttype->note; ?>
+                                    </td>
+
+                                    <td data-title="<?=$this->lang->line('paymenttypes_deposittoaccountref')?>">
+                                        <?php echo $paymenttype->deposittoaccountref; ?>
+                                    </td>
+
+                                    <?php if(permissionChecker('paymenttypes_edit') || permissionChecker('paymenttypes_delete')) { ?>
+                                        <td data-title="<?=$this->lang->line('action')?>">
+                                            <?php echo btn_edit('paymenttypes/edit/'.$paymenttype->paymenttypesID, $this->lang->line('edit')) ?>
+                                            <?php echo btn_delete('paymenttypes/delete/'.$paymenttype->paymenttypesID, $this->lang->line('delete')) ?>
+                                        </td>
+                                    <?php } ?>
+                                </tr>
+                            <?php $i++; }} ?>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
