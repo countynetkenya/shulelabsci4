@@ -63,7 +63,7 @@ class AuditService
         $payload['previous_hash'] = $previousHash;
         $payload['hash_value']    = $this->calculateHash($previousHash, $payload);
 
-        $this->db->table('ci4_audit_events')->insert($payload);
+        $this->db->table('audit_events')->insert($payload);
         $eventId = (int) $this->db->insertID();
 
         $this->db->transComplete();
@@ -84,7 +84,7 @@ class AuditService
         $start = $day->setTime(0, 0, 0);
         $end   = $day->setTime(23, 59, 59);
 
-        $builder = $this->db->table('ci4_audit_events');
+        $builder = $this->db->table('audit_events');
         $builder->select('hash_value');
         $builder->where('created_at >=', $start->toDateTimeString());
         $builder->where('created_at <=', $end->toDateTimeString());
@@ -97,7 +97,7 @@ class AuditService
 
         $sealHash = hash('sha256', $hashStream);
 
-        $this->db->table('ci4_audit_seals')->replace([
+        $this->db->table('audit_seals')->replace([
             'seal_date'   => $start->toDateString(),
             'hash_value'  => $sealHash,
             'sealed_at'   => Time::now('UTC')->toDateTimeString(),
@@ -109,7 +109,7 @@ class AuditService
      */
     public function verifyIntegrity(): bool
     {
-        $builder = $this->db->table('ci4_audit_events');
+        $builder = $this->db->table('audit_events');
         $builder->orderBy('id', 'ASC');
 
         $previousHash = null;
@@ -131,7 +131,7 @@ class AuditService
 
     private function getLatestHash(): ?string
     {
-        $builder = $this->db->table('ci4_audit_events');
+        $builder = $this->db->table('audit_events');
         $builder->select('hash_value');
         $builder->orderBy('id', 'DESC');
 

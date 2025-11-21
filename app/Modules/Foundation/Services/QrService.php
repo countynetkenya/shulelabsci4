@@ -48,7 +48,7 @@ class QrService
             'expires_at'    => $expiresAt?->toDateTimeString(),
         ];
 
-        $this->db->table('ci4_qr_tokens')->insert($record);
+        $this->db->table('qr_tokens')->insert($record);
 
         $verificationUrl = ($context['base_url'] ?? 'https://schoolos.shulelabs.com') . '/verify/' . $token;
         $pngData = Builder::create()
@@ -75,7 +75,7 @@ class QrService
      */
     public function verify(string $token, array $context): array
     {
-        $row = $this->db->table('ci4_qr_tokens')
+        $row = $this->db->table('qr_tokens')
             ->where('token', $token)
             ->get()
             ->getFirstRow('array');
@@ -96,7 +96,7 @@ class QrService
             'metadata'    => json_encode($context['metadata'] ?? [], JSON_THROW_ON_ERROR),
         ];
 
-        $this->db->table('ci4_qr_scans')->insert($scan);
+        $this->db->table('qr_scans')->insert($scan);
 
         return $row;
     }

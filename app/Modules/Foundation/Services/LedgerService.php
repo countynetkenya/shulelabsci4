@@ -84,7 +84,7 @@ class LedgerService
      */
     public function scheduleReversal(int $transactionId, array $context, string $reason): int
     {
-        $original = $this->db->table('ci4_ledger_transactions')
+        $original = $this->db->table('ledger_transactions')
             ->where('id', $transactionId)
             ->get()
             ->getFirstRow('array');
@@ -93,7 +93,7 @@ class LedgerService
             throw new RuntimeException('Cannot reverse missing transaction.');
         }
 
-        $entries = $this->db->table('ci4_ledger_entries')
+        $entries = $this->db->table('ledger_entries')
             ->where('transaction_id', $transactionId)
             ->get()
             ->getResultArray();
@@ -160,7 +160,7 @@ class LedgerService
 
     private function assertPeriodUnlocked(null|int|string $tenantId, Time $transactedAt): void
     {
-        $builder = $this->db->table('ci4_ledger_period_locks');
+        $builder = $this->db->table('ledger_period_locks');
         if ($tenantId !== null) {
             $builder->groupStart()
                 ->where('tenant_id', $tenantId)
@@ -191,7 +191,7 @@ class LedgerService
             'metadata_json'   => json_encode($metadata, JSON_THROW_ON_ERROR),
         ];
 
-        $this->db->table('ci4_ledger_transactions')->insert($payload);
+        $this->db->table('ledger_transactions')->insert($payload);
 
         return (int) $this->db->insertID();
     }
@@ -210,7 +210,7 @@ class LedgerService
             'created_at'     => Time::now('UTC')->toDateTimeString(),
         ];
 
-        $this->db->table('ci4_ledger_entries')->insert($payload);
+        $this->db->table('ledger_entries')->insert($payload);
     }
 
     /**
