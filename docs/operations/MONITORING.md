@@ -277,9 +277,13 @@ scrape_configs:
 ```bash
 #!/bin/bash
 # Check error rate every 5 minutes
+# Note: Adjust LOG_PATH to match your installation
 
-TOTAL=$(cat /var/log/shulelabs/log-$(date +%Y-%m-%d).log | jq -r 'select(.level == "INFO" or .level == "ERROR")' | wc -l)
-ERRORS=$(cat /var/log/shulelabs/log-$(date +%Y-%m-%d).log | jq -r 'select(.level == "ERROR")' | wc -l)
+LOG_PATH="/path/to/shulelabs/writable/logs"
+LOG_FILE="$LOG_PATH/log-$(date +%Y-%m-%d).log"
+
+TOTAL=$(cat "$LOG_FILE" | jq -r 'select(.level == "INFO" or .level == "ERROR")' | wc -l)
+ERRORS=$(cat "$LOG_FILE" | jq -r 'select(.level == "ERROR")' | wc -l)
 
 if [ $TOTAL -gt 0 ]; then
   ERROR_RATE=$(echo "scale=2; ($ERRORS / $TOTAL) * 100" | bc)
