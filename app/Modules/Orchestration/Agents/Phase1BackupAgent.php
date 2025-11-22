@@ -125,13 +125,20 @@ class Phase1BackupAgent extends BaseAgent
 
         $excludeArgs = implode(' ', array_map(fn($e) => "--exclude='{$e}'", $excludes));
         
-        $tarFile = "{$backupDir}/codebase.tar.gz";
-        $command = "cd " . ROOTPATH . " && tar -czf {$tarFile} {$excludeArgs} .";
+        // Create tar file in temp location first, then move to backup dir
+        $tempFile = sys_get_temp_dir() . '/shulelabs_backup_' . time() . '.tar.gz';
+        $command = "cd " . ROOTPATH . " && tar -czf {$tempFile} {$excludeArgs} .";
         
         $result = $this->executeCommand($command, 'Creating codebase backup');
         
         if (!$result['success']) {
             throw new \RuntimeException('Failed to create codebase backup');
+        }
+
+        // Move to final location
+        $tarFile = "{$backupDir}/codebase.tar.gz";
+        if (file_exists($tempFile)) {
+            rename($tempFile, $tarFile);
         }
 
         return file_exists($tarFile) ? filesize($tarFile) : 0;
