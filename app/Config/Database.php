@@ -193,64 +193,27 @@ class Database extends Config
     {
         parent::__construct();
 
+        // For testing environment, use the in-memory SQLite database
         if (ENVIRONMENT === 'testing') {
             $this->defaultGroup = 'tests';
 
             return;
         }
 
-        $resolveEnv = static function (array $keys, $default = null) {
-            foreach ($keys as $key) {
-                $value = getenv($key);
-                if ($value !== false && $value !== null) {
-                    return $value;
-                }
-            }
+        // Read database configuration from .env using env() helper
+        // This is the single source of truth for database credentials
+        $this->default['DSN']      = env('DB_DSN', '');
+        $this->default['hostname'] = env('DB_HOST', 'localhost');
+        $this->default['username'] = env('DB_USERNAME', '');
+        $this->default['password'] = env('DB_PASSWORD', '');
+        $this->default['database'] = env('DB_DATABASE', '');
+        $this->default['DBDriver'] = env('DB_DRIVER', 'MySQLi');
+        $this->default['port']     = (int) env('DB_PORT', 3306);
 
-            return $default;
-        };
-
-        $resolveBool = static function (array $keys, bool $default = false) use ($resolveEnv): bool {
-            $value = $resolveEnv($keys, null);
-            if ($value === null) {
-                return $default;
-            }
-
-            if (is_bool($value)) {
-                return $value;
-            }
-
-            return filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? $default;
-        };
-
-        $overrides = [
-            'DSN'      => $resolveEnv(['DB_DSN', 'DATABASE_DSN'], ''),
-            'hostname' => $resolveEnv(['DB_HOST', 'DB_HOSTNAME', 'DATABASE_HOST'], $this->default['hostname']),
-            'username' => $resolveEnv(['DB_USERNAME', 'DB_USER', 'DATABASE_USERNAME'], $this->default['username']),
-            'password' => $resolveEnv(['DB_PASSWORD', 'DATABASE_PASSWORD'], $this->default['password']),
-            'database' => $resolveEnv(['DB_NAME', 'DB_DATABASE', 'DATABASE_NAME'], $this->default['database']),
-            'DBDriver' => $resolveEnv(['DB_DRIVER', 'DATABASE_DRIVER'], $this->default['DBDriver']),
-            'port'     => $resolveEnv(['DB_PORT', 'DATABASE_PORT'], $this->default['port']),
-        ];
-
-        foreach ($overrides as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            if ($key === 'port') {
-                $this->default[$key] = (int) $value;
-
-                continue;
-            }
-
-            $this->default[$key] = $value;
-        }
-
-        $allowEmptyPassword = $resolveBool(['DB_ALLOW_EMPTY_PASSWORD', 'DATABASE_ALLOW_EMPTY_PASSWORD'], false);
-
+        // Validate required database credentials
+        $allowEmptyPassword = filter_var(env('DB_ALLOW_EMPTY_PASSWORD', false), FILTER_VALIDATE_BOOLEAN);
+        
         $requiredKeys = ['hostname', 'username', 'database'];
-
         if (!$allowEmptyPassword) {
             $requiredKeys[] = 'password';
         }
@@ -266,12 +229,15 @@ class Database extends Config
         if (!empty($missing)) {
             throw new \RuntimeException(
                 sprintf(
-                    'CI4 database configuration incomplete (missing: %s). Define DB_* environment variables to align with CI3.',
+                    'Database configuration is incomplete (missing: %s). ' .
+                    'Please set DB_HOST, DB_USERNAME, DB_PASSWORD, and DB_DATABASE in your .env file. ' .
+                    'Set DB_ALLOW_EMPTY_PASSWORD=true to bypass the password requirement for local development.',
                     implode(', ', $missing)
                 )
             );
         }
 
+        // Disable DBDebug in production
         $this->default['DBDebug'] = ENVIRONMENT !== 'production';
     }
 }
