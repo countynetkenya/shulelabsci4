@@ -44,6 +44,21 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
       
+      # Verify composer dependencies are installed to avoid unclear failures downstream
+      - name: "Debug: verify dependencies"
+        run: |
+          php -v
+          composer --version
+          ls -la
+          ls -la vendor || true
+          if [ ! -f vendor/autoload.php ]; then
+            echo "ERROR: vendor/autoload.php not found. Composer install likely failed." >&2
+            composer diagnose || true
+            exit 1
+          else
+            echo "vendor/autoload.php present"
+          fi
+      
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
       
@@ -96,10 +111,26 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
       
+      # Verify composer dependencies are installed to avoid unclear failures downstream
+      - name: "Debug: verify dependencies"
+        run: |
+          php -v
+          composer --version
+          ls -la
+          ls -la vendor || true
+          if [ ! -f vendor/autoload.php ]; then
+            echo "ERROR: vendor/autoload.php not found. Composer install likely failed." >&2
+            composer diagnose || true
+            exit 1
+          else
+            echo "vendor/autoload.php present"
+          fi
+      
       - name: Setup test environment
         run: |
           cp .env.example .env
-          php spark key:generate
+          chmod +x spark || true
+          php -f spark key:generate
       
       - name: Run tests
         run: |
