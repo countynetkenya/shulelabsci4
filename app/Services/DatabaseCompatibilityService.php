@@ -508,8 +508,10 @@ PHP;
             if (!empty($spec['auto_increment']) && strtoupper($type) === 'INT') {
                 // For SQLite, INTEGER PRIMARY KEY AUTOINCREMENT
                 // But we can't add PRIMARY KEY via ALTER TABLE, so just use INTEGER
+                // Note: INTEGER doesn't use constraints in SQLite, so we reset the definition
                 $columnDef = "{$column} INTEGER";
             } elseif (!empty($spec['auto_increment']) && strtoupper($type) === 'BIGINT') {
+                // BIGINT becomes INTEGER in SQLite (no size constraints for INTEGER)
                 $columnDef = "{$column} INTEGER";
             }
 
