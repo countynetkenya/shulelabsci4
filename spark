@@ -55,6 +55,15 @@ ini_set('display_errors', '1');
 
 /*
  *---------------------------------------------------------------
+ * LOAD COMPOSER AUTOLOADER
+ *---------------------------------------------------------------
+ */
+
+// Require Composer's autoloader to ensure all dependencies are available
+require_once __DIR__ . '/vendor/autoload.php';
+
+/*
+ *---------------------------------------------------------------
  * SET THE CURRENT DIRECTORY
  *---------------------------------------------------------------
  */

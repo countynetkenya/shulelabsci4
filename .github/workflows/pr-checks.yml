@@ -1,0 +1,44 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches: [ main, master, develop ]
+  push:
+    branches: [ main, master, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: bcmath, gd, intl, mysqli, pdo, zip
+          coverage: none
+      
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      
+      - name: Install PHP dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress --no-suggest
+      
+      - name: Dump optimized autoload
+        run: composer dump-autoload -o
+      
+      - name: Ensure spark is executable
+        run: |
+          if [ -f ./spark ]; then
+            chmod +x ./spark
+          fi
+      
+      - name: Test spark execution
+        run: ./spark --version
