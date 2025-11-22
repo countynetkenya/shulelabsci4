@@ -154,4 +154,17 @@ class Services extends BaseService
             $config->fallbackKeys
         );
     }
+
+    public static function integrations(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('integrations');
+        }
+
+        return new \Modules\Integrations\Services\IntegrationService(
+            null,
+            static::audit(),
+            static::integrationRegistry()
+        );
+    }
 }
