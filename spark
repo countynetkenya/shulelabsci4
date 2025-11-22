@@ -55,6 +55,21 @@ ini_set('display_errors', '1');
 
 /*
  *---------------------------------------------------------------
+ * LOAD COMPOSER AUTOLOADER
+ *---------------------------------------------------------------
+ */
+
+// Require Composer's autoloader to ensure all dependencies are available
+if (! file_exists(__DIR__ . '/vendor/autoload.php')) {
+    $message = "Composer dependencies are not installed. Please run 'composer install' first.\n";
+    fwrite(STDERR, $message);
+    exit(1);
+}
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+/*
+ *---------------------------------------------------------------
  * SET THE CURRENT DIRECTORY
  *---------------------------------------------------------------
  */
