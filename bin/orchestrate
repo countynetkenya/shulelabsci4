@@ -1,0 +1,197 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Master Orchestration Script
+ * 
+ * Executes the complete autonomous system orchestration lifecycle.
+ * 
+ * Usage: php bin/orchestrate [--phase=N] [--skip=N,M] [--dry-run] [--help]
+ * 
+ * @version 1.0.0
+ */
+
+declare(strict_types=1);
+
+// Bootstrap the application
+define('ROOTPATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
+define('FCPATH', ROOTPATH . 'public' . DIRECTORY_SEPARATOR);
+define('SYSTEMPATH', ROOTPATH . 'vendor/codeigniter4/framework/system/');
+define('APPPATH', ROOTPATH . 'app/');
+define('WRITEPATH', ROOTPATH . 'writable/');
+
+require ROOTPATH . 'vendor/autoload.php';
+
+use Modules\Orchestration\Services\MasterOrchestrationService;
+use Modules\Orchestration\Config\OrchestrationConfig;
+
+// Check if running in CLI mode
+if (PHP_SAPI !== 'cli') {
+    die("This script can only be run from the command line.\n");
+}
+
+// Display banner
+echo "\n";
+echo "╔════════════════════════════════════════════════════════════════╗\n";
+echo "║   MASTER ORCHESTRATION AGENT - AUTONOMOUS SYSTEM BUILD        ║\n";
+echo "║   Version 1.0.0 | ShuleLabs CI4                              ║\n";
+echo "╚════════════════════════════════════════════════════════════════╝\n";
+echo "\n";
+
+// Parse command line arguments
+$options = getopt('', ['phase:', 'skip:', 'config:', 'dry-run', 'help']);
+
+if (isset($options['help'])) {
+    showHelp();
+    exit(0);
+}
+
+// Determine which phases to run
+$requestedPhase = $options['phase'] ?? 'all';
+$skipPhases = isset($options['skip']) ? explode(',', $options['skip']) : [];
+$configFile = $options['config'] ?? null;
+$dryRun = isset($options['dry-run']);
+
+try {
+    // Initialize orchestration service
+    $config = $configFile ? OrchestrationConfig::fromFile($configFile) : new OrchestrationConfig();
+    $orchestrator = new MasterOrchestrationService($config);
+    
+    if ($dryRun) {
+        echo "🔍 DRY RUN MODE - No changes will be made\n\n";
+        $orchestrator->setDryRun(true);
+    }
+    
+    // Execute orchestration
+    echo "🚀 Starting Master Orchestration...\n";
+    echo "📅 Timestamp: " . date('Y-m-d H:i:s') . "\n";
+    echo "⏱️  Estimated Time: 7 minutes 24 seconds\n\n";
+    
+    $startTime = microtime(true);
+    
+    if ($requestedPhase === 'all') {
+        // Execute all phases
+        $result = $orchestrator->executeComplete($skipPhases);
+    } else {
+        // Execute specific phase
+        $result = $orchestrator->executePhase((int)$requestedPhase);
+    }
+    
+    $duration = microtime(true) - $startTime;
+    
+    // Display results
+    echo "\n";
+    echo "╔════════════════════════════════════════════════════════════════╗\n";
+    echo "║   ORCHESTRATION COMPLETE                                      ║\n";
+    echo "╚════════════════════════════════════════════════════════════════╝\n";
+    echo "\n";
+    echo "⏱️  Total Time: " . formatDuration($duration) . "\n";
+    echo "✅ Status: " . ($result['success'] ? 'SUCCESS' : 'FAILED') . "\n";
+    echo "📊 Phases Executed: " . count($result['phases']) . "\n";
+    echo "📝 Report: " . ($result['report_path'] ?? 'N/A') . "\n";
+    echo "\n";
+    
+    // Show phase summary
+    foreach ($result['phases'] as $phase) {
+        $status = $phase['success'] ? '✅' : '❌';
+        echo "{$status} Phase {$phase['number']}: {$phase['name']} ({$phase['duration']}s)\n";
+    }
+    
+    echo "\n";
+    
+    if (!$result['success']) {
+        echo "❌ Orchestration failed. Check logs for details.\n";
+        exit(1);
+    }
+    
+    echo "🎉 Autonomous system build completed successfully!\n";
+    echo "📊 View reports at: {$result['report_path']}\n";
+    echo "\n";
+    
+    exit(0);
+    
+} catch (Throwable $e) {
+    echo "\n";
+    echo "❌ FATAL ERROR:\n";
+    echo "   {$e->getMessage()}\n";
+    echo "   File: {$e->getFile()}:{$e->getLine()}\n";
+    echo "\n";
+    echo "📋 Stack trace:\n";
+    echo $e->getTraceAsString();
+    echo "\n\n";
+    exit(1);
+}
+
+/**
+ * Display help information
+ */
+function showHelp(): void
+{
+    echo <<<HELP
+
+Master Orchestration Agent - Help
+
+USAGE:
+    php bin/orchestrate [OPTIONS]
+
+OPTIONS:
+    --phase=<N>      Run specific phase only (1-6)
+    --skip=<N,M>     Skip specific phases (comma-separated)
+    --config=<file>  Use custom configuration file
+    --dry-run        Simulate execution without making changes
+    --help           Display this help message
+
+PHASES:
+    1. RESTART & BACKUP      - System backup and clean slate
+    2. CODE GENERATION       - Generate production-ready code
+    3. BUILD & VALIDATION    - Run tests and quality checks
+    4. MERGE & INTEGRATION   - Merge to main and create release
+    5. DEPLOYMENT            - Deploy to staging and production
+    6. REPORTS               - Generate comprehensive intelligence reports
+
+EXAMPLES:
+    # Execute complete orchestration
+    php bin/orchestrate
+
+    # Execute only Phase 1
+    php bin/orchestrate --phase=1
+
+    # Skip deployment phase
+    php bin/orchestrate --skip=5
+
+    # Dry run (no changes)
+    php bin/orchestrate --dry-run
+
+    # Use custom config
+    php bin/orchestrate --config=config/custom-orchestration.php
+
+ENVIRONMENT VARIABLES:
+    ORCHESTRATION_ENABLED           Enable/disable orchestration
+    ORCHESTRATION_TIMEOUT           Max execution time (seconds)
+    ORCHESTRATION_RETRY_COUNT       Number of retries on failure
+    ENABLE_BACKUP_PHASE             Enable Phase 1
+    ENABLE_CODE_GENERATION          Enable Phase 2
+    ENABLE_BUILD_VALIDATION         Enable Phase 3
+    ENABLE_MERGE_INTEGRATION        Enable Phase 4
+    ENABLE_DEPLOYMENT               Enable Phase 5
+    ENABLE_REPORTS                  Enable Phase 6
+
+For more information, see: docs/agents/master-orchestration-agent.md
+
+HELP;
+}
+
+/**
+ * Format duration in human-readable format
+ */
+function formatDuration(float $seconds): string
+{
+    $minutes = floor($seconds / 60);
+    $secs = (int)($seconds % 60);
+    
+    if ($minutes > 0) {
+        return sprintf('%dm %ds', $minutes, $secs);
+    }
+    
+    return sprintf('%ds', $secs);
+}
