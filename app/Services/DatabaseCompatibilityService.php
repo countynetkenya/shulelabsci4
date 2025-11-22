@@ -248,11 +248,26 @@ class DatabaseCompatibilityService
     protected function auditTableIndexes(string $tableName, array $requiredIndexes): void
     {
         try {
-            // Get existing indexes
-            $query = $this->db->query("SHOW INDEX FROM `{$tableName}`");
-            $existingIndexes = $query->getResultArray();
+            $existingIndexNames = [];
 
-            $existingIndexNames = array_column($existingIndexes, 'Key_name');
+            if ($this->isSQLite()) {
+                // SQLite: use PRAGMA index_list
+                $query = $this->db->query("PRAGMA index_list({$tableName})");
+                $indexes = $query->getResultArray();
+
+                foreach ($indexes as $index) {
+                    $indexName = $index['name'] ?? '';
+                    // Filter out auto-generated indexes and primary key indexes
+                    if (!str_starts_with($indexName, 'sqlite_autoindex') && ($index['origin'] ?? '') !== 'pk') {
+                        $existingIndexNames[] = $indexName;
+                    }
+                }
+            } else {
+                // MySQL: use SHOW INDEX
+                $query = $this->db->query("SHOW INDEX FROM `{$tableName}`");
+                $existingIndexes = $query->getResultArray();
+                $existingIndexNames = array_column($existingIndexes, 'Key_name');
+            }
 
             foreach ($requiredIndexes as $indexSpec) {
                 $indexName = $indexSpec['name'] ?? null;
@@ -480,32 +495,65 @@ PHP;
     {
         $type = $spec['type'];
 
-        $columnDef = "`{$column}` {$type}";
+        if ($this->isSQLite()) {
+            // SQLite-specific column definition
+            $columnDef = "{$column} {$type}";
 
-        if (!empty($spec['constraint'])) {
-            $columnDef .= "({$spec['constraint']})";
-        }
+            if (!empty($spec['constraint'])) {
+                $columnDef .= "({$spec['constraint']})";
+            }
 
-        if (!empty($spec['unsigned'])) {
-            $columnDef .= " UNSIGNED";
-        }
+            // SQLite doesn't support UNSIGNED
+            // Handle auto_increment for INTEGER types differently
+            if (!empty($spec['auto_increment']) && strtoupper($type) === 'INT') {
+                // For SQLite, INTEGER PRIMARY KEY AUTOINCREMENT
+                // But we can't add PRIMARY KEY via ALTER TABLE, so just use INTEGER
+                $columnDef = "{$column} INTEGER";
+            } elseif (!empty($spec['auto_increment']) && strtoupper($type) === 'BIGINT') {
+                $columnDef = "{$column} INTEGER";
+            }
 
-        if (!empty($spec['auto_increment'])) {
-            $columnDef .= " AUTO_INCREMENT";
-        }
+            if (!empty($spec['null'])) {
+                $columnDef .= " NULL";
+            } else {
+                $columnDef .= " NOT NULL";
+            }
 
-        if (!empty($spec['null'])) {
-            $columnDef .= " NULL";
+            if (isset($spec['default'])) {
+                $default = is_string($spec['default']) ? "'{$spec['default']}'" : $spec['default'];
+                $columnDef .= " DEFAULT {$default}";
+            }
+
+            return "ALTER TABLE {$table} ADD COLUMN {$columnDef};";
         } else {
-            $columnDef .= " NOT NULL";
-        }
+            // MySQL-specific column definition
+            $columnDef = "`{$column}` {$type}";
 
-        if (isset($spec['default'])) {
-            $default = is_string($spec['default']) ? "'{$spec['default']}'" : $spec['default'];
-            $columnDef .= " DEFAULT {$default}";
-        }
+            if (!empty($spec['constraint'])) {
+                $columnDef .= "({$spec['constraint']})";
+            }
 
-        return "ALTER TABLE `{$table}` ADD COLUMN {$columnDef};";
+            if (!empty($spec['unsigned'])) {
+                $columnDef .= " UNSIGNED";
+            }
+
+            if (!empty($spec['auto_increment'])) {
+                $columnDef .= " AUTO_INCREMENT";
+            }
+
+            if (!empty($spec['null'])) {
+                $columnDef .= " NULL";
+            } else {
+                $columnDef .= " NOT NULL";
+            }
+
+            if (isset($spec['default'])) {
+                $default = is_string($spec['default']) ? "'{$spec['default']}'" : $spec['default'];
+                $columnDef .= " DEFAULT {$default}";
+            }
+
+            return "ALTER TABLE `{$table}` ADD COLUMN {$columnDef};";
+        }
     }
 
     /**
@@ -518,10 +566,17 @@ PHP;
     protected function generateAddIndexSql(string $table, array $indexSpec): string
     {
         $indexName = $indexSpec['name'];
-        $fields = is_array($indexSpec['fields']) ? implode('`, `', $indexSpec['fields']) : $indexSpec['fields'];
         $unique = !empty($indexSpec['unique']) ? 'UNIQUE ' : '';
 
-        return "ALTER TABLE `{$table}` ADD {$unique}INDEX `{$indexName}` (`{$fields}`);";
+        if ($this->isSQLite()) {
+            // SQLite: use CREATE INDEX syntax
+            $fields = is_array($indexSpec['fields']) ? implode(', ', $indexSpec['fields']) : $indexSpec['fields'];
+            return "CREATE {$unique}INDEX {$indexName} ON {$table} ({$fields});";
+        } else {
+            // MySQL: use ALTER TABLE ADD INDEX
+            $fields = is_array($indexSpec['fields']) ? implode('`, `', $indexSpec['fields']) : $indexSpec['fields'];
+            return "ALTER TABLE `{$table}` ADD {$unique}INDEX `{$indexName}` (`{$fields}`);";
+        }
     }
 
     /**
@@ -714,5 +769,37 @@ PHP;
         }
 
         return $results;
+    }
+
+    /**
+     * Get the normalized database driver name
+     *
+     * @return string Normalized driver name ('mysql', 'sqlite', etc.)
+     */
+    private function getDriver(): string
+    {
+        return strtolower($this->db->DBDriver);
+    }
+
+    /**
+     * Check if current database is SQLite
+     *
+     * @return bool
+     */
+    private function isSQLite(): bool
+    {
+        $driver = $this->getDriver();
+        return $driver === 'sqlite3' || $driver === 'sqlite';
+    }
+
+    /**
+     * Check if current database is MySQL
+     *
+     * @return bool
+     */
+    private function isMySQL(): bool
+    {
+        $driver = $this->getDriver();
+        return $driver === 'mysqli' || $driver === 'mysql';
     }
 }
