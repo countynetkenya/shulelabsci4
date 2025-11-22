@@ -12,10 +12,6 @@ parameters:
         - '#Call to an undefined method CodeIgniter\\Database\\BaseConnection::table\(\)#'
         - '#Access to an undefined property CodeIgniter\\HTTP\\IncomingRequest::\$#'
     
-    # Use CodeIgniter stubs
-    bootstrapFiles:
-        - vendor/codeigniter4/framework/system/Test/bootstrap.php
-    
     # Check PHPDocs
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false

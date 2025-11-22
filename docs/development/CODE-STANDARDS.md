@@ -1,6 +1,6 @@
 # 📏 Code Standards
 
-**Last Updated**: 2024-11-22  
+**Last Updated**: 2025-11-22  
 **Status**: Active
 
 ## Overview

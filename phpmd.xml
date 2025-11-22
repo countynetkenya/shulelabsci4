@@ -47,7 +47,9 @@
     </rule>
     <rule ref="rulesets/naming.xml/ShortVariable">
         <properties>
-            <property name="minimum" value="2"/>
+            <!-- Allow single-character loop counters like $i, $j -->
+            <property name="minimum" value="1"/>
+            <property name="exceptions" value="i,j,k,x,y,z,id"/>
         </properties>
     </rule>
 
