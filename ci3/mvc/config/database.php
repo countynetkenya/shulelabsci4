@@ -102,7 +102,7 @@ $envOverrides = [
     'hostname' => $resolveEnv(['DB_HOST', 'DB_HOSTNAME', 'DATABASE_HOST']),
     'username' => $resolveEnv(['DB_USERNAME', 'DB_USER', 'DATABASE_USERNAME']),
     'password' => $resolveEnv(['DB_PASSWORD', 'DATABASE_PASSWORD']),
-    'database' => $resolveEnv(['DB_NAME', 'DB_DATABASE', 'DATABASE_NAME'], 'shulelabs_staging'),
+    'database' => $resolveEnv(['DB_NAME', 'DB_DATABASE', 'DATABASE_NAME']),
     'dbdriver' => $resolveEnv(['DB_DRIVER', 'DATABASE_DRIVER'], $db['default']['dbdriver']),
     'port'     => $resolveEnv(['DB_PORT', 'DATABASE_PORT'], null),
 ];

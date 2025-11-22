@@ -1,6 +1,7 @@
 # Composer
 # DO NOT ignore composer.lock — required for reproducible builds
 # composer.lock
+/vendor/
 
 # Environment
 .env

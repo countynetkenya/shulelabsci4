@@ -26,10 +26,15 @@ if (array_key_exists('self-test', $options)) {
     exit(0);
 }
 
-$dbName = getenv('DB_DATABASE') ?: 'shulelabs';
+$dbName = getenv('DB_DATABASE') ?: getenv('DB_NAME') ?: '';
 $dbHost = getenv('DB_HOST') ?: '127.0.0.1';
-$dbUser = getenv('DB_USERNAME') ?: 'root';
+$dbUser = getenv('DB_USERNAME') ?: getenv('DB_USER') ?: 'root';
 $dbPassword = getenv('DB_PASSWORD') ?: '';
+
+if (empty($dbName)) {
+    fwrite(STDERR, "Error: DB_DATABASE environment variable is not set.\n");
+    exit(1);
+}
 
 $dumpPath = sprintf('%s/database-%s.sql', $backupRoot, $timestamp);
 $archivePath = $dumpPath . '.gz';
