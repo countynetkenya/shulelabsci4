@@ -155,6 +155,12 @@ class Services extends BaseService
         );
     }
 
+    /**
+     * Returns the IntegrationService for managing third-party integrations.
+     *
+     * @param bool $getShared Whether to return a shared instance
+     * @return \Modules\Integrations\Services\IntegrationService
+     */
     public static function integrations(bool $getShared = true)
     {
         if ($getShared) {

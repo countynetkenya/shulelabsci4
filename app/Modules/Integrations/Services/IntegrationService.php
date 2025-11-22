@@ -79,7 +79,15 @@ class IntegrationService
 
         // If already completed, return cached result
         if ($dispatch['status'] === 'completed') {
-            return json_decode((string) $dispatch['response_json'], true, 512, JSON_THROW_ON_ERROR);
+            try {
+                return json_decode((string) $dispatch['response_json'], true, 512, JSON_THROW_ON_ERROR);
+            } catch (\JsonException $e) {
+                throw new RuntimeException(
+                    sprintf('Failed to decode cached response for dispatch %d: %s', $dispatch['id'], $e->getMessage()),
+                    0,
+                    $e
+                );
+            }
         }
 
         try {
