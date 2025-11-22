@@ -217,13 +217,13 @@ class Database extends Config
         if (!$allowEmptyPassword) {
             $requiredKeys[] = 'password';
         }
-
-        $missing = [];
-        foreach ($requiredKeys as $key) {
-            $value = $this->default[$key] ?? null;
-            if ($value === null || trim((string) $value) === '') {
-                $missing[] = $key;
-            }
+        if (empty($this->default['database'])) {
+            $missing[] = 'database (DB_DATABASE)';
+        }
+        
+        // Password is optional in development but required in production
+        if (ENVIRONMENT === 'production' && empty($this->default['password'])) {
+            $missing[] = 'password (DB_PASSWORD)';
         }
 
         if (!empty($missing)) {
