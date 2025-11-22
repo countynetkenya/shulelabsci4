@@ -262,15 +262,22 @@ else
 fi
 
 if [ -d "$BACKUP_DIR/config/Config" ]; then
-    cp -r "$BACKUP_DIR/config/Config/"* "$ROOT_DIR/app/Config/" 2>&1
-    echo "  ✓ Config files restored"
+    if cp -r "$BACKUP_DIR/config/Config/"* "$ROOT_DIR/app/Config/" 2>&1; then
+        echo "  ✓ Config files restored"
+    else
+        echo "  ⚠ Warning: Some config files may not have been restored"
+    fi
 else
     echo "  ⚠ Config backup not found"
 fi
 
 # Clear caches
 echo "Clearing caches..."
-php spark cache:clear 2>&1
+if php spark cache:clear 2>&1; then
+    echo "  ✓ Caches cleared"
+else
+    echo "  ⚠ Warning: Cache clearing may have failed"
+fi
 
 echo "Rollback complete!"
 echo "Duration: $(date)"
