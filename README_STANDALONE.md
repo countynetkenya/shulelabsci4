@@ -95,6 +95,29 @@ SESSION_SAVE_PATH=school_sessions
 
 CI4 now uses its own normalized user schema (`ci4_users`, `ci4_roles`, `ci4_user_roles`) that is completely independent from CI3.
 
+**For Fresh Installation (Recommended - Web-Based Installer):**
+
+1. Run migrations to create all required tables:
+
+```bash
+php bin/migrate/latest
+```
+
+2. Visit the web-based installer at `/install` (e.g., `http://localhost:8080/install`)
+
+3. Follow the three-step installation wizard:
+   - **Step 1**: Environment check - verifies database connection and migrations
+   - **Step 2**: Organisation & School setup - create your first organisation and school
+   - **Step 3**: Admin account - create your administrator user with Super Admin role
+
+4. After completing the installer, set the installed flag in your `.env` file:
+
+```env
+app.installed = true
+```
+
+5. Sign in with your new admin credentials
+
 **For Migration from CI3:**
 
 1. Ensure your existing CI3 database has the legacy user tables (student, teacher, parents, user, systemadmin)
@@ -118,35 +141,7 @@ This will:
 php spark db:seed Ci4DefaultSuperadminSeeder
 ```
 
-**For Fresh Installation (No CI3 data):**
-
-1. Run migrations to create all tables:
-
-```bash
-php spark migrate --all
-```
-
-2. Seed a default superadmin:
-
-```bash
-php spark db:seed Ci4DefaultSuperadminSeeder
-```
-
-Default credentials will be:
-- Username: `admin_ci4`
-- Password: `ChangeMe123!`
-- **IMPORTANT:** Change this password immediately after first login!
-
 **Note:** The `ENCRYPTION_KEY` in `.env` must be set before running migrations, as it's used for password hashing.
-php spark migrate --all
-```
-
-If setting up fresh (not recommended - use CI3 schema):
-
-```bash
-# Import the full ShuleLabs schema
-mysql -u your_user -p shulelabs < database/schema.sql
-```
 
 ### 5. Set Permissions
 

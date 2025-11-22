@@ -35,8 +35,18 @@ $routes->get('dashboard', 'Dashboard::index', ['filter' => 'auth']);
 // Admin Panel (Admin only)
 $routes->get('admin', 'Admin::index', ['filter' => ['auth', 'admin']]);
 
-// Default route - redirect based on authentication
+// Default route - redirect based on authentication and installation status
 $routes->get('/', static function () {
+    // Check if installed
+    $envInstalled = env('app.installed', false);
+    $isInstalled = filter_var($envInstalled, FILTER_VALIDATE_BOOLEAN);
+    
+    if (!$isInstalled) {
+        // Not installed - redirect to installer
+        return redirect()->to('/install');
+    }
+    
+    // Installed - normal flow
     if (session()->get('loggedin')) {
         return redirect()->to('/dashboard');
     }
