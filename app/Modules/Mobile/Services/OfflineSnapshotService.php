@@ -208,7 +208,7 @@ class OfflineSnapshotService
     private function buildSnapshotId(string $tenantId, DateTimeImmutable $issuedAt, string $deviceId): string
     {
         $timestamp = $issuedAt->format('YmdHis');
-        $hash      = substr(hash('sha1', $tenantId . $timestamp . $deviceId . microtime()), 0, 10);
+        $hash      = substr(hash('sha256', $tenantId . $timestamp . $deviceId . microtime()), 0, 10);
 
         return sprintf('%s-%s-%s', strtoupper($tenantId), $timestamp, strtoupper($hash));
     }

@@ -28,3 +28,11 @@
 # OS
 .DS_Store
 Thumbs.db
+
+# Code Quality Tools
+.php-cs-fixer.cache
+.phpunit.result.cache
+.phpstan/
+phpstan.neon.dist
+.phpcs-cache
+.psalm/

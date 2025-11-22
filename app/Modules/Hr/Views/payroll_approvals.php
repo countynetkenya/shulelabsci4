@@ -244,14 +244,14 @@
 
             function buildEndpoint(action, id) {
                 const path = action === 'approve'
-                    ? `/v2/hr/payroll/approvals/${id}/approve`
-                    : `/v2/hr/payroll/approvals/${id}/reject`;
+                    ? `/hr/payroll/approvals/${id}/approve`
+                    : `/hr/payroll/approvals/${id}/reject`;
 
                 return `${baseUrl}${path}`;
             }
 
             function buildRefreshUrl() {
-                const url = new URL(`${baseUrl}/v2/hr/payroll/approvals/pending`);
+                const url = new URL(`${baseUrl}/hr/payroll/approvals/pending`);
                 if (tenantId) {
                     url.searchParams.set('tenant_id', tenantId);
                 }

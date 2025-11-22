@@ -1,12 +1,17 @@
 <?php
 
 /**
+ * ⚠️ EXAMPLE FILE - NOT FOR PRODUCTION USE
+ * 
  * Example: Using the Integrations Module
  *
  * This file demonstrates how to use the IntegrationService to:
  * 1. Register adapters
  * 2. Execute integration operations
  * 3. Handle errors and retries
+ * 
+ * This file contains echo statements for demonstration purposes only.
+ * Do not include this file in production code.
  */
 
 // Bootstrap CodeIgniter (adjust path as needed)

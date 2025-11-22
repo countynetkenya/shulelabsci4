@@ -9,8 +9,8 @@ use CodeIgniter\Config\BaseConfig;
  */
 $routes = service('routes');
 
-// API v2 Integration endpoints
-$routes->group('api/v2/integrations', ['namespace' => 'Modules\Integrations\Controllers'], static function ($routes) {
+// API Integration endpoints
+$routes->group('api/integrations', ['namespace' => 'Modules\Integrations\Controllers'], static function ($routes) {
     // Health check endpoint
     $routes->get('health', 'IntegrationController::health');
     $routes->get('health/(:segment)', 'IntegrationController::checkAdapter/$1');

@@ -15,9 +15,6 @@ class App extends BaseConfig
      * WITH a trailing slash:
      *
      * E.g., http://example.com/
-     *
-     * For standalone deployment, this should NOT include /v2
-     * The /v2 prefix was only needed when running alongside CI3
      */
     public string $baseURL = 'http://localhost:8080/';
 
