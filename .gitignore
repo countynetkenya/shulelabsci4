@@ -5,6 +5,8 @@
 
 # Environment
 .env
+.env.bak*
+.env.backup*
 
 # Writable directories
 /writable/cache/*
