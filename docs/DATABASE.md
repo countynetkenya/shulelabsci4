@@ -388,12 +388,225 @@ class CreateStudents extends Migration
 }
 ```
 
+## Tenant Isolation Rules
+
+### Critical Security Requirements
+
+**ALL tenant-scoped queries MUST follow these rules to prevent data leaks**:
+
+1. **Use TenantAwareModel**: All models handling tenant data must extend `App\Models\TenantAwareModel`
+2. **Always Set Tenant ID**: Call `setTenantId($tenantId)` before any query
+3. **Verify Tenant Context**: Controllers must resolve and verify tenant context from request
+4. **Never Trust Client Input**: Tenant ID must come from authenticated user context, not client request
+5. **Test Tenant Isolation**: Every tenant-scoped feature must have tests verifying isolation
+
+### TenantAwareModel Usage
+
+**Basic Usage**:
+
+```php
+<?php
+
+namespace Modules\Learning\Models;
+
+use App\Models\TenantAwareModel;
+
+class StudentModel extends TenantAwareModel
+{
+    protected $table = 'students';
+    protected $primaryKey = 'id';
+    protected $returnType = 'object';
+    
+    // Specify tenant scoping column (default is 'school_id')
+    protected $tenantColumn = 'school_id';
+    
+    // Enable tenant scoping enforcement (default is true)
+    protected $enforceTenantScoping = true;
+    
+    protected $allowedFields = [
+        'school_id',
+        'admission_number',
+        'first_name',
+        'last_name',
+        // ... other fields
+    ];
+    
+    protected $useTimestamps = true;
+    protected $useSoftDeletes = true;
+}
+```
+
+**In Controllers**:
+
+```php
+<?php
+
+namespace Modules\Learning\Controllers\Api;
+
+use CodeIgniter\RESTful\ResourceController;
+use Modules\Learning\Models\StudentModel;
+
+class StudentsController extends ResourceController
+{
+    protected $modelName = StudentModel::class;
+    
+    public function index()
+    {
+        // Get tenant ID from authenticated request
+        $tenantId = $this->request->getAttribute('tenant_id');
+        
+        if (!$tenantId) {
+            return $this->failForbidden('Tenant context not found');
+        }
+        
+        // Set tenant ID - all subsequent queries will be scoped
+        $students = $this->model
+            ->setTenantId($tenantId)
+            ->findAll();
+        
+        return $this->respond(['data' => $students]);
+    }
+    
+    public function show($id = null)
+    {
+        $tenantId = $this->request->getAttribute('tenant_id');
+        
+        // Verify student belongs to tenant
+        if (!$this->model->setTenantId($tenantId)->belongsToTenant($id)) {
+            return $this->failNotFound('Student not found');
+        }
+        
+        $student = $this->model->find($id);
+        
+        return $this->respond(['data' => $student]);
+    }
+    
+    public function create()
+    {
+        $tenantId = $this->request->getAttribute('tenant_id');
+        $data = $this->request->getJSON(true);
+        
+        // Tenant ID is automatically injected by TenantAwareModel
+        $studentId = $this->model
+            ->setTenantId($tenantId)
+            ->insert($data);
+        
+        return $this->respondCreated(['data' => $this->model->find($studentId)]);
+    }
+}
+```
+
+### Testing Tenant Isolation
+
+**Required Tests for Every Tenant-Scoped Feature**:
+
+```php
+<?php
+
+namespace Tests\Modules\Learning;
+
+use CodeIgniter\Test\CIUnitTestCase;
+use CodeIgniter\Test\DatabaseTestTrait;
+
+class StudentModelTest extends CIUnitTestCase
+{
+    use DatabaseTestTrait;
+    
+    /**
+     * Test that queries without tenant ID throw exception
+     */
+    public function testThrowsExceptionWithoutTenantId()
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Tenant ID must be set');
+        
+        $model = new \Modules\Learning\Models\StudentModel();
+        $model->findAll(); // Should throw
+    }
+    
+    /**
+     * Test that findAll only returns current tenant's records
+     */
+    public function testFindAllOnlyReturnsTenantRecords()
+    {
+        // Create students for different tenants
+        $this->db->table('students')->insert([
+            'school_id' => 'school-1',
+            'first_name' => 'Alice',
+            'last_name' => 'Smith',
+        ]);
+        $this->db->table('students')->insert([
+            'school_id' => 'school-2',
+            'first_name' => 'Bob',
+            'last_name' => 'Jones',
+        ]);
+        
+        $model = new \Modules\Learning\Models\StudentModel();
+        
+        // Query as school-1
+        $school1Students = $model->setTenantId('school-1')->findAll();
+        
+        $this->assertCount(1, $school1Students);
+        $this->assertEquals('Alice', $school1Students[0]->first_name);
+    }
+    
+    /**
+     * Test that find() cannot access other tenant's records
+     */
+    public function testFindCannotAccessOtherTenantRecord()
+    {
+        // Create student for school-1
+        $this->db->table('students')->insert([
+            'id' => 100,
+            'school_id' => 'school-1',
+            'first_name' => 'Alice',
+        ]);
+        
+        $model = new \Modules\Learning\Models\StudentModel();
+        
+        // Try to access as school-2
+        $student = $model->setTenantId('school-2')->find(100);
+        
+        $this->assertNull($student); // Should not find it
+    }
+}
+```
+
+### Common Pitfalls
+
+**❌ DON'T: Query without setting tenant ID**:
+```php
+// BAD: No tenant scoping
+$students = $this->studentModel->findAll();
+```
+
+**✅ DO: Always set tenant ID first**:
+```php
+// GOOD: Tenant scoped
+$students = $this->studentModel
+    ->setTenantId($tenantId)
+    ->findAll();
+```
+
+**❌ DON'T: Trust tenant ID from client request**:
+```php
+// BAD: Client could send any tenant_id
+$tenantId = $this->request->getVar('tenant_id');
+```
+
+**✅ DO: Get tenant ID from authenticated user context**:
+```php
+// GOOD: Tenant ID from authenticated session
+$tenantId = $this->request->getAttribute('tenant_id');
+```
+
 ## References
 
 - [System Overview](01-SYSTEM-OVERVIEW.md)
 - [Architecture](ARCHITECTURE.md)
 - [Multi-Tenant Feature Documentation](features/27-MULTI-TENANT.md)
 - [Database Migrations Guide](development/DATABASE-MIGRATIONS.md)
+- [TenantAwareModel](../app/Models/TenantAwareModel.php)
 
 ---
 

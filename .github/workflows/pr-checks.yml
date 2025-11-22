@@ -2,16 +2,21 @@ name: PR Checks
 
 on:
   pull_request:
-    branches: [ main, master, develop ]
+    types: [opened, synchronize, reopened]
   push:
-    branches: [ main, master, develop ]
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
 
 jobs:
-  test:
+  validate-code:
+    name: Code Validation
     runs-on: ubuntu-latest
-    
-    permissions:
-      contents: read
     
     steps:
       - name: Checkout code
@@ -21,24 +26,306 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
-          extensions: bcmath, gd, intl, mysqli, pdo, zip
-          coverage: none
+          extensions: intl, mbstring, mysqli, pdo, zip, gd, bcmath
+          coverage: xdebug
+      
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
       
       - name: Cache Composer dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         with:
-          path: ~/.composer/cache
+          path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
+          restore-keys: |
+            ${{ runner.os }}-composer-
       
-      - name: Install PHP dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress --optimize-autoloader
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
       
-      - name: Ensure spark is executable
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+      
+      - name: Check code style
         run: |
-          if [ -f ./spark ]; then
-            chmod +x ./spark
+          echo "Checking code style with PHP-CS-Fixer..."
+          vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php --dry-run --diff --verbose
+      
+      - name: Run PHPStan
+        run: |
+          echo "Running static analysis with PHPStan..."
+          vendor/bin/phpstan analyse --memory-limit=1G --error-format=github
+      
+      - name: Run PHPMD
+        run: |
+          echo "Running mess detection with PHPMD..."
+          vendor/bin/phpmd app/Modules text phpmd.xml || true
+  
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        php-version: ['8.3']
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: intl, mbstring, mysqli, pdo, zip, gd, bcmath
+          coverage: xdebug
+      
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-php${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php${{ matrix.php-version }}-composer-
+      
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+      
+      - name: Setup test environment
+        run: |
+          cp .env.example .env
+          php spark key:generate
+      
+      - name: Run tests
+        run: |
+          echo "Running PHPUnit tests..."
+          vendor/bin/phpunit -c phpunit.ci4.xml --coverage-text --coverage-clover=coverage.xml
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+  
+  guardrails:
+    name: Guardrails Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Check for TenantAwareModel usage
+        run: |
+          echo "Checking that tenant-scoped models extend TenantAwareModel..."
+          
+          # Find models that have tenant columns but don't extend TenantAwareModel
+          VIOLATIONS=0
+          
+          for file in $(find app/Modules -name "*Model.php" -type f); do
+            # Check if model has tenant columns (school_id, organisation_id, warehouse_id)
+            if grep -q "school_id\|organisation_id\|warehouse_id" "$file"; then
+              # Check if it extends TenantAwareModel
+              if ! grep -q "extends TenantAwareModel" "$file"; then
+                echo "⚠️  WARNING: $file has tenant columns but doesn't extend TenantAwareModel"
+                VIOLATIONS=$((VIOLATIONS + 1))
+              fi
+            fi
+          done
+          
+          if [ $VIOLATIONS -gt 0 ]; then
+            echo ""
+            echo "❌ Found $VIOLATIONS model(s) that should extend TenantAwareModel"
+            echo "Please update these models to extend App\Models\TenantAwareModel"
+            exit 1
+          else
+            echo "✅ All tenant-scoped models correctly extend TenantAwareModel"
           fi
       
-      - name: Test spark execution
-        run: ./spark --version
+      - name: Check for audit logging
+        run: |
+          echo "Checking for audit logging in sensitive operations..."
+          
+          # Check that create/update/delete methods include audit logging
+          MISSING_AUDIT=0
+          
+          for file in $(find app/Modules -name "*Controller.php" -type f); do
+            # Look for create/update/delete methods without audit logging
+            if grep -q "public function create\|public function update\|public function delete" "$file"; then
+              if ! grep -q "auditService->log\|AuditService" "$file"; then
+                echo "⚠️  WARNING: $file has create/update/delete but no audit logging"
+                MISSING_AUDIT=$((MISSING_AUDIT + 1))
+              fi
+            fi
+          done
+          
+          if [ $MISSING_AUDIT -gt 0 ]; then
+            echo ""
+            echo "⚠️  Found $MISSING_AUDIT controller(s) potentially missing audit logging"
+            echo "This is a warning, not a failure. Please review and add audit logging where appropriate."
+          else
+            echo "✅ Audit logging appears to be present in controllers"
+          fi
+      
+      - name: Check for observability
+        run: |
+          echo "Checking for observability implementation..."
+          
+          # Check for structured logging
+          if [ -f "app/Services/StructuredLogger.php" ]; then
+            echo "✅ StructuredLogger service exists"
+          else
+            echo "⚠️  WARNING: StructuredLogger service not found"
+          fi
+          
+          # Check for health check endpoint
+          if grep -q "health" app/Config/Routes.php 2>/dev/null; then
+            echo "✅ Health check routes configured"
+          else
+            echo "⚠️  WARNING: Health check routes not configured"
+          fi
+      
+      - name: Check for security patterns
+        run: |
+          echo "Checking for security best practices..."
+          
+          # Check for CSRF protection in forms
+          FORMS_WITHOUT_CSRF=0
+          
+          for file in $(find app/Modules -name "*.php" -path "*/Views/*" -type f); do
+            if grep -q "<form" "$file"; then
+              if ! grep -q "csrf_field()" "$file"; then
+                echo "⚠️  WARNING: $file has <form> but no csrf_field()"
+                FORMS_WITHOUT_CSRF=$((FORMS_WITHOUT_CSRF + 1))
+              fi
+            fi
+          done
+          
+          if [ $FORMS_WITHOUT_CSRF -gt 0 ]; then
+            echo "⚠️  Found $FORMS_WITHOUT_CSRF form(s) potentially missing CSRF protection"
+          else
+            echo "✅ Forms appear to have CSRF protection"
+          fi
+          
+          # Check for XSS prevention (esc() usage)
+          VIEWS_WITHOUT_ESC=0
+          
+          for file in $(find app/Modules -name "*.php" -path "*/Views/*" -type f); do
+            if grep -q '<?=' "$file"; then
+              if ! grep -q "esc(" "$file"; then
+                # Some views might not need esc() if they only have static content
+                # This is just a warning
+                VIEWS_WITHOUT_ESC=$((VIEWS_WITHOUT_ESC + 1))
+              fi
+            fi
+          done
+          
+          if [ $VIEWS_WITHOUT_ESC -gt 0 ]; then
+            echo "⚠️  Found $VIEWS_WITHOUT_ESC view(s) potentially missing esc() calls"
+            echo "Please review these views and ensure user data is properly escaped"
+          fi
+      
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Guardrails Check Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The following checks were performed:" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ TenantAwareModel usage" >> $GITHUB_STEP_SUMMARY
+          echo "- ⚠️  Audit logging (warnings only)" >> $GITHUB_STEP_SUMMARY
+          echo "- ⚠️  Observability (warnings only)" >> $GITHUB_STEP_SUMMARY
+          echo "- ⚠️  Security patterns (warnings only)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "See job output for details." >> $GITHUB_STEP_SUMMARY
+  
+  documentation:
+    name: Documentation Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Check required documentation
+        run: |
+          echo "Checking for required documentation files..."
+          
+          REQUIRED_DOCS=(
+            "docs/ARCHITECTURE.md"
+            "docs/DATABASE.md"
+            "docs/SECURITY.md"
+            "docs/OBSERVABILITY.md"
+            "docs/agents/phase1-gap-agent.md"
+            "docs/agents/phase2a-core-apis-agent.md"
+            "docs/agents/phase2b-portals-agent.md"
+            "docs/agents/monitoring-observability-agent.md"
+            "GUARDRAILS_REVIEW_CHECKLIST.md"
+          )
+          
+          MISSING=0
+          
+          for doc in "${REQUIRED_DOCS[@]}"; do
+            if [ ! -f "$doc" ]; then
+              echo "❌ Missing: $doc"
+              MISSING=$((MISSING + 1))
+            else
+              echo "✅ Found: $doc"
+            fi
+          done
+          
+          if [ $MISSING -gt 0 ]; then
+            echo ""
+            echo "❌ $MISSING required documentation file(s) missing"
+            exit 1
+          else
+            echo ""
+            echo "✅ All required documentation files present"
+          fi
+      
+      - name: Check for broken links in documentation
+        run: |
+          echo "Checking for broken internal links in documentation..."
+          
+          # Simple check for broken relative links in markdown files
+          find docs -name "*.md" -type f -exec grep -H "\[.*\](.*\.md)" {} \; | while read -r line; do
+            file=$(echo "$line" | cut -d: -f1)
+            link=$(echo "$line" | grep -o "\](.*\.md)" | sed 's/](\(.*\))/\1/')
+            
+            # Check if link is relative and file exists
+            if [[ ! "$link" =~ ^http ]]; then
+              # Resolve relative path
+              dir=$(dirname "$file")
+              target="$dir/$link"
+              
+              if [ ! -f "$target" ]; then
+                echo "⚠️  Potential broken link in $file: $link"
+              fi
+            fi
+          done || true
+          
+          echo "✅ Documentation link check complete"
+
+  summary:
+    name: Check Summary
+    runs-on: ubuntu-latest
+    needs: [validate-code, test, guardrails, documentation]
+    if: always()
+    
+    steps:
+      - name: Check status
+        run: |
+          echo "## PR Checks Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Job | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Code Validation | ${{ needs.validate-code.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Tests | ${{ needs.test.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Guardrails | ${{ needs.guardrails.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Documentation | ${{ needs.documentation.result }} |" >> $GITHUB_STEP_SUMMARY
