@@ -183,6 +183,45 @@ output {
 */5 * * * * /usr/bin/curl -s https://shulelabs.example.com/health | jq -e '.status == "healthy"' || /usr/local/bin/alert-admin.sh
 ```
 
+**Alert Script Example** (`/usr/local/bin/alert-admin.sh`):
+```bash
+#!/bin/bash
+# Simple alert script - customize for your environment
+
+MESSAGE="$1"
+TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+LOG_FILE="/var/log/shulelabs-alerts.log"
+
+# Log the alert
+echo "[$TIMESTAMP] $MESSAGE" >> "$LOG_FILE"
+
+# Send email alert (requires mailutils or sendmail)
+if command -v mail &> /dev/null; then
+    echo "$MESSAGE at $TIMESTAMP" | mail -s "ShuleLabs Alert" admin@example.com
+fi
+
+# Send Slack notification (optional, requires webhook URL)
+if [ -n "$SLACK_WEBHOOK_URL" ]; then
+    curl -X POST -H 'Content-type: application/json' \
+        --data "{\"text\":\"ShuleLabs Alert: $MESSAGE\"}" \
+        "$SLACK_WEBHOOK_URL"
+fi
+
+# Send SMS via Africa's Talking (optional)
+# if [ -n "$AFRICASTALKING_API_KEY" ]; then
+#     curl -X POST "https://api.africastalking.com/version1/messaging" \
+#         -H "apiKey: $AFRICASTALKING_API_KEY" \
+#         -d "username=sandbox" \
+#         -d "to=+254712345678" \
+#         -d "message=ShuleLabs Alert: $MESSAGE"
+# fi
+```
+
+Make the script executable:
+```bash
+chmod +x /usr/local/bin/alert-admin.sh
+```
+
 **External Monitoring**:
 - UptimeRobot: Monitor `/health` endpoint every 5 minutes
 - Pingdom: Monitor with alerting to email/SMS
@@ -434,7 +473,30 @@ Create a simple dashboard showing key metrics:
    find writable/logs -name "*.gz" -mtime +30 -delete
    ```
 
-4. Increase disk space or adjust retention policies
+4. Increase disk space or adjust retention policies:
+   - Edit `app/Config/Logger.php` to reduce retention:
+     ```php
+     public array $handlers = [
+         'file' => [
+             'class' => FileHandler::class,
+             'permissions' => 0644,
+             'path' => WRITEPATH . 'logs/',
+             'fileExtension' => 'log',
+             'dateFormat' => 'Y-m-d',
+             'threshold' => 'info',
+             'maxFiles' => 7,  // Keep only 7 days of logs (default: 30)
+         ],
+     ];
+     ```
+   - Set up automated cleanup cron:
+     ```bash
+     # /etc/cron.daily/shulelabs-log-cleanup
+     #!/bin/bash
+     # Compress logs older than 7 days
+     find /path/to/shulelabs/writable/logs -name "log-*.log" -mtime +7 -exec gzip {} \;
+     # Delete compressed logs older than 30 days
+     find /path/to/shulelabs/writable/logs -name "*.gz" -mtime +30 -delete
+     ```
 
 ## Best Practices
 

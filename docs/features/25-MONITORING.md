@@ -172,6 +172,100 @@ http_request_duration_seconds_count{method="POST",endpoint="/api/v1/students"} 1
 
 ### Logging in Controllers
 
+For consistency and maintainability, consider creating a structured logging helper:
+
+**Helper Function** (optional, recommended for production):
+```php
+// app/Helpers/logging_helper.php
+
+if (!function_exists('log_structured')) {
+    /**
+     * Log a structured event with standard fields
+     */
+    function log_structured(
+        string $level,
+        string $service,
+        string $action,
+        string $result,
+        ?string $tenantId,
+        ?int $userId,
+        ?string $traceId,
+        float $durationMs,
+        string $message,
+        array $metadata = []
+    ): void {
+        $logData = [
+            'timestamp' => date('c'),
+            'level' => strtoupper($level),
+            'service' => $service,
+            'tenant_id' => $tenantId,
+            'user_id' => $userId,
+            'trace_id' => $traceId,
+            'action' => $action,
+            'result' => $result,
+            'duration_ms' => round($durationMs, 2),
+            'message' => $message,
+            'metadata' => $metadata,
+        ];
+        
+        log_message($level, json_encode($logData));
+    }
+}
+```
+
+**Usage in Controllers** (with helper):
+```php
+class StudentController extends BaseController
+{
+    public function create()
+    {
+        $traceId = $this->request->getHeaderLine('X-Trace-ID') ?: uniqid('trace_', true);
+        $tenantContext = $this->tenantResolver->fromRequest($this->request);
+        $schoolId = $tenantContext['school']['id'] ?? null;
+        $userId = auth()->id();
+        
+        $startTime = microtime(true);
+        
+        try {
+            $data = $this->request->getJSON(true);
+            $student = $this->studentService->createStudent($schoolId, $data);
+            
+            log_structured(
+                'info',
+                'learning.students',
+                'student.created',
+                'success',
+                $schoolId,
+                $userId,
+                $traceId,
+                (microtime(true) - $startTime) * 1000,
+                'Student created successfully',
+                ['student_id' => $student['id']]
+            );
+            
+            return $this->respondCreated($student);
+            
+        } catch (\Exception $e) {
+            log_structured(
+                'error',
+                'learning.students',
+                'student.created',
+                'failure',
+                $schoolId,
+                $userId,
+                $traceId,
+                (microtime(true) - $startTime) * 1000,
+                'Failed to create student',
+                ['error' => $e->getMessage()]
+            );
+            
+            return $this->failServerError('Failed to create student');
+        }
+    }
+}
+```
+
+**Inline Logging** (without helper, for reference):
 ```php
 class StudentController extends BaseController
 {
