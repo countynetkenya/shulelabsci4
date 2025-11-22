@@ -1,1 +1,0 @@
-included blade template
