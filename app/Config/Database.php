@@ -193,31 +193,29 @@ class Database extends Config
     {
         parent::__construct();
 
-        // Use test database for testing environment
+        // For testing environment, use the in-memory SQLite database
         if (ENVIRONMENT === 'testing') {
             $this->defaultGroup = 'tests';
 
             return;
         }
 
-        // Load database configuration from .env using CI4's env() helper
-        // This is the ONLY source of truth - no fallbacks to hardcoded values
-        $this->default['DSN']      = env('database.default.DSN', env('DB_DSN', ''));
-        $this->default['hostname'] = env('database.default.hostname', env('DB_HOST', ''));
-        $this->default['username'] = env('database.default.username', env('DB_USERNAME', ''));
-        $this->default['password'] = env('database.default.password', env('DB_PASSWORD', ''));
-        $this->default['database'] = env('database.default.database', env('DB_DATABASE', ''));
-        $this->default['DBDriver'] = env('database.default.DBDriver', env('DB_DRIVER', 'MySQLi'));
-        $this->default['port']     = (int) env('database.default.port', env('DB_PORT', 3306));
+        // Read database configuration from .env using env() helper
+        // This is the single source of truth for database credentials
+        $this->default['DSN']      = env('DB_DSN', '');
+        $this->default['hostname'] = env('DB_HOST', 'localhost');
+        $this->default['username'] = env('DB_USERNAME', '');
+        $this->default['password'] = env('DB_PASSWORD', '');
+        $this->default['database'] = env('DB_DATABASE', '');
+        $this->default['DBDriver'] = env('DB_DRIVER', 'MySQLi');
+        $this->default['port']     = (int) env('DB_PORT', 3306);
 
-        // Validate required configuration
-        $missing = [];
+        // Validate required database credentials
+        $allowEmptyPassword = filter_var(env('DB_ALLOW_EMPTY_PASSWORD', false), FILTER_VALIDATE_BOOLEAN);
         
-        if (empty($this->default['hostname'])) {
-            $missing[] = 'hostname (DB_HOST)';
-        }
-        if (empty($this->default['username'])) {
-            $missing[] = 'username (DB_USERNAME)';
+        $requiredKeys = ['hostname', 'username', 'database'];
+        if (!$allowEmptyPassword) {
+            $requiredKeys[] = 'password';
         }
         if (empty($this->default['database'])) {
             $missing[] = 'database (DB_DATABASE)';
@@ -230,13 +228,16 @@ class Database extends Config
 
         if (!empty($missing)) {
             throw new \RuntimeException(
-                'Database configuration incomplete. Missing required values in .env: '
-                . implode(', ', $missing)
-                . '. Please configure your database credentials in the .env file.'
+                sprintf(
+                    'Database configuration is incomplete (missing: %s). ' .
+                    'Please set DB_HOST, DB_USERNAME, DB_PASSWORD, and DB_DATABASE in your .env file. ' .
+                    'Set DB_ALLOW_EMPTY_PASSWORD=true to bypass the password requirement for local development.',
+                    implode(', ', $missing)
+                )
             );
         }
 
-        // Enable debug mode in non-production environments
+        // Disable DBDebug in production
         $this->default['DBDebug'] = ENVIRONMENT !== 'production';
     }
 }
