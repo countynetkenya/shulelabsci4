@@ -9,6 +9,7 @@ use CodeIgniter\RESTful\ResourceController;
 use Modules\Reports\Models\ReportModel;
 use Modules\Reports\Services\ReportExecutorService;
 use Modules\Reports\Domain\Report;
+use Modules\Reports\Domain\ReportDefinition;
 
 /**
  * Controller for Report CRUD operations
@@ -218,7 +219,7 @@ class ReportController extends ResourceController
             }
 
             $config = $report['config_json'] ?? [];
-            $definition = \Modules\Reports\Domain\ReportDefinition::fromArray($config);
+            $definition = ReportDefinition::fromArray($config);
             
             $useCache = (bool) ($this->request->getGet('use_cache') ?? true);
             $result = $this->executor->execute($definition, (int) $id, $useCache);

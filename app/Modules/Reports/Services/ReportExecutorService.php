@@ -20,7 +20,7 @@ use Modules\Reports\Models\ReportResultModel;
 class ReportExecutorService
 {
     /**
-     * @phpstan-var BaseConnection<object, object>
+     * @var BaseConnection
      */
     private BaseConnection $db;
     private Reports $config;
@@ -28,7 +28,7 @@ class ReportExecutorService
     private ReportBuilderService $builder;
 
     /**
-     * @phpstan-param ConnectionInterface<object, object>|null $connection
+     * @param ConnectionInterface|null $connection
      */
     public function __construct(?ConnectionInterface $connection = null)
     {

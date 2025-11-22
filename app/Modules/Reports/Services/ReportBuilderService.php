@@ -231,11 +231,14 @@ class ReportBuilderService
         $year = $quarter === 1 ? (int) $date->format('Y') - 1 : (int) $date->format('Y');
         
         $startMonth = ($lastQuarter - 1) * 3 + 1;
-        $endMonth = $startMonth + 2;
+        $endMonth = $lastQuarter * 3;
         
         $start = $date->setDate($year, $startMonth, 1)->setTime(0, 0, 0);
-        $end = $date->setDate($year, $endMonth, (int) $start->modify("last day of +2 months")->format('d'))
-                    ->setTime(23, 59, 59);
+        
+        // Calculate the last day of the end month
+        $tempEnd = $date->setDate($year, $endMonth, 1);
+        $lastDay = (int) $tempEnd->format('t'); // 't' gives days in month
+        $end = $tempEnd->setDate($year, $endMonth, $lastDay)->setTime(23, 59, 59);
 
         return [
             'start' => $start->format('Y-m-d H:i:s'),

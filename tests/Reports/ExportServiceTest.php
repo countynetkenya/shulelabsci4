@@ -115,8 +115,8 @@ class ExportServiceTest extends ReportsDatabaseTestCase
 
         $result1 = $this->service->export($data, 'csv', ['title' => 'Test Report']);
         
-        // Small delay to ensure different timestamp
-        usleep(1100000);
+        // Small delay to ensure different timestamp (1 second + 1 microsecond)
+        sleep(1);
         
         $result2 = $this->service->export($data, 'csv', ['title' => 'Test Report']);
 

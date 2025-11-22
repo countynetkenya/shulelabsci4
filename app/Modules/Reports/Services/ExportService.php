@@ -220,7 +220,13 @@ class ExportService
      */
     private function generateFilename(string $title, string $extension): string
     {
-        $slug = preg_replace('/[^a-z0-9]+/i', '_', strtolower($title));
+        $slug = preg_replace('/[^a-z0-9]+/i', '_', strtolower(trim($title)));
+        $slug = trim($slug, '_');
+        
+        if (empty($slug)) {
+            $slug = 'report';
+        }
+        
         $timestamp = date('Y-m-d_His');
         return "{$slug}_{$timestamp}.{$extension}";
     }

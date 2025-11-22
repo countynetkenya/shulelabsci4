@@ -64,8 +64,15 @@
 
     <script>
         // Placeholder for dashboard JavaScript
+        // Get tenant ID from session/auth - should be injected by backend
+        const tenantId = window.TENANT_ID || null; // Set by backend
+        
         async function loadDashboard() {
-            const tenantId = 'demo-tenant'; // Replace with actual tenant ID
+            if (!tenantId) {
+                console.error('Tenant ID not set');
+                return;
+            }
+            
             try {
                 const response = await fetch(`/api/reports/dashboard?tenant_id=${tenantId}`);
                 const data = await response.json();
