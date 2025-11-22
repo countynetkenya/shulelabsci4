@@ -26,9 +26,9 @@ if (array_key_exists('self-test', $options)) {
     exit(0);
 }
 
-$dbName = getenv('DB_DATABASE') ?: getenv('DB_NAME') ?: '';
+$dbName = getenv('DB_DATABASE') ?: '';
 $dbHost = getenv('DB_HOST') ?: '127.0.0.1';
-$dbUser = getenv('DB_USERNAME') ?: getenv('DB_USER') ?: 'root';
+$dbUser = getenv('DB_USERNAME') ?: 'root';
 $dbPassword = getenv('DB_PASSWORD') ?: '';
 
 if (empty($dbName)) {
