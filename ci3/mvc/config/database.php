@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * If you need to use CI3 database functionality, please migrate to CI4.
  */
 
-throw new RuntimeException(
+throw new \RuntimeException(
     'CI3 database configuration is disabled. ' .
     'Use CodeIgniter 4 database configuration in app/Config/Database.php instead.'
 );
