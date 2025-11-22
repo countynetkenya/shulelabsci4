@@ -154,4 +154,23 @@ class Services extends BaseService
             $config->fallbackKeys
         );
     }
+
+    /**
+     * Returns the IntegrationService for managing third-party integrations.
+     *
+     * @param bool $getShared Whether to return a shared instance
+     * @return \Modules\Integrations\Services\IntegrationService
+     */
+    public static function integrations(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('integrations');
+        }
+
+        return new \Modules\Integrations\Services\IntegrationService(
+            null,
+            static::audit(),
+            static::integrationRegistry()
+        );
+    }
 }
