@@ -176,7 +176,7 @@ jobs:
           # Generate encryption key without requiring CodeIgniter bootstrap
           # This avoids Database.php validation failures with empty credentials
           ENCRYPTION_KEY=$(php -r "echo bin2hex(random_bytes(32));")
-          sed -i "s/encryption.key = .*/encryption.key = '$ENCRYPTION_KEY'/" .env
+          sed -i "s/encryption\.key = .*/encryption.key = '$ENCRYPTION_KEY'/" .env
           sed -i "s/ENCRYPTION_KEY = .*/ENCRYPTION_KEY = '$ENCRYPTION_KEY'/" .env
           echo "Encryption key generated successfully"
       
