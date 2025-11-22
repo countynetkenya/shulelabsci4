@@ -640,9 +640,13 @@ PHP;
     {
         $issues = [];
 
+        // Quote table name appropriately for the database
+        $quotedTable = $this->isSQLite() ? $tableName : "`{$tableName}`";
+        $quoteCol = $this->isSQLite() ? '' : '`';
+
         // Check for NULL values in non-nullable columns
         if (!empty($rules['check_null_data'])) {
-            $query = $this->db->query("SELECT COUNT(*) as count FROM `{$tableName}` WHERE `data` IS NULL OR `data` = ''");
+            $query = $this->db->query("SELECT COUNT(*) as count FROM {$quotedTable} WHERE {$quoteCol}data{$quoteCol} IS NULL OR {$quoteCol}data{$quoteCol} = ''");
             $result = $query->getRow();
             if ($result && $result->count > 0) {
                 $issues[] = [
@@ -656,7 +660,7 @@ PHP;
         // Check for invalid timestamps
         if (!empty($rules['check_timestamp'])) {
             if ($this->db->fieldExists('timestamp', $tableName)) {
-                $query = $this->db->query("SELECT COUNT(*) as count FROM `{$tableName}` WHERE `timestamp` = 0 OR `timestamp` IS NULL");
+                $query = $this->db->query("SELECT COUNT(*) as count FROM {$quotedTable} WHERE {$quoteCol}timestamp{$quoteCol} = 0 OR {$quoteCol}timestamp{$quoteCol} IS NULL");
                 $result = $query->getRow();
                 if ($result && $result->count > 0) {
                     $issues[] = [
@@ -671,7 +675,7 @@ PHP;
         // Check for NULL hash values in audit tables
         if (!empty($rules['check_null_hash'])) {
             if ($this->db->fieldExists('hash_value', $tableName)) {
-                $query = $this->db->query("SELECT COUNT(*) as count FROM `{$tableName}` WHERE `hash_value` IS NULL OR `hash_value` = ''");
+                $query = $this->db->query("SELECT COUNT(*) as count FROM {$quotedTable} WHERE {$quoteCol}hash_value{$quoteCol} IS NULL OR {$quoteCol}hash_value{$quoteCol} = ''");
                 $result = $query->getRow();
                 if ($result && $result->count > 0) {
                     $issues[] = [
@@ -687,7 +691,7 @@ PHP;
         // Check for NULL created_at
         if (!empty($rules['check_created_at'])) {
             if ($this->db->fieldExists('created_at', $tableName)) {
-                $query = $this->db->query("SELECT COUNT(*) as count FROM `{$tableName}` WHERE `created_at` IS NULL");
+                $query = $this->db->query("SELECT COUNT(*) as count FROM {$quotedTable} WHERE {$quoteCol}created_at{$quoteCol} IS NULL");
                 $result = $query->getRow();
                 if ($result && $result->count > 0) {
                     $issues[] = [
@@ -711,17 +715,35 @@ PHP;
     {
         $sql = [];
 
+        // Quote appropriately for the database
+        $quoteTable = function(string $table): string {
+            return $this->isSQLite() ? $table : "`{$table}`";
+        };
+        $quoteCol = $this->isSQLite() ? '' : '`';
+
         // Backfill NULL timestamps in sessions table
         $sessionsTable = $this->getPrefixedTableName('school_sessions');
         if ($this->db->tableExists($sessionsTable)) {
-            $sql[] = "UPDATE `{$sessionsTable}` SET `timestamp` = UNIX_TIMESTAMP() WHERE `timestamp` = 0 OR `timestamp` IS NULL;";
+            if ($this->isSQLite()) {
+                // SQLite: use strftime for current unix timestamp
+                $sql[] = "UPDATE {$quoteTable($sessionsTable)} SET {$quoteCol}timestamp{$quoteCol} = strftime('%s', 'now') WHERE {$quoteCol}timestamp{$quoteCol} = 0 OR {$quoteCol}timestamp{$quoteCol} IS NULL;";
+            } else {
+                // MySQL: use UNIX_TIMESTAMP()
+                $sql[] = "UPDATE {$quoteTable($sessionsTable)} SET {$quoteCol}timestamp{$quoteCol} = UNIX_TIMESTAMP() WHERE {$quoteCol}timestamp{$quoteCol} = 0 OR {$quoteCol}timestamp{$quoteCol} IS NULL;";
+            }
         }
 
         // Backfill NULL created_at with current timestamp
         foreach (['ci4_audit_events', 'idempotency_keys', 'menu_overrides'] as $table) {
             $prefixedTable = $this->getPrefixedTableName($table);
             if ($this->db->tableExists($prefixedTable) && $this->db->fieldExists('created_at', $prefixedTable)) {
-                $sql[] = "UPDATE `{$prefixedTable}` SET `created_at` = NOW() WHERE `created_at` IS NULL;";
+                if ($this->isSQLite()) {
+                    // SQLite: use datetime('now')
+                    $sql[] = "UPDATE {$quoteTable($prefixedTable)} SET {$quoteCol}created_at{$quoteCol} = datetime('now') WHERE {$quoteCol}created_at{$quoteCol} IS NULL;";
+                } else {
+                    // MySQL: use NOW()
+                    $sql[] = "UPDATE {$quoteTable($prefixedTable)} SET {$quoteCol}created_at{$quoteCol} = NOW() WHERE {$quoteCol}created_at{$quoteCol} IS NULL;";
+                }
             }
         }
 
