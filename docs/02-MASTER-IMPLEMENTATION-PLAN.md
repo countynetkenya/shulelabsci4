@@ -59,11 +59,11 @@ This document outlines the complete implementation plan for ShuleLabs School Man
 
 ### Phase 1: Foundation (Q1-Q2 2024) ✅ COMPLETE
 
-**Goal**: Establish core platform with essential features
+**Goal**: Establish core platform with essential features and architectural guardrails
 
 **Completed Features**:
 1. ✅ CI4 Framework Setup
-2. ✅ Database Architecture
+2. ✅ Database Architecture (tenant-aware schema design)
 3. ✅ Authentication & Authorization
 4. ✅ Audit Trail System
 5. ✅ Ledger & Accounting Foundation
@@ -82,32 +82,54 @@ This document outlines the complete implementation plan for ShuleLabs School Man
 - [x] Basic testing framework
 - [x] API infrastructure
 - [x] Deployment scripts
+- [x] **Tenant-aware foundation**: Database schema, `TenantResolver` service, and `tenant_catalog` table for multi-school support
+- [x] **Baseline observability**: Structured audit logging with tenant/user context, health checks, and log aggregation infrastructure
 
 ### Phase 2: Feature Expansion (Q3 2024 - Q2 2025) 🟡 IN PROGRESS
 
-**Goal**: Complete all core operational features
+**Goal**: Complete all core operational features with tenant-aware APIs and baseline observability
 
-**Priority 1 (Critical)**:
-- 🟡 Student Admissions & CRM
-- 🟡 Enhanced Reporting
-- 🟡 Parent Portal
-- 🟡 Mobile App Backend
-- 🟡 Communications System
+**Architecture Guardrails**:
+All Phase 2 features are built on the tenant-aware foundation established in Phase 1:
+- **Multi-tenancy by design**: APIs, services, and repositories use `TenantContext` from the start; data models include `tenant_id` or equivalent tenant scoping where applicable
+- **Baseline observability required**: Every new feature integrates with structured logging (tenant_id, user_id, trace_id, action, result), emits basic metrics, and is considered "done" only when visible on shared dashboards
+- **Security & audit**: All changes flow through the audit trail with tenant context
 
-**Priority 2 (High)**:
-- 🟡 Inventory Management
-- 🟡 Library System
-- 📝 Transport Management
-- 📝 Hostel Management
-- 🟡 Approval Workflows
+**Phase 2A – Core APIs & Domain Models** (Backend-First, Tenant-Aware)
+Focus: Stable, tenant-scoped backend APIs and domain models that support multiple schools
 
-**Priority 3 (Medium)**:
-- 📝 Digital Wallets
-- 🟡 Gamification
-- 📝 Advanced Analytics
-- 📝 Parent Engagement Tools
+- 🟡 Student Admissions & CRM (tenant-scoped applications, waitlists)
+- 🟡 Billing Enhancements (tenant-specific fee structures)
+- 🟡 Portals Backend APIs (student/parent data per tenant)
+- 🟡 Communications Backend (Threads, tenant-scoped messaging)
+- 🟡 Inventory Management (tenant-specific stock and assets)
+- 🟡 Library System (tenant-scoped catalog and borrowing)
+- 🟡 Approval Workflows (tenant-aware maker-checker)
+
+**Phase 2B – Portals & Mobile Flows** (UX Built on 2A APIs)
+Focus: Student/parent portals and mobile app flows consuming stable Phase 2A APIs
+
+- 🟡 Parent Portal UX (fee payment, child monitoring)
+- 🟡 Student Portal UX (timetable, assignments, grades)
+- 🟡 Mobile App Backend Integration (push notifications, offline sync)
+- 📝 Transport Management (route/vehicle tracking per school)
+- 📝 Hostel Management (room allocation per school)
+- 📝 Parent Engagement Tools (surveys, events per school)
+
+**Phase 2C – Optimization & Advanced Observability**
+Focus: Performance tuning, advanced dashboards, predictive monitoring
+
+- 📝 Advanced Monitoring Dashboards (APM integration, predictive alerts)
+- 📝 Digital Wallets Enhancements (caching, wallet optimizations)
+- 🟡 Gamification (points, badges with tenant context)
+- 📝 Cron Manager (job monitoring and alerting)
 
 **Target Completion**: Q2 2025
+
+**Execution Model**:
+- Phase 2A lays the tenant-aware API foundation; 2B builds user-facing flows on that foundation
+- Baseline observability (structured logs, basic metrics, health checks) is mandatory for all features in 2A and 2B
+- Advanced observability (2C) is an enhancement layer on top of the working baseline
 
 ### Phase 3: Advanced Features (Q3 2025+) 📝 PLANNED
 
@@ -752,24 +774,37 @@ See: [Security Enhancements Feature Docs](features/24-SECURITY-ENHANCEMENTS.md)
 
 **Status**: In Progress (50% complete)  
 **Module**: Foundation  
-**Phase**: 2
+**Phase**: 2 (Baseline Complete in Phase 1, Advanced Features in Phase 2C)
 
-**Features**:
+**Baseline Observability** (✅ Complete in Phase 1):
 - Application health checks
-- Performance monitoring
-- Error tracking
-- Log aggregation
+- Structured logging with standard fields (timestamp, level, service, tenant_id, user_id, trace_id, action, result)
+- Error tracking and basic alerting
+- Log aggregation infrastructure
 - Uptime monitoring
-- Resource usage tracking
-- Alerts and notifications
-- Dashboards
-- Historical metrics
-- Integration with external tools
+- Resource usage tracking (CPU, memory, disk)
+- Audit trail integration
 
-**Remaining Work**:
-- Advanced dashboards
-- Predictive alerts
-- Integration with APM tools
+**Advanced Observability** (🟡 In Progress - Phase 2C):
+- Advanced dashboards with custom metrics
+- APM (Application Performance Monitoring) integration
+- Predictive alerts based on trends
+- Distributed tracing across services
+- Complex query performance analytics
+- SLA tracking and reporting
+
+**Remaining Work** (Phase 2C):
+- Integration with external APM tools (New Relic, DataDog, etc.)
+- Custom dashboard builder
+- Predictive anomaly detection
+- Advanced alerting rules engine
+
+**Observability as a Guardrail**:
+All new features in Phase 2 must integrate with baseline observability before being considered "done":
+- Emit structured logs with tenant context
+- Expose basic metrics (request count, error rate, latency)
+- Appear on shared health dashboards
+- Support trace_id propagation for request tracking
 
 See: [Monitoring Feature Docs](features/25-MONITORING.md)
 
@@ -801,21 +836,35 @@ See: [Parent Engagement Feature Docs](features/26-PARENT-ENGAGEMENT.md)
 
 ### 27. Multi-Tenant Support 📝
 
-**Status**: Planned  
+**Status**: Planned (Foundation in Phase 1, Productization in Phase 3)  
 **Module**: Foundation  
-**Phase**: 3
+**Phase**: 3 (Tenant Orchestration & Productization)
 
-**Planned Features**:
-- Tenant isolation
-- Shared infrastructure
-- Tenant management
-- Custom branding
-- Tenant-specific configuration
-- Data partitioning
-- Resource allocation
-- Billing per tenant
-- Tenant analytics
-- Migration tools
+**Tenant-Aware Foundation** (✅ Complete in Phase 1/2):
+Phase 1 and Phase 2 are built with multi-tenancy by design:
+- **Tenant catalog**: `ci4_tenant_catalog` table stores organisations, schools, and warehouses
+- **TenantResolver service**: Resolves tenant context from request headers (X-Tenant-Context, X-School-ID, X-Organisation-ID)
+- **Tenant-aware data model**: Core tables include `tenant_id` or equivalent for row-level isolation
+- **Tenant context propagation**: Controllers, services, and repositories use tenant context in business logic and queries
+- **Audit trail**: All events logged with tenant_id for compliance and isolation
+
+**Phase 3 Productization Features** (📝 Planned for Q3 2025):
+Phase 3 focuses on tenant orchestration, management, and billing rather than initial tenant awareness:
+- Tenant provisioning UI (create/configure new schools)
+- Tenant management dashboard (view all schools, quotas, usage)
+- Custom branding per tenant (logos, colors, domain mapping)
+- Tenant-specific configuration (feature toggles, settings)
+- Billing per tenant (usage tracking, subscription management)
+- Tenant analytics (usage reports, performance metrics per school)
+- Migration tools (tenant onboarding, data import/export)
+- Advanced isolation options (schema-per-tenant, database-per-tenant)
+- Tenant switching for multi-school administrators
+
+**Data Partitioning Strategy**:
+- **Row-level isolation**: Shared tables with `tenant_id` column (current approach for most tables)
+- **Tenant catalog**: Central registry linking organisations, schools, and warehouses
+- **Query scoping**: All queries automatically scoped to active tenant via TenantContext
+- **Future options**: Schema-per-tenant or database-per-tenant for high-security tenants (Phase 3)
 
 **Estimated Completion**: Q3 2025
 
