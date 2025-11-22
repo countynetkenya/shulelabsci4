@@ -81,20 +81,6 @@ jobs:
             echo "vendor/autoload.php present"
           fi
       
-      - name: Verify dependencies installed
-        run: |
-          php -v
-          composer --version
-          ls -la
-          ls -la vendor || true
-          if [ ! -f vendor/autoload.php ]; then
-            echo "ERROR: vendor/autoload.php not found. Composer install likely failed." >&2
-            composer diagnose || true
-            exit 1
-          else
-            echo "vendor/autoload.php present"
-          fi
-      
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
       
@@ -184,25 +170,15 @@ jobs:
             echo "vendor/autoload.php present"
           fi
       
-      - name: Verify dependencies installed
-        run: |
-          php -v
-          composer --version
-          ls -la
-          ls -la vendor || true
-          if [ ! -f vendor/autoload.php ]; then
-            echo "ERROR: vendor/autoload.php not found. Composer install likely failed." >&2
-            composer diagnose || true
-            exit 1
-          else
-            echo "vendor/autoload.php present"
-          fi
-      
       - name: Setup test environment
         run: |
           cp .env.example .env
-          chmod +x spark || true
-          php -f spark key:generate
+          # Generate encryption key without requiring CodeIgniter bootstrap
+          # This avoids Database.php validation failures with empty credentials
+          ENCRYPTION_KEY=$(php -r "echo bin2hex(random_bytes(32));")
+          sed -i "s/encryption.key = .*/encryption.key = '$ENCRYPTION_KEY'/" .env
+          sed -i "s/ENCRYPTION_KEY = .*/ENCRYPTION_KEY = '$ENCRYPTION_KEY'/" .env
+          echo "Encryption key generated successfully"
       
       - name: Run tests
         run: |

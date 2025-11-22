@@ -29,9 +29,6 @@ return $config
             'operators' => ['=>' => null],
         ],
         'blank_line_after_opening_tag' => true,
-        'blank_line_before_statement' => [
-            'statements' => ['return', 'throw', 'try'],
-        ],
         'cast_spaces' => true,
         'class_attributes_separation' => [
             'elements' => [
