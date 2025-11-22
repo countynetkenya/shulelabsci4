@@ -12,9 +12,11 @@ ShuleLabs is built on a modular, API-first architecture using CodeIgniter 4 fram
 1. **Modular Design**: Self-contained, independent modules
 2. **API-First**: All functionality exposed via REST APIs
 3. **Security by Design**: Role-based access control throughout
-4. **Scalability**: Horizontal and vertical scaling supported
-5. **Maintainability**: Clear separation of concerns
-6. **Testability**: Comprehensive test coverage
+4. **Tenant-Aware by Design**: Multi-tenancy from the start with `TenantContext` abstraction
+5. **Observability as a Guardrail**: Baseline logging, metrics, and health checks for all features
+6. **Scalability**: Horizontal and vertical scaling supported
+7. **Maintainability**: Clear separation of concerns
+8. **Testability**: Comprehensive test coverage
 
 ## 🏢 High-Level Architecture
 
@@ -78,12 +80,13 @@ app/Modules/{ModuleName}/
 **Purpose**: Core system services
 
 **Components**:
-- Audit Service: Activity logging and compliance
+- Audit Service: Activity logging and compliance (with tenant context)
 - Ledger Service: Double-entry accounting
 - Integration Registry: External system tracking
 - Maker-Checker Service: Approval workflows
 - QR Service: QR code generation and validation
-- Tenant Catalog: Multi-tenant support (future)
+- **Tenant Resolver**: Multi-tenant context resolution from requests
+- **TenantContext Abstraction**: Used throughout controllers, services, and repositories
 
 **Dependencies**: None (foundation layer)
 
@@ -295,6 +298,291 @@ See: [Database Documentation](DATABASE.md)
 │    - Backup Encryption               │
 └──────────────────────────────────────┘
 ```
+
+See: [Security Documentation](SECURITY.md)
+
+## 🏢 Multi-Tenancy Architecture
+
+### Tenant-Aware Design
+
+ShuleLabs is built with **multi-tenancy by design** from Phase 1:
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                    Request Flow                              │
+└──────────────────────────────────────────────────────────────┘
+                             ↓
+┌──────────────────────────────────────────────────────────────┐
+│  1. TenantResolver extracts tenant context                  │
+│     - X-Tenant-Context header (JSON)                         │
+│     - X-School-ID / X-Organisation-ID headers                │
+│     - Query parameters (school_id, organisation_id)          │
+└────────────────────┬─────────────────────────────────────────┘
+                     ↓
+┌──────────────────────────────────────────────────────────────┐
+│  2. TenantContext Object Created                            │
+│     {                                                        │
+│       tenant_id: "school-1",                                 │
+│       school: {...},                                         │
+│       organisation: {...}                                    │
+│     }                                                        │
+└────────────────────┬─────────────────────────────────────────┘
+                     ↓
+┌──────────────────────────────────────────────────────────────┐
+│  3. Controller uses TenantContext                           │
+│     - Validates tenant access                                │
+│     - Passes to service layer                                │
+└────────────────────┬─────────────────────────────────────────┘
+                     ↓
+┌──────────────────────────────────────────────────────────────┐
+│  4. Service/Repository queries scoped by tenant_id          │
+│     - WHERE tenant_id = 'school-1'                           │
+│     - Prevents cross-tenant data leaks                       │
+└────────────────────┬─────────────────────────────────────────┘
+                     ↓
+┌──────────────────────────────────────────────────────────────┐
+│  5. Audit logging includes tenant_id                        │
+│     - All events tracked per tenant                          │
+│     - Compliance and isolation guaranteed                    │
+└──────────────────────────────────────────────────────────────┘
+```
+
+### TenantContext Abstraction
+
+**Service**: `Modules\Foundation\Services\TenantResolver`
+
+**Usage Pattern**:
+```php
+class StudentController extends BaseController
+{
+    public function __construct()
+    {
+        $this->tenantResolver = new TenantResolver();
+    }
+    
+    public function index()
+    {
+        // Resolve tenant from request
+        $tenantContext = $this->tenantResolver->fromRequest($this->request);
+        $schoolId = $tenantContext['school']['id'] ?? null;
+        
+        if (!$schoolId) {
+            return $this->failUnauthorized('Tenant context required');
+        }
+        
+        // Pass to service layer
+        $students = $this->studentService->listStudents($schoolId);
+        
+        return $this->respond($students);
+    }
+}
+```
+
+### Tenant-Aware Data Modeling
+
+**Row-Level Isolation** (Current Approach):
+- Shared database and schema
+- Tables include `tenant_id`, `school_id`, or `organisation_id` column
+- Application enforces query scoping
+
+**Example Tables**:
+```sql
+-- Student table with school scoping
+CREATE TABLE students (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    school_id VARCHAR(50) NOT NULL,  -- Tenant scoping
+    admission_number VARCHAR(50) NOT NULL,
+    first_name VARCHAR(100) NOT NULL,
+    -- ... other columns
+    FOREIGN KEY (school_id) REFERENCES ci4_tenant_catalog(id),
+    UNIQUE KEY unique_admission_per_school (school_id, admission_number)
+);
+
+-- Fee structure scoped by school
+CREATE TABLE fee_structures (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    school_id VARCHAR(50) NOT NULL,  -- Tenant scoping
+    name VARCHAR(100) NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    -- ... other columns
+    FOREIGN KEY (school_id) REFERENCES ci4_tenant_catalog(id)
+);
+```
+
+**Global Tables** (No Tenant Scoping):
+- `ci4_users` (users can access multiple schools)
+- `ci4_roles` (role definitions are shared)
+- `ci4_migrations` (system metadata)
+- `audit_seals` (cryptographic integrity)
+
+### Tenant Catalog Table
+
+**Table**: `ci4_tenant_catalog`
+
+**Schema**:
+```sql
+CREATE TABLE ci4_tenant_catalog (
+    id VARCHAR(50) PRIMARY KEY,
+    tenant_type ENUM('organisation', 'school', 'warehouse') NOT NULL,
+    name VARCHAR(200) NOT NULL,
+    metadata JSON,  -- Flexible tenant-specific data
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+```
+
+**Example Data**:
+```sql
+-- Organisation
+INSERT INTO ci4_tenant_catalog VALUES (
+    'org-1', 
+    'organisation', 
+    'County Education Network',
+    '{"country": "Kenya", "timezone": "Africa/Nairobi"}',
+    NOW(), NOW()
+);
+
+-- School
+INSERT INTO ci4_tenant_catalog VALUES (
+    'school-1',
+    'school',
+    'Nairobi Primary School',
+    '{"organisation_id": "org-1", "curriculum": "CBC", "motto": "Excellence in Learning"}',
+    NOW(), NOW()
+);
+```
+
+### Phase 3 Tenant Features
+
+See [Multi-Tenant Feature Documentation](features/27-MULTI-TENANT.md) for Phase 3 productization plans:
+- Tenant provisioning UI
+- Billing per tenant
+- Custom branding
+- Tenant analytics
+- Schema-per-tenant option
+
+## 📊 Observability Architecture
+
+### Baseline Observability (Platform Guardrail)
+
+All modules must integrate with baseline observability:
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                 Application Layer                            │
+│  - Controllers log requests with tenant/user context         │
+│  - Services log business operations                          │
+│  - Exceptions logged with full context                       │
+└────────────────────┬─────────────────────────────────────────┘
+                     ↓
+┌──────────────────────────────────────────────────────────────┐
+│              Structured Logging Layer                        │
+│  Standard Fields: timestamp, level, service, tenant_id,      │
+│                   user_id, trace_id, action, result          │
+│  Format: JSON                                                │
+└────────────────────┬─────────────────────────────────────────┘
+                     ↓
+┌──────────────────────────────────────────────────────────────┐
+│                Log Aggregation                               │
+│  - File-based: writable/logs/log-YYYY-MM-DD.log              │
+│  - ELK Stack (optional): Elasticsearch + Kibana              │
+│  - Cloud Logging (future): CloudWatch, Stackdriver           │
+└────────────────────┬─────────────────────────────────────────┘
+                     ↓
+┌──────────────────────────────────────────────────────────────┐
+│              Metrics & Health Checks                         │
+│  - /health endpoint: database, cache, disk checks            │
+│  - /metrics endpoint: request count, latency, errors         │
+│  - Audit trail integration: tenant-scoped events             │
+└──────────────────────────────────────────────────────────────┘
+```
+
+### Standard Log Format
+
+**All logs use structured JSON**:
+```json
+{
+  "timestamp": "2025-11-22T10:52:31.028Z",
+  "level": "INFO",
+  "service": "learning.students",
+  "tenant_id": "school-1",
+  "user_id": 123,
+  "trace_id": "abc123xyz",
+  "action": "student.created",
+  "result": "success",
+  "duration_ms": 45,
+  "message": "Student created successfully",
+  "metadata": {
+    "student_id": 456,
+    "admission_number": "2025-001"
+  }
+}
+```
+
+### Observability Integration Points
+
+**Controllers**:
+- Log all requests with tenant context
+- Emit metrics (request count, latency)
+- Include trace_id for request tracking
+
+**Services**:
+- Log business operations (create, update, delete)
+- Log errors with full context
+- Include tenant_id for multi-tenant visibility
+
+**Repositories/Models**:
+- Log slow queries (>100ms)
+- Track query count and time
+
+**Audit Trail**:
+- All significant actions logged with tenant context
+- Immutable audit log with cryptographic sealing
+
+### Health Check Endpoints
+
+**Endpoint**: `GET /health`
+
+**Response**:
+```json
+{
+  "status": "healthy",
+  "timestamp": "2025-11-22T10:52:31.028Z",
+  "checks": {
+    "database": true,
+    "cache": true,
+    "disk": true
+  }
+}
+```
+
+**Status Codes**:
+- `200 OK`: All checks passed
+- `503 Service Unavailable`: One or more checks failed
+
+### Metrics Endpoints
+
+**Endpoint**: `GET /metrics`
+
+**Format**: Prometheus-compatible or JSON
+
+**Example Metrics**:
+- `http_requests_total{method, endpoint, status, tenant}` - Request count
+- `http_request_duration_seconds{method, endpoint}` - Request latency
+- `db_queries_total{service, query_type}` - Database query count
+- `errors_total{service, error_type}` - Error count
+
+### Definition of Done (Observability)
+
+A feature is not considered "done" unless:
+- ✅ Structured logging with standard fields implemented
+- ✅ Health checks added (if new module/service)
+- ✅ Error handling logs exceptions with context
+- ✅ Basic metrics exposed (request count, latency, errors)
+- ✅ Audit trail integration for significant actions
+- ✅ Feature visible on shared monitoring dashboard
+
+See [Monitoring Feature Documentation](features/25-MONITORING.md) for complete details.
 
 See: [Security Documentation](SECURITY.md)
 
