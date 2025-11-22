@@ -193,85 +193,50 @@ class Database extends Config
     {
         parent::__construct();
 
+        // Use test database for testing environment
         if (ENVIRONMENT === 'testing') {
             $this->defaultGroup = 'tests';
 
             return;
         }
 
-        $resolveEnv = static function (array $keys, $default = null) {
-            foreach ($keys as $key) {
-                $value = getenv($key);
-                if ($value !== false && $value !== null) {
-                    return $value;
-                }
-            }
+        // Load database configuration from .env using CI4's env() helper
+        // This is the ONLY source of truth - no fallbacks to hardcoded values
+        $this->default['DSN']      = env('database.default.DSN', env('DB_DSN', ''));
+        $this->default['hostname'] = env('database.default.hostname', env('DB_HOST', ''));
+        $this->default['username'] = env('database.default.username', env('DB_USERNAME', ''));
+        $this->default['password'] = env('database.default.password', env('DB_PASSWORD', ''));
+        $this->default['database'] = env('database.default.database', env('DB_DATABASE', ''));
+        $this->default['DBDriver'] = env('database.default.DBDriver', env('DB_DRIVER', 'MySQLi'));
+        $this->default['port']     = (int) env('database.default.port', env('DB_PORT', 3306));
 
-            return $default;
-        };
-
-        $resolveBool = static function (array $keys, bool $default = false) use ($resolveEnv): bool {
-            $value = $resolveEnv($keys, null);
-            if ($value === null) {
-                return $default;
-            }
-
-            if (is_bool($value)) {
-                return $value;
-            }
-
-            return filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? $default;
-        };
-
-        $overrides = [
-            'DSN'      => $resolveEnv(['DB_DSN', 'DATABASE_DSN'], ''),
-            'hostname' => $resolveEnv(['DB_HOST', 'DB_HOSTNAME', 'DATABASE_HOST'], $this->default['hostname']),
-            'username' => $resolveEnv(['DB_USERNAME', 'DB_USER', 'DATABASE_USERNAME'], $this->default['username']),
-            'password' => $resolveEnv(['DB_PASSWORD', 'DATABASE_PASSWORD'], $this->default['password']),
-            'database' => $resolveEnv(['DB_NAME', 'DB_DATABASE', 'DATABASE_NAME'], $this->default['database']),
-            'DBDriver' => $resolveEnv(['DB_DRIVER', 'DATABASE_DRIVER'], $this->default['DBDriver']),
-            'port'     => $resolveEnv(['DB_PORT', 'DATABASE_PORT'], $this->default['port']),
-        ];
-
-        foreach ($overrides as $key => $value) {
-            if ($value === null || $value === '') {
-                continue;
-            }
-
-            if ($key === 'port') {
-                $this->default[$key] = (int) $value;
-
-                continue;
-            }
-
-            $this->default[$key] = $value;
-        }
-
-        $allowEmptyPassword = $resolveBool(['DB_ALLOW_EMPTY_PASSWORD', 'DATABASE_ALLOW_EMPTY_PASSWORD'], false);
-
-        $requiredKeys = ['hostname', 'username', 'database'];
-
-        if (!$allowEmptyPassword) {
-            $requiredKeys[] = 'password';
-        }
-
+        // Validate required configuration
         $missing = [];
-        foreach ($requiredKeys as $key) {
-            $value = $this->default[$key] ?? null;
-            if ($value === null || trim((string) $value) === '') {
-                $missing[] = $key;
-            }
+        
+        if (empty($this->default['hostname'])) {
+            $missing[] = 'hostname (DB_HOST)';
+        }
+        if (empty($this->default['username'])) {
+            $missing[] = 'username (DB_USERNAME)';
+        }
+        if (empty($this->default['database'])) {
+            $missing[] = 'database (DB_DATABASE)';
+        }
+        
+        // Password is optional in development but required in production
+        if (ENVIRONMENT === 'production' && empty($this->default['password'])) {
+            $missing[] = 'password (DB_PASSWORD)';
         }
 
         if (!empty($missing)) {
             throw new \RuntimeException(
-                sprintf(
-                    'CI4 database configuration incomplete (missing: %s). Define DB_* environment variables to align with CI3.',
-                    implode(', ', $missing)
-                )
+                'Database configuration incomplete. Missing required values in .env: '
+                . implode(', ', $missing)
+                . '. Please configure your database credentials in the .env file.'
             );
         }
 
+        // Enable debug mode in non-production environments
         $this->default['DBDebug'] = ENVIRONMENT !== 'production';
     }
 }
