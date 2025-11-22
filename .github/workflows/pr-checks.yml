@@ -175,7 +175,9 @@ jobs:
           cp .env.example .env
           # Generate encryption key without requiring CodeIgniter bootstrap
           # This avoids Database.php validation failures with empty credentials
+          # bin2hex(random_bytes(32)) produces only hex chars (0-9a-f), safe for sed
           ENCRYPTION_KEY=$(php -r "echo bin2hex(random_bytes(32));")
+          # Update both formats: encryption.key (CI4 standard) and ENCRYPTION_KEY (backward compat)
           sed -i "s/encryption\.key = .*/encryption.key = '$ENCRYPTION_KEY'/" .env
           sed -i "s/ENCRYPTION_KEY = .*/ENCRYPTION_KEY = '$ENCRYPTION_KEY'/" .env
           echo "Encryption key generated successfully"
