@@ -122,9 +122,9 @@ jobs:
       
       - name: Check for TenantAwareModel usage
         run: |
-          if grep -r "extends Model" app/ --include="*.php" | grep -v "TenantAwareModel"; then
+          if grep -r "extends Model" app/ --include="*.php" 2>/dev/null | grep -v "TenantAwareModel"; then
             echo "::warning::Found models not extending TenantAwareModel"
-          fi
+          fi || true
       
       - name: Check for audit logging
         run: |
@@ -144,13 +144,13 @@ jobs:
       
       - name: Check for security patterns
         run: |
-          if grep -r "eval(" app/ --include="*.php"; then
+          if grep -r "eval(" app/ --include="*.php" 2>/dev/null; then
             echo "::error::Found dangerous eval() usage"
             exit 1
-          fi
-          if grep -r "exec(" app/ --include="*.php" | grep -v "// safe"; then
+          fi || true
+          if grep -r "exec(" app/ --include="*.php" 2>/dev/null | grep -v "// safe"; then
             echo "::warning::Found exec() usage - ensure it's properly sanitized"
-          fi
+          fi || true
       
       - name: Summary
         run: echo "Guardrails check completed"
