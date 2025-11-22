@@ -64,7 +64,7 @@ ShuleLabs is a comprehensive, cloud-ready school management system built on Code
 1. **Modular Design**: Independent, self-contained modules
 2. **API-First**: All functionality exposed via REST APIs
 3. **Security-First**: Role-based access control, audit logging
-4. **Multi-Tenant Ready**: Support for multiple schools (future)
+4. **Multi-Tenant Ready**: Support for multiple schools via tenant catalog (initial bootstrap available via web installer)
 5. **Mobile-Ready**: Responsive design and dedicated mobile APIs
 6. **Extensible**: Plugin architecture for custom features
 
@@ -371,8 +371,9 @@ ShuleLabs welcomes contributions! See:
 
 ## 🎯 Next Steps
 
-- **New Users**: [Getting Started Guide](guides/GETTING-STARTED.md)
+- **New Users**: [Getting Started Guide](guides/GETTING-STARTED.md) or use the web-based installer at `/install`
 - **Developers**: [Local Setup](guides/LOCAL-SETUP.md)
+- **Multi-Tenant Setup**: [Multi-Tenant Documentation](features/27-MULTI-TENANT.md)
 - **Full Feature List**: [Master Implementation Plan](02-MASTER-IMPLEMENTATION-PLAN.md)
 - **Technical Deep Dive**: [Architecture](ARCHITECTURE.md)
 

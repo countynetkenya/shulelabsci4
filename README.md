@@ -51,6 +51,37 @@ prefer.
 `app/Modules/Database/Migrations/`. See [docs/MIGRATION_SYSTEM.md](docs/MIGRATION_SYSTEM.md)
 for technical details about the migration system configuration.
 
+## Initial Web-Based Setup
+
+After configuring your database and running migrations, ShuleLabs provides a
+web-based installer to bootstrap your first organisation, school, and admin user.
+
+1. Configure your database credentials in `.env`:
+
+   ```bash
+   cp .env.example .env
+   # Edit .env with your database settings
+   ```
+
+2. Run all migrations to create the required database tables:
+
+   ```bash
+   php bin/migrate/latest
+   ```
+
+3. Visit `/install` in your browser (e.g., `http://localhost:8080/install`)
+
+4. Follow the three-step wizard:
+   - **Step 1**: Environment check - verifies database connection and migrations
+   - **Step 2**: Organisation & School setup - create your first organisation and school
+   - **Step 3**: Admin account - create your administrator user
+
+5. After completing the installer, you will be redirected to the login page.
+   Sign in with your new admin credentials.
+
+6. **Important**: Once installation is complete, set `app.installed = true` in
+   your `.env` file to prevent access to the installer.
+
 ## Running the test suite
 
 Use the portable test runner to execute the PHPUnit suite:
