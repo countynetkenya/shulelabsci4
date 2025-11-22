@@ -11,19 +11,46 @@ ROOT_DIR="$(dirname "$(dirname "$BACKUP_DIR")")"
 echo "Starting rollback from backup: $BACKUP_DIR"
 echo "Target directory: $ROOT_DIR"
 
+# Verify backup file exists and is readable
+if [ ! -f "$BACKUP_DIR/codebase.tar.gz" ]; then
+    echo "ERROR: Backup file not found: $BACKUP_DIR/codebase.tar.gz"
+    exit 1
+fi
+
+# Verify tar file integrity
+echo "Verifying backup integrity..."
+if ! tar -tzf "$BACKUP_DIR/codebase.tar.gz" > /dev/null 2>&1; then
+    echo "ERROR: Backup file is corrupted or invalid"
+    exit 1
+fi
+
 # Extract codebase backup
 echo "Restoring codebase..."
 cd "$ROOT_DIR"
-tar -xzf "$BACKUP_DIR/codebase.tar.gz"
+if ! tar -xzf "$BACKUP_DIR/codebase.tar.gz"; then
+    echo "ERROR: Failed to extract backup"
+    exit 1
+fi
 
 # Restore configuration
 echo "Restoring configuration..."
-cp -r "$BACKUP_DIR/config/.env" "$ROOT_DIR/.env" 2>/dev/null || true
-cp -r "$BACKUP_DIR/config/Config/"* "$ROOT_DIR/app/Config/" 2>/dev/null || true
+if [ -f "$BACKUP_DIR/config/.env" ]; then
+    cp "$BACKUP_DIR/config/.env" "$ROOT_DIR/.env"
+    echo "  ✓ .env restored"
+else
+    echo "  ⚠ .env backup not found"
+fi
+
+if [ -d "$BACKUP_DIR/config/Config" ]; then
+    cp -r "$BACKUP_DIR/config/Config/"* "$ROOT_DIR/app/Config/" 2>&1
+    echo "  ✓ Config files restored"
+else
+    echo "  ⚠ Config backup not found"
+fi
 
 # Clear caches
 echo "Clearing caches..."
-php spark cache:clear
+php spark cache:clear 2>&1
 
 echo "Rollback complete!"
 echo "Duration: $(date)"

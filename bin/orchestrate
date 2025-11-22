@@ -5,7 +5,8 @@
  * Master Orchestration Script
  * 
  * Executes the complete autonomous system orchestration lifecycle.
- * Triggers: @Copilot AUTONOMOUS COMPLETE SYSTEM ORCHESTRATION - START FINAL BUILD!
+ * 
+ * Usage: php bin/orchestrate [--phase=N] [--skip=N,M] [--dry-run] [--help]
  * 
  * @version 1.0.0
  */
