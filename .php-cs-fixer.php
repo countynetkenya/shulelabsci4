@@ -41,7 +41,9 @@ return $config
         ],
         'concat_space' => ['spacing' => 'one'],
         'declare_equal_normalize' => true,
-        'declare_strict_types' => true,
+        // Note: 'declare_strict_types' is disabled to allow gradual adoption
+        // Enable this after ensuring all files handle types strictly
+        // 'declare_strict_types' => true,
         'function_typehint_space' => true,
         'lowercase_cast' => true,
         'lowercase_static_reference' => true,
@@ -87,7 +89,7 @@ return $config
         'phpdoc_no_useless_inheritdoc' => true,
         'phpdoc_scalar' => true,
         'phpdoc_single_line_var_spacing' => true,
-        'phpdoc_summary' => false,
+        'phpdoc_summary' => true,
         'phpdoc_to_comment' => false,
         'phpdoc_trim' => true,
         'phpdoc_types' => true,

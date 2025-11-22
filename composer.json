@@ -42,7 +42,7 @@
         "cs:check": "vendor/bin/php-cs-fixer fix --dry-run --diff --verbose",
         "cs:fix": "vendor/bin/php-cs-fixer fix --verbose",
         "phpstan": "vendor/bin/phpstan analyse --memory-limit=1G",
-        "phpmd": "vendor/bin/phpmd app/Modules text cleancode,codesize,controversial,design,naming,unusedcode",
+        "phpmd": "vendor/bin/phpmd app/Modules text phpmd.xml",
         "quality:check": [
             "@cs:check",
             "@phpstan",
