@@ -23,10 +23,10 @@ audit log via the shared `AuditService`.
 
 ## Routing
 
-Routes are exposed under `/v2/inventory`:
+Routes are exposed under `/inventory`:
 
-- `POST /v2/inventory/transfers` – create a transfer.
-- `POST /v2/inventory/transfers/{id}/complete` – accept or reject a transfer
+- `POST /inventory/transfers` – create a transfer.
+- `POST /inventory/transfers/{id}/complete` – accept or reject a transfer
   after scanning.
 
 Integrators should bind `inventoryTransferRepository` in the service container

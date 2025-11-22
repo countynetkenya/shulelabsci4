@@ -292,7 +292,7 @@ The module creates the following tables:
 
 ## API Endpoints
 
-All endpoints are under `/api/v2/integrations`:
+All endpoints are under `/api/integrations`:
 
 - `GET /health` - Overall health check
 - `GET /health/:adapter` - Check specific adapter

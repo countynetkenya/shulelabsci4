@@ -58,7 +58,7 @@ All adapters:
 - `OAuthController` - OAuth callback handling
 - `LogController` - View integration logs
 
-**Endpoints** (under `/api/v2/integrations`):
+**Endpoints** (under `/api/integrations`):
 ```
 GET  /health                      - System health
 GET  /health/:adapter             - Adapter health
