@@ -1,0 +1,196 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  tests:
+    name: Tests (PHP ${{ matrix.php-version }})
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.1', '8.2', '8.3']
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: intl, mbstring, xml, curl, json, mysqli, pdo_mysql
+          coverage: xdebug
+          tools: composer:v2
+      
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      
+      - name: Install PHP dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress --no-suggest
+      
+      - name: Dump optimized autoload
+        run: composer dump-autoload -o
+      
+      - name: Ensure spark is executable
+        run: |
+          if [ -f ./spark ]; then
+            chmod +x ./spark
+          fi
+      
+      - name: Setup test environment
+        run: |
+          cp .env.example .env
+          php spark key:generate --force --no-interaction
+      
+      - name: Run tests
+        run: vendor/bin/phpunit --configuration phpunit.ci4.xml --coverage-clover coverage.xml
+      
+      - name: Upload coverage to Codecov
+        if: matrix.php-version == '8.3'
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage.xml
+          fail_ci_if_error: false
+
+  code-validation:
+    name: Code Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: intl, mbstring, xml, curl, json
+          tools: composer:v2
+      
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+      
+      - name: Install PHP dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress --no-suggest
+      
+      - name: Dump optimized autoload
+        run: composer dump-autoload -o
+      
+      - name: Ensure spark is executable
+        run: |
+          if [ -f ./spark ]; then
+            chmod +x ./spark
+          fi
+      
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+      
+      - name: Check code style
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff --verbose
+      
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse --memory-limit=512M
+      
+      - name: Run PHPMD
+        run: vendor/bin/phpmd app,tests text phpmd.xml
+
+  guardrails-check:
+    name: Guardrails Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Check for TenantAwareModel usage
+        run: |
+          if grep -r "extends Model" app/ --include="*.php" | grep -v "TenantAwareModel"; then
+            echo "::warning::Found models not extending TenantAwareModel"
+          fi
+      
+      - name: Check for audit logging
+        run: |
+          if [ -d "app/Controllers" ]; then
+            if ! grep -r "AuditLogger" app/Controllers/ --include="*.php" > /dev/null; then
+              echo "::warning::Consider adding audit logging to controllers"
+            fi
+          fi
+      
+      - name: Check for observability
+        run: |
+          if [ -d "app/Controllers" ]; then
+            if ! grep -r "observability" app/Controllers/ --include="*.php" > /dev/null; then
+              echo "::notice::Consider adding observability metrics"
+            fi
+          fi
+      
+      - name: Check for security patterns
+        run: |
+          if grep -r "eval(" app/ --include="*.php"; then
+            echo "::error::Found dangerous eval() usage"
+            exit 1
+          fi
+          if grep -r "exec(" app/ --include="*.php" | grep -v "// safe"; then
+            echo "::warning::Found exec() usage - ensure it's properly sanitized"
+          fi
+      
+      - name: Summary
+        run: echo "Guardrails check completed"
+
+  documentation-check:
+    name: Documentation Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Check required documentation
+        run: |
+          required_files=("README.md" "docs/ARCHITECTURE.md" "docs/API.md")
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "::warning::Missing required documentation: $file"
+            fi
+          done
+      
+      - name: Check for broken links in documentation
+        run: |
+          if command -v markdown-link-check &> /dev/null; then
+            find . -name "*.md" -not -path "./vendor/*" -not -path "./.git/*" -exec markdown-link-check {} \; || true
+          else
+            echo "::notice::markdown-link-check not available, skipping link check"
+          fi
+
+  check-summary:
+    name: Check Summary
+    runs-on: ubuntu-latest
+    needs: [tests, code-validation, guardrails-check, documentation-check]
+    if: always()
+    
+    steps:
+      - name: Check status
+        run: |
+          if [ "${{ needs.tests.result }}" != "success" ] || [ "${{ needs.code-validation.result }}" != "success" ]; then
+            echo "::error::Some checks failed"
+            exit 1
+          fi
+          echo "All checks passed successfully"

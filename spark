@@ -10,6 +10,9 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+// Load Composer's autoloader
+require_once __DIR__ . '/vendor/autoload.php';
+
 use CodeIgniter\Boot;
 use Config\Paths;
 
