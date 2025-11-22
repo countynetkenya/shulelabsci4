@@ -190,6 +190,9 @@ class InstallService
             }
 
             // Hash password using SHA-512 (CI3 compatible initially, can be upgraded later)
+            // Note: SHA-512 without salt is used for CI3 compatibility during migration.
+            // For new installations, consider using password_hash() with PASSWORD_DEFAULT.
+            // However, this maintains consistency with the existing CI3 schema.
             $passwordHash = hash('sha512', $data['password']);
 
             // Create user
