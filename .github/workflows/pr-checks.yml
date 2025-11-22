@@ -29,7 +29,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
       
       - name: Install PHP dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress --no-suggest
+        run: composer install --prefer-dist --no-interaction --no-progress
       
       - name: Dump optimized autoload
         run: composer dump-autoload -o
