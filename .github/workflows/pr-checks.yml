@@ -110,7 +110,7 @@ jobs:
         run: vendor/bin/phpstan analyse --memory-limit=512M
       
       - name: Run PHPMD
-        run: vendor/bin/phpmd app text phpmd.xml || true
+        run: vendor/bin/phpmd app/Modules text phpmd.xml
 
   guardrails-check:
     name: Guardrails Check
