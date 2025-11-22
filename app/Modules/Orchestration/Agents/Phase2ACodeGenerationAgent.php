@@ -241,7 +241,7 @@ class {$className} extends ResourceController
             \$data = \$this->request->getJSON(true);
             
             \$validationErrors = \$this->service->validate(\$data);
-            if (!\empty(\$validationErrors)) {
+            if (!\\empty(\$validationErrors)) {
                 return \$this->failValidationErrors(\$validationErrors);
             }
             
@@ -262,7 +262,7 @@ class {$className} extends ResourceController
             \$data = \$this->request->getJSON(true);
             
             \$validationErrors = \$this->service->validate(\$data, (int) \$id);
-            if (!\empty(\$validationErrors)) {
+            if (!\\empty(\$validationErrors)) {
                 return \$this->failValidationErrors(\$validationErrors);
             }
             

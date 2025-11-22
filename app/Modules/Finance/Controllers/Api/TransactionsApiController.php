@@ -72,7 +72,7 @@ class TransactionsApiController extends ResourceController
             $data = $this->request->getJSON(true);
             
             $validationErrors = $this->service->validate($data);
-            if (!mpty($validationErrors)) {
+            if (!\empty($validationErrors)) {
                 return $this->failValidationErrors($validationErrors);
             }
             
@@ -93,7 +93,7 @@ class TransactionsApiController extends ResourceController
             $data = $this->request->getJSON(true);
             
             $validationErrors = $this->service->validate($data, (int) $id);
-            if (!mpty($validationErrors)) {
+            if (!\empty($validationErrors)) {
                 return $this->failValidationErrors($validationErrors);
             }
             
