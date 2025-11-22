@@ -6,8 +6,6 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\I18n\Time;
 use Config\Database;
-use Endroid\QrCode\Builder\Builder;
-use Endroid\QrCode\Writer\PngWriter;
 use RuntimeException;
 
 /**
@@ -51,13 +49,7 @@ class QrService
         $this->db->table('qr_tokens')->insert($record);
 
         $verificationUrl = ($context['base_url'] ?? 'https://schoolos.shulelabs.com') . '/verify/' . $token;
-        $pngData = Builder::create()
-            ->writer(new PngWriter())
-            ->data($verificationUrl)
-            ->size(300)
-            ->margin(10)
-            ->build()
-            ->getString();
+        $pngData = $this->renderPngPlaceholder($verificationUrl);
 
         return [
             'token' => $token,
@@ -99,5 +91,31 @@ class QrService
         $this->db->table('qr_scans')->insert($scan);
 
         return $row;
+    }
+
+    private function renderPngPlaceholder(string $data): string
+    {
+        $image = imagecreatetruecolor(300, 300);
+
+        if ($image === false) {
+            throw new RuntimeException('Failed to allocate image resource.');
+        }
+
+        $background = imagecolorallocate($image, 255, 255, 255);
+        $textColor = imagecolorallocate($image, 0, 0, 0);
+
+        imagefilledrectangle($image, 0, 0, 299, 299, $background);
+        imagestring($image, 3, 10, 140, substr($data, -16), $textColor);
+
+        ob_start();
+        imagepng($image);
+        $pngData = ob_get_clean();
+        imagedestroy($image);
+
+        if ($pngData === false) {
+            throw new RuntimeException('Failed to render QR placeholder.');
+        }
+
+        return $pngData;
     }
 }

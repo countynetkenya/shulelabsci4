@@ -20,6 +20,8 @@ class DatabaseCompatibilityService
     protected array $findings = [];
     protected string $tablePrefix = '';
 
+    protected string $driver;
+
     /**
      * @param \CodeIgniter\Database\BaseConnection<mixed, mixed> $db
      * @param string $tablePrefix
@@ -27,6 +29,7 @@ class DatabaseCompatibilityService
     public function __construct(BaseConnection $db, string $tablePrefix = '')
     {
         $this->db = $db;
+        $this->driver = strtolower($this->db->DBDriver ?? '');
         $this->tablePrefix = $tablePrefix;
         $this->initializeRequiredTables();
     }
@@ -50,6 +53,11 @@ class DatabaseCompatibilityService
     protected function getPrefixedTableName(string $tableName): string
     {
         return $this->tablePrefix . $tableName;
+    }
+
+    protected function isSQLite(): bool
+    {
+        return $this->driver === 'sqlite3';
     }
 
     /**
@@ -248,11 +256,21 @@ class DatabaseCompatibilityService
     protected function auditTableIndexes(string $tableName, array $requiredIndexes): void
     {
         try {
-            // Get existing indexes
-            $query = $this->db->query("SHOW INDEX FROM `{$tableName}`");
-            $existingIndexes = $query->getResultArray();
+            if ($this->isSQLite()) {
+                $existingIndexes = $this->db->query("PRAGMA index_list('{$tableName}')")->getResultArray();
+                $existingIndexNames = [];
 
-            $existingIndexNames = array_column($existingIndexes, 'Key_name');
+                foreach ($existingIndexes as $index) {
+                    $name = $index['name'] ?? null;
+                    if ($name !== null && ! str_starts_with((string) $name, 'sqlite_')) {
+                        $existingIndexNames[] = (string) $name;
+                    }
+                }
+            } else {
+                $query = $this->db->query("SHOW INDEX FROM `{$tableName}`");
+                $existingIndexes = $query->getResultArray();
+                $existingIndexNames = array_column($existingIndexes, 'Key_name');
+            }
 
             foreach ($requiredIndexes as $indexSpec) {
                 $indexName = $indexSpec['name'] ?? null;
@@ -480,18 +498,26 @@ PHP;
     {
         $type = $spec['type'];
 
-        $columnDef = "`{$column}` {$type}";
+        if ($this->isSQLite()) {
+            $columnDef = "\"{$column}\" {$type}";
+        } else {
+            $columnDef = "`{$column}` {$type}";
+        }
 
         if (!empty($spec['constraint'])) {
             $columnDef .= "({$spec['constraint']})";
         }
 
-        if (!empty($spec['unsigned'])) {
+        if (!empty($spec['unsigned']) && ! $this->isSQLite()) {
             $columnDef .= " UNSIGNED";
         }
 
         if (!empty($spec['auto_increment'])) {
-            $columnDef .= " AUTO_INCREMENT";
+            if ($this->isSQLite()) {
+                $columnDef .= " PRIMARY KEY AUTOINCREMENT";
+            } else {
+                $columnDef .= " AUTO_INCREMENT";
+            }
         }
 
         if (!empty($spec['null'])) {
@@ -503,6 +529,10 @@ PHP;
         if (isset($spec['default'])) {
             $default = is_string($spec['default']) ? "'{$spec['default']}'" : $spec['default'];
             $columnDef .= " DEFAULT {$default}";
+        }
+
+        if ($this->isSQLite()) {
+            return "ALTER TABLE \"{$table}\" ADD COLUMN {$columnDef};";
         }
 
         return "ALTER TABLE `{$table}` ADD COLUMN {$columnDef};";
@@ -520,6 +550,18 @@ PHP;
         $indexName = $indexSpec['name'];
         $fields = is_array($indexSpec['fields']) ? implode('`, `', $indexSpec['fields']) : $indexSpec['fields'];
         $unique = !empty($indexSpec['unique']) ? 'UNIQUE ' : '';
+
+        if ($this->isSQLite()) {
+            $fields = is_array($indexSpec['fields']) ? implode('", "', $indexSpec['fields']) : $indexSpec['fields'];
+
+            return sprintf(
+                'CREATE %sINDEX IF NOT EXISTS "%s" ON "%s" ("%s");',
+                $unique,
+                $indexName,
+                $table,
+                $fields
+            );
+        }
 
         return "ALTER TABLE `{$table}` ADD {$unique}INDEX `{$indexName}` (`{$fields}`);";
     }
