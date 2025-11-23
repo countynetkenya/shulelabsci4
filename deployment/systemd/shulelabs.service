@@ -1,0 +1,51 @@
+# ShuleLabs CI4 - Systemd Service Configuration
+# Location: /etc/systemd/system/shulelabs.service
+# 
+# Commands:
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable shulelabs
+#   sudo systemctl start shulelabs
+#   sudo systemctl status shulelabs
+#   sudo systemctl restart shulelabs
+#   sudo systemctl stop shulelabs
+
+[Unit]
+Description=ShuleLabs CodeIgniter 4 Application
+After=network.target mysql.service
+Requires=mysql.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/shulelabs
+Environment="CI_ENVIRONMENT=production"
+Environment="PATH=/usr/local/bin:/usr/bin:/bin"
+
+# Start the PHP-FPM service (managed separately)
+# This service is mainly for queue workers and scheduled tasks
+ExecStartPre=/usr/bin/php /var/www/shulelabs/spark cache:clear
+ExecStart=/usr/bin/php /var/www/shulelabs/spark schedule:run
+
+# Restart policy
+Restart=on-failure
+RestartSec=10s
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/www/shulelabs/writable
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=shulelabs
+
+[Install]
+WantedBy=multi-user.target
