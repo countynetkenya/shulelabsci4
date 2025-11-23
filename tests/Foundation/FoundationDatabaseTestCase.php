@@ -116,7 +116,7 @@ abstract class FoundationDatabaseTestCase extends TestCase
         return [
             'database'    => ':memory:',
             'DBDriver'    => 'SQLite3',
-            'DBPrefix'    => 'ci4_',
+            'DBPrefix'    => '',
             'DBDebug'     => true,
             'charset'     => 'utf8',
             'DBCollat'    => '',

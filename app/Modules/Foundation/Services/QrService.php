@@ -6,8 +6,8 @@ use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\I18n\Time;
 use Config\Database;
-use Endroid\QrCode\Builder\Builder;
-use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\SvgWriter;
 use RuntimeException;
 
 /**
@@ -52,13 +52,10 @@ class QrService
 
         $verificationUrl = ($context['base_url'] ?? 'https://schoolos.shulelabs.com') . '/verify/' . $token;
         
-        // QR Code v6+ uses constructor instead of Builder::create()
-        $result = Builder::build()
-            ->writer(new PngWriter())
-            ->data($verificationUrl)
-            ->size(300)
-            ->margin(10)
-            ->get();
+        // Generate QR code (using SVG writer - no GD extension required)
+        $qrCode = new QrCode($verificationUrl);
+        $writer = new SvgWriter();
+        $result = $writer->write($qrCode);
 
         return [
             'token' => $token,

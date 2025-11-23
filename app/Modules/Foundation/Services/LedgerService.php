@@ -15,6 +15,16 @@ if (!function_exists('bcadd')) {
     }
 }
 
+if (!function_exists('bccomp')) {
+    function bccomp(string $num1, string $num2, ?int $scale = 0): int {
+        $n1 = round((float)$num1, $scale);
+        $n2 = round((float)$num2, $scale);
+        if ($n1 > $n2) return 1;
+        if ($n1 < $n2) return -1;
+        return 0;
+    }
+}
+
 /**
  * Append-only ledger orchestration with accounting period locks.
  */
