@@ -15,11 +15,80 @@ final class HrServiceTest extends CIUnitTestCase
 
     protected $refresh = false;
     protected HrService $service;
+    protected static bool $migrated = false;
 
     protected function setUp(): void
     {
         parent::setUp();
+        
+        // Run migrations only once for all tests
+        if (!self::$migrated) {
+            $migrate = \Config\Services::migrations();
+            $migrate->latest();
+            self::$migrated = true;
+        }
+        
         $this->service = new HrService();
+        
+        // Create minimal test data
+        $db = \Config\Database::connect();
+        
+        // Create schools
+        $schools = [
+            ['id' => 6, 'school_name' => 'Nairobi Primary', 'school_code' => 'NRB001', 'max_students' => 500],
+            ['id' => 7, 'school_name' => 'Mombasa Secondary', 'school_code' => 'MSA001', 'max_students' => 600],
+        ];
+        
+        foreach ($schools as $school) {
+            $existing = $db->table('schools')->where('id', $school['id'])->get()->getRow();
+            if (!$existing) {
+                $school['created_at'] = date('Y-m-d H:i:s');
+                $db->table('schools')->insert($school);
+            }
+        }
+        
+        // Create classes
+        for ($i = 1; $i <= 3; $i++) {
+            $existing = $db->table('school_classes')->where('id', $i)->get()->getRow();
+            if (!$existing) {
+                $db->table('school_classes')->insert([
+                    'id' => $i,
+                    'school_id' => 6,
+                    'class_name' => "Grade {$i}",
+                    'max_capacity' => 40,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+            }
+        }
+        
+        // Create users (teachers and staff)
+        for ($i = 101; $i <= 105; $i++) {
+            $existing = $db->table('ci4_users')->where('id', $i)->get()->getRow();
+            if (!$existing) {
+                $db->table('ci4_users')->insert([
+                    'id' => $i,
+                    'username' => "teacher{$i}",
+                    'email' => "teacher{$i}@test.com",
+                    'full_name' => "Teacher {$i}",
+                    'password_hash' => password_hash('password', PASSWORD_DEFAULT),
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+            }
+        }
+        
+        // Assign teachers to school
+        for ($i = 101; $i <= 105; $i++) {
+            $existing = $db->table('school_users')->where('user_id', $i)->where('school_id', 6)->get()->getRow();
+            if (!$existing) {
+                $db->table('school_users')->insert([
+                    'school_id' => 6,
+                    'user_id' => $i,
+                    'role_id' => 3, // Assuming role_id 3 is for teachers
+                    'is_primary_school' => 1,
+                    'joined_at' => date('Y-m-d H:i:s'),
+                ]);
+            }
+        }
     }
 
     public function testGetSchoolStaff(): void
