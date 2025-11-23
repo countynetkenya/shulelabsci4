@@ -217,12 +217,12 @@ class InstallServiceTest extends FoundationDatabaseTestCase
     {
         // Create roles table
         $prefix = $this->db->getPrefix();
-        $this->db->simpleQuery("DROP TABLE IF EXISTS {$prefix}ci4_roles");
+        $this->db->simpleQuery("DROP TABLE IF EXISTS {$prefix}roles");
         $this->db->simpleQuery("DROP TABLE IF EXISTS {$prefix}ci4_user_roles");
-        $this->db->simpleQuery("DROP TABLE IF EXISTS {$prefix}ci4_users");
+        $this->db->simpleQuery("DROP TABLE IF EXISTS {$prefix}users");
 
         $this->db->simpleQuery(<<<SQL
-CREATE TABLE {$prefix}ci4_roles (
+CREATE TABLE {$prefix}roles (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     role_name VARCHAR(40) NOT NULL,
     role_slug VARCHAR(40) NOT NULL,
@@ -243,7 +243,7 @@ CREATE TABLE {$prefix}ci4_user_roles (
 SQL);
 
         $this->db->simpleQuery(<<<SQL
-CREATE TABLE {$prefix}ci4_users (
+CREATE TABLE {$prefix}users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username VARCHAR(40) NOT NULL,
     email VARCHAR(40),

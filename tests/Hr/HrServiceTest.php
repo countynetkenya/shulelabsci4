@@ -61,8 +61,9 @@ final class HrServiceTest extends CIUnitTestCase
             }
         }
         
-        // Create users (teachers and staff)
-        for ($i = 101; $i <= 105; $i++) {
+        // Create users (teachers and staff) - includes IDs referenced in tests
+        $teacherIds = [25, 26, 101, 102, 103, 104, 105];
+        foreach ($teacherIds as $i) {
             $existing = $db->table('ci4_users')->where('id', $i)->get()->getRow();
             if (!$existing) {
                 $db->table('ci4_users')->insert([
@@ -77,17 +78,23 @@ final class HrServiceTest extends CIUnitTestCase
         }
         
         // Assign teachers to school
-        for ($i = 101; $i <= 105; $i++) {
+        foreach ($teacherIds as $i) {
             $existing = $db->table('school_users')->where('user_id', $i)->where('school_id', 6)->get()->getRow();
             if (!$existing) {
                 $db->table('school_users')->insert([
                     'school_id' => 6,
                     'user_id' => $i,
-                    'role_id' => 3, // Assuming role_id 3 is for teachers
+                    'role_id' => 3, // Teacher role
                     'is_primary_school' => 1,
                     'joined_at' => date('Y-m-d H:i:s'),
                 ]);
             }
+        }
+        
+        // Assign teacher 25 to class 1 (for testGetTeacherClasses)
+        $existing = $db->table('school_classes')->where('id', 1)->get()->getRow();
+        if ($existing && !$existing->class_teacher_id) {
+            $db->table('school_classes')->where('id', 1)->update(['class_teacher_id' => 25]);
         }
     }
 

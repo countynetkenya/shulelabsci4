@@ -27,6 +27,8 @@ abstract class FoundationDatabaseTestCase extends TestCase
         'maker_checker_requests',
         'tenant_catalog',
         'example_records',
+        'users',
+        'roles',
     ];
 
     protected function setUp(): void
@@ -114,7 +116,7 @@ abstract class FoundationDatabaseTestCase extends TestCase
         return [
             'database'    => ':memory:',
             'DBDriver'    => 'SQLite3',
-            'DBPrefix'    => 'db_',
+            'DBPrefix'    => 'ci4_',
             'DBDebug'     => true,
             'charset'     => 'utf8',
             'DBCollat'    => '',
@@ -295,6 +297,28 @@ CREATE TABLE {$prefix}example_records (
     deleted_by VARCHAR(64),
     delete_reason TEXT,
     updated_at DATETIME
+)
+SQL);
+
+        $this->db->simpleQuery(<<<SQL
+CREATE TABLE {$prefix}users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    email VARCHAR(191) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    full_name VARCHAR(191) NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME
+)
+SQL);
+
+        $this->db->simpleQuery(<<<SQL
+CREATE TABLE {$prefix}roles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role_name VARCHAR(100) NOT NULL,
+    role_slug VARCHAR(100) UNIQUE NOT NULL,
+    description TEXT,
+    created_at DATETIME NOT NULL
 )
 SQL);
     }
