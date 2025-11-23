@@ -20,7 +20,7 @@ Total users migrated: 0
 FFFFF....FEFEFFFFFF........EF.FFEEFFFF......................... 189 / 206 ( 91%)
 .....EF.FFFFEFF.F                                               206 / 206 (100%)
 
-Time: 00:03.824, Memory: 24.00 MB
+Time: 00:03.798, Memory: 24.00 MB
 
 There was 1 PHPUnit test runner warning:
 
