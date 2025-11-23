@@ -127,6 +127,12 @@ class CreateCi4RolesTables extends Migration
      */
     private function seedDefaultRoles(): void
     {
+        // Check if roles already exist to prevent duplicates
+        $existingCount = $this->db->table('ci4_roles')->countAllResults();
+        if ($existingCount > 0) {
+            return; // Roles already seeded
+        }
+
         $roles = [
             [
                 'role_name' => 'Super Admin',

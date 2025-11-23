@@ -12,6 +12,7 @@
         "ext-pdo": "*",
         "ext-zip": "*",
         "codeigniter4/framework": "^4.5",
+        "endroid/qr-code": "^6.0",
         "ramsey/uuid": "^4.9"
     },
     "require-dev": {

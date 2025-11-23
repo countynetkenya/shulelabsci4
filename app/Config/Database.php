@@ -167,7 +167,7 @@ class Database extends Config
         'hostname'    => '127.0.0.1',
         'username'    => '',
         'password'    => '',
-        'database'    => WRITEPATH . 'database.db', // Use actual database for tests
+        'database'    => ':memory:', // Use in-memory database for tests
         'DBDriver'    => 'SQLite3',
         'DBPrefix'    => '',  // No prefix - tables are: schools, school_users, etc.
         'pConnect'    => false,

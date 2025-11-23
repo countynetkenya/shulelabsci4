@@ -15,11 +15,69 @@ final class EnrollmentServiceTest extends CIUnitTestCase
 
     protected $refresh = false;
     protected EnrollmentService $service;
+    protected static bool $migrated = false;
 
     protected function setUp(): void
     {
         parent::setUp();
+        
+        // Run migrations only once for all tests
+        if (!self::$migrated) {
+            $migrate = \Config\Services::migrations();
+            $migrate->latest();
+            self::$migrated = true;
+        }
+        
         $this->service = new EnrollmentService();
+        
+        // Create minimal test data
+        $db = \Config\Database::connect();
+        
+        // Create school if not exists
+        $existing = $db->table('schools')->where('id', 6)->get()->getRow();
+        if (!$existing) {
+            $db->table('schools')->insert([
+                'id' => 6,
+                'school_name' => 'Test School',
+                'school_code' => 'TEST001',
+                'max_students' => 1000,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+        }
+        
+        // Create classes if not exist
+        $existingClass = $db->table('school_classes')->where('id', 1)->get()->getRow();
+        if (!$existingClass) {
+            $db->table('school_classes')->insertBatch([
+                ['id' => 1, 'school_id' => 6, 'class_name' => 'Class 1', 'max_capacity' => 40, 'created_at' => date('Y-m-d H:i:s')],
+                ['id' => 2, 'school_id' => 6, 'class_name' => 'Class 2', 'max_capacity' => 40, 'created_at' => date('Y-m-d H:i:s')],
+            ]);
+        }
+        
+        // Create users if not exist
+        $existingUser = $db->table('ci4_users')->where('id', 218)->get()->getRow();
+        if (!$existingUser) {
+            $db->table('ci4_users')->insertBatch([
+                ['id' => 218, 'username' => 'student218', 'email' => 'student218@test.com', 'full_name' => 'Student 218', 'password_hash' => password_hash('password', PASSWORD_DEFAULT), 'created_at' => date('Y-m-d H:i:s')],
+                ['id' => 219, 'username' => 'student219', 'email' => 'student219@test.com', 'full_name' => 'Student 219', 'password_hash' => password_hash('password', PASSWORD_DEFAULT), 'created_at' => date('Y-m-d H:i:s')],
+                ['id' => 33, 'username' => 'student33', 'email' => 'student33@test.com', 'full_name' => 'Student 33', 'password_hash' => password_hash('password', PASSWORD_DEFAULT), 'created_at' => date('Y-m-d H:i:s')],
+                ['id' => 134, 'username' => 'parent134', 'email' => 'parent134@test.com', 'full_name' => 'Parent 134', 'password_hash' => password_hash('password', PASSWORD_DEFAULT), 'created_at' => date('Y-m-d H:i:s')],
+                ['id' => 220, 'username' => 'student220', 'email' => 'student220@test.com', 'full_name' => 'Student 220', 'password_hash' => password_hash('password', PASSWORD_DEFAULT), 'created_at' => date('Y-m-d H:i:s')],
+            ]);
+        }
+        
+        // Pre-enroll student 33 to test duplicate enrollment
+        $enrollment = $db->table('student_enrollments')->where('student_id', 33)->where('school_id', 6)->get()->getRow();
+        if (!$enrollment) {
+            $db->table('student_enrollments')->insert([
+                'student_id' => 33,
+                'school_id' => 6,
+                'class_id' => 1,
+                'status' => 'active',
+                'enrollment_date' => date('Y-m-d'),
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+        }
     }
 
     public function testEnrollStudent(): void

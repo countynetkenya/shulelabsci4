@@ -1,0 +1,1457 @@
+PHPUnit 10.5.58 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.3.14
+Configuration: /workspaces/shulelabsci4/phpunit.xml
+
+.........EEEEEEEEEEEE...EEEEEEEEEE.E.FEEE.......EF.E....EEEEEEE  63 / 206 ( 30%)
+EEE.EE.....Starting CI4 users backfill from CI3 tables...
+Table systemadmin does not exist, skipping.
+Migrated 0 users from systemadmin
+Table user does not exist, skipping.
+Migrated 0 users from user
+Table teacher does not exist, skipping.
+Migrated 0 users from teacher
+Table student does not exist, skipping.
+Migrated 0 users from student
+Table parents does not exist, skipping.
+Migrated 0 users from parents
+Total users migrated: 0
+.FFF.FFRRFFR.FFFFE...F..F.FF...E.E.................. 126 / 206 ( 61%)
+........................................E................E..... 189 / 206 ( 91%)
+.................                                               206 / 206 (100%)
+
+Time: 00:00.893, Memory: 24.00 MB
+
+There was 1 PHPUnit test runner warning:
+
+1) XDEBUG_MODE=coverage (environment variable) or xdebug.mode=coverage (PHP configuration setting) has to be set
+
+--
+
+There were 45 errors:
+
+1) Tests\Finance\FinanceServiceTest::testGetSchoolInvoices
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:33
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:33
+
+Caused by
+SQLite3Exception: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:175
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:33
+
+2) Tests\Finance\FinanceServiceTest::testCreateInvoice
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:48
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:48
+
+Caused by
+SQLite3Exception: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:175
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:48
+
+3) Tests\Finance\FinanceServiceTest::testRecordPayment
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:65
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:65
+
+Caused by
+SQLite3Exception: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:175
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:65
+
+4) Tests\Finance\FinanceServiceTest::testRecordFullPayment
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:85
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:85
+
+Caused by
+SQLite3Exception: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:175
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:85
+
+5) Tests\Finance\FinanceServiceTest::testGetInvoiceDetails
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:105
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:105
+
+Caused by
+SQLite3Exception: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:175
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:105
+
+6) Tests\Finance\FinanceServiceTest::testGetPaymentStats
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:126
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:126
+
+Caused by
+SQLite3Exception: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:175
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:126
+
+7) Tests\Finance\FinanceServiceTest::testGetOutstandingInvoices
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:143
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:143
+
+Caused by
+SQLite3Exception: no such table: invoices
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:175
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:394
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:838
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:797
+/workspaces/shulelabsci4/app/Models/TenantModel.php:99
+/workspaces/shulelabsci4/app/Services/FinanceService.php:60
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:143
+
+8) Tests\Finance\FinanceServiceTest::testGetFeeStructure
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: fee_structures
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:330
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:715
+/workspaces/shulelabsci4/app/Models/TenantModel.php:77
+/workspaces/shulelabsci4/app/Services/FinanceService.php:206
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:164
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: fee_structures
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:330
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:715
+/workspaces/shulelabsci4/app/Models/TenantModel.php:77
+/workspaces/shulelabsci4/app/Services/FinanceService.php:206
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:164
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: fee_structures
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:330
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:715
+/workspaces/shulelabsci4/app/Models/TenantModel.php:77
+/workspaces/shulelabsci4/app/Services/FinanceService.php:206
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:164
+
+9) Tests\Finance\FinanceServiceTest::testSetFeeStructure
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: fee_structures
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:330
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:715
+/workspaces/shulelabsci4/app/Models/TenantModel.php:77
+/workspaces/shulelabsci4/app/Services/FinanceService.php:206
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:179
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: fee_structures
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:330
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:715
+/workspaces/shulelabsci4/app/Models/TenantModel.php:77
+/workspaces/shulelabsci4/app/Services/FinanceService.php:206
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:179
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: fee_structures
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:330
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:715
+/workspaces/shulelabsci4/app/Models/TenantModel.php:77
+/workspaces/shulelabsci4/app/Services/FinanceService.php:206
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:179
+
+10) Tests\Finance\FinanceServiceTest::testUpdateFeeStructure
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: fee_structures
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:330
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:715
+/workspaces/shulelabsci4/app/Models/TenantModel.php:77
+/workspaces/shulelabsci4/app/Services/FinanceService.php:206
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:195
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: fee_structures
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:330
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:715
+/workspaces/shulelabsci4/app/Models/TenantModel.php:77
+/workspaces/shulelabsci4/app/Services/FinanceService.php:206
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:195
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: fee_structures
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:330
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:715
+/workspaces/shulelabsci4/app/Models/TenantModel.php:77
+/workspaces/shulelabsci4/app/Services/FinanceService.php:206
+/workspaces/shulelabsci4/tests/Finance/FinanceServiceTest.php:195
+
+11) Tests\Ci4\Finance\InvoiceServiceTest::testIssueInvoiceCommitsLedgerAndRecordsAudit
+Error: Call to undefined function Modules\Finance\Services\bcadd()
+
+/workspaces/shulelabsci4/app/Modules/Finance/Services/InvoiceService.php:293
+/workspaces/shulelabsci4/app/Modules/Finance/Services/InvoiceService.php:197
+/workspaces/shulelabsci4/app/Modules/Finance/Services/InvoiceService.php:50
+/workspaces/shulelabsci4/tests/Finance/InvoiceServiceTest.php:95
+
+12) Tests\Ci4\Finance\InvoiceServiceTest::testSettleInvoiceCreatesLedgerEntriesAndUpdatesStatus
+Error: Call to undefined function Modules\Finance\Services\bcadd()
+
+/workspaces/shulelabsci4/app/Modules/Finance/Services/InvoiceService.php:293
+/workspaces/shulelabsci4/app/Modules/Finance/Services/InvoiceService.php:112
+/workspaces/shulelabsci4/tests/Finance/InvoiceServiceTest.php:179
+
+13) Tests\Foundation\EnrollmentServiceTest::testEnrollStudent
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: school_classes
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:31
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:28
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: school_classes
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:31
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:28
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: school_classes
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:31
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:28
+
+14) Tests\Foundation\EnrollmentServiceTest::testEnrollStudentWithParent
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: school_classes
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:31
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:37
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: school_classes
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:31
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:37
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: school_classes
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:31
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:37
+
+15) Tests\Foundation\EnrollmentServiceTest::testEnrollStudentInNonExistentClass
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: school_classes
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:31
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:44
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: school_classes
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:31
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:44
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: school_classes
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:31
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:44
+
+16) Tests\Foundation\EnrollmentServiceTest::testCannotEnrollDuplicateStudent
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: school_classes
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:31
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:53
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: school_classes
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:31
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:53
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: school_classes
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:31
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:53
+
+17) Tests\Foundation\EnrollmentServiceTest::testTransferClass
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: student_enrollments
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:330
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:715
+/workspaces/shulelabsci4/app/Models/TenantModel.php:77
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:62
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: student_enrollments
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:330
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:715
+/workspaces/shulelabsci4/app/Models/TenantModel.php:77
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:62
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: student_enrollments
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:330
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:715
+/workspaces/shulelabsci4/app/Models/TenantModel.php:77
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:62
+
+18) Tests\Foundation\EnrollmentServiceTest::testTransferToNonExistentClass
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: student_enrollments
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:330
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:715
+/workspaces/shulelabsci4/app/Models/TenantModel.php:77
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:74
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: student_enrollments
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:330
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:715
+/workspaces/shulelabsci4/app/Models/TenantModel.php:77
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:74
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: student_enrollments
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:330
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:715
+/workspaces/shulelabsci4/app/Models/TenantModel.php:77
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:74
+
+19) Tests\Foundation\EnrollmentServiceTest::testGetClassEnrollments
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: student_enrollments
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:286
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:677
+/workspaces/shulelabsci4/app/Models/TenantModel.php:65
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:127
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:84
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: student_enrollments
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:286
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:677
+/workspaces/shulelabsci4/app/Models/TenantModel.php:65
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:127
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:84
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: student_enrollments
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:286
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:677
+/workspaces/shulelabsci4/app/Models/TenantModel.php:65
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:127
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:84
+
+20) Tests\Foundation\EnrollmentServiceTest::testWithdrawStudent
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: school_classes
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:31
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:99
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: school_classes
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:31
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:99
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: school_classes
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:31
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:99
+
+21) Tests\Foundation\EnrollmentServiceTest::testWithdrawNonExistentEnrollment
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: student_enrollments
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:148
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:116
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: student_enrollments
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:148
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:116
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: student_enrollments
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Models/TenantModel.php:53
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:148
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:116
+
+22) Tests\Foundation\EnrollmentServiceTest::testGetClassEnrollmentsExcludesWithdrawn
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: student_enrollments
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:286
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:677
+/workspaces/shulelabsci4/app/Models/TenantModel.php:65
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:127
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:123
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: student_enrollments
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:286
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:677
+/workspaces/shulelabsci4/app/Models/TenantModel.php:65
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:127
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:123
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: student_enrollments
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:286
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:677
+/workspaces/shulelabsci4/app/Models/TenantModel.php:65
+/workspaces/shulelabsci4/app/Services/EnrollmentService.php:127
+/workspaces/shulelabsci4/tests/Foundation/EnrollmentServiceTest.php:123
+
+23) Tests\Ci4\Foundation\InstallServiceTest::testIsInstalledReturnsTrueWhenTenantsExist
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: db_ci4_tenant_catalog
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/tests/Foundation/InstallServiceTest.php:27
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: db_ci4_tenant_catalog
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/tests/Foundation/InstallServiceTest.php:27
+
+Caused by
+SQLite3Exception: no such table: db_ci4_tenant_catalog
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:175
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/tests/Foundation/InstallServiceTest.php:27
+
+24) Tests\Ci4\Foundation\InstallServiceTest::testCreateTenantsSucceeds
+RuntimeException: Failed to create tenants: Failed to create tenants
+
+/workspaces/shulelabsci4/app/Modules/Foundation/Services/InstallService.php:154
+/workspaces/shulelabsci4/tests/Foundation/InstallServiceTest.php:61
+
+Caused by
+RuntimeException: Failed to create tenants
+
+/workspaces/shulelabsci4/app/Modules/Foundation/Services/InstallService.php:145
+/workspaces/shulelabsci4/tests/Foundation/InstallServiceTest.php:61
+
+25) Tests\Ci4\Foundation\InstallServiceTest::testCreateTenantsGeneratesIdsWhenNotProvided
+RuntimeException: Failed to create tenants: Failed to create tenants
+
+/workspaces/shulelabsci4/app/Modules/Foundation/Services/InstallService.php:154
+/workspaces/shulelabsci4/tests/Foundation/InstallServiceTest.php:99
+
+Caused by
+RuntimeException: Failed to create tenants
+
+/workspaces/shulelabsci4/app/Modules/Foundation/Services/InstallService.php:145
+/workspaces/shulelabsci4/tests/Foundation/InstallServiceTest.php:99
+
+26) Tests\Ci4\Foundation\InstallServiceTest::testCreateAdminUserSucceeds
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: db_ci4_tenant_catalog
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/tests/Foundation/InstallServiceTest.php:111
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: no such table: db_ci4_tenant_catalog
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/tests/Foundation/InstallServiceTest.php:111
+
+Caused by
+SQLite3Exception: no such table: db_ci4_tenant_catalog
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:175
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2345
+/workspaces/shulelabsci4/tests/Foundation/InstallServiceTest.php:111
+
+27) Tests\Ci4\Foundation\LedgerServiceTest::testCommitTransactionPersistsLedgerAndAudit
+Error: Call to undefined function Modules\Foundation\Services\bcadd()
+
+/workspaces/shulelabsci4/app/Modules/Foundation/Services/LedgerService.php:231
+/workspaces/shulelabsci4/app/Modules/Foundation/Services/LedgerService.php:145
+/workspaces/shulelabsci4/app/Modules/Foundation/Services/LedgerService.php:48
+/workspaces/shulelabsci4/tests/Foundation/LedgerServiceTest.php:18
+
+28) Tests\Ci4\Foundation\LedgerServiceTest::testScheduleReversalCreatesOppositeEntries
+Error: Call to undefined function Modules\Foundation\Services\bcadd()
+
+/workspaces/shulelabsci4/app/Modules/Foundation/Services/LedgerService.php:231
+/workspaces/shulelabsci4/app/Modules/Foundation/Services/LedgerService.php:145
+/workspaces/shulelabsci4/app/Modules/Foundation/Services/LedgerService.php:48
+/workspaces/shulelabsci4/tests/Foundation/LedgerServiceTest.php:97
+
+29) Tests\Ci4\Foundation\QrServiceTest::testIssueTokenPersistsRecordAndReturnsArtifacts
+Error: Call to undefined method Endroid\QrCode\Builder\Builder::create()
+
+/workspaces/shulelabsci4/app/Modules/Foundation/Services/QrService.php:54
+/workspaces/shulelabsci4/tests/Foundation/QrServiceTest.php:17
+
+30) Tests\Ci4\Foundation\QrServiceTest::testVerifyRecordsScan
+Error: Call to undefined method Endroid\QrCode\Builder\Builder::create()
+
+/workspaces/shulelabsci4/app/Modules/Foundation/Services/QrService.php:54
+/workspaces/shulelabsci4/tests/Foundation/QrServiceTest.php:38
+
+31) Tests\Ci4\Foundation\QrServiceTest::testVerifyThrowsForExpiredToken
+Error: Call to undefined method Endroid\QrCode\Builder\Builder::create()
+
+/workspaces/shulelabsci4/app/Modules/Foundation/Services/QrService.php:54
+/workspaces/shulelabsci4/tests/Foundation/QrServiceTest.php:56
+
+32) Tests\Foundation\SchoolServiceTest::testGetDashboardStats
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:27
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:27
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:27
+
+33) Tests\Foundation\SchoolServiceTest::testGetDashboardStatsForSchool1
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:38
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:38
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:38
+
+34) Tests\Foundation\SchoolServiceTest::testGetDashboardStatsForSchool2
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:47
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:47
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:47
+
+35) Tests\Foundation\SchoolServiceTest::testGetSchoolOverview
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/app/Services/SchoolService.php:63
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:55
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/app/Services/SchoolService.php:63
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:55
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/app/Services/SchoolService.php:63
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:55
+
+36) Tests\Foundation\SchoolServiceTest::testCanEnrollStudents
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:83
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:65
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:83
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:65
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:83
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:65
+
+37) Tests\Foundation\SchoolServiceTest::testCanEnrollStudentsRespectsCap
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:83
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:73
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:83
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:73
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:83
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:73
+
+38) Tests\Foundation\SchoolServiceTest::testGetAvailableSchools
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:286
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:677
+/workspaces/shulelabsci4/app/Models/SchoolModel.php:74
+/workspaces/shulelabsci4/app/Services/SchoolService.php:103
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:80
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:286
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:677
+/workspaces/shulelabsci4/app/Models/SchoolModel.php:74
+/workspaces/shulelabsci4/app/Services/SchoolService.php:103
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:80
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:286
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:677
+/workspaces/shulelabsci4/app/Models/SchoolModel.php:74
+/workspaces/shulelabsci4/app/Services/SchoolService.php:103
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:80
+
+39) Tests\Foundation\SchoolServiceTest::testSchoolOverviewIncludesEnrollmentCounts
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/app/Services/SchoolService.php:63
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:94
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/app/Services/SchoolService.php:63
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:94
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/app/Services/SchoolService.php:63
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:94
+
+40) Tests\Foundation\SchoolServiceTest::testUtilizationCalculation
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:104
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:104
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: schools
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Model.php:210
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/BaseModel.php:611
+/workspaces/shulelabsci4/app/Services/SchoolService.php:30
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:104
+
+41) Tests\Foundation\TenantTest::testGetSchoolStatistics
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such column: ci4_roles.name
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1733
+/workspaces/shulelabsci4/app/Models/SchoolModel.php:129
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:299
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such column: ci4_roles.name
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1733
+/workspaces/shulelabsci4/app/Models/SchoolModel.php:129
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:299
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such column: ci4_roles.name
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1733
+/workspaces/shulelabsci4/app/Models/SchoolModel.php:129
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:299
+
+42) Tests\Ci4\Hr\PayrollApprovalServiceTest::testListPendingAndApprove
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: db_ci4_maker_checker_requests
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/app/Modules/Hr/Services/PayrollApprovalService.php:53
+/workspaces/shulelabsci4/tests/Hr/PayrollApprovalServiceTest.php:36
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: db_ci4_maker_checker_requests
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/app/Modules/Hr/Services/PayrollApprovalService.php:53
+/workspaces/shulelabsci4/tests/Hr/PayrollApprovalServiceTest.php:36
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: db_ci4_maker_checker_requests
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/app/Modules/Hr/Services/PayrollApprovalService.php:53
+/workspaces/shulelabsci4/tests/Hr/PayrollApprovalServiceTest.php:36
+
+43) Tests\Ci4\Hr\PayrollApprovalServiceTest::testSummariseAggregatesStatuses
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: db_ci4_maker_checker_requests
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/app/Modules/Hr/Services/PayrollApprovalService.php:53
+/workspaces/shulelabsci4/tests/Hr/PayrollApprovalServiceTest.php:65
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: db_ci4_maker_checker_requests
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/app/Modules/Hr/Services/PayrollApprovalService.php:53
+/workspaces/shulelabsci4/tests/Hr/PayrollApprovalServiceTest.php:65
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: db_ci4_maker_checker_requests
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/app/Modules/Hr/Services/PayrollApprovalService.php:53
+/workspaces/shulelabsci4/tests/Hr/PayrollApprovalServiceTest.php:65
+
+44) Tests\Mobile\MobileApiServiceTest::testGetDashboard
+RuntimeException: School not found
+
+/workspaces/shulelabsci4/app/Services/SchoolService.php:33
+/workspaces/shulelabsci4/app/Services/MobileApiService.php:61
+/workspaces/shulelabsci4/tests/Mobile/MobileApiServiceTest.php:51
+
+45) Tests\Ci4\Mobile\SnapshotTelemetryServiceTest::testTelemetryAggregatesIssuedVerifiedAndFailures
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: db_ci4_audit_events
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/app/Modules/Mobile/Services/SnapshotTelemetryService.php:48
+/workspaces/shulelabsci4/tests/Mobile/SnapshotTelemetryServiceTest.php:25
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: Unable to prepare statement: no such table: db_ci4_audit_events
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/app/Modules/Mobile/Services/SnapshotTelemetryService.php:48
+/workspaces/shulelabsci4/tests/Mobile/SnapshotTelemetryServiceTest.php:25
+
+Caused by
+SQLite3Exception: Unable to prepare statement: no such table: db_ci4_audit_events
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:176
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1649
+/workspaces/shulelabsci4/app/Modules/Mobile/Services/SnapshotTelemetryService.php:48
+/workspaces/shulelabsci4/tests/Mobile/SnapshotTelemetryServiceTest.php:25
+
+--
+
+There were 17 failures:
+
+1) Tests\Ci4\Foundation\InstallServiceTest::testCheckMigrationsReturnsSuccess
+Failed asserting that false is true.
+
+/workspaces/shulelabsci4/tests/Foundation/InstallServiceTest.php:46
+
+2) Tests\Ci4\Foundation\LedgerServiceTest::testCommitTransactionThrowsWhenUnbalanced
+Failed asserting that exception of type "Error" matches expected exception "RuntimeException". Message was: "Call to undefined function Modules\Foundation\Services\bcadd()" at
+/workspaces/shulelabsci4/app/Modules/Foundation/Services/LedgerService.php:231
+/workspaces/shulelabsci4/app/Modules/Foundation/Services/LedgerService.php:145
+/workspaces/shulelabsci4/app/Modules/Foundation/Services/LedgerService.php:48
+/workspaces/shulelabsci4/tests/Foundation/LedgerServiceTest.php:55
+.
+
+3) Tests\Foundation\TenantTest::testSetCurrentSchoolBySession
+Failed asserting that null matches expected 1.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:56
+
+4) Tests\Foundation\TenantTest::testSetCurrentSchoolByPrimarySchool
+Failed asserting that null matches expected 1.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:66
+
+5) Tests\Foundation\TenantTest::testSwitchSchool
+Failed asserting that false is true.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:76
+
+6) Tests\Foundation\TenantTest::testGetUserSchools
+Failed asserting that actual size 0 matches expected size 1.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:97
+
+7) Tests\Foundation\TenantTest::testHasAccessToSchool
+Failed asserting that false is true.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:107
+
+8) Tests\Foundation\TenantTest::testTenantModelWithoutTenant
+Failed asserting that 0 is greater than 1.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:153
+
+9) Tests\Foundation\TenantTest::testTenantModelForSchools
+Failed asserting that an array contains 1.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:164
+
+10) Tests\Foundation\TenantTest::testUserCanBelongToMultipleSchools
+Failed asserting that actual size 0 matches expected size 2.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:248
+
+11) Tests\Foundation\TenantTest::testPrimarySchoolIdentification
+Failed asserting that null is not null.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:268
+
+12) Tests\Foundation\TenantTest::testGetActiveSchools
+Failed asserting that actual size 0 matches expected size 5.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:281
+
+13) Tests\Foundation\TenantTest::testGetSchoolByCode
+Failed asserting that null is not null.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:292
+
+14) Tests\Hr\HrServiceTest::testGetSchoolStaff
+Failed asserting that 0 is greater than 0.
+
+/workspaces/shulelabsci4/tests/Hr/HrServiceTest.php:30
+
+15) Tests\Hr\HrServiceTest::testCannotAssignTeacherTwice
+Failed asserting that true is false.
+
+/workspaces/shulelabsci4/tests/Hr/HrServiceTest.php:72
+
+16) Tests\Hr\HrServiceTest::testGetTeacherClasses
+Failed asserting that 0 is greater than 0.
+
+/workspaces/shulelabsci4/tests/Hr/HrServiceTest.php:101
+
+17) Tests\Hr\HrServiceTest::testAssignTeacherToClass
+Failed asserting that false is true.
+
+/workspaces/shulelabsci4/tests/Hr/HrServiceTest.php:109
+
+--
+
+There were 3 risky tests:
+
+1) Tests\Foundation\TenantTest::testTenantModelAutoScoping
+This test did not perform any assertions
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:117
+
+2) Tests\Foundation\TenantTest::testTenantModelForSchool
+This test did not perform any assertions
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:133
+
+3) Tests\Foundation\TenantTest::testSchool1CannotSeeSchool2Data
+This test did not perform any assertions
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:173
+
+ERRORS!
+Tests: 206, Assertions: 498, Errors: 45, Failures: 17, PHPUnit Warnings: 1, PHPUnit Deprecations: 1, Risky: 3.

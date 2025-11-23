@@ -13,13 +13,37 @@ final class FinanceServiceTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    protected $refresh = false;
+    protected $refresh = true;
     protected FinanceService $service;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->service = new FinanceService();
+        
+        // Create minimal test data
+        $db = \Config\Database::connect();
+        
+        // Create school
+        $db->table('schools')->insert([
+            'id' => 6,
+            'school_name' => 'Test School',
+            'max_students' => 1000,
+            'status' => 'active',
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+        
+        // Create students
+        $students = [50, 51, 52, 53, 54, 55, 56, 57];
+        foreach ($students as $id) {
+            $db->table('ci4_users')->insert([
+                'id' => $id,
+                'username' => "student{$id}",
+                'email' => "student{$id}@test.com",
+                'full_name' => "Student {$id}",
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+        }
     }
 
     public function testGetSchoolInvoices(): void

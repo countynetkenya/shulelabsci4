@@ -24,7 +24,7 @@ class TenantTest extends CIUnitTestCase
     use DatabaseTestTrait;
     use FeatureTestTrait;
 
-    protected $refresh = false;
+    protected $refresh = true;
     protected $namespace = 'App';
 
     protected function setUp(): void

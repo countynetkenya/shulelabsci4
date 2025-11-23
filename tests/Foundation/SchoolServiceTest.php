@@ -13,7 +13,7 @@ final class SchoolServiceTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    protected $refresh = false;
+    protected $refresh = true;
     protected SchoolService $service;
 
     protected function setUp(): void
