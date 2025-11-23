@@ -1,0 +1,100 @@
+Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+PHPUnit 10.5.58 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.3.14
+Configuration: /workspaces/shulelabsci4/phpunit.xml
+
+.........Starting CI4 users backfill from CI3 tables...
+Table systemadmin does not exist, skipping.
+Migrated 0 users from systemadmin
+Table user does not exist, skipping.
+Migrated 0 users from user
+Table teacher does not exist, skipping.
+Migrated 0 users from teacher
+Table student does not exist, skipping.
+Migrated 0 users from student
+Table parents does not exist, skipping.
+Migrated 0 users from parents
+Total users migrated: 0
+...........E..............E.FEEE.......EF.E....EEE.F..  63 / 206 ( 30%)
+............FFF.FFER.FEFFFEFE......F.FF...E.E.................. 126 / 206 ( 61%)
+.........................................................E..... 189 / 206 ( 91%)
+.................                                               206 / 206 (100%)
+
+Time: 00:03.327, Memory: 24.00 MB
+
+Audit Service (Tests\Ci4\Foundation\AuditService)
+ ✔ Record event persists hash chain
+ ✔ Verify integrity detects tampering
+ ✔ Seal day persists seal record
+
+Database Compatibility Service (Tests\Ci4\Compat\DatabaseCompatibilityService)
+ ✔ Audit detects missing tables
+ ✔ Audit detects missing columns
+ ✔ Audit passes when schema is complete
+ ✔ Generate sql patches for missing columns
+ ✔ Add experimental tables adds okr tables
+ ✔ Generate migration content
+
+Database Config (Tests\Ci4\Config\DatabaseConfig)
+ ✔ Database config reads from env
+ ✔ Default database config has correct structure
+ ✔ Tests config uses in memory s q lite
+
+Document Catalog (Tests\Ci4\Library\DocumentCatalog)
+ ✔ Register document uploads to drive issues qr and audits
+
+Enrollment Service (Tests\Foundation\EnrollmentService)
+ ✔ Enroll student
+ ✔ Enroll student with parent
+ ✔ Enroll student in non existent class
+ ✔ Cannot enroll duplicate student
+ ✔ Transfer class
+ ✔ Transfer to non existent class
+ ✔ Get class enrollments
+ ✔ Withdraw student
+ ✔ Withdraw non existent enrollment
+ ✔ Get class enrollments excludes withdrawn
+
+Event Bus (Tests\Ci4\Threads\EventBus)
+ ✔ Dispatch invokes all subscribers and captures failures
+
+Finance Service (Tests\Finance\FinanceService)
+ ✔ Get school invoices
+ ✔ Create invoice
+ ✔ Record payment
+ ✔ Record full payment
+ ✔ Get invoice details
+ ✔ Get payment stats
+ ✔ Get outstanding invoices
+ ✔ Get fee structure
+ ✔ Set fee structure
+ ✔ Update fee structure
+
+Gamification Service (Tests\Ci4\Gamification\GamificationService)
+ ✔ Handle recognition awarded increments points and awards badges
+
+Hr Service (Tests\Hr\HrService)
+ ✔ Get school staff
+ ✔ Get school staff with role filter
+ ✔ Assign teacher
+ ✘ Cannot assign teacher twice
+   │
+   │ Failed asserting that true is false.
+   │
+   │ /workspaces/shulelabsci4/tests/Hr/HrServiceTest.php:141
+   │
+ ✔ Remove teacher
+ ✘ Get teacher classes
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Hr/HrServiceTest.php:170
+   │
+ ✘ Assign teacher to class
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Hr/HrServiceTest.php:178
+   │
+ ✔ Cannot assign teacher to class in different school
