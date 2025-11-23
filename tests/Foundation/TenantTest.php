@@ -38,6 +38,49 @@ class TenantTest extends CIUnitTestCase
             $migrate->latest();
             self::$migrated = true;
         }
+        
+        // Create test data
+        $db = \Config\Database::connect();
+        
+        // Create 5 schools
+        for ($i = 1; $i <= 5; $i++) {
+            $existing = $db->table('schools')->where('id', $i)->get()->getRow();
+            if (!$existing) {
+                $db->table('schools')->insert([
+                    'id' => $i,
+                    'school_name' => "School {$i}",
+                    'school_code' => "SCH00{$i}",
+                    'max_students' => 500,
+                    'is_active' => 1,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+            }
+        }
+        
+        // Create test user (ID 24 - schooladmin100)
+        $existing = $db->table('ci4_users')->where('id', 24)->get()->getRow();
+        if (!$existing) {
+            $db->table('ci4_users')->insert([
+                'id' => 24,
+                'username' => 'schooladmin100',
+                'email' => 'schooladmin100@test.com',
+                'full_name' => 'School Admin 100',
+                'password_hash' => password_hash('password', PASSWORD_DEFAULT),
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+        }
+        
+        // Assign user to school 1 as primary
+        $existing = $db->table('school_users')->where('user_id', 24)->where('school_id', 1)->get()->getRow();
+        if (!$existing) {
+            $db->table('school_users')->insert([
+                'school_id' => 1,
+                'user_id' => 24,
+                'role_id' => 1, // Admin role
+                'is_primary_school' => 1,
+                'joined_at' => date('Y-m-d H:i:s'),
+            ]);
+        }
     }
 
     protected function tearDown(): void

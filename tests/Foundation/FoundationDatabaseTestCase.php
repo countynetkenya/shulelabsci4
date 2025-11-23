@@ -315,6 +315,7 @@ SQL);
         $this->db->simpleQuery(<<<SQL
 CREATE TABLE {$prefix}roles (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(100) NOT NULL,
     role_name VARCHAR(100) NOT NULL,
     role_slug VARCHAR(100) UNIQUE NOT NULL,
     description TEXT,
