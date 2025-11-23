@@ -8,6 +8,13 @@ use CodeIgniter\I18n\Time;
 use Config\Database;
 use RuntimeException;
 
+// Polyfill for bcmath if not available
+if (!function_exists('bcadd')) {
+    function bcadd(string $num1, string $num2, ?int $scale = 0): string {
+        return number_format((float)$num1 + (float)$num2, $scale, '.', '');
+    }
+}
+
 /**
  * Append-only ledger orchestration with accounting period locks.
  */

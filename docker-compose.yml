@@ -1,0 +1,99 @@
+version: '3.8'
+
+services:
+  # Application service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shulelabs-app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8080}:80"
+    environment:
+      - CI_ENVIRONMENT=${CI_ENVIRONMENT:-production}
+      - DB_HOSTNAME=db
+      - DB_DATABASE=${DB_DATABASE:-shulelabs}
+      - DB_USERNAME=${DB_USERNAME:-shulelabs}
+      - DB_PASSWORD=${DB_PASSWORD:-secret}
+      - DB_DRIVER=MySQLi
+    volumes:
+      - ./writable:/var/www/html/writable
+      - ./public/uploads:/var/www/html/public/uploads
+      - ./var/logs:/var/www/html/var/logs
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - shulelabs-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Database service
+  db:
+    image: mysql:8.0
+    container_name: shulelabs-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-rootsecret}
+      - MYSQL_DATABASE=${DB_DATABASE:-shulelabs}
+      - MYSQL_USER=${DB_USERNAME:-shulelabs}
+      - MYSQL_PASSWORD=${DB_PASSWORD:-secret}
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./deployment/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    networks:
+      - shulelabs-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # Redis cache (optional)
+  redis:
+    image: redis:7-alpine
+    container_name: shulelabs-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - shulelabs-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  # Adminer - Database management (dev only)
+  adminer:
+    image: adminer:latest
+    container_name: shulelabs-adminer
+    restart: unless-stopped
+    ports:
+      - "${ADMINER_PORT:-8081}:8080"}
+    environment:
+      - ADMINER_DEFAULT_SERVER=db
+    networks:
+      - shulelabs-network
+    profiles:
+      - dev
+
+volumes:
+  db-data:
+    driver: local
+  redis-data:
+    driver: local
+
+networks:
+  shulelabs-network:
+    driver: bridge

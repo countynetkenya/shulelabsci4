@@ -24,12 +24,20 @@ class TenantTest extends CIUnitTestCase
     use DatabaseTestTrait;
     use FeatureTestTrait;
 
-    protected $refresh = true;
+    protected $refresh = false;
     protected $namespace = 'App';
+    protected static bool $migrated = false;
 
     protected function setUp(): void
     {
         parent::setUp();
+        
+        // Run migrations only once for all tests
+        if (!self::$migrated) {
+            $migrate = \Config\Services::migrations();
+            $migrate->latest();
+            self::$migrated = true;
+        }
     }
 
     protected function tearDown(): void

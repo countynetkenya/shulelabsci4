@@ -13,36 +13,52 @@ final class FinanceServiceTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    protected $refresh = true;
+    protected $refresh = false;
     protected FinanceService $service;
+    protected static bool $migrated = false;
 
     protected function setUp(): void
     {
         parent::setUp();
+        
+        // Run migrations only once for all tests
+        if (!self::$migrated) {
+            $migrate = \Config\Services::migrations();
+            $migrate->latest();
+            self::$migrated = true;
+        }
+        
         $this->service = new FinanceService();
         
         // Create minimal test data
         $db = \Config\Database::connect();
         
-        // Create school
-        $db->table('schools')->insert([
-            'id' => 6,
-            'school_name' => 'Test School',
-            'max_students' => 1000,
-            'status' => 'active',
-            'created_at' => date('Y-m-d H:i:s'),
-        ]);
-        
-        // Create students
-        $students = [50, 51, 52, 53, 54, 55, 56, 57];
-        foreach ($students as $id) {
-            $db->table('ci4_users')->insert([
-                'id' => $id,
-                'username' => "student{$id}",
-                'email' => "student{$id}@test.com",
-                'full_name' => "Student {$id}",
+        // Create school if not exists
+        $existing = $db->table('schools')->where('id', 6)->get()->getRow();
+        if (!$existing) {
+            $db->table('schools')->insert([
+                'id' => 6,
+                'school_name' => 'Test School',
+                'school_code' => 'TEST001',
+                'max_students' => 1000,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
+        }
+        
+        // Create students if not exist
+        $students = [50, 51, 52, 53, 54, 55, 56, 57];
+        foreach ($students as $id) {
+            $existingUser = $db->table('ci4_users')->where('id', $id)->get()->getRow();
+            if (!$existingUser) {
+                $db->table('ci4_users')->insert([
+                    'id' => $id,
+                    'username' => "student{$id}",
+                    'email' => "student{$id}@test.com",
+                    'full_name' => "Student {$id}",
+                    'password_hash' => password_hash('password', PASSWORD_DEFAULT),
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+            }
         }
     }
 

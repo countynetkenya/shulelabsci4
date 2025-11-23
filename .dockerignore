@@ -1,0 +1,67 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.travis.yml
+
+# Documentation
+*.md
+!README.md
+docs/
+CHANGELOG.md
+
+# Tests
+tests/
+phpunit.xml
+phpunit.ci4.xml
+phpstan.neon
+phpmd.xml
+.phpunit.result.cache
+
+# Development
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Dependencies (will be installed during build)
+vendor/
+node_modules/
+
+# Writable directories (will be volumes)
+writable/cache/*
+writable/logs/*
+writable/session/*
+writable/uploads/*
+var/logs/*
+var/cache/*
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+backups/
+
+# Database
+*.sql
+*.sqlite
+*.db
+!deployment/database/*.sql
+
+# Build artifacts
+coverage/
+build/
+dist/

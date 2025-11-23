@@ -1,0 +1,77 @@
+# Development Docker Compose - includes dev tools
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: shulelabs-app-dev
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+      - "9003:9003"  # Xdebug
+    environment:
+      - CI_ENVIRONMENT=development
+      - DB_HOSTNAME=db
+      - DB_DATABASE=shulelabs_dev
+      - DB_USERNAME=shulelabs
+      - DB_PASSWORD=secret
+      - XDEBUG_MODE=debug
+      - XDEBUG_CONFIG=client_host=host.docker.internal
+    volumes:
+      - .:/var/www/html
+      - /var/www/html/vendor  # Don't mount vendor
+    depends_on:
+      - db
+    networks:
+      - shulelabs-network
+
+  db:
+    image: mysql:8.0
+    container_name: shulelabs-db-dev
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootsecret
+      - MYSQL_DATABASE=shulelabs_dev
+      - MYSQL_USER=shulelabs
+      - MYSQL_PASSWORD=secret
+    volumes:
+      - db-dev-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - shulelabs-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: shulelabs-redis-dev
+    ports:
+      - "6379:6379"
+    networks:
+      - shulelabs-network
+
+  adminer:
+    image: adminer:latest
+    container_name: shulelabs-adminer-dev
+    ports:
+      - "8081:8080"
+    networks:
+      - shulelabs-network
+
+  # Mailhog for email testing
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: shulelabs-mailhog
+    ports:
+      - "1025:1025"  # SMTP
+      - "8025:8025"  # Web UI
+    networks:
+      - shulelabs-network
+
+volumes:
+  db-dev-data:
+
+networks:
+  shulelabs-network:
+    driver: bridge

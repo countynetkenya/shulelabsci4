@@ -51,17 +51,18 @@ class QrService
         $this->db->table('qr_tokens')->insert($record);
 
         $verificationUrl = ($context['base_url'] ?? 'https://schoolos.shulelabs.com') . '/verify/' . $token;
-        $pngData = Builder::create()
+        
+        // QR Code v6+ uses constructor instead of Builder::create()
+        $result = Builder::build()
             ->writer(new PngWriter())
             ->data($verificationUrl)
             ->size(300)
             ->margin(10)
-            ->build()
-            ->getString();
+            ->get();
 
         return [
             'token' => $token,
-            'png'   => $pngData,
+            'png'   => $result->getString(),
             'url'   => $verificationUrl,
         ];
     }
