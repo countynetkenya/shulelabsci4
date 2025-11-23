@@ -1,0 +1,49 @@
+{
+  // Full Copilot Autonomous Access
+  "github.copilot.chat.executeCommand.enabled": true,
+  "github.copilot.chat.commandCenter.enabled": true,
+  "github.copilot.chat.terminalCwdAuthorization": "allow",
+  "github.copilot.chat.runCommand.enabled": true,
+  "github.copilot.chat.useProjectTemplates": true,
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+  // File Operations - Allow All
+  "github.copilot.chat.fileOperations.enabled": true,
+  "github.copilot.chat.fileOperations.autoApprove": "always",
+  "github.copilot.chat.search.enabled": true,
+  "github.copilot.chat.search.followSymlinks": true,
+  "github.copilot.advanced.internalMode": "enabled",
+  // Git - Auto-approve All
+  "git.allowNoVerifyCommit": true,
+  "git.confirmSync": false,
+  "git.confirmNoVerifyCommit": false,
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+  "git.confirmEmptyCommits": false,
+  "git.autorefresh": true,
+  "git.confirmForcePush": false,
+  // Terminal - No Confirmations
+  "terminal.integrated.confirmOnExit": "never",
+  "terminal.integrated.confirmOnKill": "never",
+  "terminal.integrated.allowMnemonics": true,
+  "terminal.integrated.enablePersistentSessions": true,
+  // Security - Full Trust
+  "security.workspace.trust.enabled": false,
+  "security.workspace.trust.startupPrompt": "never",
+  "security.workspace.trust.banner": "never",
+  "security.workspace.trust.emptyWindow": false,
+  // Editor - Auto-save and Format
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  // Extensions
+  "extensions.ignoreRecommendations": true,
+  "extensions.autoUpdate": true,
+  // Disable All Confirmations
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "files.participants.timeout": 10000
+}
