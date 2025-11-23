@@ -52,7 +52,9 @@ class UserModel extends Model
      */
     public function findByUsernameAnyStatus(string $username): ?object
     {
-        return $this->where('username', $username)->first();
+        return $this->where('username', $username)
+                    ->orWhere('email', $username)
+                    ->first();
     }
 
     /**
@@ -104,6 +106,21 @@ class UserModel extends Model
             ->limit(1)
             ->get()
             ->getRow();
+    }
+
+    /**
+     * Get all users with their roles for admin panel
+     *
+     * @return array
+     */
+    public function getUsersWithRoles(): array
+    {
+        $users = $this->select('ci4_users.*, r.role_name, r.id as role_id')
+            ->join('ci4_user_roles ur', 'ur.user_id = ci4_users.id', 'left')
+            ->join('ci4_roles r', 'r.id = ur.role_id', 'left')
+            ->findAll();
+
+        return $users;
     }
 
     /**

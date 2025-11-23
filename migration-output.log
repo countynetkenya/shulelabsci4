@@ -1,0 +1,43 @@
+
+CodeIgniter v4.6.3 Command Line Tool - Server Time: 2025-11-23 06:39:41 UTC+00:00
+
+Running all new migrations...
+[CodeIgniter\Database\Exceptions\DatabaseException]
+Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user '****'@'localhost'
+at SYSTEMPATH/Database/BaseConnection.php:465
+
+Backtrace:
+  1    SYSTEMPATH/Database/BaseConnection.php:614
+       CodeIgniter\Database\BaseConnection()->initialize()
+
+  2    SYSTEMPATH/Database/BaseConnection.php:1525
+       CodeIgniter\Database\BaseConnection()->query()
+
+  3    SYSTEMPATH/Database/BaseConnection.php:1545
+       CodeIgniter\Database\BaseConnection()->listTables()
+
+  4    SYSTEMPATH/Database/MigrationRunner.php:768
+       CodeIgniter\Database\BaseConnection()->tableExists()
+
+  5    SYSTEMPATH/Database/MigrationRunner.php:162
+       CodeIgniter\Database\MigrationRunner()->ensureTable()
+
+  6    SYSTEMPATH/Commands/Database/Migrate.php:85
+       CodeIgniter\Database\MigrationRunner()->latest()
+
+  7    SYSTEMPATH/CLI/Commands.php:74
+       CodeIgniter\Commands\Database\Migrate()->run()
+
+  8    SYSTEMPATH/CLI/Console.php:47
+       CodeIgniter\CLI\Commands()->run()
+
+  9    SYSTEMPATH/Boot.php:388
+       CodeIgniter\CLI\Console()->run()
+
+ 10    SYSTEMPATH/Boot.php:133
+       CodeIgniter\Boot::runCommand()
+
+ 11    ROOTPATH/spark:105
+       CodeIgniter\Boot::bootSpark()
+

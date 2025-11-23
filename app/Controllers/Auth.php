@@ -43,7 +43,9 @@ class Auth extends BaseController
      */
     public function signin()
     {
-        log_message('debug', 'Auth::signin() - Signin page accessed');
+        $method = $this->request->getMethod();
+        log_message('debug', 'Auth::signin() - Method: ' . $method . ' - Signin page accessed');
+        log_message('debug', 'Auth::signin() - POST data: ' . json_encode($this->request->getPost()));
 
         // If already logged in, redirect to dashboard
         if (session()->get('loggedin')) {
@@ -51,11 +53,22 @@ class Auth extends BaseController
             return redirect()->to('/dashboard');
         }
 
-        // Get site info
-        $this->data['siteinfos'] = $this->siteModel->getSite(0);
+        // Get site info (handle missing table gracefully)
+        try {
+            $this->data['siteinfos'] = $this->siteModel->getSite(0);
+        } catch (\Exception $e) {
+            log_message('warning', 'Auth::signin() - Could not fetch site info: ' . $e->getMessage());
+            $this->data['siteinfos'] = (object) [
+                'sname' => 'ShuleLabs',
+                'photo' => 'default-logo.png',
+                'address' => '',
+                'phone' => '',
+                'email' => ''
+            ];
+        }
         $this->data['form_validation'] = 'No';
 
-        if ($this->request->getMethod() === 'post') {
+        if (strtolower($this->request->getMethod()) === 'post') {
             log_message('debug', 'Auth::signin() - POST request detected, processing signin');
             return $this->processSignin();
         }
@@ -124,7 +137,8 @@ class Auth extends BaseController
 
             if (!$user) {
                 log_message('info', 'Auth::processSignin() - User not found in any table: ' . $username);
-                $this->data['form_validation'] = 'Unknown username';
+                $this->data['form_validation'] = '<i class="fa fa-user-times"></i> <strong>Username not found.</strong> Please check your username and try again.';
+                $this->data['error_type'] = 'username';
                 $this->data['siteinfos'] = $this->siteModel->getSite(0);
                 return view('auth/signin', $this->data);
             }
@@ -137,7 +151,8 @@ class Auth extends BaseController
         // Check if user is active
         if (!$user->is_active) {
             log_message('warning', 'Auth::processSignin() - Inactive account signin attempt: ' . $username);
-            $this->data['form_validation'] = 'Your account has been deactivated. Please contact administrator.';
+            $this->data['form_validation'] = '<i class="fa fa-ban"></i> <strong>Account Deactivated.</strong> Your account has been deactivated. Please contact the administrator.';
+            $this->data['error_type'] = 'inactive';
             $this->data['siteinfos'] = $this->siteModel->getSite(0);
             return view('auth/signin', $this->data);
         }
@@ -145,10 +160,23 @@ class Auth extends BaseController
         // Hash password using CI3 compatible method
         $hashedPassword = $this->hashCompat->hash($password);
 
-        // Verify password
-        if ($user->password_hash !== $hashedPassword) {
+        // Verify password - support both bcrypt (new) and SHA512 (CI3 compat)
+        $passwordValid = false;
+        
+        if (password_verify($password, $user->password_hash)) {
+            // Bcrypt hash (new CI4 users)
+            $passwordValid = true;
+            log_message('debug', 'Auth::processSignin() - Password verified using bcrypt');
+        } elseif ($user->password_hash === $hashedPassword) {
+            // SHA512 hash (CI3 migrated users)
+            $passwordValid = true;
+            log_message('debug', 'Auth::processSignin() - Password verified using SHA512 (CI3 compat)');
+        }
+
+        if (!$passwordValid) {
             log_message('info', 'Auth::processSignin() - Password mismatch for user: ' . $username);
-            $this->data['form_validation'] = 'Incorrect password';
+            $this->data['form_validation'] = '<i class="fa fa-key"></i> <strong>Incorrect Password.</strong> The password you entered is incorrect. Please try again or contact support.';
+            $this->data['error_type'] = 'password';
             $this->data['siteinfos'] = $this->siteModel->getSite(0);
             return view('auth/signin', $this->data);
         }
@@ -168,7 +196,8 @@ class Auth extends BaseController
             log_message('debug', 'Auth::processSignin() - User role: ' . $role->role_name . ' (usertypeID=' . $role->ci3_usertype_id . ')');
         } else {
             log_message('error', 'Auth::processSignin() - No role found for user: ' . $username);
-            $this->data['form_validation'] = 'User account is not properly configured. Please contact administrator.';
+            $this->data['form_validation'] = '<i class="fa fa-exclamation-triangle"></i> <strong>Account Configuration Error.</strong> Your user account is not properly configured. Please contact the administrator.';
+            $this->data['error_type'] = 'config';
             $this->data['siteinfos'] = $this->siteModel->getSite(0);
             return view('auth/signin', $this->data);
         }
@@ -270,7 +299,7 @@ class Auth extends BaseController
      */
     protected function redirectAfterSignin(object $user): RedirectResponse
     {
-        $schoolIDs = explode(',', $user->schoolID);
+        $schoolIDs = !empty($user->schoolID) ? explode(',', $user->schoolID) : [];
         $usertypeID = (int)$user->usertypeID;
         $loginuserID = (int)$user->userID;
 

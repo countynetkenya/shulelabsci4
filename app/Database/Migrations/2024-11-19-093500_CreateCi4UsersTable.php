@@ -89,11 +89,16 @@ class CreateCi4UsersTable extends Migration
         $this->forge->addKey(['ci3_user_table', 'ci3_user_id']);
         $this->forge->addKey('is_active');
 
-        $this->forge->createTable('ci4_users', true, [
-            'ENGINE' => 'InnoDB',
-            'CHARSET' => 'utf8mb4',
-            'COLLATE' => 'utf8mb4_general_ci',
-        ]);
+        // Create table with DB-specific attributes
+        $attributes = [];
+        if ($this->db->DBDriver === 'MySQLi') {
+            $attributes = [
+                'ENGINE' => 'InnoDB',
+                'CHARSET' => 'utf8mb4',
+                'COLLATE' => 'utf8mb4_general_ci',
+            ];
+        }
+        $this->forge->createTable('ci4_users', true, $attributes);
     }
 
     public function down()

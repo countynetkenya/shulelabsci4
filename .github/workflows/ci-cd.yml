@@ -1,0 +1,248 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        php-version: ['8.1', '8.2', '8.3']
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: intl, mbstring, pdo_sqlite, sqlite3, curl
+          coverage: xdebug
+          tools: composer:v2
+      
+      - name: Validate composer.json
+        run: composer validate --strict
+      
+      - name: Cache Composer packages
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ matrix.php-version }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-${{ matrix.php-version }}-
+      
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+      
+      - name: Create directories
+        run: |
+          mkdir -p writable/logs writable/cache writable/sessions writable/uploads
+          chmod -R 777 writable
+          php spark migrate --all
+      
+      - name: Run PHPUnit tests
+        run: vendor/bin/phpunit -c phpunit.ci4.xml --coverage-text --coverage-clover coverage.xml
+      
+      - name: Upload coverage to Codecov
+        if: matrix.php-version == '8.3'
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage.xml
+          fail_ci_if_error: false
+
+  code-quality:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: intl, mbstring, pdo_sqlite, sqlite3
+          tools: composer:v2, phpstan, phpmd
+      
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+      
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyze --memory-limit=512M --error-format=github || true
+      
+      - name: Run PHPMD
+        run: vendor/bin/phpmd app/Services,app/Models,app/Controllers github phpmd.xml || true
+      
+      - name: Run PHP CS Fixer (dry run)
+        run: |
+          composer require --dev friendsofphp/php-cs-fixer || true
+          vendor/bin/php-cs-fixer fix --dry-run --diff --allow-risky=yes || true
+
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: intl, mbstring
+          tools: composer:v2
+      
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+      
+      - name: Run Security Checker
+        run: |
+          composer require --dev enlightn/security-checker || true
+          vendor/bin/security-checker security:check composer.lock || true
+      
+      - name: Check for known vulnerabilities
+        uses: symfonycorp/security-checker-action@v5
+
+  deploy-staging:
+    name: Deploy to Staging
+    needs: [test, code-quality]
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    
+    environment:
+      name: staging
+      url: https://staging.shulelabs.com
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: intl, mbstring, pdo_mysql
+          tools: composer:v2
+      
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-dev --optimize-autoloader --no-progress
+      
+      - name: Create deployment package
+        run: |
+          mkdir -p deploy
+          rsync -av --exclude='.git' --exclude='tests' --exclude='writable/logs/*' --exclude='writable/cache/*' . deploy/
+      
+      - name: Deploy to Staging Server
+        uses: easingthemes/ssh-deploy@v4
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.STAGING_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.STAGING_HOST }}
+          REMOTE_USER: ${{ secrets.STAGING_USER }}
+          TARGET: ${{ secrets.STAGING_PATH }}
+          EXCLUDE: ".git,tests,writable/logs/*,writable/cache/*"
+      
+      - name: Run post-deployment tasks
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.STAGING_HOST }}
+          username: ${{ secrets.STAGING_USER }}
+          key: ${{ secrets.STAGING_SSH_KEY }}
+          script: |
+            cd ${{ secrets.STAGING_PATH }}
+            php spark migrate --all
+            php spark cache:clear
+            chmod -R 755 writable
+
+  deploy-production:
+    name: Deploy to Production
+    needs: [test, code-quality, security]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    
+    environment:
+      name: production
+      url: https://api.shulelabs.com
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: intl, mbstring, pdo_mysql
+          tools: composer:v2
+      
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-dev --optimize-autoloader --no-progress
+      
+      - name: Create production backup
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.PRODUCTION_HOST }}
+          username: ${{ secrets.PRODUCTION_USER }}
+          key: ${{ secrets.PRODUCTION_SSH_KEY }}
+          script: |
+            cd ${{ secrets.PRODUCTION_PATH }}
+            timestamp=$(date +%Y%m%d_%H%M%S)
+            tar -czf "../backups/shulelabs_backup_${timestamp}.tar.gz" .
+            mysqldump -u ${{ secrets.DB_USER }} -p${{ secrets.DB_PASSWORD }} ${{ secrets.DB_NAME }} > "../backups/database_backup_${timestamp}.sql"
+            ls -lt ../backups | head -6
+      
+      - name: Deploy to Production Server
+        uses: easingthemes/ssh-deploy@v4
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.PRODUCTION_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.PRODUCTION_HOST }}
+          REMOTE_USER: ${{ secrets.PRODUCTION_USER }}
+          TARGET: ${{ secrets.PRODUCTION_PATH }}
+          EXCLUDE: ".git,tests,writable/logs/*,writable/cache/*"
+      
+      - name: Run post-deployment tasks
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.PRODUCTION_HOST }}
+          username: ${{ secrets.PRODUCTION_USER }}
+          key: ${{ secrets.PRODUCTION_SSH_KEY }}
+          script: |
+            cd ${{ secrets.PRODUCTION_PATH }}
+            php spark migrate --all
+            php spark cache:clear
+            chmod -R 755 writable
+            # Restart PHP-FPM (adjust based on your server setup)
+            sudo systemctl reload php8.3-fpm || true
+      
+      - name: Health check
+        run: |
+          sleep 10
+          curl -f https://api.shulelabs.com/health || exit 1
+      
+      - name: Notify deployment
+        if: success()
+        run: |
+          echo "🚀 Production deployment successful!"
+      
+      - name: Rollback on failure
+        if: failure()
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.PRODUCTION_HOST }}
+          username: ${{ secrets.PRODUCTION_USER }}
+          key: ${{ secrets.PRODUCTION_SSH_KEY }}
+          script: |
+            cd ${{ secrets.PRODUCTION_PATH }}/..
+            latest_backup=$(ls -t backups/*.tar.gz | head -1)
+            cd ${{ secrets.PRODUCTION_PATH }}
+            rm -rf *
+            tar -xzf "../${latest_backup}"
+            echo "❌ Deployment failed. Rolled back to previous version."

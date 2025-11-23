@@ -65,6 +65,15 @@ class Services extends BaseService
         return new \Modules\Foundation\Services\TenantResolver();
     }
 
+    public static function tenant(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('tenant');
+        }
+
+        return new \App\Services\TenantService(static::request());
+    }
+
     public static function qr(bool $getShared = true)
     {
         if ($getShared) {

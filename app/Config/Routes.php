@@ -14,6 +14,15 @@ use Modules\Threads\Config\Routes as ThreadsRoutes;
  * @var RouteCollection $routes
  */
 
+// Installation Routes (only when not installed)
+$routes->group('install', static function ($routes) {
+    $routes->get('/', 'Install::index');
+    $routes->get('check', 'Install::checkEnvironment');
+    $routes->post('organization', 'Install::createOrganization');
+    $routes->post('admin', 'Install::createAdmin');
+    $routes->post('complete', 'Install::complete');
+});
+
 // Authentication Routes (Guest only)
 $routes->group('auth', ['filter' => 'guest'], static function ($routes) {
     $routes->get('signin', 'Auth::signin');
@@ -33,7 +42,51 @@ $routes->group('school', ['filter' => 'auth'], static function ($routes) {
 $routes->get('dashboard', 'Dashboard::index', ['filter' => 'auth']);
 
 // Admin Panel (Admin only)
-$routes->get('admin', 'Admin::index', ['filter' => ['auth', 'admin']]);
+$routes->group('admin', ['filter' => ['auth', 'admin']], static function ($routes) {
+    $routes->get('/', 'Admin::index');
+    $routes->get('users', 'Admin::users');
+    $routes->post('users/create', 'Admin::createUser');
+    $routes->post('users/update/(:num)', 'Admin::updateUser/$1');
+    $routes->get('users/delete/(:num)', 'Admin::deleteUser/$1');
+    $routes->get('schools', 'Admin::schools');
+    $routes->post('schools/update', 'Admin::updateSchool');
+    $routes->get('settings', 'Admin::settings');
+    $routes->post('settings/update', 'Admin::updateSettings');
+    $routes->get('reports', 'Admin::reports');
+    $routes->get('finance', 'Admin::finance');
+});
+
+// Teacher Portal (Teacher role only)
+$routes->group('teacher', ['filter' => 'auth'], static function ($routes) {
+    $routes->get('/', 'Teacher::index');
+    $routes->get('classes', 'Teacher::classes');
+    $routes->get('class/(:num)/students', 'Teacher::students/$1');
+    $routes->get('assignments', 'Teacher::assignments');
+    $routes->post('assignment/create', 'Teacher::createAssignment');
+    $routes->get('grading', 'Teacher::grading');
+    $routes->post('grade/submit', 'Teacher::submitGrade');
+    $routes->post('announcement/create', 'Teacher::createAnnouncement');
+});
+
+// Student Portal (Student role only)
+$routes->group('student', ['filter' => 'auth'], static function ($routes) {
+    $routes->get('/', 'Student::index');
+    $routes->get('courses', 'Student::courses');
+    $routes->get('course/(:num)/materials', 'Student::materials/$1');
+    $routes->get('assignments', 'Student::assignments');
+    $routes->post('assignment/submit', 'Student::submitAssignment');
+    $routes->get('grades', 'Student::grades');
+});
+
+// Parent Portal (Parent role only)
+$routes->group('parent', ['filter' => 'auth'], static function ($routes) {
+    $routes->get('/', 'ParentPortal::index');
+    $routes->get('children', 'ParentPortal::children');
+    $routes->get('child/(:num)/attendance', 'ParentPortal::attendance/$1');
+    $routes->get('child/(:num)/grades', 'ParentPortal::grades/$1');
+    $routes->get('child/(:num)/assignments', 'ParentPortal::assignments/$1');
+    $routes->post('message/send', 'ParentPortal::sendMessage');
+});
 
 // Default route - redirect based on authentication and installation status
 $routes->get('/', static function () {

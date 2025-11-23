@@ -59,11 +59,16 @@ class CreateCi4RolesTables extends Migration
         $this->forge->addUniqueKey('role_slug');
         $this->forge->addKey('ci3_usertype_id');
 
-        $this->forge->createTable('ci4_roles', true, [
-            'ENGINE' => 'InnoDB',
-            'CHARSET' => 'utf8mb4',
-            'COLLATE' => 'utf8mb4_general_ci',
-        ]);
+        // Create table with DB-specific attributes
+        $attributes = [];
+        if ($this->db->DBDriver === 'MySQLi') {
+            $attributes = [
+                'ENGINE' => 'InnoDB',
+                'CHARSET' => 'utf8mb4',
+                'COLLATE' => 'utf8mb4_general_ci',
+            ];
+        }
+        $this->forge->createTable('ci4_roles', true, $attributes);
 
         // Create ci4_user_roles pivot table
         $this->forge->addField([
@@ -96,11 +101,16 @@ class CreateCi4RolesTables extends Migration
         $this->forge->addKey('user_id');
         $this->forge->addKey('role_id');
 
-        $this->forge->createTable('ci4_user_roles', true, [
-            'ENGINE' => 'InnoDB',
-            'CHARSET' => 'utf8mb4',
-            'COLLATE' => 'utf8mb4_general_ci',
-        ]);
+        // Create table with DB-specific attributes
+        $attributes = [];
+        if ($this->db->DBDriver === 'MySQLi') {
+            $attributes = [
+                'ENGINE' => 'InnoDB',
+                'CHARSET' => 'utf8mb4',
+                'COLLATE' => 'utf8mb4_general_ci',
+            ];
+        }
+        $this->forge->createTable('ci4_user_roles', true, $attributes);
 
         // Seed default roles
         $this->seedDefaultRoles();

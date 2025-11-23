@@ -36,9 +36,9 @@
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="/admin/users">
                     <div class="panel-footer">
-                        <span class="pull-left">Manage Users</span>
+                        <span class="pull-left">Manage Users & Roles</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="/admin/schools">
                     <div class="panel-footer">
                         <span class="pull-left">Manage Schools</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -82,7 +82,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="/admin/settings">
                     <div class="panel-footer">
                         <span class="pull-left">Configure System</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -97,17 +97,43 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-database fa-5x"></i>
+                            <i class="fa fa-bar-chart-o fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div>Database</div>
+                            <div>Reports</div>
+                            <div>&amp; Analytics</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="/admin/reports">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Reports</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Row - Finance Panel -->
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-money fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div>Finance</div>
                             <div>Management</div>
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="/admin/finance">
                     <div class="panel-footer">
-                        <span class="pull-left">Database Tools</span>
+                        <span class="pull-left">View Invoices & Payments</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>

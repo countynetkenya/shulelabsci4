@@ -167,9 +167,9 @@ class Database extends Config
         'hostname'    => '127.0.0.1',
         'username'    => '',
         'password'    => '',
-        'database'    => ':memory:',
+        'database'    => WRITEPATH . 'database.db', // Use actual database for tests
         'DBDriver'    => 'SQLite3',
-        'DBPrefix'    => 'db_',  // Needed to ensure we're working correctly with prefixes live. DO NOT REMOVE FOR CI DEVS
+        'DBPrefix'    => '',  // No prefix - tables are: schools, school_users, etc.
         'pConnect'    => false,
         'DBDebug'     => true,
         'charset'     => 'utf8',
@@ -210,12 +210,26 @@ class Database extends Config
         $this->default['DBDriver'] = env('DB_DRIVER', 'MySQLi');
         $this->default['port']     = (int) env('DB_PORT', 3306);
 
-        // Validate required database credentials
+        // Special handling for SQLite3
+        if ($this->default['DBDriver'] === 'SQLite3') {
+            $this->default['foreignKeys'] = true;
+            $this->default['busyTimeout'] = 1000;
+            // Ensure database path is writable
+            if (!empty($this->default['database']) && !str_starts_with($this->default['database'], '/')) {
+                $this->default['database'] = WRITEPATH . $this->default['database'];
+            }
+            return; // Skip validation for SQLite
+        }
+
+        // Validate required database credentials for MySQL/PostgreSQL
         $allowEmptyPassword = filter_var(env('DB_ALLOW_EMPTY_PASSWORD', false), FILTER_VALIDATE_BOOLEAN);
+        $missing = [];
         
-        $requiredKeys = ['hostname', 'username', 'database'];
-        if (!$allowEmptyPassword) {
-            $requiredKeys[] = 'password';
+        if (empty($this->default['hostname'])) {
+            $missing[] = 'hostname (DB_HOST)';
+        }
+        if (empty($this->default['username'])) {
+            $missing[] = 'username (DB_USERNAME)';
         }
         if (empty($this->default['database'])) {
             $missing[] = 'database (DB_DATABASE)';

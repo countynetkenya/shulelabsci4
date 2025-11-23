@@ -1,16 +1,93 @@
-# ShuleLabs CodeIgniter 4 Runtime
+# ShuleLabs CodeIgniter 4
 
-This directory contains the CodeIgniter 4 application extracted from the legacy
-monorepo. It can run in two modes:
+A comprehensive school management system built with CodeIgniter 4, designed for modern educational institutions.
 
-1. **Embedded** – the folder remains inside the `shulelabs` monorepo and reuses
-   the top-level Composer dependencies.
-2. **Standalone** – copy the contents of `ci4/` into a fresh repository and run
-   Composer from that location.
+## Quick Start
 
-The helper scripts below are scoped so they work in both layouts.
+### Development Setup (SQLite - Fastest)
+```bash
+# Install dependencies
+composer install
 
-## Initial setup
+# Copy environment file
+cp env .env
+
+# Environment is pre-configured for SQLite
+# No additional database setup needed!
+
+# Run migrations
+php spark migrate
+
+# Seed test data (23 users, 8 roles)
+php spark db:seed CompleteDatabaseSeeder
+
+# Start development server
+php spark serve
+```
+
+**Access**: http://localhost:8080  
+**Login**: admin@shulelabs.local / Admin@123456
+
+**See all test credentials**: [TESTING.md](TESTING.md)
+
+### Production Setup (MySQL)
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for complete production setup instructions.
+
+## Features
+
+### Core Modules
+- **Foundation** - Multi-tenant architecture, system configuration
+- **HR** - User management, roles, permissions (8 role types)
+- **Finance** - Invoices, payments, M-Pesa integration
+- **Learning** - Courses, assignments, grading, attendance
+- **Library** - Book cataloging, borrowing, inventory
+- **Inventory** - Stock management, asset tracking
+- **Mobile** - Mobile-first REST API
+- **Threads** - Real-time messaging and notifications
+
+### Key Features
+- Role-based access control (SuperAdmin, Admin, Teacher, Student, Parent, Accountant, Librarian, Receptionist)
+- Student information management
+- Academic management (courses, assignments, grading)
+- Finance management with M-Pesa integration
+- Library and inventory management
+- Mobile-first API design
+- Gamification (badges, achievements, leaderboards)
+
+## Running Tests
+
+```bash
+# Run all tests
+php vendor/bin/phpunit -c phpunit.ci4.xml --testdox
+
+# Run specific module
+php vendor/bin/phpunit tests/Finance/ --testdox
+
+# Code coverage
+php vendor/bin/phpunit --coverage-html coverage/
+
+# Code style
+php vendor/bin/php-cs-fixer fix --dry-run
+
+# Static analysis
+php vendor/bin/phpstan analyse
+```
+
+**Test Status**: 79/90 tests passing (87.8%)  
+**Code Coverage**: 87.8%
+
+See [TESTING.md](TESTING.md) for complete testing guide.
+
+## Documentation
+
+- [Testing Guide](TESTING.md) - Test credentials, running tests, manual testing workflows
+- [Build Validation Report](BUILD_VALIDATION_REPORT.md) - Complete system validation
+- [Session Changelog](SESSION_CHANGELOG.md) - Recent changes and fixes
+- [Architecture](docs/ARCHITECTURE.md) - System architecture
+- [API Reference](docs/API-REFERENCE.md) - API documentation
+- [Deployment](docs/DEPLOYMENT.md) - Production deployment guide
+
+## Initial Setup (Advanced)
 
 1. Install PHP 8.3 and the required extensions (`intl`, `mbstring`, `sqlite3`,
    `openssl`, `curl`).

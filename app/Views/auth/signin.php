@@ -78,10 +78,9 @@
             
             <div class="body white-bg">
                 <?php if ($form_validation !== 'No') : ?>
-                    <div class="alert alert-danger alert-dismissable">
-                        <i class="fa fa-ban"></i>
+                    <div class="alert alert-danger alert-dismissable" style="border-left: 4px solid #d9534f;">
                         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                        <?= esc($form_validation) ?>
+                        <?= $form_validation ?>
                     </div>
                 <?php endif; ?>
 
