@@ -46,11 +46,11 @@ class PayrollService
      */
     public function generatePayslip(array $payload, array $context): Payslip
     {
-        $employeeId   = trim((string) ($payload['employee_id'] ?? ''));
+        $employeeId = trim((string) ($payload['employee_id'] ?? ''));
         $employeeName = trim((string) ($payload['employee_name'] ?? ''));
-        $period       = trim((string) ($payload['period'] ?? ''));
-        $payoutDate   = trim((string) ($payload['payout_date'] ?? ''));
-        $countryCode  = strtoupper((string) ($payload['country_code'] ?? 'KE'));
+        $period = trim((string) ($payload['period'] ?? ''));
+        $payoutDate = trim((string) ($payload['payout_date'] ?? ''));
+        $countryCode = strtoupper((string) ($payload['country_code'] ?? 'KE'));
 
         if ($employeeId === '') {
             throw new InvalidArgumentException('Employee ID is required.');
@@ -112,7 +112,7 @@ class PayrollService
         $payslip->setApprovalRequestId($approvalId);
 
         $metadata = $payslip->getComplianceDetails();
-        $metadata['template']       = $countryCode;
+        $metadata['template'] = $countryCode;
         $metadata['request_origin'] = $context['request_origin'] ?? null;
 
         $this->auditService->recordEvent(
@@ -130,7 +130,7 @@ class PayrollService
     private function generatePayslipNumber(string $employeeId, string $period): string
     {
         $sanitisedEmployee = strtoupper(preg_replace('/[^A-Z0-9]/', '', $employeeId) ?? $employeeId);
-        $sanitisedPeriod   = preg_replace('/[^0-9]/', '', $period) ?? $period;
+        $sanitisedPeriod = preg_replace('/[^0-9]/', '', $period) ?? $period;
 
         return sprintf('%s-%s', $sanitisedEmployee, $sanitisedPeriod);
     }

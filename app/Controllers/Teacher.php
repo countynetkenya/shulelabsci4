@@ -2,22 +2,25 @@
 
 namespace App\Controllers;
 
-use App\Models\SchoolClassModel;
-use App\Models\StudentEnrollmentModel;
 use App\Models\AssignmentModel;
 use App\Models\GradeModel;
+use App\Models\SchoolClassModel;
+use App\Models\StudentEnrollmentModel;
 use App\Models\ThreadAnnouncementModel;
 
 /**
- * Teacher Controller
+ * Teacher Controller.
  *
  * Teacher portal for class management, assignments, grading
  */
 class Teacher extends BaseController
 {
     protected $data = [];
+
     protected SchoolClassModel $classModel;
+
     protected AssignmentModel $assignmentModel;
+
     protected GradeModel $gradeModel;
 
     public function __construct()
@@ -29,7 +32,7 @@ class Teacher extends BaseController
     }
 
     /**
-     * Teacher dashboard
+     * Teacher dashboard.
      */
     public function index(): string
     {
@@ -55,7 +58,7 @@ class Teacher extends BaseController
     }
 
     /**
-     * View all classes
+     * View all classes.
      */
     public function classes(): string
     {
@@ -68,7 +71,7 @@ class Teacher extends BaseController
     }
 
     /**
-     * View students in a class
+     * View students in a class.
      */
     public function students(int $classId): string
     {
@@ -90,7 +93,7 @@ class Teacher extends BaseController
     }
 
     /**
-     * View all assignments
+     * View all assignments.
      */
     public function assignments(): string
     {
@@ -108,7 +111,7 @@ class Teacher extends BaseController
     }
 
     /**
-     * Create new assignment
+     * Create new assignment.
      */
     public function createAssignment()
     {
@@ -137,7 +140,7 @@ class Teacher extends BaseController
     }
 
     /**
-     * Grading interface
+     * Grading interface.
      */
     public function grading(): string
     {
@@ -162,7 +165,7 @@ class Teacher extends BaseController
     }
 
     /**
-     * Submit grade for student
+     * Submit grade for student.
      */
     public function submitGrade()
     {
@@ -191,7 +194,7 @@ class Teacher extends BaseController
     }
 
     /**
-     * Create announcement for class
+     * Create announcement for class.
      */
     public function createAnnouncement()
     {
@@ -226,7 +229,7 @@ class Teacher extends BaseController
             'name' => $session->get('name'),
             'email' => $session->get('email'),
             'usertypeID' => $session->get('usertypeID'),
-            'photo' => $session->get('photo')
+            'photo' => $session->get('photo'),
         ];
     }
 
@@ -253,10 +256,18 @@ class Teacher extends BaseController
     {
         $percentage = ($obtained / $total) * 100;
 
-        if ($percentage >= 90) return 'A';
-        if ($percentage >= 80) return 'B';
-        if ($percentage >= 70) return 'C';
-        if ($percentage >= 60) return 'D';
+        if ($percentage >= 90) {
+            return 'A';
+        }
+        if ($percentage >= 80) {
+            return 'B';
+        }
+        if ($percentage >= 70) {
+            return 'C';
+        }
+        if ($percentage >= 60) {
+            return 'D';
+        }
         return 'F';
     }
 }

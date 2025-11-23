@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Modules\Orchestration\Agents;
 
 /**
- * Phase 1: RESTART & BACKUP Agent
- * 
+ * Phase 1: RESTART & BACKUP Agent.
+ *
  * Creates complete system backup and clean slate
- * 
+ *
  * Tasks:
  * - Create timestamped backup of entire codebase
  * - Backup database schemas and migrations
@@ -17,8 +17,7 @@ namespace Modules\Orchestration\Agents;
  * - Reset development environment
  * - Clear all caches (application, route, view)
  * - Verify backup integrity
- * 
- * @package Modules\Orchestration\Agents
+ *
  * @version 1.0.0
  */
 class Phase1BackupAgent extends BaseAgent
@@ -36,7 +35,7 @@ class Phase1BackupAgent extends BaseAgent
     public function execute(): array
     {
         $this->log('Starting Phase 1: RESTART & BACKUP', 'info');
-        
+
         try {
             $deliverables = [];
 
@@ -49,17 +48,17 @@ class Phase1BackupAgent extends BaseAgent
             $codebackupSize = $this->backupCodebase($backupDir);
             $deliverables['codebase_backup_size'] = $codebackupSize;
             $this->addMetric('codebase_backup_mb', round($codebackupSize / 1024 / 1024, 2));
-            $this->log("✓ Codebase backed up: " . round($codebackupSize / 1024 / 1024, 2) . " MB", 'info');
+            $this->log('✓ Codebase backed up: ' . round($codebackupSize / 1024 / 1024, 2) . ' MB', 'info');
 
             // Step 3: Backup database schemas
             $dbBackup = $this->backupDatabaseSchemas($backupDir);
             $deliverables['database_backup'] = $dbBackup;
-            $this->log("✓ Database schemas backed up", 'info');
+            $this->log('✓ Database schemas backed up', 'info');
 
             // Step 4: Backup configuration files
             $configBackup = $this->backupConfigFiles($backupDir);
             $deliverables['config_backup'] = $configBackup;
-            $this->log("✓ Configuration files backed up", 'info');
+            $this->log('✓ Configuration files backed up', 'info');
 
             // Step 5: Create rollback script
             $rollbackScript = $this->createRollbackScript($backupDir);
@@ -68,12 +67,12 @@ class Phase1BackupAgent extends BaseAgent
 
             // Step 6: Clear caches
             $this->clearCaches();
-            $this->log("✓ All caches cleared", 'info');
+            $this->log('✓ All caches cleared', 'info');
 
             // Step 7: Verify backup integrity
             $verificationReport = $this->verifyBackupIntegrity($backupDir);
             $deliverables['verification_report'] = $verificationReport;
-            $this->log("✓ Backup integrity verified", 'info');
+            $this->log('✓ Backup integrity verified', 'info');
 
             // Set metrics
             $this->addMetric('backup_complete', true);
@@ -89,13 +88,13 @@ class Phase1BackupAgent extends BaseAgent
     }
 
     /**
-     * Create backup directory with timestamp
+     * Create backup directory with timestamp.
      */
     protected function createBackupDirectory(): string
     {
         $timestamp = date('Y-m-d-His');
         $backupDir = ROOTPATH . $this->config->backupDirectory . "/{$timestamp}";
-        
+
         if (!$this->dryRun && !is_dir($backupDir)) {
             mkdir($backupDir, 0755, true);
         }
@@ -104,7 +103,7 @@ class Phase1BackupAgent extends BaseAgent
     }
 
     /**
-     * Backup entire codebase
+     * Backup entire codebase.
      */
     protected function backupCodebase(string $backupDir): int
     {
@@ -123,14 +122,14 @@ class Phase1BackupAgent extends BaseAgent
             $this->config->backupDirectory . '/',
         ];
 
-        $excludeArgs = implode(' ', array_map(fn($e) => "--exclude='{$e}'", $excludes));
-        
+        $excludeArgs = implode(' ', array_map(fn ($e) => "--exclude='{$e}'", $excludes));
+
         // Create tar file in temp location first, then move to backup dir
         $tempFile = sys_get_temp_dir() . '/shulelabs_backup_' . time() . '.tar.gz';
-        $command = "cd " . ROOTPATH . " && tar -czf {$tempFile} {$excludeArgs} .";
-        
+        $command = 'cd ' . ROOTPATH . " && tar -czf {$tempFile} {$excludeArgs} .";
+
         $result = $this->executeCommand($command, 'Creating codebase backup');
-        
+
         if (!$result['success']) {
             throw new \RuntimeException('Failed to create codebase backup');
         }
@@ -145,7 +144,7 @@ class Phase1BackupAgent extends BaseAgent
     }
 
     /**
-     * Backup database schemas
+     * Backup database schemas.
      */
     protected function backupDatabaseSchemas(string $backupDir): string
     {
@@ -156,7 +155,7 @@ class Phase1BackupAgent extends BaseAgent
         // Copy all migration files
         $migrationDir = ROOTPATH . 'app/Modules/Database/Migrations';
         $backupMigrationDir = "{$backupDir}/migrations";
-        
+
         if (!is_dir($backupMigrationDir)) {
             mkdir($backupMigrationDir, 0755, true);
         }
@@ -170,7 +169,7 @@ class Phase1BackupAgent extends BaseAgent
     }
 
     /**
-     * Backup configuration files
+     * Backup configuration files.
      */
     protected function backupConfigFiles(string $backupDir): string
     {
@@ -186,7 +185,7 @@ class Phase1BackupAgent extends BaseAgent
         ];
 
         $backupConfigDir = "{$backupDir}/config";
-        
+
         if (!is_dir($backupConfigDir)) {
             mkdir($backupConfigDir, 0755, true);
         }
@@ -207,12 +206,12 @@ class Phase1BackupAgent extends BaseAgent
     }
 
     /**
-     * Create rollback script
+     * Create rollback script.
      */
     protected function createRollbackScript(string $backupDir): string
     {
         $scriptPath = "{$backupDir}/rollback.sh";
-        
+
         if ($this->dryRun) {
             return $scriptPath;
         }
@@ -290,7 +289,7 @@ SCRIPT;
     }
 
     /**
-     * Clear all application caches
+     * Clear all application caches.
      */
     protected function clearCaches(): void
     {
@@ -315,7 +314,7 @@ SCRIPT;
     }
 
     /**
-     * Verify backup integrity
+     * Verify backup integrity.
      */
     protected function verifyBackupIntegrity(string $backupDir): array
     {
@@ -328,7 +327,7 @@ SCRIPT;
         ];
 
         if ($this->dryRun) {
-            $report = array_map(fn() => true, $report);
+            $report = array_map(fn () => true, $report);
         }
 
         $report['all_checks_passed'] = !in_array(false, $report, true);

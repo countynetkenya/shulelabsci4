@@ -2,9 +2,9 @@
 
 namespace Tests\Threads;
 
+use App\Services\ThreadsService;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use App\Services\ThreadsService;
 
 /**
  * @internal
@@ -14,6 +14,7 @@ final class ThreadsServiceTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = false;
+
     protected ThreadsService $service;
 
     protected function setUp(): void

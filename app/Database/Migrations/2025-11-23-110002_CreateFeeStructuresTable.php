@@ -35,7 +35,7 @@ class CreateFeeStructuresTable extends Migration
                 'null' => true,
             ],
         ]);
-        
+
         $this->forge->addKey('id', true);
         $this->forge->addKey(['school_id', 'grade_level']);
         $this->forge->createTable('fee_structures');

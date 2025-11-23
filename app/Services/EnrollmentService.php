@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\StudentEnrollmentModel;
 use App\Models\SchoolClassModel;
 use App\Models\SchoolUserModel;
+use App\Models\StudentEnrollmentModel;
 
 /**
  * EnrollmentService - Student enrollment management business logic.
@@ -12,7 +12,9 @@ use App\Models\SchoolUserModel;
 class EnrollmentService
 {
     protected StudentEnrollmentModel $enrollmentModel;
+
     protected SchoolClassModel $classModel;
+
     protected SchoolUserModel $schoolUserModel;
 
     public function __construct()
@@ -29,7 +31,7 @@ class EnrollmentService
     {
         // Verify class belongs to school
         $class = $this->classModel->forSchool($schoolId)->find($classId);
-        
+
         if (!$class) {
             return ['success' => false, 'message' => 'Class not found or does not belong to this school'];
         }
@@ -83,14 +85,14 @@ class EnrollmentService
     public function transferClass(int $enrollmentId, int $newClassId): array
     {
         $enrollment = $this->enrollmentModel->find($enrollmentId);
-        
+
         if (!$enrollment) {
             return ['success' => false, 'message' => 'Enrollment not found'];
         }
 
         // Verify new class exists and has capacity
         $newClass = $this->classModel->forSchool($enrollment['school_id'])->find($newClassId);
-        
+
         if (!$newClass) {
             return ['success' => false, 'message' => 'Target class not found'];
         }
@@ -146,7 +148,7 @@ class EnrollmentService
     public function withdrawStudent(int $enrollmentId, string $reason = ''): array
     {
         $enrollment = $this->enrollmentModel->find($enrollmentId);
-        
+
         if (!$enrollment) {
             return ['success' => false, 'message' => 'Enrollment not found'];
         }

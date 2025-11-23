@@ -9,8 +9,10 @@ use CodeIgniter\Model;
  */
 class OfflineQueueModel extends Model
 {
-    protected $table         = 'integration_offline_queue';
-    protected $primaryKey    = 'id';
+    protected $table = 'integration_offline_queue';
+
+    protected $primaryKey = 'id';
+
     protected $allowedFields = [
         'adapter_name',
         'operation',
@@ -28,8 +30,10 @@ class OfflineQueueModel extends Model
     ];
 
     protected $useTimestamps = true;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
+
+    protected $createdField = 'created_at';
+
+    protected $updatedField = 'updated_at';
 
     protected $returnType = 'array';
 
@@ -91,7 +95,7 @@ class OfflineQueueModel extends Model
     {
         $record = $this->find($id);
 
-        if (! $record) {
+        if (!$record) {
             return false;
         }
 

@@ -14,7 +14,7 @@ use CodeIgniter\Debug\Toolbar\Collectors\Views;
 /**
  * --------------------------------------------------------------------------
  * Debug Toolbar
- * --------------------------------------------------------------------------
+ * --------------------------------------------------------------------------.
  *
  * The Debug Toolbar provides a way to see information about the performance
  * and state of your application during that page display. By default it will
@@ -26,7 +26,7 @@ class Toolbar extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Toolbar Collectors
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * List of toolbar collectors that will be called when Debug Toolbar
      * fires up and collects data from.
@@ -47,7 +47,7 @@ class Toolbar extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Collect Var Data
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * If set to false var data from the views will not be collected. Useful to
      * avoid high memory usage when there are lots of data passed to the view.
@@ -57,7 +57,7 @@ class Toolbar extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Max History
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * `$maxHistory` sets a limit on the number of past requests that are stored,
      * helping to conserve file space used to store them. You can set it to
@@ -68,7 +68,7 @@ class Toolbar extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Toolbar Views Path
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * The full path to the the views that are used by the toolbar.
      * This MUST have a trailing slash.
@@ -78,7 +78,7 @@ class Toolbar extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Max Queries
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * If the Database Collector is enabled, it will log every query that the
      * the system generates so they can be displayed on the toolbar's timeline
@@ -92,7 +92,7 @@ class Toolbar extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Watched Directories
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * Contains an array of directories that will be watched for changes and
      * used to determine if the hot-reload feature should reload the page or not.
@@ -109,7 +109,7 @@ class Toolbar extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Watched File Extensions
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * Contains an array of file extensions that will be watched for changes and
      * used to determine if the hot-reload feature should reload the page or not.

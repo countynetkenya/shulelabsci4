@@ -9,7 +9,7 @@ class Pager extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Templates
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * Pagination links are rendered out using views to configure their
      * appearance. This array contains aliases and the view names to
@@ -29,7 +29,7 @@ class Pager extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Items Per Page
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * The default number of results shown in a single page.
      */

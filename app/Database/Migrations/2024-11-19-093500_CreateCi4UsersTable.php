@@ -5,8 +5,8 @@ namespace App\Database\Migrations;
 use CodeIgniter\Database\Migration;
 
 /**
- * Create CI4 Users Table
- * 
+ * Create CI4 Users Table.
+ *
  * This migration creates the users table that will serve as the
  * normalized identity store for all user types in CI4, replacing the
  * CI3 multi-table approach (student, teacher, parents, user, systemadmin).

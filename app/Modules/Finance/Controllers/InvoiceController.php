@@ -80,7 +80,7 @@ class InvoiceController extends ResourceController
             return $service;
         }
 
-        if ($service !== null && ! $service instanceof InvoiceRepositoryInterface) {
+        if ($service !== null && !$service instanceof InvoiceRepositoryInterface) {
             throw new RuntimeException('Configured finance invoice repository must implement InvoiceRepositoryInterface.');
         }
 

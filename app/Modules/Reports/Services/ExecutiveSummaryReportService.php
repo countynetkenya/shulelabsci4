@@ -3,15 +3,15 @@
 namespace Modules\Reports\Services;
 
 /**
- * Executive Summary Report Generator
- * 
+ * Executive Summary Report Generator.
+ *
  * Generates high-level overview of build, deployment, and system health
  * for executive stakeholders.
  */
 class ExecutiveSummaryReportService
 {
     private array $data = [];
-    
+
     public function __construct()
     {
         $this->data = [
@@ -20,9 +20,9 @@ class ExecutiveSummaryReportService
             'version' => '1.0.0',
         ];
     }
-    
+
     /**
-     * Generate the executive summary report
+     * Generate the executive summary report.
      *
      * @param array $buildMetrics Build and orchestration metrics
      * @return array Complete report data
@@ -34,12 +34,12 @@ class ExecutiveSummaryReportService
         $this->data['success_summary'] = $this->generateSuccessSummary($buildMetrics);
         $this->data['risk_highlights'] = $this->generateRiskHighlights($buildMetrics);
         $this->data['recommendations'] = $this->generateRecommendations($buildMetrics);
-        
+
         return $this->data;
     }
-    
+
     /**
-     * Generate build overview section
+     * Generate build overview section.
      */
     private function generateBuildOverview(array $metrics): array
     {
@@ -53,9 +53,9 @@ class ExecutiveSummaryReportService
             'deployment_status' => $metrics['deployment_status'] ?? 'successful',
         ];
     }
-    
+
     /**
-     * Generate key metrics section
+     * Generate key metrics section.
      */
     private function generateKeyMetrics(array $metrics): array
     {
@@ -85,16 +85,16 @@ class ExecutiveSummaryReportService
             ],
         ];
     }
-    
+
     /**
-     * Generate success summary section
+     * Generate success summary section.
      */
     private function generateSuccessSummary(array $metrics): array
     {
         $totalPhases = 6;
         $completedPhases = $metrics['phases_completed'] ?? 6;
         $successRate = ($completedPhases / $totalPhases) * 100;
-        
+
         return [
             'overall_status' => $successRate === 100.0 ? 'success' : 'partial',
             'success_rate' => number_format($successRate, 1) . '%',
@@ -115,14 +115,14 @@ class ExecutiveSummaryReportService
             ],
         ];
     }
-    
+
     /**
-     * Generate risk highlights section
+     * Generate risk highlights section.
      */
     private function generateRiskHighlights(array $metrics): array
     {
         $risks = [];
-        
+
         // Check for critical risks
         if (($metrics['code_coverage'] ?? 85.5) < 85) {
             $risks[] = [
@@ -132,7 +132,7 @@ class ExecutiveSummaryReportService
                 'mitigation' => 'Add additional unit tests',
             ];
         }
-        
+
         if (($metrics['security_vulnerabilities'] ?? 0) > 0) {
             $risks[] = [
                 'level' => 'high',
@@ -141,7 +141,7 @@ class ExecutiveSummaryReportService
                 'mitigation' => 'Apply security patches immediately',
             ];
         }
-        
+
         if (empty($risks)) {
             $risks[] = [
                 'level' => 'low',
@@ -150,12 +150,12 @@ class ExecutiveSummaryReportService
                 'mitigation' => 'Continue monitoring',
             ];
         }
-        
+
         return $risks;
     }
-    
+
     /**
-     * Generate recommendations section
+     * Generate recommendations section.
      */
     private function generateRecommendations(array $metrics): array
     {
@@ -164,28 +164,28 @@ class ExecutiveSummaryReportService
             'short_term' => [],
             'long_term' => [],
         ];
-        
+
         // Immediate actions
         if (($metrics['deployment_status'] ?? 'successful') === 'successful') {
             $recommendations['immediate_actions'][] = 'Monitor production metrics for next 24 hours';
             $recommendations['immediate_actions'][] = 'Verify all critical user paths are functional';
         }
-        
+
         // Short-term recommendations
         $recommendations['short_term'][] = 'Review and address any warning-level findings';
         $recommendations['short_term'][] = 'Update internal documentation with new features';
         $recommendations['short_term'][] = 'Schedule team training on new capabilities';
-        
+
         // Long-term recommendations
         $recommendations['long_term'][] = 'Increase code coverage to 90%';
         $recommendations['long_term'][] = 'Implement additional performance optimizations';
         $recommendations['long_term'][] = 'Enhance monitoring and alerting capabilities';
-        
+
         return $recommendations;
     }
-    
+
     /**
-     * Export report to HTML format
+     * Export report to HTML format.
      *
      * @return string HTML formatted report
      */

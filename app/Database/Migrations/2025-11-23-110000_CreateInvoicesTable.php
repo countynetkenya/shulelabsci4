@@ -58,7 +58,7 @@ class CreateInvoicesTable extends Migration
                 'null' => true,
             ],
         ]);
-        
+
         $this->forge->addKey('id', true);
         $this->forge->addKey('school_id');
         $this->forge->addKey('student_id');

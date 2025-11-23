@@ -2,9 +2,9 @@
 
 namespace Tests\Mobile;
 
+use App\Services\MobileApiService;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use App\Services\MobileApiService;
 
 /**
  * @internal
@@ -14,6 +14,7 @@ final class MobileApiServiceTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = false;
+
     protected MobileApiService $service;
 
     protected function setUp(): void
@@ -63,7 +64,7 @@ final class MobileApiServiceTest extends CIUnitTestCase
 
         $this->assertIsArray($response);
         $this->assertArrayHasKey('success', $response);
-        
+
         if ($response['success']) {
             $this->assertArrayHasKey('data', $response);
             $this->assertArrayHasKey('student_id', $response['data']);
@@ -165,7 +166,7 @@ final class MobileApiServiceTest extends CIUnitTestCase
 
         $this->assertTrue($response['success']);
         $invoices = $response['data']['invoices'];
-        
+
         if (!empty($invoices)) {
             $invoice = $invoices[0];
             $this->assertArrayHasKey('id', $invoice);

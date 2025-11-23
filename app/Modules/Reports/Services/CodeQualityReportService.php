@@ -3,7 +3,7 @@
 namespace Modules\Reports\Services;
 
 /**
- * Code Quality Assessment Report Generator
+ * Code Quality Assessment Report Generator.
  */
 class CodeQualityReportService
 {

@@ -11,6 +11,7 @@ use App\Services\TenantService;
 class HrController extends BaseController
 {
     protected HrService $hrService;
+
     protected TenantService $tenantService;
 
     public function __construct()
@@ -25,7 +26,7 @@ class HrController extends BaseController
     public function staff()
     {
         $schoolId = $this->tenantService->getCurrentSchoolId();
-        
+
         if (!$schoolId) {
             return redirect()->to('/school/select');
         }
@@ -57,7 +58,7 @@ class HrController extends BaseController
             ])->setStatusCode(400);
         }
 
-        $result = $this->hrService->assignTeacher((int)$userId, $schoolId, $isPrimary);
+        $result = $this->hrService->assignTeacher((int) $userId, $schoolId, $isPrimary);
 
         return $this->response->setJSON($result);
     }
@@ -77,7 +78,7 @@ class HrController extends BaseController
             ])->setStatusCode(400);
         }
 
-        $result = $this->hrService->removeTeacher((int)$userId, $schoolId);
+        $result = $this->hrService->removeTeacher((int) $userId, $schoolId);
 
         return $this->response->setJSON($result);
     }
@@ -120,7 +121,7 @@ class HrController extends BaseController
             ])->setStatusCode(400);
         }
 
-        $result = $this->hrService->assignTeacherToClass((int)$classId, (int)$teacherId, $schoolId);
+        $result = $this->hrService->assignTeacherToClass((int) $classId, (int) $teacherId, $schoolId);
 
         return $this->response->setJSON($result);
     }

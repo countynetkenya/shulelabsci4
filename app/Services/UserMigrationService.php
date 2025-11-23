@@ -7,7 +7,7 @@ use CodeIgniter\Database\BaseConnection;
 use Modules\Foundation\Services\AuditService;
 
 /**
- * User Migration Service
+ * User Migration Service.
  *
  * Handles automatic migration of users from legacy CI3 tables to users
  * during the authentication process.
@@ -15,7 +15,7 @@ use Modules\Foundation\Services\AuditService;
 class UserMigrationService
 {
     /**
-     * CI3 table mappings with their configuration
+     * CI3 table mappings with their configuration.
      */
     private array $ci3Tables = [
         'systemadmin' => [
@@ -46,7 +46,9 @@ class UserMigrationService
     ];
 
     protected BaseConnection $db;
+
     protected UserModel $userModel;
+
     protected AuditService $auditService;
 
     public function __construct()
@@ -57,7 +59,7 @@ class UserMigrationService
     }
 
     /**
-     * Find user in CI3 tables and backfill to users if found
+     * Find user in CI3 tables and backfill to users if found.
      *
      * @param string $username
      * @return object|null User object if found and migrated, null otherwise
@@ -81,7 +83,7 @@ class UserMigrationService
     }
 
     /**
-     * Find user in a specific CI3 table
+     * Find user in a specific CI3 table.
      *
      * @param string $tableName
      * @param string $username
@@ -109,7 +111,7 @@ class UserMigrationService
     }
 
     /**
-     * Migrate a CI3 user to users
+     * Migrate a CI3 user to users.
      *
      * @param object $ci3User
      * @param string $tableName
@@ -135,7 +137,7 @@ class UserMigrationService
                 'schoolID' => $this->extractSchoolID($ci3User),
                 'ci3_user_id' => $ci3User->{$idField},
                 'ci3_user_table' => $tableName,
-                'is_active' => isset($ci3User->active) ? (int)$ci3User->active : 1,
+                'is_active' => isset($ci3User->active) ? (int) $ci3User->active : 1,
                 'created_at' => $this->extractCreatedAt($ci3User),
                 'updated_at' => $this->extractUpdatedAt($ci3User),
             ];
@@ -145,7 +147,7 @@ class UserMigrationService
             $newUserId = $this->db->insertID();
 
             // Determine role based on usertypeID if present, otherwise use default
-            $usertypeId = isset($ci3User->usertypeID) ? (int)$ci3User->usertypeID : $defaultUsertypeId;
+            $usertypeId = isset($ci3User->usertypeID) ? (int) $ci3User->usertypeID : $defaultUsertypeId;
 
             // Get the role ID for this usertype
             $role = $this->db->table('roles')
@@ -185,7 +187,7 @@ class UserMigrationService
     }
 
     /**
-     * Log user migration in audit trail
+     * Log user migration in audit trail.
      *
      * @param int $newUserId
      * @param object $ci3User
@@ -219,7 +221,7 @@ class UserMigrationService
     }
 
     /**
-     * Extract schoolID from CI3 user object
+     * Extract schoolID from CI3 user object.
      *
      * @param object $user
      * @return string|null
@@ -227,7 +229,7 @@ class UserMigrationService
     protected function extractSchoolID(object $user): ?string
     {
         if (isset($user->schoolID)) {
-            return (string)$user->schoolID;
+            return (string) $user->schoolID;
         }
 
         // For students, might be derived from their class
@@ -236,7 +238,7 @@ class UserMigrationService
     }
 
     /**
-     * Extract created_at timestamp
+     * Extract created_at timestamp.
      *
      * @param object $user
      * @return string
@@ -255,7 +257,7 @@ class UserMigrationService
     }
 
     /**
-     * Extract updated_at timestamp
+     * Extract updated_at timestamp.
      *
      * @param object $user
      * @return string

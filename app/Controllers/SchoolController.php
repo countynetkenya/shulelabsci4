@@ -11,6 +11,7 @@ use App\Services\TenantService;
 class SchoolController extends BaseController
 {
     protected SchoolService $schoolService;
+
     protected TenantService $tenantService;
 
     public function __construct()
@@ -25,7 +26,7 @@ class SchoolController extends BaseController
     public function dashboard()
     {
         $schoolId = $this->tenantService->getCurrentSchoolId();
-        
+
         if (!$schoolId) {
             return redirect()->to('/school/select')->with('error', 'Please select a school');
         }
@@ -41,7 +42,7 @@ class SchoolController extends BaseController
     public function overview()
     {
         $schoolId = $this->tenantService->getCurrentSchoolId();
-        
+
         if (!$schoolId) {
             return $this->response->setJSON([
                 'success' => false,
@@ -64,7 +65,7 @@ class SchoolController extends BaseController
     public function stats()
     {
         $schoolId = $this->tenantService->getCurrentSchoolId();
-        
+
         if (!$schoolId) {
             return $this->response->setJSON([
                 'success' => false,
@@ -95,12 +96,12 @@ class SchoolController extends BaseController
             ])->setStatusCode(400);
         }
 
-        $canEnroll = $this->schoolService->canEnrollStudents($schoolId, (int)$count);
+        $canEnroll = $this->schoolService->canEnrollStudents($schoolId, (int) $count);
 
         return $this->response->setJSON([
             'success' => true,
             'can_enroll' => $canEnroll,
-            'count' => (int)$count,
+            'count' => (int) $count,
         ]);
     }
 }

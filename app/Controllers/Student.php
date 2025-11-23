@@ -2,21 +2,24 @@
 
 namespace App\Controllers;
 
-use App\Models\StudentEnrollmentModel;
 use App\Models\AssignmentModel;
 use App\Models\GradeModel;
+use App\Models\StudentEnrollmentModel;
 use CodeIgniter\Files\File;
 
 /**
- * Student Controller
+ * Student Controller.
  *
  * Student portal for viewing courses, assignments, grades
  */
 class Student extends BaseController
 {
     protected $data = [];
+
     protected StudentEnrollmentModel $enrollmentModel;
+
     protected AssignmentModel $assignmentModel;
+
     protected GradeModel $gradeModel;
 
     public function __construct()
@@ -28,7 +31,7 @@ class Student extends BaseController
     }
 
     /**
-     * Student dashboard
+     * Student dashboard.
      */
     public function index(): string
     {
@@ -53,7 +56,7 @@ class Student extends BaseController
     }
 
     /**
-     * View all enrolled courses
+     * View all enrolled courses.
      */
     public function courses(): string
     {
@@ -66,7 +69,7 @@ class Student extends BaseController
     }
 
     /**
-     * View course materials
+     * View course materials.
      */
     public function materials(int $courseId): string
     {
@@ -97,7 +100,7 @@ class Student extends BaseController
     }
 
     /**
-     * View all assignments
+     * View all assignments.
      */
     public function assignments(): string
     {
@@ -111,7 +114,7 @@ class Student extends BaseController
     }
 
     /**
-     * Submit assignment
+     * Submit assignment.
      */
     public function submitAssignment()
     {
@@ -149,7 +152,7 @@ class Student extends BaseController
     }
 
     /**
-     * View all grades
+     * View all grades.
      */
     public function grades(): string
     {
@@ -182,7 +185,7 @@ class Student extends BaseController
             'name' => $session->get('name'),
             'email' => $session->get('email'),
             'usertypeID' => $session->get('usertypeID'),
-            'photo' => $session->get('photo')
+            'photo' => $session->get('photo'),
         ];
     }
 

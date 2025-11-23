@@ -5,17 +5,17 @@ namespace App\Database\Migrations;
 use CodeIgniter\Database\Migration;
 
 /**
- * Backfill CI4 Users from CI3 Tables
- * 
+ * Backfill CI4 Users from CI3 Tables.
+ *
  * This migration backfills the users and user_roles tables
  * from existing CI3 user tables (systemadmin, user, teacher, student, parents).
- * 
+ *
  * It is idempotent - safe to run multiple times, as it checks for existing data.
  */
 class BackfillCi4UsersFromCi3 extends Migration
 {
     /**
-     * CI3 table mappings with their configuration
+     * CI3 table mappings with their configuration.
      */
     private array $ci3Tables = [
         'systemadmin' => [
@@ -44,7 +44,7 @@ class BackfillCi4UsersFromCi3 extends Migration
     {
         // Check if users already has data
         $existingUsers = $this->db->table('users')->countAllResults();
-        
+
         if ($existingUsers > 0) {
             echo "CI4 users table already has {$existingUsers} records. Skipping backfill to prevent duplicates.\n";
             echo "If you want to re-run the backfill, please truncate users and user_roles first.\n";
@@ -70,13 +70,13 @@ class BackfillCi4UsersFromCi3 extends Migration
         // Uncomment if you want rollback to remove data
         // $this->db->table('user_roles')->truncate();
         // $this->db->table('users')->truncate();
-        
+
         echo "Backfill rollback: Data preserved. To remove, manually truncate users and user_roles.\n";
     }
 
     /**
-     * Backfill users from a specific CI3 table
-     * 
+     * Backfill users from a specific CI3 table.
+     *
      * @param string $tableName The CI3 table name
      * @param array $config Table configuration
      * @return int Number of users migrated
@@ -114,7 +114,7 @@ class BackfillCi4UsersFromCi3 extends Migration
                     'schoolID' => $this->extractSchoolID($user),
                     'ci3_user_id' => $user->{$idField},
                     'ci3_user_table' => $tableName,
-                    'is_active' => isset($user->active) ? (int)$user->active : 1,
+                    'is_active' => isset($user->active) ? (int) $user->active : 1,
                     'created_at' => $this->extractCreatedAt($user),
                     'updated_at' => $this->extractUpdatedAt($user),
                 ];
@@ -141,7 +141,7 @@ class BackfillCi4UsersFromCi3 extends Migration
                 $newUserId = $this->db->insertID();
 
                 // Determine role based on usertypeID if present, otherwise use default
-                $usertypeId = isset($user->usertypeID) ? (int)$user->usertypeID : $defaultUsertypeId;
+                $usertypeId = isset($user->usertypeID) ? (int) $user->usertypeID : $defaultUsertypeId;
 
                 // Get the role ID for this usertype
                 $role = $this->db->table('roles')
@@ -169,25 +169,25 @@ class BackfillCi4UsersFromCi3 extends Migration
     }
 
     /**
-     * Extract schoolID from user object
-     * 
+     * Extract schoolID from user object.
+     *
      * @param object $user
      * @return string|null
      */
     private function extractSchoolID(object $user): ?string
     {
         if (isset($user->schoolID)) {
-            return (string)$user->schoolID;
+            return (string) $user->schoolID;
         }
-        
+
         // For students, might be a single school based on their class
         // For now, return null if not set
         return null;
     }
 
     /**
-     * Extract created_at timestamp
-     * 
+     * Extract created_at timestamp.
+     *
      * @param object $user
      * @return string|null
      */
@@ -196,13 +196,13 @@ class BackfillCi4UsersFromCi3 extends Migration
         if (isset($user->create_date)) {
             return $user->create_date;
         }
-        
+
         return date('Y-m-d H:i:s');
     }
 
     /**
-     * Extract updated_at timestamp
-     * 
+     * Extract updated_at timestamp.
+     *
      * @param object $user
      * @return string|null
      */
@@ -211,11 +211,11 @@ class BackfillCi4UsersFromCi3 extends Migration
         if (isset($user->modify_date)) {
             return $user->modify_date;
         }
-        
+
         if (isset($user->create_date)) {
             return $user->create_date;
         }
-        
+
         return date('Y-m-d H:i:s');
     }
 }

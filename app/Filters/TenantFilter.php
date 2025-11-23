@@ -28,11 +28,11 @@ class TenantFilter implements FilterInterface
         // Verify user has access to current school
         $session = session();
         if ($session->has('user_id') && $tenantService->getCurrentSchoolId()) {
-            $userId   = (int) $session->get('user_id');
+            $userId = (int) $session->get('user_id');
             $schoolId = $tenantService->getCurrentSchoolId();
 
             // Check if user has access to this school
-            if (! $tenantService->hasAccessToSchool($userId, $schoolId)) {
+            if (!$tenantService->hasAccessToSchool($userId, $schoolId)) {
                 // User doesn't have access - redirect to school selector
                 return redirect()->to('/dashboard/select-school')
                     ->with('error', 'You do not have access to this school. Please select a school you have access to.');
@@ -40,7 +40,7 @@ class TenantFilter implements FilterInterface
         }
 
         // If no school context and user is logged in, redirect to selector
-        if ($session->has('user_id') && ! $tenantService->getCurrentSchoolId()) {
+        if ($session->has('user_id') && !$tenantService->getCurrentSchoolId()) {
             $schools = $tenantService->getUserSchools((int) $session->get('user_id'));
 
             if (empty($schools)) {

@@ -18,11 +18,11 @@ class HealthController extends ResourceController
     public function index(): ResponseInterface
     {
         $resolver = new TenantResolver();
-        $audit    = new AuditService();
-        $ledger   = new LedgerService();
+        $audit = new AuditService();
+        $ledger = new LedgerService();
         $registry = new IntegrationRegistry();
-        $qr       = new QrService();
-        $maker    = new MakerCheckerService();
+        $qr = new QrService();
+        $maker = new MakerCheckerService();
 
         return $this->respond([
             'status'        => 'ok',

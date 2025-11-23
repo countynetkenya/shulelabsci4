@@ -2,8 +2,6 @@
 
 namespace Modules\Integrations\Config;
 
-use CodeIgniter\Config\BaseConfig;
-
 /**
  * Routes configuration for Integrations module.
  */

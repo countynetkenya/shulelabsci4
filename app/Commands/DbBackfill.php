@@ -7,7 +7,7 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
 /**
- * Database Backfill Command
+ * Database Backfill Command.
  *
  * Validates and backfills data in CI4 tables
  *
@@ -17,10 +17,15 @@ use CodeIgniter\CLI\CLI;
 class DbBackfill extends BaseCommand
 {
     protected $group = 'Database';
+
     protected $name = 'db:backfill';
+
     protected $description = 'Validate and backfill data in CI4 tables';
+
     protected $usage = 'db:backfill [options]';
+
     protected $arguments = [];
+
     protected $options = [
         '--dry-run' => 'Show planned operations without applying them (default)',
         '--apply' => 'Apply the data backfill operations',
@@ -28,7 +33,7 @@ class DbBackfill extends BaseCommand
     ];
 
     /**
-     * Run the backfill command
+     * Run the backfill command.
      */
     public function run(array $params)
     {
@@ -116,10 +121,10 @@ class DbBackfill extends BaseCommand
             if ($result['success']) {
                 $successCount++;
                 $totalAffected += $result['affected_rows'] ?? 0;
-                CLI::write("  ✓ Success: " . substr($result['sql'], 0, 60) . '... (' . ($result['affected_rows'] ?? 0) . ' rows)', 'green');
+                CLI::write('  ✓ Success: ' . substr($result['sql'], 0, 60) . '... (' . ($result['affected_rows'] ?? 0) . ' rows)', 'green');
             } else {
-                CLI::write("  ✗ Error: " . $result['error'], 'red');
-                CLI::write("    SQL: " . $result['sql'], 'white');
+                CLI::write('  ✗ Error: ' . $result['error'], 'red');
+                CLI::write('    SQL: ' . $result['sql'], 'white');
             }
         }
 

@@ -10,12 +10,14 @@ use Ramsey\Uuid\Uuid;
  */
 class Transfer
 {
-    public const STATUS_PENDING  = 'pending';
+    public const STATUS_PENDING = 'pending';
     public const STATUS_ACCEPTED = 'accepted';
     public const STATUS_REJECTED = 'rejected';
 
     private string $id;
+
     private string $sourceWarehouseId;
+
     private string $targetWarehouseId;
 
     /**
@@ -24,10 +26,15 @@ class Transfer
     private array $items;
 
     private string $status;
+
     private DateTimeImmutable $requestedAt;
+
     private ?DateTimeImmutable $completedAt = null;
+
     private ?string $qrToken = null;
+
     private ?string $qrUrl = null;
+
     private ?int $approvalRequestId = null;
 
     /**
@@ -40,12 +47,12 @@ class Transfer
         ?string $id = null,
         ?DateTimeImmutable $requestedAt = null
     ) {
-        $this->id                = $id ?? Uuid::uuid4()->toString();
+        $this->id = $id ?? Uuid::uuid4()->toString();
         $this->sourceWarehouseId = $sourceWarehouseId;
         $this->targetWarehouseId = $targetWarehouseId;
-        $this->items             = $items;
-        $this->status            = self::STATUS_PENDING;
-        $this->requestedAt       = $requestedAt ?? new DateTimeImmutable('now', new \DateTimeZone('UTC'));
+        $this->items = $items;
+        $this->status = self::STATUS_PENDING;
+        $this->requestedAt = $requestedAt ?? new DateTimeImmutable('now', new \DateTimeZone('UTC'));
     }
 
     public function getId(): string
@@ -78,13 +85,13 @@ class Transfer
 
     public function markAccepted(): void
     {
-        $this->status      = self::STATUS_ACCEPTED;
+        $this->status = self::STATUS_ACCEPTED;
         $this->completedAt = new DateTimeImmutable('now', new \DateTimeZone('UTC'));
     }
 
     public function markRejected(): void
     {
-        $this->status      = self::STATUS_REJECTED;
+        $this->status = self::STATUS_REJECTED;
         $this->completedAt = new DateTimeImmutable('now', new \DateTimeZone('UTC'));
     }
 
@@ -101,7 +108,7 @@ class Transfer
     public function setQrDetails(string $token, string $url): void
     {
         $this->qrToken = $token;
-        $this->qrUrl   = $url;
+        $this->qrUrl = $url;
     }
 
     public function getQrToken(): ?string

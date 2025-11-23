@@ -125,12 +125,12 @@ class CreateSchoolsTable extends Migration
 
         $this->forge->addKey('id', true);
         $this->forge->addUniqueKey('school_code');
-        
+
         $attributes = [];
         if ($this->db->DBDriver === 'MySQLi') {
             $attributes = ['ENGINE' => 'InnoDB'];
         }
-        
+
         $this->forge->createTable('schools', false, $attributes);
     }
 

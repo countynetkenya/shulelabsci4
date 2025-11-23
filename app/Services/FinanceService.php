@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\FeeStructureModel;
 use App\Models\InvoiceModel;
 use App\Models\PaymentModel;
-use App\Models\FeeStructureModel;
 
 /**
  * FinanceService - Financial management for multi-school system.
@@ -12,7 +12,9 @@ use App\Models\FeeStructureModel;
 class FinanceService
 {
     protected InvoiceModel $invoiceModel;
+
     protected PaymentModel $paymentModel;
+
     protected FeeStructureModel $feeStructureModel;
 
     public function __construct()
@@ -156,7 +158,7 @@ class FinanceService
 
         foreach ($payments as $payment) {
             $stats['total_collected'] += $payment['amount'];
-            
+
             $method = $payment['payment_method'];
             if (!isset($stats['by_method'][$method])) {
                 $stats['by_method'][$method] = ['count' => 0, 'amount' => 0];

@@ -5,7 +5,7 @@ namespace App\Models;
 use CodeIgniter\Model;
 
 /**
- * LoginLog Model
+ * LoginLog Model.
  *
  * Handles login logging and tracking
  * Compatible with CI3 database schema
@@ -13,13 +13,17 @@ use CodeIgniter\Model;
 class LoginLogModel extends Model
 {
     protected $table = 'loginlog';
+
     protected $primaryKey = 'loginlogID';
+
     protected $returnType = 'object';
+
     protected $allowedFields = ['userID', 'usertypeID', 'ip', 'browser', 'login', 'logout'];
+
     protected $useTimestamps = false;
 
     /**
-     * Create login log entry
+     * Create login log entry.
      *
      * @param array<string, mixed> $data
      * @return int|bool
@@ -30,7 +34,7 @@ class LoginLogModel extends Model
     }
 
     /**
-     * Update logout time
+     * Update logout time.
      *
      * @param int $loginlogID
      * @param int $logoutTime
@@ -42,7 +46,7 @@ class LoginLogModel extends Model
     }
 
     /**
-     * Get single login log entry
+     * Get single login log entry.
      *
      * @param array<string, mixed> $where
      * @return object|null

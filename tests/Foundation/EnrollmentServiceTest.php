@@ -2,9 +2,9 @@
 
 namespace Tests\Foundation;
 
+use App\Services\EnrollmentService;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use App\Services\EnrollmentService;
 
 /**
  * @internal
@@ -14,25 +14,27 @@ final class EnrollmentServiceTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = false;
+
     protected EnrollmentService $service;
+
     protected static bool $migrated = false;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Run migrations only once for all tests
         if (!self::$migrated) {
             $migrate = \Config\Services::migrations();
             $migrate->latest();
             self::$migrated = true;
         }
-        
+
         $this->service = new EnrollmentService();
-        
+
         // Create minimal test data
         $db = \Config\Database::connect();
-        
+
         // Create school if not exists
         $existing = $db->table('schools')->where('id', 6)->get()->getRow();
         if (!$existing) {
@@ -44,7 +46,7 @@ final class EnrollmentServiceTest extends CIUnitTestCase
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
         }
-        
+
         // Create classes if not exist
         $existingClass = $db->table('school_classes')->where('id', 1)->get()->getRow();
         if (!$existingClass) {
@@ -53,7 +55,7 @@ final class EnrollmentServiceTest extends CIUnitTestCase
                 ['id' => 2, 'school_id' => 6, 'class_name' => 'Class 2', 'max_capacity' => 40, 'created_at' => date('Y-m-d H:i:s')],
             ]);
         }
-        
+
         // Create users if not exist
         $existingUser = $db->table('users')->where('id', 218)->get()->getRow();
         if (!$existingUser) {
@@ -65,7 +67,7 @@ final class EnrollmentServiceTest extends CIUnitTestCase
                 ['id' => 220, 'username' => 'student220', 'email' => 'student220@test.com', 'full_name' => 'Student 220', 'password_hash' => password_hash('password', PASSWORD_DEFAULT), 'created_at' => date('Y-m-d H:i:s')],
             ]);
         }
-        
+
         // Pre-enroll student 33 to test duplicate enrollment
         $enrollment = $db->table('student_enrollments')->where('student_id', 33)->where('school_id', 6)->get()->getRow();
         if (!$enrollment) {
@@ -118,7 +120,7 @@ final class EnrollmentServiceTest extends CIUnitTestCase
     {
         // Get an existing enrollment from School 6
         $enrollment = model('StudentEnrollmentModel')->forSchool(6)->first();
-        
+
         $this->assertNotNull($enrollment);
 
         // Transfer to different class (from class 1 to class 2)
@@ -143,7 +145,7 @@ final class EnrollmentServiceTest extends CIUnitTestCase
 
         $this->assertIsArray($enrollments);
         $this->assertGreaterThan(0, count($enrollments));
-        
+
         foreach ($enrollments as $enrollment) {
             $this->assertArrayHasKey('username', $enrollment);
             $this->assertArrayHasKey('email', $enrollment);

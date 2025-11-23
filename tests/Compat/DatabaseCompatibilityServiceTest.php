@@ -12,6 +12,7 @@ use PHPUnit\Framework\TestCase;
 class DatabaseCompatibilityServiceTest extends TestCase
 {
     protected BaseConnection $db;
+
     protected DatabaseCompatibilityService $service;
 
     protected function setUp(): void
@@ -40,7 +41,7 @@ class DatabaseCompatibilityServiceTest extends TestCase
         $findings = $this->service->audit();
 
         $this->assertNotEmpty($findings['missing_tables']);
-        
+
         // Check that required tables are detected as missing
         $missingTableNames = array_column($findings['missing_tables'], 'table');
         $this->assertContains('audit_events', $missingTableNames);
@@ -56,12 +57,12 @@ class DatabaseCompatibilityServiceTest extends TestCase
         $findings = $this->service->audit();
 
         $this->assertNotEmpty($findings['missing_columns']);
-        
+
         // Check that missing columns are detected
         $missingColumns = array_filter($findings['missing_columns'], function ($item) {
             return $item['table'] === 'audit_events';
         });
-        
+
         $this->assertNotEmpty($missingColumns);
     }
 
@@ -86,7 +87,7 @@ class DatabaseCompatibilityServiceTest extends TestCase
         $patches = $this->service->generateSqlPatches();
 
         $this->assertNotEmpty($patches);
-        
+
         // Check that SQL contains ALTER TABLE statements
         $hasAlterTable = false;
         foreach ($patches as $sql) {
@@ -95,7 +96,7 @@ class DatabaseCompatibilityServiceTest extends TestCase
                 break;
             }
         }
-        
+
         $this->assertTrue($hasAlterTable, 'Should generate ALTER TABLE statements');
     }
 
@@ -129,7 +130,7 @@ class DatabaseCompatibilityServiceTest extends TestCase
             foreach ($generated as $file) {
                 $this->assertFileExists($file);
                 $content = file_get_contents($file);
-                
+
                 // Verify migration structure
                 $this->assertStringContainsString('namespace App\Database\Migrations', $content);
                 $this->assertStringContainsString('extends Migration', $content);
@@ -144,7 +145,7 @@ class DatabaseCompatibilityServiceTest extends TestCase
     }
 
     /**
-     * Create complete schema for testing
+     * Create complete schema for testing.
      */
     protected function createCompleteSchema(): void
     {
@@ -207,7 +208,7 @@ SQL);
     }
 
     /**
-     * Ensure path constants are defined
+     * Ensure path constants are defined.
      */
     private function ensurePathConstants(): void
     {

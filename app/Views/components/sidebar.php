@@ -13,8 +13,8 @@
         
         <?php
         $usertypeID = session()->get('usertypeID');
-        $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
-        ?>
+            $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
+            ?>
         
         <?php if ($isAdmin) : ?>
         <li style="padding: 10px 20px;">

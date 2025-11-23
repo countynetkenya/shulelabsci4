@@ -9,8 +9,10 @@ use CodeIgniter\Model;
  */
 class IntegrationLogModel extends Model
 {
-    protected $table         = 'integration_logs';
-    protected $primaryKey    = 'id';
+    protected $table = 'integration_logs';
+
+    protected $primaryKey = 'id';
+
     protected $allowedFields = [
         'integration_id',
         'adapter_name',
@@ -26,8 +28,10 @@ class IntegrationLogModel extends Model
     ];
 
     protected $useTimestamps = true;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = null; // Logs are immutable
+
+    protected $createdField = 'created_at';
+
+    protected $updatedField = null; // Logs are immutable
 
     protected $returnType = 'array';
 

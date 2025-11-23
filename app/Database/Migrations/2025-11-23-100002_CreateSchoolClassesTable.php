@@ -68,18 +68,18 @@ class CreateSchoolClassesTable extends Migration
         $this->forge->addKey('id', true);
         $this->forge->addKey('school_id');
         $this->forge->addKey('class_teacher_id');
-        
+
         // Foreign keys only for MySQL
         if ($this->db->DBDriver === 'MySQLi') {
             $this->forge->addForeignKey('school_id', 'schools', 'id', 'CASCADE', 'CASCADE');
             $this->forge->addForeignKey('class_teacher_id', 'users', 'id', 'SET NULL', 'CASCADE');
         }
-        
+
         $attributes = [];
         if ($this->db->DBDriver === 'MySQLi') {
             $attributes = ['ENGINE' => 'InnoDB'];
         }
-        
+
         $this->forge->createTable('school_classes', false, $attributes);
     }
 

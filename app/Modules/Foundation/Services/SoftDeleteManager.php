@@ -17,6 +17,7 @@ class SoftDeleteManager
      * @phpstan-var BaseConnection<object, object>
      */
     private BaseConnection $db;
+
     private AuditService $auditService;
 
     /**
@@ -24,7 +25,7 @@ class SoftDeleteManager
      */
     public function __construct(?ConnectionInterface $connection = null, ?AuditService $auditService = null)
     {
-        $this->db           = $connection instanceof BaseConnection ? $connection : Database::connect();
+        $this->db = $connection instanceof BaseConnection ? $connection : Database::connect();
         $this->auditService = $auditService ?? new AuditService($this->db);
     }
 
@@ -35,13 +36,13 @@ class SoftDeleteManager
      */
     public function softDelete(string $table, int|string $id, array $context, string $reason): void
     {
-        $actorId  = $context['actor_id'] ?? null;
+        $actorId = $context['actor_id'] ?? null;
 
         $builder = $this->db->table($table);
         $builder->where('id', $id);
 
         $existing = $builder->get()->getFirstRow('array');
-        if (! $existing) {
+        if (!$existing) {
             throw new RuntimeException(sprintf('Record %s::%s not found for soft delete.', $table, $id));
         }
 
@@ -69,7 +70,7 @@ class SoftDeleteManager
 
         $this->db->transComplete();
 
-        if (! $this->db->transStatus()) {
+        if (!$this->db->transStatus()) {
             throw new RuntimeException('Soft delete transaction failed.');
         }
     }

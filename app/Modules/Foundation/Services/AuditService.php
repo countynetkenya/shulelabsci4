@@ -61,14 +61,14 @@ class AuditService
 
         $previousHash = $this->getLatestHash();
         $payload['previous_hash'] = $previousHash;
-        $payload['hash_value']    = $this->calculateHash($previousHash, $payload);
+        $payload['hash_value'] = $this->calculateHash($previousHash, $payload);
 
         $this->db->table('audit_events')->insert($payload);
         $eventId = (int) $this->db->insertID();
 
         $this->db->transComplete();
 
-        if (! $this->db->transStatus()) {
+        if (!$this->db->transStatus()) {
             throw new RuntimeException('Failed to record audit event.');
         }
 
@@ -82,7 +82,7 @@ class AuditService
     {
         $day ??= Time::today('UTC');
         $start = $day->setTime(0, 0, 0);
-        $end   = $day->setTime(23, 59, 59);
+        $end = $day->setTime(23, 59, 59);
 
         $builder = $this->db->table('audit_events');
         $builder->select('hash_value');
@@ -115,11 +115,11 @@ class AuditService
         $previousHash = null;
         foreach ($builder->get()->getResultArray() as $row) {
             $expected = $this->calculateHash($row['previous_hash'], $row);
-            if (! hash_equals($expected, $row['hash_value'])) {
+            if (!hash_equals($expected, $row['hash_value'])) {
                 return false;
             }
 
-            if ($previousHash !== null && ! hash_equals($previousHash, (string) $row['previous_hash'])) {
+            if ($previousHash !== null && !hash_equals($previousHash, (string) $row['previous_hash'])) {
                 return false;
             }
 

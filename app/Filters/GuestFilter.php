@@ -7,14 +7,14 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
 /**
- * Guest Filter
+ * Guest Filter.
  *
  * Redirects authenticated users away from guest-only pages (like signin)
  */
 class GuestFilter implements FilterInterface
 {
     /**
-     * Redirect authenticated users to dashboard
+     * Redirect authenticated users to dashboard.
      *
      * @param RequestInterface $request
      * @param array<int|string, mixed>|null $arguments
@@ -31,7 +31,7 @@ class GuestFilter implements FilterInterface
     }
 
     /**
-     * After filter - not used
+     * After filter - not used.
      *
      * @param RequestInterface $request
      * @param ResponseInterface $response

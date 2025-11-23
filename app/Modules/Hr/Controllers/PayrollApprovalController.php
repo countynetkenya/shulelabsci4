@@ -24,7 +24,7 @@ class PayrollApprovalController extends BaseController
         $tenantId = $this->request->getGet('tenant_id');
         $tenantId = $tenantId !== null && $tenantId !== '' ? (string) $tenantId : null;
 
-        $summary   = $this->approvalService->summarise($tenantId);
+        $summary = $this->approvalService->summarise($tenantId);
         $approvals = $this->approvalService->listPending($tenantId);
 
         return view('Modules\\Hr\\Views\\payroll_approvals', [
@@ -40,7 +40,7 @@ class PayrollApprovalController extends BaseController
         $tenantId = $this->request->getGet('tenant_id');
         $tenantId = $tenantId !== null && $tenantId !== '' ? (string) $tenantId : null;
 
-        $summary   = $this->approvalService->summarise($tenantId);
+        $summary = $this->approvalService->summarise($tenantId);
         $approvals = $this->approvalService->listPending($tenantId);
 
         return $this->response->setJSON([
@@ -65,7 +65,7 @@ class PayrollApprovalController extends BaseController
     public function reject(int $requestId): ResponseInterface
     {
         $payload = $this->request->getJSON(true) ?? [];
-        $reason  = (string) ($payload['reason'] ?? '');
+        $reason = (string) ($payload['reason'] ?? '');
 
         try {
             $approval = $this->approvalService->reject($requestId, $reason, $this->buildContext());

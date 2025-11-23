@@ -5,8 +5,8 @@ namespace App\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * Complete Database Seeder
- * 
+ * Complete Database Seeder.
+ *
  * Seeds all necessary data for comprehensive system testing:
  * - SuperAdmin user
  * - Test users (teachers, students, parents, admins)
@@ -20,7 +20,7 @@ class CompleteDatabaseSeeder extends Seeder
 
         $this->createSuperAdmin();
         $this->createTestUsers();
-        
+
         echo "\n✅ Database seeding complete!\n";
         echo "📊 Summary:\n";
         echo "   - SuperAdmin: admin@shulelabs.local / Admin@123456\n";
@@ -31,7 +31,7 @@ class CompleteDatabaseSeeder extends Seeder
     }
 
     /**
-     * Create SuperAdmin user with full system access
+     * Create SuperAdmin user with full system access.
      */
     private function createSuperAdmin(): void
     {
@@ -84,7 +84,7 @@ class CompleteDatabaseSeeder extends Seeder
     }
 
     /**
-     * Create test users for different roles
+     * Create test users for different roles.
      */
     private function createTestUsers(): void
     {
@@ -153,7 +153,7 @@ class CompleteDatabaseSeeder extends Seeder
     }
 
     /**
-     * Helper method to create a user
+     * Helper method to create a user.
      */
     private function createUser(array $data): void
     {

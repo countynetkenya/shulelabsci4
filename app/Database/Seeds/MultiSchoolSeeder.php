@@ -12,7 +12,7 @@ class MultiSchoolSeeder extends Seeder
     public function run()
     {
         $db = \Config\Database::connect();
-        
+
         // Check if schools already exist
         $existing = $db->table('schools')->countAllResults();
         if ($existing > 0) {

@@ -31,7 +31,7 @@ abstract class BaseAdapter implements IntegrationAdapterInterface
         $required = $this->getRequiredConfigKeys();
 
         foreach ($required as $key) {
-            if (! isset($config[$key]) || empty($config[$key])) {
+            if (!isset($config[$key]) || empty($config[$key])) {
                 return false;
             }
         }

@@ -5,7 +5,7 @@ namespace App\Models;
 use CodeIgniter\Model;
 
 /**
- * User Model
+ * User Model.
  *
  * Handles user authentication using CI4-native user tables
  * Uses users table exclusively for authentication
@@ -13,11 +13,17 @@ use CodeIgniter\Model;
 class UserModel extends Model
 {
     protected $table = 'users';
+
     protected $primaryKey = 'id';
+
     protected $returnType = 'object';
+
     protected $useTimestamps = true;
+
     protected $createdField = 'created_at';
+
     protected $updatedField = 'updated_at';
+
     protected $allowedFields = [
         'username',
         'email',
@@ -31,7 +37,7 @@ class UserModel extends Model
     ];
 
     /**
-     * Find user by username (active users only)
+     * Find user by username (active users only).
      *
      * @param string $username
      * @return object|null
@@ -45,7 +51,7 @@ class UserModel extends Model
 
     /**
      * Find user by username regardless of active status
-     * Used for detailed signin error messages
+     * Used for detailed signin error messages.
      *
      * @param string $username
      * @return object|null
@@ -58,7 +64,7 @@ class UserModel extends Model
     }
 
     /**
-     * Get user with their roles
+     * Get user with their roles.
      *
      * @param int $userId
      * @return object|null User object with roles array attached
@@ -67,7 +73,7 @@ class UserModel extends Model
     {
         // Get user
         $user = $this->find($userId);
-        
+
         if (!$user) {
             return null;
         }
@@ -91,7 +97,7 @@ class UserModel extends Model
     }
 
     /**
-     * Get user's primary role (first assigned role)
+     * Get user's primary role (first assigned role).
      *
      * @param int $userId
      * @return object|null
@@ -109,7 +115,7 @@ class UserModel extends Model
     }
 
     /**
-     * Get all users with their roles for admin panel
+     * Get all users with their roles for admin panel.
      *
      * @return array
      */
@@ -124,7 +130,7 @@ class UserModel extends Model
     }
 
     /**
-     * Check if user has a specific role
+     * Check if user has a specific role.
      *
      * @param int $userId
      * @param string $roleSlug
@@ -143,7 +149,7 @@ class UserModel extends Model
 
     /**
      * Legacy method: Get user for signin (backward compatibility)
-     * Now uses users table instead of multiple CI3 tables
+     * Now uses users table instead of multiple CI3 tables.
      *
      * @param string $username
      * @param string $hashedPassword

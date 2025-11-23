@@ -2,9 +2,9 @@
 
 namespace Tests\Learning;
 
+use App\Services\LearningService;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use App\Services\LearningService;
 
 /**
  * @internal
@@ -14,6 +14,7 @@ final class LearningServiceTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = false;
+
     protected LearningService $service;
 
     protected function setUp(): void

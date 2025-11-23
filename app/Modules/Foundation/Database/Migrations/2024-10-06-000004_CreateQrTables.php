@@ -20,7 +20,7 @@ class CreateQrTables extends Migration
         $this->forge->addKey('id', true);
         $this->forge->addKey('token', false, true);
         $this->forge->addKey('resource_id');
-        $this->forge->createTable('ci4_qr_tokens', true);
+        $this->forge->createTable('qr_tokens', true);
 
         $this->forge->addField([
             'id'          => ['type' => 'BIGINT', 'unsigned' => true, 'auto_increment' => true],
@@ -32,12 +32,12 @@ class CreateQrTables extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addKey('token_id');
-        $this->forge->createTable('ci4_qr_scans', true);
+        $this->forge->createTable('qr_scans', true);
     }
 
     public function down(): void
     {
-        $this->forge->dropTable('ci4_qr_scans', true);
-        $this->forge->dropTable('ci4_qr_tokens', true);
+        $this->forge->dropTable('qr_scans', true);
+        $this->forge->dropTable('qr_tokens', true);
     }
 }

@@ -20,7 +20,7 @@ class EnrollmentSeeder extends Seeder
     public function run()
     {
         $db = \Config\Database::connect();
-        
+
         echo "\n📝 Enrolling students into classes...\n";
 
         // Get class IDs for each school

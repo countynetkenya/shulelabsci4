@@ -3,14 +3,14 @@
 namespace Modules\Reports\Services;
 
 /**
- * Master Report Orchestrator
- * 
+ * Master Report Orchestrator.
+ *
  * Coordinates generation of all 9 intelligence reports
  */
 class ReportOrchestrator
 {
     private array $reportServices = [];
-    
+
     public function __construct()
     {
         // Initialize all report services
@@ -26,9 +26,9 @@ class ReportOrchestrator
             'risk_assessment' => new RiskAssessmentReportService(),
         ];
     }
-    
+
     /**
-     * Generate all 9 reports
+     * Generate all 9 reports.
      *
      * @param array $buildMetrics Metrics from all build phases
      * @return array All generated reports
@@ -36,7 +36,7 @@ class ReportOrchestrator
     public function generateAllReports(array $buildMetrics = []): array
     {
         $reports = [];
-        
+
         foreach ($this->reportServices as $name => $service) {
             try {
                 $reports[$name] = $service->generate($buildMetrics);
@@ -49,12 +49,12 @@ class ReportOrchestrator
                 ];
             }
         }
-        
+
         return $reports;
     }
-    
+
     /**
-     * Generate and save all reports to files
+     * Generate and save all reports to files.
      *
      * @param array $buildMetrics Build metrics
      * @param string $outputDir Output directory
@@ -65,20 +65,20 @@ class ReportOrchestrator
         if ($outputDir === null) {
             $outputDir = WRITEPATH . 'reports/' . date('Y-m-d-His');
         }
-        
+
         if (!is_dir($outputDir)) {
             mkdir($outputDir, 0755, true);
         }
-        
+
         $reports = $this->generateAllReports($buildMetrics);
         $savedFiles = [];
-        
+
         foreach ($reports as $name => $reportData) {
             // Save as JSON
             $jsonPath = $outputDir . '/' . $name . '.json';
             file_put_contents($jsonPath, json_encode($reportData, JSON_PRETTY_PRINT));
             $savedFiles[$name . '_json'] = $jsonPath;
-            
+
             // Save as HTML if executive summary
             if ($name === 'executive_summary' && $reportData['status'] === 'success') {
                 $htmlPath = $outputDir . '/executive_summary.html';
@@ -87,16 +87,16 @@ class ReportOrchestrator
                 $savedFiles[$name . '_html'] = $htmlPath;
             }
         }
-        
+
         // Generate index file
         $this->generateIndexFile($outputDir, $reports);
         $savedFiles['index'] = $outputDir . '/index.html';
-        
+
         return $savedFiles;
     }
-    
+
     /**
-     * Generate index.html with links to all reports
+     * Generate index.html with links to all reports.
      */
     private function generateIndexFile(string $outputDir, array $reports): void
     {
@@ -262,7 +262,7 @@ HTML;
             $title = $reportTitles[$name] ?? ucwords(str_replace('_', ' ', $name));
             $status = $report['status'] ?? 'unknown';
             $statusClass = $status === 'success' ? 'status-success' : 'status-error';
-            
+
             $html .= <<<HTML
             <div class="report-card">
                 <h3>{$title}</h3>
@@ -270,11 +270,11 @@ HTML;
                 <div class="report-links">
                     <a href="{$name}.json">View JSON</a>
 HTML;
-            
+
             if ($name === 'executive_summary' && file_exists($outputDir . '/executive_summary.html')) {
                 $html .= '<a href="executive_summary.html">View HTML</a>';
             }
-            
+
             $html .= <<<HTML
                 </div>
             </div>
@@ -294,9 +294,9 @@ HTML;
 
         file_put_contents($outputDir . '/index.html', $html);
     }
-    
+
     /**
-     * Get summary of all reports
+     * Get summary of all reports.
      *
      * @param array $buildMetrics Build metrics
      * @return array Summary data

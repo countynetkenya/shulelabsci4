@@ -5,7 +5,7 @@ namespace Config;
 use CodeIgniter\Database\Config;
 
 /**
- * Database Configuration
+ * Database Configuration.
  */
 class Database extends Config
 {
@@ -202,13 +202,13 @@ class Database extends Config
 
         // Read database configuration from .env using env() helper
         // This is the single source of truth for database credentials
-        $this->default['DSN']      = env('DB_DSN', '');
+        $this->default['DSN'] = env('DB_DSN', '');
         $this->default['hostname'] = env('DB_HOST', 'localhost');
         $this->default['username'] = env('DB_USERNAME', '');
         $this->default['password'] = env('DB_PASSWORD', '');
         $this->default['database'] = env('DB_DATABASE', '');
         $this->default['DBDriver'] = env('DB_DRIVER', 'MySQLi');
-        $this->default['port']     = (int) env('DB_PORT', 3306);
+        $this->default['port'] = (int) env('DB_PORT', 3306);
 
         // Special handling for SQLite3
         if ($this->default['DBDriver'] === 'SQLite3') {
@@ -224,7 +224,7 @@ class Database extends Config
         // Validate required database credentials for MySQL/PostgreSQL
         $allowEmptyPassword = filter_var(env('DB_ALLOW_EMPTY_PASSWORD', false), FILTER_VALIDATE_BOOLEAN);
         $missing = [];
-        
+
         if (empty($this->default['hostname'])) {
             $missing[] = 'hostname (DB_HOST)';
         }
@@ -234,7 +234,7 @@ class Database extends Config
         if (empty($this->default['database'])) {
             $missing[] = 'database (DB_DATABASE)';
         }
-        
+
         // Password is optional in development but required in production
         if (ENVIRONMENT === 'production' && empty($this->default['password'])) {
             $missing[] = 'password (DB_PASSWORD)';

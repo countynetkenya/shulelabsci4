@@ -7,13 +7,19 @@ namespace App\Models;
  */
 class SchoolClassModel extends TenantModel
 {
-    protected $table            = 'school_classes';
-    protected $primaryKey       = 'id';
+    protected $table = 'school_classes';
+
+    protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = [
+
+    protected $returnType = 'array';
+
+    protected $useSoftDeletes = false;
+
+    protected $protectFields = true;
+
+    protected $allowedFields = [
         'school_id',
         'class_name',
         'grade_level',
@@ -26,9 +32,12 @@ class SchoolClassModel extends TenantModel
 
     // Dates
     protected $useTimestamps = true;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
+
+    protected $dateFormat = 'datetime';
+
+    protected $createdField = 'created_at';
+
+    protected $updatedField = 'updated_at';
 
     // Validation
     protected $validationRules = [
@@ -37,7 +46,8 @@ class SchoolClassModel extends TenantModel
     ];
 
     protected $validationMessages = [];
-    protected $skipValidation     = false;
+
+    protected $skipValidation = false;
 
     /**
      * Get class with teacher details.

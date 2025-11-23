@@ -7,13 +7,19 @@ namespace App\Models;
  */
 class StudentEnrollmentModel extends TenantModel
 {
-    protected $table            = 'student_enrollments';
-    protected $primaryKey       = 'id';
+    protected $table = 'student_enrollments';
+
+    protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = [
+
+    protected $returnType = 'array';
+
+    protected $useSoftDeletes = false;
+
+    protected $protectFields = true;
+
+    protected $allowedFields = [
         'student_id',
         'school_id',
         'class_id',
@@ -25,9 +31,12 @@ class StudentEnrollmentModel extends TenantModel
 
     // Dates
     protected $useTimestamps = true;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
+
+    protected $dateFormat = 'datetime';
+
+    protected $createdField = 'created_at';
+
+    protected $updatedField = 'updated_at';
 
     // Validation
     protected $validationRules = [
@@ -38,7 +47,8 @@ class StudentEnrollmentModel extends TenantModel
     ];
 
     protected $validationMessages = [];
-    protected $skipValidation     = false;
+
+    protected $skipValidation = false;
 
     /**
      * Get enrollment with student and parent details.
@@ -104,11 +114,11 @@ class StudentEnrollmentModel extends TenantModel
      */
     public function enrollStudent(array $data): bool
     {
-        if (! isset($data['enrollment_date'])) {
+        if (!isset($data['enrollment_date'])) {
             $data['enrollment_date'] = date('Y-m-d');
         }
 
-        if (! isset($data['status'])) {
+        if (!isset($data['status'])) {
             $data['status'] = 'active';
         }
 

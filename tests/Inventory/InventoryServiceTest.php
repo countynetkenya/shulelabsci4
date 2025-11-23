@@ -2,9 +2,9 @@
 
 namespace Tests\Inventory;
 
+use App\Services\InventoryService;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use App\Services\InventoryService;
 
 /**
  * @internal
@@ -14,6 +14,7 @@ final class InventoryServiceTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = false;
+
     protected InventoryService $service;
 
     protected function setUp(): void
@@ -121,7 +122,7 @@ final class InventoryServiceTest extends CIUnitTestCase
 
         $this->assertIsArray($lowStock);
         $this->assertGreaterThan(0, count($lowStock));
-        
+
         foreach ($lowStock as $item) {
             $this->assertLessThanOrEqual(10, $item['quantity']);
         }

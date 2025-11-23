@@ -18,7 +18,9 @@ class OfflineSnapshotService
 {
     /** @var array<string, string> */
     private array $signingKeys;
+
     private string $activeKeyId;
+
     private int $defaultTtlSeconds;
 
     /**
@@ -36,8 +38,8 @@ class OfflineSnapshotService
         }
 
         $this->defaultTtlSeconds = $defaultTtlSeconds;
-        $this->activeKeyId       = $keyId;
-        $this->signingKeys       = $fallbackKeys;
+        $this->activeKeyId = $keyId;
+        $this->signingKeys = $fallbackKeys;
         $this->signingKeys[$keyId] = $signingKey;
     }
 
@@ -57,11 +59,11 @@ class OfflineSnapshotService
             throw new InvalidArgumentException('Snapshot TTL must be positive.');
         }
 
-        $issuedAt  = new DateTimeImmutable('now', new DateTimeZone('UTC'));
+        $issuedAt = new DateTimeImmutable('now', new DateTimeZone('UTC'));
         $expiresAt = $issuedAt->add(new DateInterval(sprintf('PT%dS', $ttl)));
         $snapshotId = $this->buildSnapshotId($tenantId, $issuedAt, (string) ($context['device_id'] ?? ''));
 
-        $checksum  = hash('sha256', json_encode($dataset, JSON_THROW_ON_ERROR));
+        $checksum = hash('sha256', json_encode($dataset, JSON_THROW_ON_ERROR));
         $signature = $this->sign($snapshotId, $checksum, $expiresAt, $this->activeKeyId);
 
         $metadata = array_filter(
@@ -73,18 +75,18 @@ class OfflineSnapshotService
             static fn ($value) => $value !== null && $value !== ''
         );
 
-            $snapshot = new Snapshot(
-                snapshotId: $snapshotId,
-                tenantId: $tenantId,
-                issuedAt: $issuedAt,
-                expiresAt: $expiresAt,
-                payload: $dataset,
-                checksum: $checksum,
-                signature: $signature,
-                keyId: $this->activeKeyId,
-                version: $version,
-                metadata: $metadata,
-            );
+        $snapshot = new Snapshot(
+            snapshotId: $snapshotId,
+            tenantId: $tenantId,
+            issuedAt: $issuedAt,
+            expiresAt: $expiresAt,
+            payload: $dataset,
+            checksum: $checksum,
+            signature: $signature,
+            keyId: $this->activeKeyId,
+            version: $version,
+            metadata: $metadata,
+        );
 
         $this->auditService->recordEvent(
             eventKey: sprintf('mobile.snapshot.%s', $snapshotId),
@@ -122,7 +124,7 @@ class OfflineSnapshotService
         }
 
         $keyId = $snapshot->getKeyId();
-        $key   = $this->signingKeys[$keyId] ?? null;
+        $key = $this->signingKeys[$keyId] ?? null;
 
         if ($key === null) {
             $this->recordVerificationFailure($snapshot, $context, 'unknown_key');
@@ -138,7 +140,7 @@ class OfflineSnapshotService
             $key
         );
 
-        if (! hash_equals($expectedSignature, $snapshot->getSignature())) {
+        if (!hash_equals($expectedSignature, $snapshot->getSignature())) {
             $this->recordVerificationFailure($snapshot, $context, 'invalid_signature');
 
             return false;
@@ -173,7 +175,7 @@ class OfflineSnapshotService
     public function rotateSigningKey(string $newKey, string $keyId): void
     {
         $this->signingKeys[$keyId] = $newKey;
-        $this->activeKeyId         = $keyId;
+        $this->activeKeyId = $keyId;
     }
 
     public function getActiveKeyId(): string
@@ -208,7 +210,7 @@ class OfflineSnapshotService
     private function buildSnapshotId(string $tenantId, DateTimeImmutable $issuedAt, string $deviceId): string
     {
         $timestamp = $issuedAt->format('YmdHis');
-        $hash      = substr(hash('sha256', $tenantId . $timestamp . $deviceId . microtime()), 0, 10);
+        $hash = substr(hash('sha256', $tenantId . $timestamp . $deviceId . microtime()), 0, 10);
 
         return sprintf('%s-%s-%s', strtoupper($tenantId), $timestamp, strtoupper($hash));
     }

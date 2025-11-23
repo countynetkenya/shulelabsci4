@@ -1,16 +1,15 @@
 <?php
 
 /**
- * CI3 Compatibility Helper
+ * CI3 Compatibility Helper.
  *
  * Provides helper functions to maintain compatibility with CI3 code patterns
  * while running in the CI4 environment.
  */
-
 if (!function_exists('customCompute')) {
     /**
      * Custom compute function - counts array/object elements or checks if value exists
-     * Compatible with CI3's customCompute helper
+     * Compatible with CI3's customCompute helper.
      *
      * @param mixed $data
      * @return int
@@ -18,7 +17,7 @@ if (!function_exists('customCompute')) {
     function customCompute($data): int
     {
         if (is_array($data) || is_object($data)) {
-            return count((array)$data);
+            return count((array) $data);
         }
 
         return $data ? 1 : 0;
@@ -28,7 +27,7 @@ if (!function_exists('customCompute')) {
 if (!function_exists('namesorting')) {
     /**
      * Name sorting/truncation function
-     * Truncates a name to specified length
+     * Truncates a name to specified length.
      *
      * @param string $name
      * @param int $length
@@ -46,7 +45,7 @@ if (!function_exists('namesorting')) {
 
 if (!function_exists('config_item')) {
     /**
-     * Get config item - CI3 compatibility
+     * Get config item - CI3 compatibility.
      *
      * @param string $item
      * @return string|bool|null
@@ -68,7 +67,7 @@ if (!function_exists('config_item')) {
 
 if (!function_exists('set_value')) {
     /**
-     * Set form value for repopulating forms
+     * Set form value for repopulating forms.
      *
      * @param string $field
      * @param string $default
@@ -85,7 +84,7 @@ if (!function_exists('set_value')) {
 
 if (!function_exists('form_error')) {
     /**
-     * Get form validation error for a field
+     * Get form validation error for a field.
      *
      * @param string $field
      * @param string $prefix
@@ -106,7 +105,7 @@ if (!function_exists('form_error')) {
 
 if (!function_exists('doctype')) {
     /**
-     * Return HTML5 doctype
+     * Return HTML5 doctype.
      *
      * @param string $type
      * @return string
@@ -119,7 +118,7 @@ if (!function_exists('doctype')) {
 
 if (!function_exists('validation_errors')) {
     /**
-     * Get all validation errors as a string
+     * Get all validation errors as a string.
      *
      * @param string $prefix
      * @param string $suffix

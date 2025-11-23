@@ -5,7 +5,7 @@ namespace App\Services;
 use CodeIgniter\Database\BaseConnection;
 
 /**
- * Schema Version Tracking Service
+ * Schema Version Tracking Service.
  *
  * Tracks applied schema migrations and provides rollback capability
  */
@@ -13,6 +13,7 @@ class SchemaVersionService
 {
     /** @var \CodeIgniter\Database\BaseConnection<mixed, mixed> */
     protected BaseConnection $db;
+
     protected string $versionTable = 'ci4_schema_versions';
 
     /**
@@ -25,7 +26,7 @@ class SchemaVersionService
     }
 
     /**
-     * Ensure the schema version tracking table exists
+     * Ensure the schema version tracking table exists.
      */
     protected function ensureVersionTableExists(): void
     {
@@ -81,7 +82,7 @@ class SchemaVersionService
     }
 
     /**
-     * Record a schema migration
+     * Record a schema migration.
      *
      * @param string $version Version identifier
      * @param string $description Human-readable description
@@ -111,7 +112,7 @@ class SchemaVersionService
     }
 
     /**
-     * Get all applied migrations
+     * Get all applied migrations.
      *
      * @return array<int, array<string, mixed>>
      */
@@ -124,7 +125,7 @@ class SchemaVersionService
     }
 
     /**
-     * Get the last applied migration
+     * Get the last applied migration.
      *
      * @return array<string, mixed>|null
      */
@@ -140,7 +141,7 @@ class SchemaVersionService
     }
 
     /**
-     * Check if a version has been applied
+     * Check if a version has been applied.
      *
      * @param string $version
      * @return bool
@@ -156,7 +157,7 @@ class SchemaVersionService
     }
 
     /**
-     * Mark a migration as rolled back
+     * Mark a migration as rolled back.
      *
      * @param int $versionId
      * @return bool
@@ -171,7 +172,7 @@ class SchemaVersionService
     }
 
     /**
-     * Get migration details by ID
+     * Get migration details by ID.
      *
      * @param int $versionId
      * @return array<string, mixed>|null
@@ -187,7 +188,7 @@ class SchemaVersionService
     }
 
     /**
-     * Get operations from a migration
+     * Get operations from a migration.
      *
      * @param int $versionId
      * @return array<int, array<string, mixed>>

@@ -15,15 +15,17 @@ use RuntimeException;
 class MoodleSyncServiceTest extends TestCase
 {
     private MoodleClientInterface&MockObject $client;
+
     private IntegrationRegistry&MockObject $registry;
+
     private AuditService&MockObject $auditService;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->client       = $this->createMock(MoodleClientInterface::class);
-        $this->registry     = $this->createMock(IntegrationRegistry::class);
+        $this->client = $this->createMock(MoodleClientInterface::class);
+        $this->registry = $this->createMock(IntegrationRegistry::class);
         $this->auditService = $this->createMock(AuditService::class);
     }
 

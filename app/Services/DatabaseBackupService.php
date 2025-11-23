@@ -3,13 +3,14 @@
 namespace App\Services;
 
 /**
- * Database Backup Service
+ * Database Backup Service.
  *
  * Creates and manages database backups for safe schema migrations
  */
 class DatabaseBackupService
 {
     protected string $backupDir;
+
     /** @var array<string, mixed> */
     protected array $dbConfig;
 
@@ -25,7 +26,7 @@ class DatabaseBackupService
     }
 
     /**
-     * Create a database backup
+     * Create a database backup.
      *
      * @param string|null $description Optional description for the backup
      * @return array<string, mixed> Backup info with file path
@@ -75,7 +76,7 @@ class DatabaseBackupService
     }
 
     /**
-     * Build mysqldump command
+     * Build mysqldump command.
      *
      * @param string $filepath
      * @return string
@@ -109,7 +110,7 @@ class DatabaseBackupService
     }
 
     /**
-     * List available backups
+     * List available backups.
      *
      * @return array<int, array<string, mixed>>
      */
@@ -146,7 +147,7 @@ class DatabaseBackupService
     }
 
     /**
-     * Restore from a backup
+     * Restore from a backup.
      *
      * @param string $backupFile
      * @return bool
@@ -190,7 +191,7 @@ class DatabaseBackupService
     }
 
     /**
-     * Delete old backups, keeping only the specified number
+     * Delete old backups, keeping only the specified number.
      *
      * @param int $keepCount Number of backups to keep
      * @return int Number of backups deleted
@@ -225,7 +226,7 @@ class DatabaseBackupService
     }
 
     /**
-     * Format bytes to human-readable format
+     * Format bytes to human-readable format.
      *
      * @param int $bytes
      * @return string
@@ -239,7 +240,7 @@ class DatabaseBackupService
     }
 
     /**
-     * Get backup directory
+     * Get backup directory.
      *
      * @return string
      */

@@ -21,7 +21,7 @@ class Integrations extends BaseConfig
     public int $maxRetries = 3;
 
     /**
-     * Retry backoff strategy: 'fixed', 'exponential', 'linear'
+     * Retry backoff strategy: 'fixed', 'exponential', 'linear'.
      */
     public string $retryStrategy = 'exponential';
 
@@ -57,7 +57,7 @@ class Integrations extends BaseConfig
 
     /**
      * Integration adapter mappings.
-     * Format: 'logical_name' => ['adapter' => AdapterClass::class, 'enabled' => true]
+     * Format: 'logical_name' => ['adapter' => AdapterClass::class, 'enabled' => true].
      *
      * @var array<string, array{adapter: class-string, enabled: bool, timeout?: int}>
      */

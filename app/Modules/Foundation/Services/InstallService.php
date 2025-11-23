@@ -44,7 +44,7 @@ class InstallService
             $count = $this->db->table('tenant_catalog')
                 ->whereIn('tenant_type', ['organisation', 'school'])
                 ->countAllResults();
-            
+
             return $count > 0;
         } catch (\Throwable $e) {
             // If table doesn't exist, migrations haven't been run
@@ -80,7 +80,7 @@ class InstallService
         ];
 
         $missing = [];
-        
+
         foreach ($requiredTables as $table) {
             if (!$this->db->tableExists($table)) {
                 $missing[] = $table;

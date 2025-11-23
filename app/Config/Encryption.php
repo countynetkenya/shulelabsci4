@@ -15,7 +15,7 @@ class Encryption extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Encryption Key Starter
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * If you use the Encryption class you must set an encryption key (seed).
      * You need to ensure it is long enough for the cipher and mode you plan to use.
@@ -26,7 +26,7 @@ class Encryption extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Encryption Driver to Use
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * One of the supported encryption drivers.
      *
@@ -39,7 +39,7 @@ class Encryption extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * SodiumHandler's Padding Length in Bytes
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * This is the number of bytes that will be padded to the plaintext message
      * before it is encrypted. This value should be greater than zero.
@@ -51,7 +51,7 @@ class Encryption extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Encryption digest
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * HMAC digest to use, e.g. 'SHA512' or 'SHA256'. Default value is 'SHA512'.
      */

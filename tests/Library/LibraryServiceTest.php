@@ -2,9 +2,9 @@
 
 namespace Tests\Library;
 
+use App\Services\LibraryService;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use App\Services\LibraryService;
 
 /**
  * @internal
@@ -14,6 +14,7 @@ final class LibraryServiceTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = false;
+
     protected LibraryService $service;
 
     protected function setUp(): void
@@ -183,7 +184,7 @@ final class LibraryServiceTest extends CIUnitTestCase
 
         $this->assertIsArray($results);
         $this->assertGreaterThan(0, count($results));
-        
+
         foreach ($results as $book) {
             $this->assertStringContainsStringIgnoringCase('JavaScript', $book['title']);
         }

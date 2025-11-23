@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\SchoolUserModel;
 use App\Models\SchoolClassModel;
+use App\Models\SchoolUserModel;
 
 /**
  * HrService - Human resources management for multi-school system.
@@ -11,6 +11,7 @@ use App\Models\SchoolClassModel;
 class HrService
 {
     protected SchoolUserModel $schoolUserModel;
+
     protected SchoolClassModel $classModel;
 
     public function __construct()
@@ -113,7 +114,7 @@ class HrService
     {
         // Verify class belongs to school
         $class = $this->classModel->forSchool($schoolId)->find($classId);
-        
+
         if (!$class) {
             return ['success' => false, 'message' => 'Class not found'];
         }
@@ -143,7 +144,7 @@ class HrService
     public function getStaffStats(int $schoolId): array
     {
         $allStaff = $this->getSchoolStaff($schoolId);
-        
+
         $stats = [
             'total_staff' => count($allStaff),
             'by_role' => [],

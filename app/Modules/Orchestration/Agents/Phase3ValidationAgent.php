@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Modules\Orchestration\Agents;
 
 /**
- * Phase 3: Build & Validation Agent
- * 
+ * Phase 3: Build & Validation Agent.
+ *
  * Comprehensive build, test, and quality validation
- * 
+ *
  * Tasks:
  * - Run PHP CS Fixer (code style)
  * - Execute PHPStan analysis (static analysis)
@@ -18,8 +18,7 @@ namespace Modules\Orchestration\Agents;
  * - Validate database migrations
  * - Check security vulnerabilities
  * - Validate API contracts
- * 
- * @package Modules\Orchestration\Agents
+ *
  * @version 1.0.0
  */
 class Phase3ValidationAgent extends BaseAgent
@@ -37,7 +36,7 @@ class Phase3ValidationAgent extends BaseAgent
     public function execute(): array
     {
         $this->log('Starting Phase 3: BUILD & VALIDATION', 'info');
-        
+
         try {
             $deliverables = [];
 
@@ -54,7 +53,7 @@ class Phase3ValidationAgent extends BaseAgent
             // Step 3: Run PHPMD
             $phpmd = $this->runMessDetection();
             $deliverables['mess_detection'] = $phpmd;
-            $this->log("✓ Mess detection completed", 'info');
+            $this->log('✓ Mess detection completed', 'info');
 
             // Step 4: Run Tests
             $tests = $this->runTests();
@@ -69,7 +68,7 @@ class Phase3ValidationAgent extends BaseAgent
             // Step 6: Validate Migrations
             $migrations = $this->validateMigrations();
             $deliverables['migrations'] = $migrations;
-            $this->log("✓ Database migrations validated", 'info');
+            $this->log('✓ Database migrations validated', 'info');
 
             // Step 7: Security Scan
             $security = $this->runSecurityScan();
@@ -86,12 +85,12 @@ class Phase3ValidationAgent extends BaseAgent
             $this->addMetric('execution_time_seconds', $this->getElapsedTime());
 
             // Check if all quality gates passed
-            $allPassed = $tests['passed'] === $tests['total'] 
+            $allPassed = $tests['passed'] === $tests['total']
                 && $coverage['percentage'] >= $this->config->targetCodeCoverage
                 && $security['critical_issues'] === 0;
 
             if (!$allPassed) {
-                $this->log("⚠ Some quality gates did not pass", 'warning');
+                $this->log('⚠ Some quality gates did not pass', 'warning');
             }
 
             return $this->createSuccessResult($deliverables);
@@ -103,7 +102,7 @@ class Phase3ValidationAgent extends BaseAgent
     }
 
     /**
-     * Run code style check
+     * Run code style check.
      */
     protected function runCodeStyleCheck(): array
     {
@@ -123,7 +122,7 @@ class Phase3ValidationAgent extends BaseAgent
     }
 
     /**
-     * Run static analysis
+     * Run static analysis.
      */
     protected function runStaticAnalysis(): array
     {
@@ -138,7 +137,7 @@ class Phase3ValidationAgent extends BaseAgent
 
         // Parse PHPStan output for error count
         preg_match('/(\d+)\s+error/', $result['output'], $matches);
-        $errors = isset($matches[1]) ? (int)$matches[1] : 0;
+        $errors = isset($matches[1]) ? (int) $matches[1] : 0;
 
         return [
             'errors' => $errors,
@@ -148,7 +147,7 @@ class Phase3ValidationAgent extends BaseAgent
     }
 
     /**
-     * Run mess detection
+     * Run mess detection.
      */
     protected function runMessDetection(): array
     {
@@ -168,7 +167,7 @@ class Phase3ValidationAgent extends BaseAgent
     }
 
     /**
-     * Run all tests
+     * Run all tests.
      */
     protected function runTests(): array
     {
@@ -188,7 +187,7 @@ class Phase3ValidationAgent extends BaseAgent
 
         // Parse PHPUnit output
         preg_match('/Tests:\s+(\d+),\s+Assertions/', $result['output'], $matches);
-        $total = isset($matches[1]) ? (int)$matches[1] : 192;
+        $total = isset($matches[1]) ? (int) $matches[1] : 192;
 
         return [
             'total' => $total,
@@ -200,7 +199,7 @@ class Phase3ValidationAgent extends BaseAgent
     }
 
     /**
-     * Generate code coverage report
+     * Generate code coverage report.
      */
     protected function generateCodeCoverage(): array
     {
@@ -221,7 +220,7 @@ class Phase3ValidationAgent extends BaseAgent
     }
 
     /**
-     * Validate database migrations
+     * Validate database migrations.
      */
     protected function validateMigrations(): array
     {
@@ -241,7 +240,7 @@ class Phase3ValidationAgent extends BaseAgent
     }
 
     /**
-     * Run security vulnerability scan
+     * Run security vulnerability scan.
      */
     protected function runSecurityScan(): array
     {

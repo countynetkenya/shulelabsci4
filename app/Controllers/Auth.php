@@ -2,15 +2,15 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
-use App\Models\SiteModel;
-use App\Models\LoginLogModel;
 use App\Libraries\HashCompat;
+use App\Models\LoginLogModel;
+use App\Models\SiteModel;
+use App\Models\UserModel;
 use App\Services\UserMigrationService;
 use CodeIgniter\HTTP\RedirectResponse;
 
 /**
- * Auth Controller
+ * Auth Controller.
  *
  * Handles user authentication (signin/signout)
  * Uses CI4-native user tables (ci4_users, ci4_roles, ci4_user_roles)
@@ -20,10 +20,15 @@ use CodeIgniter\HTTP\RedirectResponse;
 class Auth extends BaseController
 {
     protected $userModel;
+
     protected $siteModel;
+
     protected $loginLogModel;
+
     protected $hashCompat;
+
     protected $userMigrationService;
+
     protected $data = [];
 
     public function __construct()
@@ -37,7 +42,7 @@ class Auth extends BaseController
     }
 
     /**
-     * Sign in page
+     * Sign in page.
      *
      * @return string|RedirectResponse
      */
@@ -63,7 +68,7 @@ class Auth extends BaseController
                 'photo' => 'default-logo.png',
                 'address' => '',
                 'phone' => '',
-                'email' => ''
+                'email' => '',
             ];
         }
         $this->data['form_validation'] = 'No';
@@ -79,7 +84,7 @@ class Auth extends BaseController
     }
 
     /**
-     * Process signin form submission
+     * Process signin form submission.
      *
      * @return string|RedirectResponse
      */
@@ -93,16 +98,16 @@ class Auth extends BaseController
                 'rules' => 'required|max_length[40]',
                 'errors' => [
                     'required' => 'Username is required',
-                    'max_length' => 'Username must not exceed 40 characters'
-                ]
+                    'max_length' => 'Username must not exceed 40 characters',
+                ],
             ],
             'password' => [
                 'rules' => 'required|max_length[40]',
                 'errors' => [
                     'required' => 'Password is required',
-                    'max_length' => 'Password must not exceed 40 characters'
-                ]
-            ]
+                    'max_length' => 'Password must not exceed 40 characters',
+                ],
+            ],
         ];
 
         if (!$this->validate($rules)) {
@@ -162,7 +167,7 @@ class Auth extends BaseController
 
         // Verify password - support both bcrypt (new) and SHA512 (CI3 compat)
         $passwordValid = false;
-        
+
         if (password_verify($password, $user->password_hash)) {
             // Bcrypt hash (new CI4 users)
             $passwordValid = true;
@@ -216,7 +221,7 @@ class Auth extends BaseController
     }
 
     /**
-     * Handle remember me functionality
+     * Handle remember me functionality.
      */
     protected function handleRememberMe(): void
     {
@@ -230,7 +235,7 @@ class Auth extends BaseController
     }
 
     /**
-     * Create login log entry
+     * Create login log entry.
      *
      * @param object $user
      */
@@ -242,14 +247,14 @@ class Auth extends BaseController
             'ip' => $this->request->getIPAddress(),
             'browser' => $this->request->getUserAgent()->getBrowser(),
             'login' => time(),
-            'logout' => null
+            'logout' => null,
         ];
 
         $this->loginLogModel->createLoginLog($loginData);
     }
 
     /**
-     * Set user session data
+     * Set user session data.
      *
      * @param object $user
      */
@@ -257,11 +262,11 @@ class Auth extends BaseController
     {
         // Get role information for usertype
         $role = $this->userModel->getUserPrimaryRole($user->id);
-        
+
         // Parse schoolID to get list of available schools
         $schoolIDs = !empty($user->schoolID) ? explode(',', $user->schoolID) : [];
         $availableSchoolIDs = array_filter($schoolIDs); // Remove empty values
-        
+
         $sessionData = [
             'loginuserID' => $user->userID,
             'name' => $user->name,
@@ -275,7 +280,7 @@ class Auth extends BaseController
             'available_school_ids' => $availableSchoolIDs, // Array of available school IDs for multi-school staff
             'loggedin' => true,
             'varifyvaliduser' => true, // CI3 compatibility
-            'user_table' => $user->user_table
+            'user_table' => $user->user_table,
         ];
 
         log_message('debug', 'Auth::setUserSession() - Setting session data: ' . json_encode([
@@ -283,16 +288,16 @@ class Auth extends BaseController
             'usertypeID' => $sessionData['usertypeID'],
             'usertype' => $sessionData['usertype'],
             'schools' => $sessionData['schools'],
-            'available_school_ids' => $sessionData['available_school_ids']
+            'available_school_ids' => $sessionData['available_school_ids'],
         ]));
 
         session()->set($sessionData);
-        
+
         log_message('debug', 'Auth::setUserSession() - Session data set successfully');
     }
 
     /**
-     * Redirect user after successful signin
+     * Redirect user after successful signin.
      *
      * @param object $user
      * @return RedirectResponse
@@ -300,14 +305,14 @@ class Auth extends BaseController
     protected function redirectAfterSignin(object $user): RedirectResponse
     {
         $schoolIDs = !empty($user->schoolID) ? explode(',', $user->schoolID) : [];
-        $usertypeID = (int)$user->usertypeID;
-        $loginuserID = (int)$user->userID;
+        $usertypeID = (int) $user->usertypeID;
+        $loginuserID = (int) $user->userID;
 
         log_message('debug', 'Auth::redirectAfterSignin() - Determining redirect for user: usertypeID=' . $usertypeID . ', loginuserID=' . $loginuserID . ', schools=' . $user->schoolID);
 
         // Check if user is super admin (usertypeID 0 or role_slug 'super_admin')
         $isSuperAdmin = $usertypeID === 0 || ($usertypeID === 1 && $loginuserID === 1);
-        
+
         if (!$isSuperAdmin) {
             // Also check role_slug for super_admin
             $isSuperAdmin = $this->userModel->hasRole($user->id, 'super_admin');
@@ -333,21 +338,21 @@ class Auth extends BaseController
                 return $this->redirectWithDebug('/dashboard', 'Admin/staff has no schools assigned');
             } else {
                 // Single school - set it and go to dashboard
-                $this->setSchoolSession((int)$schoolIDs[0]);
+                $this->setSchoolSession((int) $schoolIDs[0]);
                 return $this->redirectWithDebug('/dashboard', 'Admin/staff with single school (' . $schoolIDs[0] . ')');
             }
         }
 
         // Teachers, students, parents - set first school and redirect to dashboard
         if (!empty($schoolIDs) && !empty($schoolIDs[0])) {
-            $this->setSchoolSession((int)$schoolIDs[0]);
+            $this->setSchoolSession((int) $schoolIDs[0]);
         }
 
         return $this->redirectWithDebug('/dashboard', !empty($schoolIDs[0]) ? 'Regular user with school ' . $schoolIDs[0] : 'Regular user with no school assigned');
     }
 
     /**
-     * Set an informational flash message and log where the user is headed after signin
+     * Set an informational flash message and log where the user is headed after signin.
      */
     protected function redirectWithDebug(string $path, string $reason): RedirectResponse
     {
@@ -360,14 +365,14 @@ class Auth extends BaseController
     }
 
     /**
-     * Set school-specific session data
+     * Set school-specific session data.
      *
      * @param int $schoolID
      */
     protected function setSchoolSession(int $schoolID): void
     {
         log_message('debug', 'Auth::setSchoolSession() - Setting school session for schoolID: ' . $schoolID);
-        
+
         $siteInfo = $this->siteModel->getSite($schoolID);
 
         if ($siteInfo) {
@@ -376,7 +381,7 @@ class Auth extends BaseController
             session()->set([
                 'schoolID' => $schoolID, // Active school ID
                 'defaultschoolyearID' => $siteInfo->school_year ?? null,
-                'lang' => $siteInfo->language ?? 'english'
+                'lang' => $siteInfo->language ?? 'english',
             ]);
             log_message('debug', 'Auth::setSchoolSession() - School session set successfully: schoolID=' . $schoolID);
         } else {
@@ -385,7 +390,7 @@ class Auth extends BaseController
     }
 
     /**
-     * Sign out
+     * Sign out.
      *
      * @return RedirectResponse
      */
@@ -399,7 +404,7 @@ class Auth extends BaseController
             'usertypeID' => $session->get('usertypeID'),
             'ip' => $this->request->getIPAddress(),
             'browser' => $this->request->getUserAgent()->getBrowser(),
-            'logout' => null
+            'logout' => null,
         ];
 
         $loginLog = $this->loginLogModel->getSingleLoginLog($loginLogData);

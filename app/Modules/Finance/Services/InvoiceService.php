@@ -10,8 +10,23 @@ use RuntimeException;
 
 // Polyfill for bcmath if not available
 if (!function_exists('Modules\\Finance\\Services\\bcadd')) {
-    function bcadd(string $num1, string $num2, ?int $scale = 0): string {
-        return number_format((float)$num1 + (float)$num2, $scale, '.', '');
+    function bcadd(string $num1, string $num2, ?int $scale = 0): string
+    {
+        return number_format((float) $num1 + (float) $num2, $scale, '.', '');
+    }
+}
+
+if (!function_exists('Modules\\Finance\\Services\\bccomp')) {
+    function bccomp(string $num1, string $num2, ?int $scale = 0): int
+    {
+        $result = round((float) $num1 - (float) $num2, $scale);
+        if ($result > 0) {
+            return 1;
+        }
+        if ($result < 0) {
+            return -1;
+        }
+        return 0;
     }
 }
 
@@ -21,7 +36,7 @@ if (!function_exists('Modules\\Finance\\Services\\bcadd')) {
 class InvoiceService
 {
     private const DEFAULT_RECEIVABLE_ACCOUNT = '1100-ACCOUNTS-RECEIVABLE';
-    private const DEFAULT_CASH_ACCOUNT       = '1000-CASH-ON-HAND';
+    private const DEFAULT_CASH_ACCOUNT = '1000-CASH-ON-HAND';
 
     public function __construct(
         private readonly InvoiceRepositoryInterface $repository,
@@ -36,11 +51,11 @@ class InvoiceService
      */
     public function issueInvoice(array $payload, array $context): Invoice
     {
-        $invoiceNumber     = trim((string) ($payload['invoice_number'] ?? ''));
-        $studentId         = trim((string) ($payload['student_id'] ?? ''));
-        $currency          = strtoupper((string) ($payload['currency'] ?? 'KES'));
+        $invoiceNumber = trim((string) ($payload['invoice_number'] ?? ''));
+        $studentId = trim((string) ($payload['student_id'] ?? ''));
+        $currency = strtoupper((string) ($payload['currency'] ?? 'KES'));
         $receivableAccount = (string) ($payload['receivable_account'] ?? self::DEFAULT_RECEIVABLE_ACCOUNT);
-        $itemsPayload      = $payload['items'] ?? null;
+        $itemsPayload = $payload['items'] ?? null;
 
         if ($invoiceNumber === '' || $studentId === '') {
             throw new InvalidArgumentException('Invoice number and student ID are required.');
@@ -50,12 +65,12 @@ class InvoiceService
             throw new InvalidArgumentException('Receivable account code cannot be empty.');
         }
 
-        if (! is_array($itemsPayload) || $itemsPayload === []) {
+        if (!is_array($itemsPayload) || $itemsPayload === []) {
             throw new InvalidArgumentException('At least one invoice line item is required.');
         }
 
         $lineItems = $this->normaliseLineItems($itemsPayload);
-        $total     = $this->calculateTotal($lineItems);
+        $total = $this->calculateTotal($lineItems);
 
         $invoice = new Invoice(
             $invoiceNumber,
@@ -66,7 +81,7 @@ class InvoiceService
             $receivableAccount
         );
 
-        $contextForLedger           = $context;
+        $contextForLedger = $context;
         $contextForLedger['currency'] = $currency;
 
         $transactionId = $this->ledgerService->commitTransaction(
@@ -117,9 +132,9 @@ class InvoiceService
         }
 
         $paymentAmount = $this->normaliseMoney($payment['amount'] ?? null);
-        $method        = trim((string) ($payment['method'] ?? ''));
+        $method = trim((string) ($payment['method'] ?? ''));
         $paymentAccount = (string) ($payment['account_code'] ?? self::DEFAULT_CASH_ACCOUNT);
-        $reference      = isset($payment['reference']) ? (string) $payment['reference'] : null;
+        $reference = isset($payment['reference']) ? (string) $payment['reference'] : null;
 
         if ($method === '') {
             throw new InvalidArgumentException('Payment method is required.');
@@ -133,7 +148,7 @@ class InvoiceService
             throw new InvalidArgumentException('Payment amount must match invoice total.');
         }
 
-        $before          = $invoice->toArray();
+        $before = $invoice->toArray();
         $contextForLedger = $context;
         $contextForLedger['currency'] = $invoice->getCurrencyCode();
 
@@ -183,12 +198,12 @@ class InvoiceService
         $normalised = [];
 
         foreach ($items as $item) {
-            if (! is_array($item)) {
+            if (!is_array($item)) {
                 throw new InvalidArgumentException('Invoice line items must be arrays.');
             }
 
-            $description    = trim((string) ($item['description'] ?? ''));
-            $amount         = $item['amount'] ?? null;
+            $description = trim((string) ($item['description'] ?? ''));
+            $amount = $item['amount'] ?? null;
             $revenueAccount = (string) ($item['revenue_account'] ?? '');
 
             if ($description === '') {
@@ -245,7 +260,7 @@ class InvoiceService
         $revenueTotals = [];
         foreach ($items as $item) {
             $code = $item['revenue_account'];
-            if (! isset($revenueTotals[$code])) {
+            if (!isset($revenueTotals[$code])) {
                 $revenueTotals[$code] = '0.00';
             }
 
@@ -292,7 +307,7 @@ class InvoiceService
      */
     private function normaliseMoney($amount): string
     {
-        if (! is_numeric($amount)) {
+        if (!is_numeric($amount)) {
             throw new InvalidArgumentException('Monetary amounts must be numeric.');
         }
 

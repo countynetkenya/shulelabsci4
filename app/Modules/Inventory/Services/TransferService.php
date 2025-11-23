@@ -30,7 +30,7 @@ class TransferService
     {
         $source = (string) ($payload['source_warehouse_id'] ?? '');
         $target = (string) ($payload['target_warehouse_id'] ?? '');
-        $items  = $payload['items'] ?? null;
+        $items = $payload['items'] ?? null;
 
         if ($source === '' || $target === '') {
             throw new InvalidArgumentException('Source and target warehouse IDs are required.');
@@ -40,12 +40,12 @@ class TransferService
             throw new InvalidArgumentException('Source and target warehouses must be different.');
         }
 
-        if (! is_array($items) || $items === []) {
+        if (!is_array($items) || $items === []) {
             throw new InvalidArgumentException('At least one transfer item is required.');
         }
 
         $normalisedItems = $this->normaliseItems($items);
-        $transfer        = new Transfer($source, $target, $normalisedItems);
+        $transfer = new Transfer($source, $target, $normalisedItems);
 
         $approvalId = $this->makerChecker->submit(
             actionKey: 'inventory.transfer',
@@ -113,7 +113,7 @@ class TransferService
         }
 
         $decision = strtolower($decision);
-        if (! in_array($decision, [Transfer::STATUS_ACCEPTED, Transfer::STATUS_REJECTED], true)) {
+        if (!in_array($decision, [Transfer::STATUS_ACCEPTED, Transfer::STATUS_REJECTED], true)) {
             throw new InvalidArgumentException('Decision must be accepted or rejected.');
         }
 
@@ -160,18 +160,18 @@ class TransferService
         $normalised = [];
 
         foreach ($items as $item) {
-            if (! is_array($item)) {
+            if (!is_array($item)) {
                 throw new InvalidArgumentException('Transfer items must be arrays.');
             }
 
-            $sku      = (string) ($item['sku'] ?? '');
+            $sku = (string) ($item['sku'] ?? '');
             $quantity = $item['quantity'] ?? null;
 
             if ($sku === '') {
                 throw new InvalidArgumentException('Each transfer item requires a SKU.');
             }
 
-            if (! is_int($quantity) || $quantity <= 0) {
+            if (!is_int($quantity) || $quantity <= 0) {
                 throw new InvalidArgumentException('Transfer item quantity must be a positive integer.');
             }
 

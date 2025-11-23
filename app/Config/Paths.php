@@ -3,7 +3,7 @@
 namespace Config;
 
 /**
- * Paths
+ * Paths.
  *
  * Holds the paths that are used by the system to
  * locate the main directories, app, system, etc.
@@ -21,7 +21,7 @@ class Paths
     /**
      * ---------------------------------------------------------------
      * SYSTEM FOLDER NAME
-     * ---------------------------------------------------------------
+     * ---------------------------------------------------------------.
      *
      * This must contain the name of your "system" folder. Include
      * the path if the folder is not in the same directory as this file.
@@ -31,7 +31,7 @@ class Paths
     /**
      * ---------------------------------------------------------------
      * APPLICATION FOLDER NAME
-     * ---------------------------------------------------------------
+     * ---------------------------------------------------------------.
      *
      * If you want this front controller to use a different "app"
      * folder than the default one you can set its name here. The folder
@@ -45,7 +45,7 @@ class Paths
     /**
      * ---------------------------------------------------------------
      * WRITABLE DIRECTORY NAME
-     * ---------------------------------------------------------------
+     * ---------------------------------------------------------------.
      *
      * This variable must contain the name of your "writable" directory.
      * The writable directory allows you to group all directories that
@@ -58,7 +58,7 @@ class Paths
     /**
      * ---------------------------------------------------------------
      * TESTS DIRECTORY NAME
-     * ---------------------------------------------------------------
+     * ---------------------------------------------------------------.
      *
      * This variable must contain the name of your "tests" directory.
      */
@@ -67,7 +67,7 @@ class Paths
     /**
      * ---------------------------------------------------------------
      * VIEW DIRECTORY NAME
-     * ---------------------------------------------------------------
+     * ---------------------------------------------------------------.
      *
      * This variable must contain the name of the directory that
      * contains the view files used by your application. By

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Modules\Orchestration\Agents;
 
 /**
- * Phase 5: Deployment Agent
- * 
+ * Phase 5: Deployment Agent.
+ *
  * Automated deployment to staging and production
- * 
+ *
  * Tasks:
  * - Deploy to staging environment
  * - Run smoke tests
@@ -22,8 +22,7 @@ namespace Modules\Orchestration\Agents;
  * - Switch traffic to new version
  * - Monitor metrics and alerts
  * - Verify zero downtime
- * 
- * @package Modules\Orchestration\Agents
+ *
  * @version 1.0.0
  */
 class Phase5DeploymentAgent extends BaseAgent
@@ -41,7 +40,7 @@ class Phase5DeploymentAgent extends BaseAgent
     public function execute(): array
     {
         $this->log('Starting Phase 5: DEPLOYMENT', 'info');
-        
+
         try {
             $deliverables = [];
 
@@ -65,7 +64,7 @@ class Phase5DeploymentAgent extends BaseAgent
                 $deliverables['production_deployment'] = $production;
                 $this->log("✓ Production deployment: {$production['status']}", 'info');
             } else {
-                $this->log("ℹ Production deployment skipped (disabled in config)", 'info');
+                $this->log('ℹ Production deployment skipped (disabled in config)', 'info');
             }
 
             // Set metrics

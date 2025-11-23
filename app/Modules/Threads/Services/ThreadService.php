@@ -22,11 +22,11 @@ class ThreadService
      */
     public function createThread(array $payload, array $context): Thread
     {
-        $subject     = trim((string) ($payload['subject'] ?? ''));
+        $subject = trim((string) ($payload['subject'] ?? ''));
         $contextType = trim((string) ($payload['context_type'] ?? ''));
-        $contextId   = trim((string) ($payload['context_id'] ?? ''));
-        $isCfr       = (bool) ($payload['is_cfr'] ?? false);
-        $message     = $payload['message'] ?? null;
+        $contextId = trim((string) ($payload['context_id'] ?? ''));
+        $isCfr = (bool) ($payload['is_cfr'] ?? false);
+        $message = $payload['message'] ?? null;
 
         if ($subject === '' || $contextType === '' || $contextId === '') {
             throw new InvalidArgumentException('Subject, context_type, and context_id are required.');

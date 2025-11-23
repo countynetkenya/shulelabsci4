@@ -5,8 +5,8 @@ namespace App\Database\Migrations;
 use CodeIgniter\Database\Migration;
 
 /**
- * Create CI4 Roles and User Roles Tables
- * 
+ * Create CI4 Roles and User Roles Tables.
+ *
  * This migration creates the roles and user_roles tables
  * for managing user roles in CI4, and seeds the default roles
  * with their CI3 usertypeID mappings.
@@ -123,7 +123,7 @@ class CreateCi4RolesTables extends Migration
     }
 
     /**
-     * Seed default roles with CI3 usertypeID mappings
+     * Seed default roles with CI3 usertypeID mappings.
      */
     private function seedDefaultRoles(): void
     {

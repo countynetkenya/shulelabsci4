@@ -48,8 +48,8 @@ class TenantResolver
         }
 
         $organisation = $request->getHeaderLine('X-Organisation-ID') ?: $request->getGet('organisation_id');
-        $school       = $request->getHeaderLine('X-School-ID') ?: $request->getGet('school_id');
-        $warehouse    = $request->getHeaderLine('X-Warehouse-ID') ?: $request->getGet('warehouse_id');
+        $school = $request->getHeaderLine('X-School-ID') ?: $request->getGet('school_id');
+        $warehouse = $request->getHeaderLine('X-Warehouse-ID') ?: $request->getGet('warehouse_id');
 
         return $this->fromIdentifiers([
             'organisation_id' => $organisation ?: null,
@@ -73,8 +73,8 @@ class TenantResolver
     public function fromIdentifiers(array $ids): array
     {
         $organisationId = $ids['organisation_id'] ?? null;
-        $schoolId       = $ids['school_id'] ?? null;
-        $warehouseId    = $ids['warehouse_id'] ?? null;
+        $schoolId = $ids['school_id'] ?? null;
+        $warehouseId = $ids['warehouse_id'] ?? null;
 
         $context = [];
         if ($organisationId !== null) {
@@ -109,7 +109,7 @@ class TenantResolver
             ->get()
             ->getFirstRow('array');
 
-        if (! $row) {
+        if (!$row) {
             throw new RuntimeException(sprintf('Unknown tenant %s::%s', $type, $id));
         }
 

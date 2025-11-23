@@ -5,7 +5,7 @@ namespace App\Models;
 use CodeIgniter\Model;
 
 /**
- * Site Model
+ * Site Model.
  *
  * Handles school/site information
  * Compatible with CI3 database schema
@@ -13,11 +13,13 @@ use CodeIgniter\Model;
 class SiteModel extends Model
 {
     protected $table = 'setting';
+
     protected $primaryKey = 'settingID';
+
     protected $returnType = 'object';
 
     /**
-     * Get site/school information
+     * Get site/school information.
      *
      * @param int $schoolID
      * @return object|null
@@ -43,7 +45,7 @@ class SiteModel extends Model
 
     /**
      * Discover the primary key column for the setting table
-     * Handles cases where settingID column may not exist in CI3 schema
+     * Handles cases where settingID column may not exist in CI3 schema.
      *
      * @return string|null The primary key column name, or null if not found
      */
@@ -80,7 +82,7 @@ class SiteModel extends Model
     }
 
     /**
-     * Get all sites for a user
+     * Get all sites for a user.
      *
      * @param string $schoolIDs Comma-separated school IDs
      * @return array<int, object>

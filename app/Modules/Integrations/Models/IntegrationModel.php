@@ -9,8 +9,10 @@ use CodeIgniter\Model;
  */
 class IntegrationModel extends Model
 {
-    protected $table         = 'integration_integrations';
-    protected $primaryKey    = 'id';
+    protected $table = 'integration_integrations';
+
+    protected $primaryKey = 'id';
+
     protected $allowedFields = [
         'name',
         'type',
@@ -21,10 +23,14 @@ class IntegrationModel extends Model
     ];
 
     protected $useTimestamps = true;
+
     protected $useSoftDeletes = true;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+
+    protected $createdField = 'created_at';
+
+    protected $updatedField = 'updated_at';
+
+    protected $deletedField = 'deleted_at';
 
     protected $returnType = 'array';
 

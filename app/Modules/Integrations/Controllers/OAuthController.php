@@ -17,7 +17,7 @@ class OAuthController extends ResourceController
      */
     public function callback(string $adapterName): ResponseInterface
     {
-        $code  = $this->request->getGet('code');
+        $code = $this->request->getGet('code');
         $state = $this->request->getGet('state');
         $error = $this->request->getGet('error');
 

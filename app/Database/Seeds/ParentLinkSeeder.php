@@ -17,7 +17,7 @@ class ParentLinkSeeder extends Seeder
     public function run()
     {
         $db = \Config\Database::connect();
-        
+
         echo "\n👨‍👩‍👧‍👦 Linking parents to students...\n";
 
         // School 1: 5 parents (134-138) → 25 students (33-57)
@@ -82,15 +82,15 @@ class ParentLinkSeeder extends Seeder
 
                 if ($enrollment) {
                     // Get existing metadata or create new
-                    $metadata = $enrollment->student_metadata 
-                        ? json_decode($enrollment->student_metadata, true) 
+                    $metadata = $enrollment->student_metadata
+                        ? json_decode($enrollment->student_metadata, true)
                         : [];
 
                     // Add parent ID (support multiple parents)
                     if (!isset($metadata['parent_ids'])) {
                         $metadata['parent_ids'] = [];
                     }
-                    
+
                     if (!in_array($parentId, $metadata['parent_ids'])) {
                         $metadata['parent_ids'][] = $parentId;
                     }

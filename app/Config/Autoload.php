@@ -7,7 +7,7 @@ use CodeIgniter\Config\AutoloadConfig;
 /**
  * -------------------------------------------------------------------
  * AUTOLOADER CONFIGURATION
- * -------------------------------------------------------------------
+ * -------------------------------------------------------------------.
  *
  * This file defines the namespaces and class maps so the Autoloader
  * can find the files as needed.
@@ -85,7 +85,7 @@ class Autoload extends AutoloadConfig
      * Prototype:
      *   $helpers = [
      *       'form',
-     *   ];
+     *   ];.
      *
      * @var list<string>
      */

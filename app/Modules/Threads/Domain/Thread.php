@@ -8,10 +8,15 @@ use Ramsey\Uuid\Uuid;
 class Thread
 {
     private string $id;
+
     private string $subject;
+
     private string $contextType;
+
     private string $contextId;
+
     private bool $isCfr;
+
     private DateTimeImmutable $createdAt;
 
     /**
@@ -27,12 +32,12 @@ class Thread
         ?string $id = null,
         ?DateTimeImmutable $createdAt = null
     ) {
-        $this->id          = $id ?? Uuid::uuid4()->toString();
-        $this->subject     = $subject;
+        $this->id = $id ?? Uuid::uuid4()->toString();
+        $this->subject = $subject;
         $this->contextType = $contextType;
-        $this->contextId   = $contextId;
-        $this->isCfr       = $isCfr;
-        $this->createdAt   = $createdAt ?? new DateTimeImmutable('now', new \DateTimeZone('UTC'));
+        $this->contextId = $contextId;
+        $this->isCfr = $isCfr;
+        $this->createdAt = $createdAt ?? new DateTimeImmutable('now', new \DateTimeZone('UTC'));
     }
 
     public function getId(): string

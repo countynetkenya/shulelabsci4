@@ -10,11 +10,13 @@ use DateTimeZone;
  */
 class Invoice
 {
-    public const STATUS_ISSUED  = 'issued';
+    public const STATUS_ISSUED = 'issued';
     public const STATUS_SETTLED = 'settled';
 
     private string $invoiceNumber;
+
     private string $studentId;
+
     private string $currencyCode;
 
     /**
@@ -23,12 +25,19 @@ class Invoice
     private array $lineItems;
 
     private string $totalAmount;
+
     private string $status;
+
     private DateTimeImmutable $issuedAt;
+
     private ?DateTimeImmutable $settledAt = null;
+
     private ?string $paymentMethod = null;
+
     private ?int $ledgerTransactionId = null;
+
     private ?int $settlementTransactionId = null;
+
     private string $receivableAccount;
 
     /**
@@ -43,19 +52,19 @@ class Invoice
         string $receivableAccount,
         ?DateTimeImmutable $issuedAt = null
     ) {
-        $this->invoiceNumber     = $invoiceNumber;
-        $this->studentId         = $studentId;
-        $this->currencyCode      = $currencyCode;
-        if (! array_is_list($lineItems)) {
+        $this->invoiceNumber = $invoiceNumber;
+        $this->studentId = $studentId;
+        $this->currencyCode = $currencyCode;
+        if (!array_is_list($lineItems)) {
             $lineItems = array_values($lineItems);
         }
 
         /** @var list<array{description: string, amount: string, revenue_account: string, metadata?: array<string, mixed>}> $lineItems */
         $this->lineItems = $lineItems;
-        $this->totalAmount       = $totalAmount;
+        $this->totalAmount = $totalAmount;
         $this->receivableAccount = $receivableAccount;
-        $this->status            = self::STATUS_ISSUED;
-        $this->issuedAt          = $issuedAt ?? new DateTimeImmutable('now', new DateTimeZone('UTC'));
+        $this->status = self::STATUS_ISSUED;
+        $this->issuedAt = $issuedAt ?? new DateTimeImmutable('now', new DateTimeZone('UTC'));
     }
 
     public function getInvoiceNumber(): string
@@ -129,9 +138,9 @@ class Invoice
     public function markSettled(int $transactionId, string $paymentMethod, ?DateTimeImmutable $settledAt = null): void
     {
         $this->settlementTransactionId = $transactionId;
-        $this->paymentMethod           = $paymentMethod;
-        $this->settledAt               = $settledAt ?? new DateTimeImmutable('now', new DateTimeZone('UTC'));
-        $this->status                  = self::STATUS_SETTLED;
+        $this->paymentMethod = $paymentMethod;
+        $this->settledAt = $settledAt ?? new DateTimeImmutable('now', new DateTimeZone('UTC'));
+        $this->status = self::STATUS_SETTLED;
     }
 
     public function isSettled(): bool

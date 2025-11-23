@@ -6,13 +6,14 @@ use App\Models\SiteModel;
 use CodeIgniter\HTTP\RedirectResponse;
 
 /**
- * School Controller
+ * School Controller.
  *
  * Handles school selection for users with multiple schools
  */
 class School extends BaseController
 {
     protected $siteModel;
+
     protected $data = [];
 
     public function __construct()
@@ -22,7 +23,7 @@ class School extends BaseController
     }
 
     /**
-     * School selection page
+     * School selection page.
      *
      * @return string|RedirectResponse
      */
@@ -66,13 +67,13 @@ class School extends BaseController
     }
 
     /**
-     * Process school selection
+     * Process school selection.
      *
      * @return RedirectResponse
      */
     protected function processSelection(): RedirectResponse
     {
-        $selectedSchoolID = (int)$this->request->getPost('schoolID');
+        $selectedSchoolID = (int) $this->request->getPost('schoolID');
 
         if (!$selectedSchoolID) {
             return redirect()->back()->with('error', 'Please select a school');
@@ -104,7 +105,7 @@ class School extends BaseController
             $session->set([
                 'schoolID' => $selectedSchoolID, // Active school ID (different from comma-separated schoolID in user record)
                 'defaultschoolyearID' => $siteInfo->school_year ?? null,
-                'lang' => $siteInfo->language ?? 'english'
+                'lang' => $siteInfo->language ?? 'english',
             ]);
         }
 

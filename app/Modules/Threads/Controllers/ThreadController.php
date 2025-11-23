@@ -72,7 +72,7 @@ class ThreadController extends ResourceController
         } catch (Throwable) {
             $repository = null;
         }
-        if (! $repository instanceof ThreadRepositoryInterface) {
+        if (!$repository instanceof ThreadRepositoryInterface) {
             $repository = new InMemoryThreadRepository();
         }
 
@@ -81,7 +81,7 @@ class ThreadController extends ResourceController
         } catch (Throwable) {
             $eventBus = null;
         }
-        if (! $eventBus instanceof EventBus) {
+        if (!$eventBus instanceof EventBus) {
             $eventBus = new EventBus();
         }
 

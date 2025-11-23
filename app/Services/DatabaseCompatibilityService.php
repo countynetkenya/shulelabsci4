@@ -5,7 +5,7 @@ namespace App\Services;
 use CodeIgniter\Database\BaseConnection;
 
 /**
- * Database Compatibility Service
+ * Database Compatibility Service.
  *
  * Centralizes schema specifications and compatibility checking for CI3->CI4 migration
  * Provides validation and migration generation for required tables, columns, and indexes
@@ -14,10 +14,13 @@ class DatabaseCompatibilityService
 {
     /** @var \CodeIgniter\Database\BaseConnection<mixed, mixed> */
     protected BaseConnection $db;
+
     /** @var array<string, array<string, mixed>> */
     protected array $requiredTables = [];
+
     /** @var array<string, mixed> */
     protected array $findings = [];
+
     protected string $tablePrefix = '';
 
     /**
@@ -32,7 +35,7 @@ class DatabaseCompatibilityService
     }
 
     /**
-     * Set table prefix for CI4-specific tables
+     * Set table prefix for CI4-specific tables.
      *
      * @param string $prefix Prefix to add to all CI4 tables (e.g., 'ci4_')
      * @return self
@@ -45,7 +48,7 @@ class DatabaseCompatibilityService
     }
 
     /**
-     * Get the prefixed table name
+     * Get the prefixed table name.
      */
     protected function getPrefixedTableName(string $tableName): string
     {
@@ -53,7 +56,7 @@ class DatabaseCompatibilityService
     }
 
     /**
-     * Initialize required table specifications
+     * Initialize required table specifications.
      */
     protected function initializeRequiredTables(): void
     {
@@ -134,7 +137,7 @@ class DatabaseCompatibilityService
     }
 
     /**
-     * Add experimental/feature-flagged tables
+     * Add experimental/feature-flagged tables.
      */
     public function addExperimentalTables(): void
     {
@@ -181,7 +184,7 @@ class DatabaseCompatibilityService
     }
 
     /**
-     * Audit database schema against requirements
+     * Audit database schema against requirements.
      *
      * @return array<string, mixed> Findings with missing tables, columns, and indexes
      */
@@ -219,7 +222,7 @@ class DatabaseCompatibilityService
     }
 
     /**
-     * Audit table columns
+     * Audit table columns.
      *
      * @param string $tableName
      * @param array<string, mixed> $requiredColumns
@@ -239,7 +242,7 @@ class DatabaseCompatibilityService
     }
 
     /**
-     * Audit table indexes
+     * Audit table indexes.
      *
      * @param string $tableName
      * @param array<int, array<string, mixed>> $requiredIndexes
@@ -285,7 +288,7 @@ class DatabaseCompatibilityService
     }
 
     /**
-     * Generate migration stubs for missing tables
+     * Generate migration stubs for missing tables.
      *
      * @param string $outputDir Directory to write migration files
      * @return array<int, string> List of generated migration files
@@ -314,7 +317,7 @@ class DatabaseCompatibilityService
     }
 
     /**
-     * Generate SQL patch statements for missing columns and indexes
+     * Generate SQL patch statements for missing columns and indexes.
      *
      * @return array<int, string> SQL statements
      */
@@ -343,7 +346,7 @@ class DatabaseCompatibilityService
     }
 
     /**
-     * Apply SQL patches to database
+     * Apply SQL patches to database.
      *
      * @param array<int, string> $sqlStatements
      * @return array<int, array<string, mixed>> Results with success/error for each statement
@@ -380,7 +383,7 @@ class DatabaseCompatibilityService
     }
 
     /**
-     * Convert table name to migration class name
+     * Convert table name to migration class name.
      *
      * @param string $tableName
      * @return string
@@ -393,7 +396,7 @@ class DatabaseCompatibilityService
     }
 
     /**
-     * Generate migration file content
+     * Generate migration file content.
      *
      * @param string $className
      * @param string $tableName
@@ -442,7 +445,7 @@ PHP;
     }
 
     /**
-     * Format columns array for migration code
+     * Format columns array for migration code.
      *
      * @param array<string, mixed> $columns
      * @return string
@@ -460,7 +463,7 @@ PHP;
     }
 
     /**
-     * Format column specification
+     * Format column specification.
      *
      * @param array<string, mixed> $spec
      * @return string
@@ -484,7 +487,7 @@ PHP;
     }
 
     /**
-     * Generate ADD COLUMN SQL
+     * Generate ADD COLUMN SQL.
      *
      * @param string $table
      * @param string $column
@@ -516,9 +519,9 @@ PHP;
             }
 
             if (!empty($spec['null'])) {
-                $columnDef .= " NULL";
+                $columnDef .= ' NULL';
             } else {
-                $columnDef .= " NOT NULL";
+                $columnDef .= ' NOT NULL';
             }
 
             if (isset($spec['default'])) {
@@ -536,17 +539,17 @@ PHP;
             }
 
             if (!empty($spec['unsigned'])) {
-                $columnDef .= " UNSIGNED";
+                $columnDef .= ' UNSIGNED';
             }
 
             if (!empty($spec['auto_increment'])) {
-                $columnDef .= " AUTO_INCREMENT";
+                $columnDef .= ' AUTO_INCREMENT';
             }
 
             if (!empty($spec['null'])) {
-                $columnDef .= " NULL";
+                $columnDef .= ' NULL';
             } else {
-                $columnDef .= " NOT NULL";
+                $columnDef .= ' NOT NULL';
             }
 
             if (isset($spec['default'])) {
@@ -559,7 +562,7 @@ PHP;
     }
 
     /**
-     * Generate ADD INDEX SQL
+     * Generate ADD INDEX SQL.
      *
      * @param string $table
      * @param array<string, mixed> $indexSpec
@@ -582,7 +585,7 @@ PHP;
     }
 
     /**
-     * Get findings
+     * Get findings.
      *
      * @return array<string, mixed>
      */
@@ -592,7 +595,7 @@ PHP;
     }
 
     /**
-     * Validate and backfill data in existing tables
+     * Validate and backfill data in existing tables.
      *
      * @param array<string, mixed> $validationRules Rules for data validation
      * @return array<string, mixed> Validation results with issues found
@@ -632,7 +635,7 @@ PHP;
     }
 
     /**
-     * Validate data in a specific table
+     * Validate data in a specific table.
      *
      * @param string $tableName
      * @param array<string, mixed> $rules
@@ -709,7 +712,7 @@ PHP;
     }
 
     /**
-     * Generate backfill SQL for common data issues
+     * Generate backfill SQL for common data issues.
      *
      * @return array<int, string> SQL statements to fix data issues
      */
@@ -718,7 +721,7 @@ PHP;
         $sql = [];
 
         // Quote appropriately for the database
-        $quoteTable = function(string $table): string {
+        $quoteTable = function (string $table): string {
             return $this->isSQLite() ? $table : "`{$table}`";
         };
         $quoteCol = $this->isSQLite() ? '' : '`';
@@ -753,7 +756,7 @@ PHP;
     }
 
     /**
-     * Apply backfill operations
+     * Apply backfill operations.
      *
      * @param array<int, string> $sqlStatements
      * @return array<int, array<string, mixed>> Results with success/error for each statement
@@ -796,7 +799,7 @@ PHP;
     }
 
     /**
-     * Get the normalized database driver name
+     * Get the normalized database driver name.
      *
      * @return string Normalized driver name ('mysql', 'sqlite', etc.)
      */
@@ -806,7 +809,7 @@ PHP;
     }
 
     /**
-     * Check if current database is SQLite
+     * Check if current database is SQLite.
      *
      * @return bool
      */
@@ -817,7 +820,7 @@ PHP;
     }
 
     /**
-     * Check if current database is MySQL
+     * Check if current database is MySQL.
      *
      * @return bool
      */

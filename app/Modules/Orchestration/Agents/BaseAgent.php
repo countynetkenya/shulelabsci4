@@ -7,20 +7,24 @@ namespace Modules\Orchestration\Agents;
 use Modules\Orchestration\Config\OrchestrationConfig;
 
 /**
- * Base Agent Class
- * 
+ * Base Agent Class.
+ *
  * Abstract base class for all orchestration agents
- * 
- * @package Modules\Orchestration\Agents
+ *
  * @version 1.0.0
  */
 abstract class BaseAgent
 {
     protected OrchestrationConfig $config;
+
     protected string $runId;
+
     protected bool $dryRun = false;
+
     protected array $metrics = [];
+
     protected array $output = [];
+
     protected float $startTime;
 
     public function __construct(OrchestrationConfig $config, string $runId)
@@ -31,7 +35,7 @@ abstract class BaseAgent
     }
 
     /**
-     * Set dry run mode
+     * Set dry run mode.
      */
     public function setDryRun(bool $dryRun): void
     {
@@ -39,35 +43,35 @@ abstract class BaseAgent
     }
 
     /**
-     * Execute the agent
+     * Execute the agent.
      */
     abstract public function execute(): array;
 
     /**
-     * Get agent name
+     * Get agent name.
      */
     abstract public function getName(): string;
 
     /**
-     * Get agent description
+     * Get agent description.
      */
     abstract public function getDescription(): string;
 
     /**
-     * Log message
+     * Log message.
      */
     protected function log(string $message, string $level = 'info'): void
     {
         $timestamp = date('Y-m-d H:i:s');
         $agentName = $this->getName();
         $logMessage = "[{$timestamp}] [{$level}] [{$agentName}] {$message}";
-        
+
         echo $logMessage . "\n";
         $this->output[] = $logMessage;
     }
 
     /**
-     * Add metric
+     * Add metric.
      */
     protected function addMetric(string $key, mixed $value): void
     {
@@ -75,7 +79,7 @@ abstract class BaseAgent
     }
 
     /**
-     * Execute shell command
+     * Execute shell command.
      */
     protected function executeCommand(string $command, string $description = ''): array
     {
@@ -94,9 +98,9 @@ abstract class BaseAgent
 
         $output = [];
         $exitCode = 0;
-        
+
         exec($command . ' 2>&1', $output, $exitCode);
-        
+
         $result = [
             'success' => $exitCode === 0,
             'output' => implode("\n", $output),
@@ -112,12 +116,12 @@ abstract class BaseAgent
     }
 
     /**
-     * Create success result
+     * Create success result.
      */
     protected function createSuccessResult(array $deliverables = []): array
     {
         $duration = microtime(true) - $this->startTime;
-        
+
         return [
             'success' => true,
             'agent' => $this->getName(),
@@ -130,12 +134,12 @@ abstract class BaseAgent
     }
 
     /**
-     * Create failure result
+     * Create failure result.
      */
     protected function createFailureResult(string $error): array
     {
         $duration = microtime(true) - $this->startTime;
-        
+
         return [
             'success' => false,
             'agent' => $this->getName(),
@@ -148,7 +152,7 @@ abstract class BaseAgent
     }
 
     /**
-     * Get elapsed time
+     * Get elapsed time.
      */
     protected function getElapsedTime(): float
     {

@@ -2,9 +2,9 @@
 
 namespace Tests\Foundation;
 
+use App\Services\SchoolService;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use App\Services\SchoolService;
 
 /**
  * @internal
@@ -14,25 +14,27 @@ final class SchoolServiceTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = false;
+
     protected SchoolService $service;
+
     protected static bool $migrated = false;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Run migrations only once for all tests
         if (!self::$migrated) {
             $migrate = \Config\Services::migrations();
             $migrate->latest();
             self::$migrated = true;
         }
-        
+
         $this->service = new SchoolService();
-        
+
         // Create test data
         $db = \Config\Database::connect();
-        
+
         // Create schools
         $schools = [
             ['id' => 6, 'school_name' => 'Nairobi Primary', 'school_code' => 'NRB001', 'max_students' => 500],
@@ -41,7 +43,7 @@ final class SchoolServiceTest extends CIUnitTestCase
             ['id' => 9, 'school_name' => 'Eldoret High', 'school_code' => 'ELD001', 'max_students' => 550],
             ['id' => 10, 'school_name' => 'Nakuru Primary', 'school_code' => 'NAK001', 'max_students' => 450],
         ];
-        
+
         foreach ($schools as $school) {
             $existing = $db->table('schools')->where('id', $school['id'])->get()->getRow();
             if (!$existing) {
@@ -49,7 +51,7 @@ final class SchoolServiceTest extends CIUnitTestCase
                 $db->table('schools')->insert($school);
             }
         }
-        
+
         // Create classes - 6 for school 6, 8 for school 7
         $classes = [
             // Nairobi Primary (school 6) - 6 classes
@@ -69,7 +71,7 @@ final class SchoolServiceTest extends CIUnitTestCase
             ['id' => 13, 'school_id' => 7, 'class_name' => 'Form 4A', 'grade_level' => '12', 'section' => 'A', 'max_capacity' => 45],
             ['id' => 14, 'school_id' => 7, 'class_name' => 'Form 4B', 'grade_level' => '12', 'section' => 'B', 'max_capacity' => 45],
         ];
-        
+
         foreach ($classes as $class) {
             $existing = $db->table('school_classes')->where('id', $class['id'])->get()->getRow();
             if (!$existing) {
@@ -77,7 +79,7 @@ final class SchoolServiceTest extends CIUnitTestCase
                 $db->table('school_classes')->insert($class);
             }
         }
-        
+
         // Create students - 33 to 62 (30 students total)
         for ($i = 33; $i <= 62; $i++) {
             $existing = $db->table('users')->where('id', $i)->get()->getRow();
@@ -92,7 +94,7 @@ final class SchoolServiceTest extends CIUnitTestCase
                 ]);
             }
         }
-        
+
         // Create enrollments - 25 for school 6, 30 for school 7
         // School 6 (Nairobi Primary): students 33-57 (25 students)
         for ($i = 33; $i <= 57; $i++) {
@@ -108,7 +110,7 @@ final class SchoolServiceTest extends CIUnitTestCase
                 ]);
             }
         }
-        
+
         // School 7 (Mombasa Secondary): students 33-62 (30 students)
         for ($i = 33; $i <= 62; $i++) {
             $existing = $db->table('student_enrollments')

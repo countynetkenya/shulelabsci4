@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\ThreadMessageModel;
 use App\Models\ThreadAnnouncementModel;
+use App\Models\ThreadMessageModel;
 
 /**
  * ThreadsService - Messaging and announcements.
@@ -11,6 +11,7 @@ use App\Models\ThreadAnnouncementModel;
 class ThreadsService
 {
     protected ThreadMessageModel $messageModel;
+
     protected ThreadAnnouncementModel $announcementModel;
 
     public function __construct()

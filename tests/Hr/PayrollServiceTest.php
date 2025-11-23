@@ -14,6 +14,7 @@ use PHPUnit\Framework\TestCase;
 class PayrollServiceTest extends TestCase
 {
     private MakerCheckerService&MockObject $makerChecker;
+
     private AuditService&MockObject $auditService;
 
     protected function setUp(): void

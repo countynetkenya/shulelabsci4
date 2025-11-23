@@ -151,7 +151,7 @@ class Services extends BaseService
         }
 
         $config = config(SnapshotConfig::class);
-        if (! $config instanceof SnapshotConfig) {
+        if (!$config instanceof SnapshotConfig) {
             $config = new SnapshotConfig();
         }
 

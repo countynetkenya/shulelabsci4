@@ -3,7 +3,7 @@
 namespace Modules\Reports\Services;
 
 /**
- * Deployment Verification Report Generator
+ * Deployment Verification Report Generator.
  */
 class DeploymentVerificationReportService
 {

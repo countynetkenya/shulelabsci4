@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * PHPStan Bootstrap for CodeIgniter 4
+ * PHPStan Bootstrap for CodeIgniter 4.
  *
  * Provides stub definitions for CodeIgniter 4 helper functions
  * that PHPStan cannot auto-discover from the framework.

@@ -12,6 +12,7 @@ use Modules\Integrations\Services\IntegrationService;
 class IntegrationController extends ResourceController
 {
     protected $format = 'json';
+
     protected IntegrationService $integrationService;
 
     public function __construct()

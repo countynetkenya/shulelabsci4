@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <title>Sign in - <?= esc($siteinfos->sname ?? 'ShuleLabs') ?></title>
-    <link rel="SHORTCUT ICON" href="<?= base_url("uploads/images/" . ($siteinfos->photo ?? 'favicon.ico')) ?>" />
+    <link rel="SHORTCUT ICON" href="<?= base_url('uploads/images/' . ($siteinfos->photo ?? 'favicon.ico')) ?>" />
     
     <!-- Bootstrap CSS -->
     <link href="<?= base_url('assets/bootstrap/bootstrap.min.css') ?>" rel="stylesheet" type="text/css">

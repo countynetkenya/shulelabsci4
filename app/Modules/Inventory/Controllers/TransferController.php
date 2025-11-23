@@ -34,12 +34,12 @@ class TransferController extends ResourceController
 
     public function complete(string $transferId): ResponseInterface
     {
-        $payload  = $this->request->getJSON(true) ?? [];
+        $payload = $this->request->getJSON(true) ?? [];
         $decision = (string) ($payload['decision'] ?? '');
         $metadata = $payload['metadata'] ?? [];
-        $context  = $this->buildContext();
+        $context = $this->buildContext();
 
-        if (! is_array($metadata)) {
+        if (!is_array($metadata)) {
             $metadata = [];
         }
 
@@ -85,7 +85,7 @@ class TransferController extends ResourceController
             return $service;
         }
 
-        if ($service !== null && ! $service instanceof TransferRepositoryInterface) {
+        if ($service !== null && !$service instanceof TransferRepositoryInterface) {
             throw new RuntimeException('Configured transfer repository must implement TransferRepositoryInterface.');
         }
 

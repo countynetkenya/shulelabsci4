@@ -2,14 +2,14 @@
 
 namespace App\Commands;
 
-use App\Services\DatabaseCompatibilityService;
 use App\Services\DatabaseBackupService;
+use App\Services\DatabaseCompatibilityService;
 use App\Services\SchemaVersionService;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
 /**
- * Database Upgrade Command
+ * Database Upgrade Command.
  *
  * Generates and optionally applies database schema upgrades for CI4 compatibility
  *
@@ -19,10 +19,15 @@ use CodeIgniter\CLI\CLI;
 class DbUpgrade extends BaseCommand
 {
     protected $group = 'Database';
+
     protected $name = 'db:upgrade';
+
     protected $description = 'Generate or apply database schema upgrades for CI4 compatibility';
+
     protected $usage = 'db:upgrade [options]';
+
     protected $arguments = [];
+
     protected $options = [
         '--dry-run' => 'Show planned operations without applying them (default)',
         '--apply' => 'Apply the schema changes to the database',
@@ -33,7 +38,7 @@ class DbUpgrade extends BaseCommand
     ];
 
     /**
-     * Run the upgrade command
+     * Run the upgrade command.
      *
      * @param array<int|string, mixed> $params
      * @return int
@@ -163,7 +168,7 @@ class DbUpgrade extends BaseCommand
     }
 
     /**
-     * Generate migration files
+     * Generate migration files.
      *
      * @param DatabaseCompatibilityService $service
      * @param bool $dryRun
@@ -230,7 +235,7 @@ class DbUpgrade extends BaseCommand
     }
 
     /**
-     * Apply SQL patches directly
+     * Apply SQL patches directly.
      *
      * @param DatabaseCompatibilityService $service
      * @param bool $dryRun
@@ -299,7 +304,7 @@ class DbUpgrade extends BaseCommand
     }
 
     /**
-     * Create missing tables
+     * Create missing tables.
      *
      * @param DatabaseCompatibilityService $service
      * @param bool $dryRun
@@ -333,7 +338,7 @@ class DbUpgrade extends BaseCommand
     }
 
     /**
-     * Create a table from specification
+     * Create a table from specification.
      *
      * @param string $tableName
      * @param array<string, mixed> $spec

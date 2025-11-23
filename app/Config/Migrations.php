@@ -9,7 +9,7 @@ class Migrations extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Enable/Disable Migrations
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * Migrations are enabled by default.
      *
@@ -21,7 +21,7 @@ class Migrations extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Migrations Table
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * This is the name of the table that will store the current migrations state.
      * When migrations runs it will store in a database table which migration
@@ -37,7 +37,7 @@ class Migrations extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Timestamp Format
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * This is the format that will be used when creating new migrations
      * using the CLI command:

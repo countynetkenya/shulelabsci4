@@ -30,8 +30,8 @@ class MoodleSyncController extends ResourceController
         $payload = $this->incomingRequest()->getJSON(true) ?? [];
 
         try {
-            $course   = $this->extractCourse($payload);
-            $grades   = $this->extractList($payload, 'grades');
+            $course = $this->extractCourse($payload);
+            $grades = $this->extractList($payload, 'grades');
             $response = $this->syncService->pushGrades($course, $grades, $this->buildContext());
         } catch (InvalidArgumentException $exception) {
             return $this->failValidationErrors([$exception->getMessage()]);
@@ -54,7 +54,7 @@ class MoodleSyncController extends ResourceController
         $payload = $this->incomingRequest()->getJSON(true) ?? [];
 
         try {
-            $course      = $this->extractCourse($payload);
+            $course = $this->extractCourse($payload);
             $enrollments = $this->extractList($payload, 'enrollments');
             $response = $this->syncService->syncEnrollments($course, $enrollments, $this->buildContext());
         } catch (InvalidArgumentException $exception) {
@@ -81,7 +81,7 @@ class MoodleSyncController extends ResourceController
     private function extractCourse(array $payload): array
     {
         $course = $payload['course'] ?? [];
-        if (! is_array($course)) {
+        if (!is_array($course)) {
             throw new InvalidArgumentException('Course payload must be an object.');
         }
 
@@ -95,7 +95,7 @@ class MoodleSyncController extends ResourceController
     private function extractList(array $payload, string $key): array
     {
         $entries = $payload[$key] ?? [];
-        if (! is_array($entries)) {
+        if (!is_array($entries)) {
             throw new InvalidArgumentException(sprintf('%s payload must be an array.', ucfirst($key)));
         }
 

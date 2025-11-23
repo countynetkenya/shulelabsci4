@@ -4,18 +4,21 @@ namespace Modules\Integrations\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Modules\Integrations\Services\IntegrationService;
 
 /**
  * CLI command to test integration adapters.
  */
 class TestIntegrationCommand extends BaseCommand
 {
-    protected $group       = 'Integrations';
-    protected $name        = 'integrations:test';
+    protected $group = 'Integrations';
+
+    protected $name = 'integrations:test';
+
     protected $description = 'Test an integration adapter';
-    protected $usage       = 'integrations:test <adapter_name>';
-    protected $arguments   = [
+
+    protected $usage = 'integrations:test <adapter_name>';
+
+    protected $arguments = [
         'adapter_name' => 'The name of the adapter to test',
     ];
 
@@ -34,7 +37,7 @@ class TestIntegrationCommand extends BaseCommand
         try {
             $service = service('integrations');
 
-            if (! $service->hasAdapter($adapterName)) {
+            if (!$service->hasAdapter($adapterName)) {
                 CLI::error("Adapter '{$adapterName}' is not registered");
 
                 return EXIT_ERROR;

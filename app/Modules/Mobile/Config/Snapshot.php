@@ -9,7 +9,9 @@ use CodeIgniter\Config\BaseConfig;
 class Snapshot extends BaseConfig
 {
     public string $signingKey = 'changeme-offline-signing-key';
+
     public string $keyId = 'snapshot-key';
+
     public int $defaultTtlSeconds = 3600;
 
     /**
@@ -21,8 +23,8 @@ class Snapshot extends BaseConfig
     {
         parent::__construct();
 
-        $this->signingKey        = (string) $this->readEnv('mobile.snapshot.signingKey', $this->signingKey);
-        $this->keyId             = (string) $this->readEnv('mobile.snapshot.keyId', $this->keyId);
+        $this->signingKey = (string) $this->readEnv('mobile.snapshot.signingKey', $this->signingKey);
+        $this->keyId = (string) $this->readEnv('mobile.snapshot.keyId', $this->keyId);
         $this->defaultTtlSeconds = (int) $this->readEnv('mobile.snapshot.ttl', $this->defaultTtlSeconds);
 
         $fallback = $this->readEnv('mobile.snapshot.fallback');
@@ -67,7 +69,7 @@ class Snapshot extends BaseConfig
 
             [$keyId, $key] = array_pad(explode(':', $entry, 2), 2, '');
             $keyId = trim($keyId);
-            $key   = trim($key);
+            $key = trim($key);
 
             if ($keyId === '' || $key === '') {
                 continue;

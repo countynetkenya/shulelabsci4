@@ -42,7 +42,7 @@ class MoodleSyncService
         $payload['dispatched_at'] = gmdate(DATE_ATOM);
 
         $idempotencyKey = $this->buildIdempotencyKey('grades', $idempotencyPayload);
-        $dispatch       = $this->registry->registerDispatch('moodle.push_grades', $idempotencyKey, $payload, $context);
+        $dispatch = $this->registry->registerDispatch('moodle.push_grades', $idempotencyKey, $payload, $context);
 
         try {
             $response = $this->client->pushGrades($payload);
@@ -92,7 +92,7 @@ class MoodleSyncService
         $payload['dispatched_at'] = gmdate(DATE_ATOM);
 
         $idempotencyKey = $this->buildIdempotencyKey('enrollments', $idempotencyPayload);
-        $dispatch       = $this->registry->registerDispatch('moodle.sync_enrollments', $idempotencyKey, $payload, $context);
+        $dispatch = $this->registry->registerDispatch('moodle.sync_enrollments', $idempotencyKey, $payload, $context);
 
         try {
             $response = $this->client->syncEnrollments($payload);
@@ -129,7 +129,7 @@ class MoodleSyncService
     private function buildCoursePayload(array $course): array
     {
         $courseId = trim((string) ($course['id'] ?? ''));
-        $name     = trim((string) ($course['name'] ?? ''));
+        $name = trim((string) ($course['name'] ?? ''));
 
         if ($courseId === '') {
             throw new InvalidArgumentException('Course ID is required.');
@@ -160,7 +160,7 @@ class MoodleSyncService
                 throw new InvalidArgumentException('Grade entries require a user_id.');
             }
 
-            if (! array_key_exists('grade', $grade) || ! is_numeric($grade['grade'])) {
+            if (!array_key_exists('grade', $grade) || !is_numeric($grade['grade'])) {
                 throw new InvalidArgumentException('Grade entries require a numeric grade.');
             }
 
@@ -189,7 +189,7 @@ class MoodleSyncService
         $normalised = [];
         foreach ($enrollments as $enrollment) {
             $userId = trim((string) ($enrollment['user_id'] ?? ''));
-            $role   = trim((string) ($enrollment['role'] ?? ''));
+            $role = trim((string) ($enrollment['role'] ?? ''));
 
             if ($userId === '') {
                 throw new InvalidArgumentException('Enrollment entries require a user_id.');

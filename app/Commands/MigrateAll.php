@@ -6,11 +6,11 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
 /**
- * Migrate All Command
- * 
+ * Migrate All Command.
+ *
  * Runs migrations for all namespaces including modules that may not be
  * auto-discovered by the default migrate --all command.
- * 
+ *
  * This command explicitly runs migrations for:
  * - App namespace (main application migrations)
  * - All known module namespaces (e.g., Modules\Foundation)
@@ -18,35 +18,35 @@ use CodeIgniter\CLI\CLI;
 class MigrateAll extends BaseCommand
 {
     /**
-     * The Command's Group
+     * The Command's Group.
      *
      * @var string
      */
     protected $group = 'Database';
 
     /**
-     * The Command's Name
+     * The Command's Name.
      *
      * @var string
      */
     protected $name = 'migrate:all-modules';
 
     /**
-     * The Command's Description
+     * The Command's Description.
      *
      * @var string
      */
     protected $description = 'Runs all migrations including module migrations.';
 
     /**
-     * The Command's Usage
+     * The Command's Usage.
      *
      * @var string
      */
     protected $usage = 'migrate:all-modules [options]';
 
     /**
-     * The Command's Options
+     * The Command's Options.
      *
      * @var array
      */
@@ -55,7 +55,7 @@ class MigrateAll extends BaseCommand
     ];
 
     /**
-     * List of module namespaces that contain migrations
+     * List of module namespaces that contain migrations.
      *
      * @var array
      */
@@ -91,7 +91,7 @@ class MigrateAll extends BaseCommand
         }
 
         CLI::write('All migrations complete!', 'green');
-        
+
         return 0;
     }
 }

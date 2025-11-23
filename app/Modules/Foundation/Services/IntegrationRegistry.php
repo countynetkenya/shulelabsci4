@@ -17,6 +17,7 @@ class IntegrationRegistry
      * @phpstan-var BaseConnection<object, object>
      */
     private BaseConnection $db;
+
     private AuditService $auditService;
 
     /**
@@ -24,7 +25,7 @@ class IntegrationRegistry
      */
     public function __construct(?ConnectionInterface $connection = null, ?AuditService $auditService = null)
     {
-        $this->db           = $connection instanceof BaseConnection ? $connection : Database::connect();
+        $this->db = $connection instanceof BaseConnection ? $connection : Database::connect();
         $this->auditService = $auditService ?? new AuditService($this->db);
     }
 
@@ -81,7 +82,7 @@ class IntegrationRegistry
     {
         $builder = $this->db->table('integration_dispatches');
         $existing = $builder->where('id', $dispatchId)->get()->getFirstRow('array');
-        if (! $existing) {
+        if (!$existing) {
             throw new RuntimeException('Integration dispatch not found.');
         }
 
@@ -115,7 +116,7 @@ class IntegrationRegistry
     {
         $builder = $this->db->table('integration_dispatches');
         $existing = $builder->where('id', $dispatchId)->get()->getFirstRow('array');
-        if (! $existing) {
+        if (!$existing) {
             throw new RuntimeException('Integration dispatch not found.');
         }
 

@@ -40,7 +40,7 @@ class MoodleDispatchRunnerTest extends FoundationDatabaseTestCase
             ->with($this->arrayHasKey('course'))
             ->willReturn(['status' => 'ok']);
 
-        $runner  = new MoodleDispatchRunner($this->registry, $client, 600);
+        $runner = new MoodleDispatchRunner($this->registry, $client, 600);
         $summary = $runner->runGrades();
 
         $this->assertSame(1, $summary['dispatched']);
@@ -66,7 +66,7 @@ class MoodleDispatchRunnerTest extends FoundationDatabaseTestCase
             ->method('pushGrades')
             ->willThrowException(new RuntimeException('API down'));
 
-        $runner  = new MoodleDispatchRunner($this->registry, $client, 300);
+        $runner = new MoodleDispatchRunner($this->registry, $client, 300);
         $summary = $runner->runGrades();
 
         $this->assertSame(1, $summary['failed']);
@@ -96,7 +96,7 @@ class MoodleDispatchRunnerTest extends FoundationDatabaseTestCase
             ->with($this->arrayHasKey('enrollments'))
             ->willReturn(['status' => 'ok']);
 
-        $runner  = new MoodleDispatchRunner($this->registry, $client, 600);
+        $runner = new MoodleDispatchRunner($this->registry, $client, 600);
         $summary = $runner->runEnrollments();
 
         $this->assertSame(1, $summary['completed']);

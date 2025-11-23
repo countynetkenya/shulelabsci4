@@ -3,7 +3,7 @@
 namespace Modules\Reports\Services;
 
 /**
- * Risk Assessment Report Generator
+ * Risk Assessment Report Generator.
  */
 class RiskAssessmentReportService
 {

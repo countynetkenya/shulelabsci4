@@ -12,7 +12,7 @@ class LedgerServiceTest extends FoundationDatabaseTestCase
 {
     public function testCommitTransactionPersistsLedgerAndAudit(): void
     {
-        $audit  = new AuditService($this->db);
+        $audit = new AuditService($this->db);
         $ledger = new LedgerService($this->db, $audit);
 
         $transactionId = $ledger->commitTransaction(
@@ -91,7 +91,7 @@ class LedgerServiceTest extends FoundationDatabaseTestCase
 
     public function testScheduleReversalCreatesOppositeEntries(): void
     {
-        $audit  = new AuditService($this->db);
+        $audit = new AuditService($this->db);
         $ledger = new LedgerService($this->db, $audit);
 
         $originalId = $ledger->commitTransaction(

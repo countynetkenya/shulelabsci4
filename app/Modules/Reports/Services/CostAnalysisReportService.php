@@ -3,7 +3,7 @@
 namespace Modules\Reports\Services;
 
 /**
- * Cost Analysis Report Generator
+ * Cost Analysis Report Generator.
  */
 class CostAnalysisReportService
 {

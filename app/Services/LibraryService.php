@@ -11,6 +11,7 @@ use App\Models\LibraryBorrowingModel;
 class LibraryService
 {
     protected LibraryBookModel $bookModel;
+
     protected LibraryBorrowingModel $borrowingModel;
 
     public function __construct()

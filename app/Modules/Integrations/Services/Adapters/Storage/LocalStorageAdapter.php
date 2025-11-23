@@ -41,22 +41,22 @@ class LocalStorageAdapter extends BaseAdapter implements StorageInterface
     {
         $this->log('info', 'Uploading file to local storage', ['payload' => $payload]);
 
-        $basePath    = $this->getConfig('base_path', WRITEPATH . 'uploads');
-        $sourcePath  = $payload['file_path'] ?? '';
+        $basePath = $this->getConfig('base_path', WRITEPATH . 'uploads');
+        $sourcePath = $payload['file_path'] ?? '';
         $destination = $payload['destination'] ?? '';
 
-        if (! file_exists($sourcePath)) {
+        if (!file_exists($sourcePath)) {
             throw new RuntimeException('Source file not found: ' . $sourcePath);
         }
 
         $targetPath = rtrim($basePath, '/') . '/' . ltrim($destination, '/');
-        $targetDir  = dirname($targetPath);
+        $targetDir = dirname($targetPath);
 
-        if (! is_dir($targetDir)) {
+        if (!is_dir($targetDir)) {
             mkdir($targetDir, 0755, true);
         }
 
-        if (! copy($sourcePath, $targetPath)) {
+        if (!copy($sourcePath, $targetPath)) {
             throw new RuntimeException('Failed to copy file to local storage');
         }
 
@@ -105,7 +105,7 @@ class LocalStorageAdapter extends BaseAdapter implements StorageInterface
         $basePath = $this->getConfig('base_path', WRITEPATH . 'uploads');
         $fullPath = rtrim($basePath, '/') . '/' . ltrim($path, '/');
 
-        if (! is_dir($fullPath)) {
+        if (!is_dir($fullPath)) {
             return ['files' => []];
         }
 
@@ -116,7 +116,7 @@ class LocalStorageAdapter extends BaseAdapter implements StorageInterface
             }
 
             $itemPath = $fullPath . '/' . $item;
-            $files[]  = [
+            $files[] = [
                 'id'   => hash('sha256', $itemPath),
                 'name' => $item,
                 'size' => is_file($itemPath) ? filesize($itemPath) : 0,

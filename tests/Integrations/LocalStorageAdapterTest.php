@@ -11,6 +11,7 @@ use Modules\Integrations\Services\Adapters\Storage\LocalStorageAdapter;
 class LocalStorageAdapterTest extends CIUnitTestCase
 {
     private LocalStorageAdapter $adapter;
+
     private string $testBasePath;
 
     protected function setUp(): void
@@ -18,7 +19,7 @@ class LocalStorageAdapterTest extends CIUnitTestCase
         parent::setUp();
         $this->testBasePath = WRITEPATH . 'tests/storage';
 
-        if (! is_dir($this->testBasePath)) {
+        if (!is_dir($this->testBasePath)) {
             mkdir($this->testBasePath, 0755, true);
         }
 
@@ -97,7 +98,7 @@ class LocalStorageAdapterTest extends CIUnitTestCase
      */
     private function recursiveDelete(string $dir): void
     {
-        if (! is_dir($dir)) {
+        if (!is_dir($dir)) {
             return;
         }
 

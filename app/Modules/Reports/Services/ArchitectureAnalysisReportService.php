@@ -3,14 +3,14 @@
 namespace Modules\Reports\Services;
 
 /**
- * Architecture Analysis Report Generator
- * 
+ * Architecture Analysis Report Generator.
+ *
  * Analyzes system architecture, module structure, dependencies, and design patterns
  */
 class ArchitectureAnalysisReportService
 {
     private array $data = [];
-    
+
     public function generate(array $metrics = []): array
     {
         $this->data = [
@@ -21,10 +21,10 @@ class ArchitectureAnalysisReportService
             'design_patterns' => $this->analyzeDesignPatterns($metrics),
             'compliance' => $this->analyzeCompliance($metrics),
         ];
-        
+
         return $this->data;
     }
-    
+
     private function analyzeModuleStructure(array $metrics): array
     {
         return [
@@ -43,7 +43,7 @@ class ArchitectureAnalysisReportService
             'avg_complexity' => $metrics['avg_complexity'] ?? 6.2,
         ];
     }
-    
+
     private function analyzeDependencies(array $metrics): array
     {
         return [
@@ -53,7 +53,7 @@ class ArchitectureAnalysisReportService
             'dependency_depth' => $metrics['dep_depth'] ?? 4,
         ];
     }
-    
+
     private function analyzeDesignPatterns(array $metrics): array
     {
         return [
@@ -63,12 +63,12 @@ class ArchitectureAnalysisReportService
             'mvc_compliance' => $metrics['mvc_compliance'] ?? '100%',
         ];
     }
-    
+
     private function analyzeCompliance(array $metrics): array
     {
         return [
             'psr12_compliance' => $metrics['psr12'] ?? '100%',
-            'ci4_standards' => $metrics['ci4_standards'] ?? '100%',
+            'standards' => $metrics['standards'] ?? '100%',
             'mobile_first' => $metrics['mobile_first'] ?? true,
             'api_standards' => $metrics['api_standards'] ?? 'Level 2/3',
         ];

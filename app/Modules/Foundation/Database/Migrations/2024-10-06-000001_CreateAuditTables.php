@@ -27,7 +27,7 @@ class CreateAuditTables extends Migration
         $this->forge->addKey('id', true);
         $this->forge->addKey('event_key');
         $this->forge->addKey('created_at');
-        $this->forge->createTable('ci4_audit_events', true);
+        $this->forge->createTable('audit_events', true);
 
         $this->forge->addField([
             'id'         => ['type' => 'BIGINT', 'unsigned' => true, 'auto_increment' => true],
@@ -37,12 +37,12 @@ class CreateAuditTables extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addKey('seal_date', false, true);
-        $this->forge->createTable('ci4_audit_seals', true);
+        $this->forge->createTable('audit_seals', true);
     }
 
     public function down(): void
     {
-        $this->forge->dropTable('ci4_audit_events', true);
-        $this->forge->dropTable('ci4_audit_seals', true);
+        $this->forge->dropTable('audit_events', true);
+        $this->forge->dropTable('audit_seals', true);
     }
 }

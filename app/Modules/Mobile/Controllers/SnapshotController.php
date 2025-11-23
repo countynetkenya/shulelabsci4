@@ -22,6 +22,7 @@ class SnapshotController extends ResourceController
     protected $format = 'json';
 
     private OfflineSnapshotService $snapshots;
+
     private SnapshotTelemetryService $telemetry;
 
     public function __construct(
@@ -36,11 +37,11 @@ class SnapshotController extends ResourceController
     {
         $payload = $this->incomingRequest()->getJSON(true) ?? [];
         $dataset = $payload['dataset'] ?? [];
-        if (! is_array($dataset)) {
+        if (!is_array($dataset)) {
             return $this->failValidationErrors(['dataset payload must be an object.']);
         }
 
-        $ttl     = isset($payload['ttl_seconds']) ? (int) $payload['ttl_seconds'] : null;
+        $ttl = isset($payload['ttl_seconds']) ? (int) $payload['ttl_seconds'] : null;
         $version = isset($payload['version']) ? (string) $payload['version'] : 'v1';
 
         try {
@@ -55,7 +56,7 @@ class SnapshotController extends ResourceController
     public function verify(): ResponseInterface
     {
         $payload = $this->incomingRequest()->getJSON(true) ?? [];
-        if (! is_array($payload)) {
+        if (!is_array($payload)) {
             return $this->failValidationErrors(['Snapshot payload must be an object.']);
         }
 
@@ -92,19 +93,19 @@ class SnapshotController extends ResourceController
     private function reconstituteSnapshot(array $payload): Snapshot
     {
         foreach (['snapshot_id', 'tenant_id', 'issued_at', 'expires_at', 'payload', 'checksum', 'signature', 'key_id', 'version'] as $field) {
-            if (! array_key_exists($field, $payload)) {
+            if (!array_key_exists($field, $payload)) {
                 throw new InvalidArgumentException(sprintf('Snapshot payload missing required field: %s.', $field));
             }
         }
 
-        if (! is_array($payload['payload'])) {
+        if (!is_array($payload['payload'])) {
             throw new InvalidArgumentException('Snapshot payload must contain an object payload.');
         }
 
         $metadata = isset($payload['metadata']) && is_array($payload['metadata']) ? $payload['metadata'] : [];
 
         try {
-            $issuedAt  = new DateTimeImmutable((string) $payload['issued_at']);
+            $issuedAt = new DateTimeImmutable((string) $payload['issued_at']);
             $expiresAt = new DateTimeImmutable((string) $payload['expires_at']);
         } catch (Exception $exception) {
             throw new InvalidArgumentException('Snapshot payload contains invalid timestamps.', 0, $exception);

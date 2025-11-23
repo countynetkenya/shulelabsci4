@@ -20,7 +20,7 @@ class CreateLedgerTables extends Migration
         $this->forge->addKey('id', true);
         $this->forge->addKey('transaction_key', false, true);
         $this->forge->addKey('transacted_at');
-        $this->forge->createTable('ci4_ledger_transactions', true);
+        $this->forge->createTable('ledger_transactions', true);
 
         $this->forge->addField([
             'id'             => ['type' => 'BIGINT', 'unsigned' => true, 'auto_increment' => true],
@@ -33,7 +33,7 @@ class CreateLedgerTables extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addKey('transaction_id');
-        $this->forge->createTable('ci4_ledger_entries', true);
+        $this->forge->createTable('ledger_entries', true);
 
         $this->forge->addField([
             'id'           => ['type' => 'BIGINT', 'unsigned' => true, 'auto_increment' => true],
@@ -45,13 +45,13 @@ class CreateLedgerTables extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addUniqueKey(['tenant_id', 'period_start', 'period_end']);
-        $this->forge->createTable('ci4_ledger_period_locks', true);
+        $this->forge->createTable('ledger_period_locks', true);
     }
 
     public function down(): void
     {
-        $this->forge->dropTable('ci4_ledger_entries', true);
-        $this->forge->dropTable('ci4_ledger_transactions', true);
-        $this->forge->dropTable('ci4_ledger_period_locks', true);
+        $this->forge->dropTable('ledger_entries', true);
+        $this->forge->dropTable('ledger_transactions', true);
+        $this->forge->dropTable('ledger_period_locks', true);
     }
 }

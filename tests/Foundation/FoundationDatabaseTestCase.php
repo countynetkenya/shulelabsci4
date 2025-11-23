@@ -29,13 +29,14 @@ abstract class FoundationDatabaseTestCase extends TestCase
         'example_records',
         'users',
         'roles',
+        'user_roles',
     ];
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        if (! class_exists('SQLite3')) {
+        if (!class_exists('SQLite3')) {
             $this->markTestSkipped('The SQLite3 extension is required for database integration tests.');
         }
 
@@ -68,19 +69,19 @@ abstract class FoundationDatabaseTestCase extends TestCase
             $ci4Root = $standaloneRoot;
         }
 
-        if (! defined('ROOTPATH')) {
+        if (!defined('ROOTPATH')) {
             define('ROOTPATH', $rootPath);
         }
 
-        if (! defined('APPPATH')) {
+        if (!defined('APPPATH')) {
             define('APPPATH', rtrim($ci4Root, DIRECTORY_SEPARATOR) . '/app/');
         }
 
-        if (! defined('WRITEPATH')) {
+        if (!defined('WRITEPATH')) {
             define('WRITEPATH', rtrim($ci4Root, DIRECTORY_SEPARATOR) . '/writable/');
         }
 
-        if (! defined('SYSTEMPATH')) {
+        if (!defined('SYSTEMPATH')) {
             $vendorRoots = [
                 rtrim($ci4Root, DIRECTORY_SEPARATOR) . '/vendor',
                 $rootPath . 'vendor',
@@ -103,7 +104,7 @@ abstract class FoundationDatabaseTestCase extends TestCase
             define('SYSTEMPATH', $systemPath);
         }
 
-        if (! function_exists('service')) {
+        if (!function_exists('service')) {
             require_once SYSTEMPATH . 'Common.php';
         }
     }
@@ -315,11 +316,22 @@ SQL);
         $this->db->simpleQuery(<<<SQL
 CREATE TABLE {$prefix}roles (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name VARCHAR(100) NOT NULL,
     role_name VARCHAR(100) NOT NULL,
     role_slug VARCHAR(100) UNIQUE NOT NULL,
+    ci3_usertype_id INTEGER NOT NULL,
     description TEXT,
     created_at DATETIME NOT NULL
+)
+SQL);
+
+        $this->db->simpleQuery(<<<SQL
+CREATE TABLE {$prefix}user_roles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    role_id INTEGER NOT NULL,
+    created_at DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES {$prefix}users(id) ON DELETE CASCADE,
+    FOREIGN KEY (role_id) REFERENCES {$prefix}roles(id) ON DELETE CASCADE
 )
 SQL);
     }

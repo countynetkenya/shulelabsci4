@@ -221,7 +221,7 @@ class MultiSchoolUserSeeder extends Seeder
     {
         $data['created_at'] = date('Y-m-d H:i:s');
         $data['updated_at'] = date('Y-m-d H:i:s');
-        $data['is_active']  = 1;
+        $data['is_active'] = 1;
 
         $db->table('ci4_users')->insert($data);
 

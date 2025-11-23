@@ -4,15 +4,16 @@ namespace Modules\Integrations\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use Modules\Integrations\Services\IntegrationService;
 
 /**
  * CLI command to check health of all integrations.
  */
 class HealthCheckCommand extends BaseCommand
 {
-    protected $group       = 'Integrations';
-    protected $name        = 'integrations:health';
+    protected $group = 'Integrations';
+
+    protected $name = 'integrations:health';
+
     protected $description = 'Check health of all registered integrations';
 
     public function run(array $params)
@@ -21,7 +22,7 @@ class HealthCheckCommand extends BaseCommand
         CLI::newLine();
 
         try {
-            $service  = service('integrations');
+            $service = service('integrations');
             $adapters = $service->getRegisteredAdapters();
 
             if (empty($adapters)) {
@@ -31,15 +32,15 @@ class HealthCheckCommand extends BaseCommand
             }
 
             $healthStatuses = [];
-            $totalOk        = 0;
-            $totalError     = 0;
+            $totalOk = 0;
+            $totalError = 0;
 
             foreach ($adapters as $adapterName) {
                 CLI::write("Checking {$adapterName}...", 'blue');
 
                 try {
-                    $health              = $service->checkHealth($adapterName);
-                    $healthStatuses[]    = [
+                    $health = $service->checkHealth($adapterName);
+                    $healthStatuses[] = [
                         'adapter' => $adapterName,
                         'status'  => $health['status'] ?? 'unknown',
                         'message' => $health['message'] ?? '',
@@ -65,7 +66,7 @@ class HealthCheckCommand extends BaseCommand
 
             CLI::newLine();
             CLI::write('Summary:', 'yellow');
-            CLI::write("Total integrations: " . count($adapters), 'blue');
+            CLI::write('Total integrations: ' . count($adapters), 'blue');
             CLI::write("Healthy: {$totalOk}", 'green');
             CLI::write("Issues: {$totalError}", $totalError > 0 ? 'red' : 'blue');
 

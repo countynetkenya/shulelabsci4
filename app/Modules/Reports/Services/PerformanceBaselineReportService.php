@@ -3,7 +3,7 @@
 namespace Modules\Reports\Services;
 
 /**
- * Performance Baseline Report Generator
+ * Performance Baseline Report Generator.
  */
 class PerformanceBaselineReportService
 {

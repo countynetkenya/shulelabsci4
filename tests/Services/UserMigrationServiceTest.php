@@ -9,7 +9,7 @@ use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 
 /**
- * Tests for UserMigrationService
+ * Tests for UserMigrationService.
  *
  * These tests verify the automatic user migration from CI3 tables to users
  */
@@ -18,6 +18,7 @@ class UserMigrationServiceTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $migrate = false; // We'll manage migrations manually for these tests
+
     protected UserMigrationService $service;
 
     protected function setUp(): void
@@ -93,7 +94,7 @@ class UserMigrationServiceTest extends CIUnitTestCase
         $user = (object) [
             'username' => 'test',
             'create_date' => '2023-01-15 10:30:00',
-            'modify_date' => '2023-02-20 14:45:00'
+            'modify_date' => '2023-02-20 14:45:00',
         ];
         $result = $method->invoke($this->service, $user);
 
@@ -108,7 +109,7 @@ class UserMigrationServiceTest extends CIUnitTestCase
 
         $user = (object) [
             'username' => 'test',
-            'create_date' => '2023-01-15 10:30:00'
+            'create_date' => '2023-01-15 10:30:00',
         ];
         $result = $method->invoke($this->service, $user);
 

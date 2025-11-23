@@ -11,6 +11,7 @@ use App\Models\InventoryTransactionModel;
 class InventoryService
 {
     protected InventoryAssetModel $assetModel;
+
     protected InventoryTransactionModel $transactionModel;
 
     public function __construct()

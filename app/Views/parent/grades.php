@@ -60,9 +60,12 @@
                                 <td>
                                     <?php
                                     $labelClass = 'success';
-                                    if ($grade['grade'] === 'F') $labelClass = 'danger';
-                                    elseif (in_array($grade['grade'], ['D', 'C'])) $labelClass = 'warning';
-                                    ?>
+                            if ($grade['grade'] === 'F') {
+                                $labelClass = 'danger';
+                            } elseif (in_array($grade['grade'], ['D', 'C'])) {
+                                $labelClass = 'warning';
+                            }
+                            ?>
                                     <span class="label label-<?= $labelClass ?>"><?= esc($grade['grade']) ?></span>
                                 </td>
                                 <td><?= esc($grade['feedback'] ?? 'No feedback') ?></td>

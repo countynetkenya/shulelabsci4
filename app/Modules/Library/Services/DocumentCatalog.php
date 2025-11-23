@@ -27,16 +27,16 @@ class DocumentCatalog
      */
     public function registerDocument(array $payload, array $context): array
     {
-        $title    = trim((string) ($payload['title'] ?? ''));
+        $title = trim((string) ($payload['title'] ?? ''));
         $category = trim((string) ($payload['category'] ?? ''));
         $contents = $payload['contents'] ?? null;
-        $path     = (string) ($payload['storage_path'] ?? $title);
+        $path = (string) ($payload['storage_path'] ?? $title);
 
         if ($title === '' || $category === '') {
             throw new InvalidArgumentException('Title and category are required.');
         }
 
-        if (! is_string($contents) || $contents === '') {
+        if (!is_string($contents) || $contents === '') {
             throw new InvalidArgumentException('Document contents are required for Drive sync.');
         }
 

@@ -10,17 +10,23 @@ use RuntimeException;
 
 // Polyfill for bcmath if not available
 if (!function_exists('bcadd')) {
-    function bcadd(string $num1, string $num2, ?int $scale = 0): string {
-        return number_format((float)$num1 + (float)$num2, $scale, '.', '');
+    function bcadd(string $num1, string $num2, ?int $scale = 0): string
+    {
+        return number_format((float) $num1 + (float) $num2, $scale, '.', '');
     }
 }
 
 if (!function_exists('bccomp')) {
-    function bccomp(string $num1, string $num2, ?int $scale = 0): int {
-        $n1 = round((float)$num1, $scale);
-        $n2 = round((float)$num2, $scale);
-        if ($n1 > $n2) return 1;
-        if ($n1 < $n2) return -1;
+    function bccomp(string $num1, string $num2, ?int $scale = 0): int
+    {
+        $n1 = round((float) $num1, $scale);
+        $n2 = round((float) $num2, $scale);
+        if ($n1 > $n2) {
+            return 1;
+        }
+        if ($n1 < $n2) {
+            return -1;
+        }
         return 0;
     }
 }
@@ -34,6 +40,7 @@ class LedgerService
      * @phpstan-var BaseConnection<object, object>
      */
     private BaseConnection $db;
+
     private AuditService $auditService;
 
     /**
@@ -41,7 +48,7 @@ class LedgerService
      */
     public function __construct(?ConnectionInterface $connection = null, ?AuditService $auditService = null)
     {
-        $this->db           = $connection instanceof BaseConnection ? $connection : Database::connect();
+        $this->db = $connection instanceof BaseConnection ? $connection : Database::connect();
         $this->auditService = $auditService ?? new AuditService($this->db);
     }
 
@@ -59,7 +66,7 @@ class LedgerService
         }
 
         $transactedAt = $this->resolveTransactionTime($context);
-        $tenantId     = $context['tenant_id'] ?? null;
+        $tenantId = $context['tenant_id'] ?? null;
 
         $this->assertPeriodUnlocked($tenantId, $transactedAt);
         $this->assertBalanced($entries);
@@ -87,7 +94,7 @@ class LedgerService
 
         $this->db->transComplete();
 
-        if (! $this->db->transStatus()) {
+        if (!$this->db->transStatus()) {
             throw new RuntimeException('Failed to commit ledger transaction.');
         }
 
@@ -106,7 +113,7 @@ class LedgerService
             ->get()
             ->getFirstRow('array');
 
-        if (! $original) {
+        if (!$original) {
             throw new RuntimeException('Cannot reverse missing transaction.');
         }
 
@@ -151,11 +158,11 @@ class LedgerService
      */
     private function assertBalanced(array $entries): void
     {
-        $totalDebit  = '0';
+        $totalDebit = '0';
         $totalCredit = '0';
 
         foreach ($entries as $entry) {
-            if (! isset($entry['direction'], $entry['amount'], $entry['account_code'])) {
+            if (!isset($entry['direction'], $entry['amount'], $entry['account_code'])) {
                 throw new RuntimeException('Ledger entry requires account_code, direction, and amount.');
             }
 

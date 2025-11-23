@@ -13,7 +13,7 @@ class SnapshotTelemetryServiceTest extends FoundationDatabaseTestCase
 {
     public function testTelemetryAggregatesIssuedVerifiedAndFailures(): void
     {
-        $audit     = new AuditService($this->db);
+        $audit = new AuditService($this->db);
         $snapshots = new OfflineSnapshotService('secret-key', 'key-1', $audit, 3600);
 
         $context = ['tenant_id' => 'tenant-1', 'device_id' => 'device-1'];
@@ -21,7 +21,7 @@ class SnapshotTelemetryServiceTest extends FoundationDatabaseTestCase
         $snapshots->verifySnapshot($snapshot, $context);
         $snapshots->verifySnapshot($snapshot, ['tenant_id' => 'tenant-2']);
 
-        $service   = new SnapshotTelemetryService($this->db);
+        $service = new SnapshotTelemetryService($this->db);
         $telemetry = $service->getTelemetry(12);
 
         $this->assertSame(1, $telemetry['totals']['issued']);

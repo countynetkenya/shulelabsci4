@@ -11,7 +11,7 @@ class Format extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Available Response Formats
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * When you perform content negotiation with the request, these are the
      * available formats that your application supports. This is currently
@@ -32,7 +32,7 @@ class Format extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Formatters
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * Lists the class to use to format responses with of a particular type.
      * For each mime type, list the class that should be used. Formatters
@@ -49,7 +49,7 @@ class Format extends BaseConfig
     /**
      * --------------------------------------------------------------------------
      * Formatters Options
-     * --------------------------------------------------------------------------
+     * --------------------------------------------------------------------------.
      *
      * Additional Options to adjust default formatters behaviour.
      * For each mime type, list the additional options that should be used.

@@ -5,7 +5,7 @@ namespace Config;
 use CodeIgniter\Config\BaseConfig;
 
 /**
- * Cross-Origin Resource Sharing (CORS) Configuration
+ * Cross-Origin Resource Sharing (CORS) Configuration.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
  */

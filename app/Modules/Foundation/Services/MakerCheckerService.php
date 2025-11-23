@@ -17,6 +17,7 @@ class MakerCheckerService
      * @phpstan-var BaseConnection<object, object>
      */
     private BaseConnection $db;
+
     private AuditService $auditService;
 
     /**
@@ -24,7 +25,7 @@ class MakerCheckerService
      */
     public function __construct(?ConnectionInterface $connection = null, ?AuditService $auditService = null)
     {
-        $this->db           = $connection instanceof BaseConnection ? $connection : Database::connect();
+        $this->db = $connection instanceof BaseConnection ? $connection : Database::connect();
         $this->auditService = $auditService ?? new AuditService($this->db);
     }
 
@@ -134,7 +135,7 @@ class MakerCheckerService
             ->get()
             ->getFirstRow('array');
 
-        if (! $request) {
+        if (!$request) {
             throw new RuntimeException('Maker checker request not found.');
         }
 

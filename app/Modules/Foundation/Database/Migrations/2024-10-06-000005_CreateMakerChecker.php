@@ -23,11 +23,11 @@ class CreateMakerChecker extends Migration
         $this->forge->addKey('id', true);
         $this->forge->addKey('action_key');
         $this->forge->addKey('status');
-        $this->forge->createTable('ci4_maker_checker_requests', true);
+        $this->forge->createTable('maker_checker_requests', true);
     }
 
     public function down(): void
     {
-        $this->forge->dropTable('ci4_maker_checker_requests', true);
+        $this->forge->dropTable('maker_checker_requests', true);
     }
 }

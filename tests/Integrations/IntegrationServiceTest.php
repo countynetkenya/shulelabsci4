@@ -3,8 +3,8 @@
 namespace Tests\Ci4\Integrations;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use Modules\Integrations\Services\IntegrationService;
 use Modules\Integrations\Services\Adapters\Storage\LocalStorageAdapter;
+use Modules\Integrations\Services\IntegrationService;
 
 /**
  * Tests for the IntegrationService.

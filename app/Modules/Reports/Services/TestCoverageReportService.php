@@ -3,7 +3,7 @@
 namespace Modules\Reports\Services;
 
 /**
- * Test Coverage Report Generator
+ * Test Coverage Report Generator.
  */
 class TestCoverageReportService
 {

@@ -49,7 +49,7 @@ class DocumentController extends ResourceController
         } catch (Throwable) {
             $drive = null;
         }
-        if (! $drive instanceof DriveAdapterInterface) {
+        if (!$drive instanceof DriveAdapterInterface) {
             throw new RuntimeException('No Drive adapter has been configured for the Library module.');
         }
 

@@ -20,7 +20,9 @@ class IntegrationService
      * @phpstan-var BaseConnection<object, object>
      */
     private BaseConnection $db;
+
     private AuditService $auditService;
+
     private IntegrationRegistry $registry;
 
     /**
@@ -36,9 +38,9 @@ class IntegrationService
         ?AuditService $auditService = null,
         ?IntegrationRegistry $registry = null
     ) {
-        $this->db           = $connection instanceof BaseConnection ? $connection : Database::connect();
+        $this->db = $connection instanceof BaseConnection ? $connection : Database::connect();
         $this->auditService = $auditService ?? new AuditService($this->db);
-        $this->registry     = $registry ?? new IntegrationRegistry($this->db, $this->auditService);
+        $this->registry = $registry ?? new IntegrationRegistry($this->db, $this->auditService);
     }
 
     /**
@@ -134,7 +136,7 @@ class IntegrationService
      */
     public function getAdapter(string $name): IntegrationAdapterInterface
     {
-        if (! isset($this->adapters[$name])) {
+        if (!isset($this->adapters[$name])) {
             throw new RuntimeException(sprintf('Integration adapter "%s" not found', $name));
         }
 

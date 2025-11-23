@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Foundation\Controllers;
 
-use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\ResponseInterface;
 use Modules\Foundation\Services\InstallService;
 

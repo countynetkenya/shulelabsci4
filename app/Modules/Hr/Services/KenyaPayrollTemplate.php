@@ -43,7 +43,7 @@ class KenyaPayrollTemplate implements PayrollTemplateInterface
         $deductions = $this->normaliseDeductions($payload['deductions'] ?? []);
         $payoutDate = $this->parseDate($payload['payout_date'] ?? null);
 
-        $taxableAllowancesTotal   = 0.0;
+        $taxableAllowancesTotal = 0.0;
         $nonTaxableAllowancesTotal = 0.0;
 
         foreach ($allowances as $allowance) {
@@ -54,11 +54,11 @@ class KenyaPayrollTemplate implements PayrollTemplateInterface
             }
         }
 
-        $grossPay     = $baseSalary + $taxableAllowancesTotal + $nonTaxableAllowancesTotal;
+        $grossPay = $baseSalary + $taxableAllowancesTotal + $nonTaxableAllowancesTotal;
         $taxableGross = $baseSalary + $taxableAllowancesTotal;
 
-        $preTaxContributions  = 0.0;
-        $postTaxDeductions    = 0.0;
+        $preTaxContributions = 0.0;
+        $postTaxDeductions = 0.0;
 
         foreach ($deductions as $deduction) {
             if ($deduction['pre_tax']) {
@@ -68,13 +68,13 @@ class KenyaPayrollTemplate implements PayrollTemplateInterface
             }
         }
 
-        $nssf         = $this->calculateNssf($taxableGross, $payoutDate);
-        $housingLevy  = $this->calculateHousingLevy($grossPay, $payoutDate);
-        $shif         = $this->calculateShif($grossPay, $payoutDate);
+        $nssf = $this->calculateNssf($taxableGross, $payoutDate);
+        $housingLevy = $this->calculateHousingLevy($grossPay, $payoutDate);
+        $shif = $this->calculateShif($grossPay, $payoutDate);
 
         $taxableIncome = max(0.0, $taxableGross - $nssf - $preTaxContributions);
         $payeBeforeRelief = $this->calculatePaye($taxableIncome);
-        $paye            = max(0.0, $payeBeforeRelief - self::PERSONAL_RELIEF);
+        $paye = max(0.0, $payeBeforeRelief - self::PERSONAL_RELIEF);
 
         $totalStatutory = $paye + $nssf + $housingLevy + $shif;
         $netPay = $grossPay - $totalStatutory - $preTaxContributions - $postTaxDeductions;
@@ -130,7 +130,7 @@ class KenyaPayrollTemplate implements PayrollTemplateInterface
 
     private function normaliseAmount(mixed $value, string $label): float
     {
-        if (! is_numeric($value)) {
+        if (!is_numeric($value)) {
             throw new InvalidArgumentException(sprintf('%s must be numeric.', $label));
         }
 
@@ -150,13 +150,13 @@ class KenyaPayrollTemplate implements PayrollTemplateInterface
     {
         $normalised = [];
         foreach ($allowances as $allowance) {
-            if (! is_array($allowance)) {
+            if (!is_array($allowance)) {
                 throw new InvalidArgumentException('Each allowance must be an array.');
             }
 
-            $name     = trim((string) ($allowance['name'] ?? ''));
-            $amount   = $this->normaliseAmount($allowance['amount'] ?? null, 'Allowance amount');
-            $taxable  = array_key_exists('taxable', $allowance) ? (bool) $allowance['taxable'] : true;
+            $name = trim((string) ($allowance['name'] ?? ''));
+            $amount = $this->normaliseAmount($allowance['amount'] ?? null, 'Allowance amount');
+            $taxable = array_key_exists('taxable', $allowance) ? (bool) $allowance['taxable'] : true;
 
             if ($name === '') {
                 throw new InvalidArgumentException('Allowance name is required.');
@@ -180,13 +180,13 @@ class KenyaPayrollTemplate implements PayrollTemplateInterface
     {
         $normalised = [];
         foreach ($deductions as $deduction) {
-            if (! is_array($deduction)) {
+            if (!is_array($deduction)) {
                 throw new InvalidArgumentException('Each deduction must be an array.');
             }
 
-            $name    = trim((string) ($deduction['name'] ?? ''));
-            $amount  = $this->normaliseAmount($deduction['amount'] ?? null, 'Deduction amount');
-            $preTax  = array_key_exists('pre_tax', $deduction) ? (bool) $deduction['pre_tax'] : false;
+            $name = trim((string) ($deduction['name'] ?? ''));
+            $amount = $this->normaliseAmount($deduction['amount'] ?? null, 'Deduction amount');
+            $preTax = array_key_exists('pre_tax', $deduction) ? (bool) $deduction['pre_tax'] : false;
 
             if ($name === '') {
                 throw new InvalidArgumentException('Deduction name is required.');
@@ -237,12 +237,12 @@ class KenyaPayrollTemplate implements PayrollTemplateInterface
     private function calculatePaye(float $taxableIncome): float
     {
         $remaining = $taxableIncome;
-        $tax       = 0.0;
+        $tax = 0.0;
         $lowerBandEdge = 0.0;
 
         foreach (self::TAX_BANDS as $band) {
             $upper = $band['upper'];
-            $rate  = $band['rate'];
+            $rate = $band['rate'];
 
             if ($upper === null) {
                 $tax += $remaining * $rate;
@@ -255,7 +255,7 @@ class KenyaPayrollTemplate implements PayrollTemplateInterface
             }
 
             $charge = min($remaining, $bandWidth);
-            $tax   += $charge * $rate;
+            $tax += $charge * $rate;
             $remaining -= $charge;
             $lowerBandEdge = $upper;
         }

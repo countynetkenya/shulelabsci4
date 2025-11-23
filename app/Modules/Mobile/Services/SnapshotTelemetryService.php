@@ -37,10 +37,10 @@ class SnapshotTelemetryService
             throw new InvalidArgumentException('Telemetry window must be positive.');
         }
 
-        $end   = Time::now('UTC');
+        $end = Time::now('UTC');
         $start = (clone $end)->subHours($hours);
 
-        $builder = $this->db->table('ci4_audit_events');
+        $builder = $this->db->table('audit_events');
         $builder->where('created_at >=', $start->toDateTimeString());
         $builder->like('event_key', 'mobile.snapshot.', 'after');
         $builder->orderBy('created_at', 'DESC');
@@ -59,8 +59,8 @@ class SnapshotTelemetryService
 
         foreach ($rows as $row) {
             $eventType = (string) $row['event_type'];
-            $metadata  = $this->decodeJson($row['metadata_json'] ?? null);
-            $after     = $this->decodeJson($row['after_state'] ?? null);
+            $metadata = $this->decodeJson($row['metadata_json'] ?? null);
+            $after = $this->decodeJson($row['after_state'] ?? null);
 
             $tenantId = (string) ($metadata['tenant_id'] ?? $after['tenant_id'] ?? 'unknown');
             if ($tenantId === '') {

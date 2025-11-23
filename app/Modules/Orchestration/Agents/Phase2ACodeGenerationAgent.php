@@ -5,20 +5,19 @@ declare(strict_types=1);
 namespace Modules\Orchestration\Agents;
 
 /**
- * Phase 2A: Core APIs Code Generation Agent
- * 
+ * Phase 2A: Core APIs Code Generation Agent.
+ *
  * Generates core API endpoints, services, repositories, and validators
- * 
+ *
  * Tasks:
  * - Generate REST API endpoints (45 endpoints)
  * - Create service layer classes (18 services)
  * - Implement repository patterns (24 repositories)
  * - Add validation rules (36 validators)
  * - Generate API documentation (OpenAPI/Swagger)
- * 
+ *
  * Target: ~2,047 lines of code
- * 
- * @package Modules\Orchestration\Agents
+ *
  * @version 1.0.0
  */
 class Phase2ACodeGenerationAgent extends BaseAgent
@@ -36,7 +35,7 @@ class Phase2ACodeGenerationAgent extends BaseAgent
     public function execute(): array
     {
         $this->log('Starting Phase 2A: Core APIs Code Generation', 'info');
-        
+
         try {
             $deliverables = [];
             $totalLines = 0;
@@ -68,7 +67,7 @@ class Phase2ACodeGenerationAgent extends BaseAgent
             // Step 5: Generate API Documentation
             $apiDocs = $this->generateAPIDocumentation();
             $deliverables['api_documentation'] = $apiDocs;
-            $this->log("✓ Generated API documentation", 'info');
+            $this->log('✓ Generated API documentation', 'info');
 
             // Set metrics
             $this->addMetric('total_lines_generated', $totalLines);
@@ -91,13 +90,13 @@ class Phase2ACodeGenerationAgent extends BaseAgent
     }
 
     /**
-     * Generate API Controllers
+     * Generate API Controllers.
      */
     protected function generateAPIControllers(): array
     {
         $controllers = [];
         $totalLines = 0;
-        
+
         // Define API endpoints for each module
         $endpoints = [
             'Learning' => ['students', 'classes', 'subjects', 'grades', 'attendance'],
@@ -123,7 +122,7 @@ class Phase2ACodeGenerationAgent extends BaseAgent
     }
 
     /**
-     * Generate individual API controller
+     * Generate individual API controller.
      */
     protected function generateAPIController(string $module, string $endpoint): array
     {
@@ -159,13 +158,13 @@ class Phase2ACodeGenerationAgent extends BaseAgent
     }
 
     /**
-     * Generate controller code template
+     * Generate controller code template.
      */
     protected function generateControllerCode(string $namespace, string $className, string $endpoint, string $module): string
     {
         $serviceName = ucfirst($endpoint) . 'Service';
         $date = date('Y-m-d');
-        
+
         return <<<PHP
 <?php
 
@@ -301,7 +300,7 @@ PHP;
     }
 
     /**
-     * Generate Service Classes
+     * Generate Service Classes.
      */
     protected function generateServiceClasses(): array
     {
@@ -337,14 +336,14 @@ PHP;
     }
 
     /**
-     * Generate Repository Classes
+     * Generate Repository Classes.
      */
     protected function generateRepositoryClasses(): array
     {
         // Simulate repository generation
         $count = 24;
         $linesPerRepo = 80;
-        
+
         return [
             'count' => $count,
             'lines_generated' => $count * $linesPerRepo,
@@ -353,14 +352,14 @@ PHP;
     }
 
     /**
-     * Generate Validators
+     * Generate Validators.
      */
     protected function generateValidators(): array
     {
         // Simulate validator generation
         $count = 36;
         $linesPerValidator = 45;
-        
+
         return [
             'count' => $count,
             'lines_generated' => $count * $linesPerValidator,
@@ -369,7 +368,7 @@ PHP;
     }
 
     /**
-     * Generate API Documentation
+     * Generate API Documentation.
      */
     protected function generateAPIDocumentation(): array
     {

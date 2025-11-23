@@ -7,14 +7,14 @@ use CodeIgniter\HTTP\ResponseInterface;
 class Install extends BaseController
 {
     /**
-     * Installation wizard entry point
+     * Installation wizard entry point.
      */
     public function index(): string|ResponseInterface
     {
         // Check if already installed
         $envInstalled = env('app.installed', false);
         $isInstalled = filter_var($envInstalled, FILTER_VALIDATE_BOOLEAN);
-        
+
         if ($isInstalled) {
             return redirect()->to('/')->with('error', 'Application is already installed.');
         }
@@ -27,7 +27,7 @@ class Install extends BaseController
     }
 
     /**
-     * Step 1: Environment check
+     * Step 1: Environment check.
      */
     public function checkEnvironment(): ResponseInterface
     {
@@ -49,7 +49,7 @@ class Install extends BaseController
     }
 
     /**
-     * Step 2: Create organization and school
+     * Step 2: Create organization and school.
      */
     public function createOrganization(): ResponseInterface
     {
@@ -80,7 +80,7 @@ class Install extends BaseController
     }
 
     /**
-     * Step 3: Create admin user
+     * Step 3: Create admin user.
      */
     public function createAdmin(): ResponseInterface
     {
@@ -113,14 +113,14 @@ class Install extends BaseController
     }
 
     /**
-     * Complete installation
+     * Complete installation.
      */
     public function complete(): ResponseInterface
     {
         // Mark installation as complete
         // Note: In production, this should update the .env file
         // For now, just return success
-        
+
         return $this->response->setJSON([
             'success' => true,
             'message' => 'Installation completed successfully!',

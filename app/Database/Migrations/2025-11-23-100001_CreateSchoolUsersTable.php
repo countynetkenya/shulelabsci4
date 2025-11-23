@@ -45,19 +45,19 @@ class CreateSchoolUsersTable extends Migration
         $this->forge->addKey('school_id');
         $this->forge->addKey('user_id');
         $this->forge->addKey(['school_id', 'user_id', 'role_id']); // Composite index for lookups
-        
+
         // Foreign keys only for MySQL
         if ($this->db->DBDriver === 'MySQLi') {
             $this->forge->addForeignKey('school_id', 'schools', 'id', 'CASCADE', 'CASCADE');
             $this->forge->addForeignKey('user_id', 'users', 'id', 'CASCADE', 'CASCADE');
             $this->forge->addForeignKey('role_id', 'roles', 'id', 'CASCADE', 'CASCADE');
         }
-        
+
         $attributes = [];
         if ($this->db->DBDriver === 'MySQLi') {
             $attributes = ['ENGINE' => 'InnoDB'];
         }
-        
+
         $this->forge->createTable('school_users', false, $attributes);
     }
 

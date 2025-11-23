@@ -25,91 +25,107 @@ class TenantTest extends CIUnitTestCase
     use FeatureTestTrait;
 
     protected $refresh = false;
+
     protected $namespace = 'App';
+
     protected static bool $migrated = false;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Run migrations only once for all tests
         if (!self::$migrated) {
             $migrate = \Config\Services::migrations();
             $migrate->latest();
             self::$migrated = true;
-            
+
             // Seed test data for multi-school tenant tests
             $this->seedTestData();
         }
     }
-    
+
     /**
-     * Seed comprehensive test data for tenant isolation tests
+     * Seed comprehensive test data for tenant isolation tests.
      */
     protected function seedTestData(): void
     {
         $db = \Config\Database::connect();
-        
+
         // Create schools
         $db->table('schools')->insertBatch([
             [
-                'school_id'   => 1,
-                'school_name' => 'Test School 1',
-                'school_code' => 'TS001',
-                'status'      => 'active',
+                'id'          => 1,
+                'school_name' => 'Nairobi Primary School',
+                'school_code' => 'NPS001',
+                'is_active'   => 1,
                 'created_at'  => date('Y-m-d H:i:s'),
                 'updated_at'  => date('Y-m-d H:i:s'),
             ],
             [
-                'school_id'   => 2,
-                'school_name' => 'Test School 2',
-                'school_code' => 'TS002',
-                'status'      => 'active',
+                'id'          => 2,
+                'school_name' => 'Mombasa Secondary School',
+                'school_code' => 'MSS002',
+                'is_active'   => 1,
                 'created_at'  => date('Y-m-d H:i:s'),
                 'updated_at'  => date('Y-m-d H:i:s'),
             ],
             [
-                'school_id'   => 3,
-                'school_name' => 'Test School 3',
-                'school_code' => 'TS003',
-                'status'      => 'inactive',
+                'id'          => 3,
+                'school_name' => 'Kisumu Academy',
+                'school_code' => 'KA003',
+                'is_active'   => 1,
+                'created_at'  => date('Y-m-d H:i:s'),
+                'updated_at'  => date('Y-m-d H:i:s'),
+            ],
+            [
+                'id'          => 4,
+                'school_name' => 'Nakuru High School',
+                'school_code' => 'NHS004',
+                'is_active'   => 1,
+                'created_at'  => date('Y-m-d H:i:s'),
+                'updated_at'  => date('Y-m-d H:i:s'),
+            ],
+            [
+                'id'          => 5,
+                'school_name' => 'Eldoret College',
+                'school_code' => 'EC005',
+                'is_active'   => 1,
                 'created_at'  => date('Y-m-d H:i:s'),
                 'updated_at'  => date('Y-m-d H:i:s'),
             ],
         ]);
-        
+
         // Create roles
         $db->table('roles')->insertBatch([
-            ['role_id' => 1, 'role_name' => 'SuperAdmin', 'created_at' => date('Y-m-d H:i:s')],
-            ['role_id' => 2, 'role_name' => 'SchoolAdmin', 'created_at' => date('Y-m-d H:i:s')],
-            ['role_id' => 3, 'role_name' => 'Teacher', 'created_at' => date('Y-m-d H:i:s')],
-            ['role_id' => 4, 'role_name' => 'Student', 'created_at' => date('Y-m-d H:i:s')],
+            ['id' => 1, 'role_name' => 'SuperAdmin', 'role_slug' => 'superadmin', 'ci3_usertype_id' => 1, 'created_at' => date('Y-m-d H:i:s')],
+            ['id' => 2, 'role_name' => 'SchoolAdmin', 'role_slug' => 'schooladmin', 'ci3_usertype_id' => 2, 'created_at' => date('Y-m-d H:i:s')],
+            ['id' => 3, 'role_name' => 'Teacher', 'role_slug' => 'teacher', 'ci3_usertype_id' => 3, 'created_at' => date('Y-m-d H:i:s')],
+            ['id' => 4, 'role_name' => 'Student', 'role_slug' => 'student', 'ci3_usertype_id' => 4, 'created_at' => date('Y-m-d H:i:s')],
         ]);
-        
+
         // Create test users
         $db->table('users')->insertBatch([
             [
-                'user_id'       => 24,
+                'id'            => 24,
                 'username'      => 'schooladmin100',
                 'email'         => 'admin1@test.local',
                 'password_hash' => password_hash('Test@123', PASSWORD_BCRYPT),
                 'full_name'     => 'School Admin 1',
                 'created_at'    => date('Y-m-d H:i:s'),
                 'updated_at'    => date('Y-m-d H:i:s'),
-                'is_active'     => 1,
             ],
             [
-                'user_id'       => 64,
+                'id'            => 64,
                 'username'      => 'schooladmin200',
                 'email'         => 'admin2@test.local',
                 'password_hash' => password_hash('Test@123', PASSWORD_BCRYPT),
                 'full_name'     => 'School Admin 2',
                 'created_at'    => date('Y-m-d H:i:s'),
                 'updated_at'    => date('Y-m-d H:i:s'),
-                'is_active'     => 1,
             ],
         ]);
-        
+
         // Create user-school mappings
         $db->table('school_users')->insertBatch([
             [
@@ -127,7 +143,7 @@ class TenantTest extends CIUnitTestCase
                 'joined_at'         => date('Y-m-d H:i:s'),
             ],
         ]);
-        
+
         // Create sample enrollment data for tenant isolation testing
         $db->table('student_enrollments')->insertBatch([
             [
@@ -184,18 +200,20 @@ class TenantTest extends CIUnitTestCase
     {
         $tenantService = service('tenant');
         session()->set('current_school_id', 1);
+        $tenantService->setCurrentSchool();
 
-        $currentSchool = $tenantService->getCurrentSchool();
-        $this->assertEquals(1, $currentSchool);
+        $currentSchoolId = $tenantService->getCurrentSchoolId();
+        $this->assertEquals(1, $currentSchoolId);
     }
 
     public function testSetCurrentSchoolByPrimarySchool()
     {
         // User 24 (schooladmin100) has school 1 as primary
         $tenantService = service('tenant');
-        $userId = 24;
+        session()->set('user_id', 24);
+        $tenantService->setCurrentSchool();
 
-        $schoolId = $tenantService->setCurrentSchool($userId);
+        $schoolId = $tenantService->getCurrentSchoolId();
         $this->assertEquals(1, $schoolId);
     }
 
@@ -259,7 +277,7 @@ class TenantTest extends CIUnitTestCase
 
         // Should only get school 1 enrollments
         foreach ($enrollments as $enrollment) {
-            $this->assertEquals(1, $enrollment->school_id);
+            $this->assertEquals(1, $enrollment['school_id']);
         }
     }
 
@@ -271,8 +289,11 @@ class TenantTest extends CIUnitTestCase
         $enrollments = $enrollmentModel->forSchool(2)->findAll();
 
         foreach ($enrollments as $enrollment) {
-            $this->assertEquals(2, $enrollment->school_id);
+            $this->assertEquals(2, $enrollment['school_id']);
         }
+
+        // Add assertion to prevent risky test warning
+        $this->assertNotEmpty($enrollments);
     }
 
     public function testTenantModelWithoutTenant()
@@ -312,8 +333,8 @@ class TenantTest extends CIUnitTestCase
         $school1Enrollments = $enrollmentModel->findAll();
 
         foreach ($school1Enrollments as $enrollment) {
-            $this->assertNotEquals(2, $enrollment->school_id);
-            $this->assertEquals(1, $enrollment->school_id);
+            $this->assertNotEquals(2, $enrollment['school_id']);
+            $this->assertEquals(1, $enrollment['school_id']);
         }
     }
 
@@ -413,7 +434,7 @@ class TenantTest extends CIUnitTestCase
 
         $this->assertCount(5, $schools);
         foreach ($schools as $school) {
-            $this->assertEquals('active', $school->status);
+            $this->assertEquals(1, $school['is_active']);
         }
     }
 
@@ -423,7 +444,7 @@ class TenantTest extends CIUnitTestCase
         $school = $schoolModel->getByCode('NPS001');
 
         $this->assertNotNull($school);
-        $this->assertEquals('Nairobi Primary School', $school->school_name);
+        $this->assertEquals('Nairobi Primary School', $school['school_name']);
     }
 
     public function testGetSchoolStatistics()
@@ -431,8 +452,10 @@ class TenantTest extends CIUnitTestCase
         $schoolModel = model('SchoolModel');
         $stats = $schoolModel->getStatistics(1);
 
-        $this->assertArrayHasKey('total_users', $stats);
-        $this->assertEquals(40, $stats['total_users']); // School 1 has 40 users
+        $this->assertArrayHasKey('student_count', $stats);
+        $this->assertArrayHasKey('teacher_count', $stats);
+        $this->assertArrayHasKey('class_count', $stats);
+        $this->assertEquals(2, $stats['student_count']); // School 1 has 2 enrollments
     }
 
     // ============================================================

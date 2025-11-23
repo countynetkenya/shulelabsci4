@@ -9,13 +9,19 @@ use CodeIgniter\Model;
  */
 class SchoolUserModel extends Model
 {
-    protected $table            = 'school_users';
-    protected $primaryKey       = 'id';
+    protected $table = 'school_users';
+
+    protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = [
+
+    protected $returnType = 'array';
+
+    protected $useSoftDeletes = false;
+
+    protected $protectFields = true;
+
+    protected $allowedFields = [
         'school_id',
         'user_id',
         'role_id',
@@ -25,7 +31,8 @@ class SchoolUserModel extends Model
 
     // Dates
     protected $useTimestamps = false;
-    protected $dateFormat    = 'datetime';
+
+    protected $dateFormat = 'datetime';
 
     // Validation
     protected $validationRules = [
@@ -35,7 +42,8 @@ class SchoolUserModel extends Model
     ];
 
     protected $validationMessages = [];
-    protected $skipValidation     = false;
+
+    protected $skipValidation = false;
 
     /**
      * Get all schools for a user.

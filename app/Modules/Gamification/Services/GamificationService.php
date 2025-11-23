@@ -22,7 +22,7 @@ class GamificationService
     public function handleRecognitionAwarded(array $event, array $context = []): array
     {
         $recipientId = (string) ($event['recipient_id'] ?? '');
-        $points      = (int) ($event['points'] ?? 0);
+        $points = (int) ($event['points'] ?? 0);
 
         if ($recipientId === '' || $points <= 0) {
             throw new InvalidArgumentException('Recognition events require a recipient_id and positive points.');
@@ -35,7 +35,7 @@ class GamificationService
         ];
 
         $newTotal = $this->leaderboard->incrementPoints($recipientId, $points, $metadata);
-        $badges   = $this->evaluateBadgeUnlocks($newTotal);
+        $badges = $this->evaluateBadgeUnlocks($newTotal);
 
         foreach ($badges as $badge) {
             $this->leaderboard->awardBadge($recipientId, $badge, $metadata);

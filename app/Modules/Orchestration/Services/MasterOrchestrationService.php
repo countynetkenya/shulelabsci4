@@ -4,30 +4,32 @@ declare(strict_types=1);
 
 namespace Modules\Orchestration\Services;
 
-use Modules\Orchestration\Config\OrchestrationConfig;
 use Modules\Orchestration\Agents\Phase1BackupAgent;
 use Modules\Orchestration\Agents\Phase2ACodeGenerationAgent;
-use Modules\Orchestration\Agents\Phase2BPortalsAgent;
 use Modules\Orchestration\Agents\Phase3ValidationAgent;
 use Modules\Orchestration\Agents\Phase4MergeAgent;
 use Modules\Orchestration\Agents\Phase5DeploymentAgent;
 use Modules\Orchestration\Agents\Phase6ReportsAgent;
+use Modules\Orchestration\Config\OrchestrationConfig;
 use Modules\Orchestration\Reports\ReportGenerator;
 
 /**
- * Master Orchestration Service
- * 
+ * Master Orchestration Service.
+ *
  * Coordinates all 6 phases of the autonomous system build
- * 
- * @package Modules\Orchestration\Services
+ *
  * @version 1.0.0
  */
 class MasterOrchestrationService
 {
     protected OrchestrationConfig $config;
+
     protected array $phaseResults = [];
+
     protected bool $dryRun = false;
+
     protected string $runId;
+
     protected float $startTime;
 
     public function __construct(OrchestrationConfig $config)
@@ -35,19 +37,19 @@ class MasterOrchestrationService
         $this->config = $config;
         $this->runId = date('YmdHis') . '-' . substr(md5(uniqid((string) mt_rand(), true)), 0, 8);
         $this->startTime = microtime(true);
-        
+
         // Validate configuration
         $errors = $config->validate();
         if (!empty($errors)) {
             throw new \RuntimeException('Configuration validation failed: ' . implode(', ', $errors));
         }
-        
+
         // Ensure directories exist
         $this->ensureDirectories();
     }
 
     /**
-     * Set dry run mode
+     * Set dry run mode.
      */
     public function setDryRun(bool $dryRun): void
     {
@@ -55,13 +57,13 @@ class MasterOrchestrationService
     }
 
     /**
-     * Execute complete orchestration (all 6 phases)
+     * Execute complete orchestration (all 6 phases).
      */
     public function executeComplete(array $skipPhases = []): array
     {
         $this->log('Starting complete orchestration', 'info');
         $this->log("Run ID: {$this->runId}", 'info');
-        
+
         $results = [
             'success' => true,
             'run_id' => $this->runId,
@@ -79,7 +81,7 @@ class MasterOrchestrationService
                 }
 
                 $phaseConfig = $this->config->getPhaseConfig($phase);
-                
+
                 if (!$phaseConfig['enabled']) {
                     $this->log("Phase {$phase} is disabled in configuration", 'info');
                     continue;
@@ -117,15 +119,15 @@ class MasterOrchestrationService
     }
 
     /**
-     * Execute a specific phase
+     * Execute a specific phase.
      */
     public function executePhase(int $phaseNumber): array
     {
         $phaseConfig = $this->config->getPhaseConfig($phaseNumber);
         $this->log("Starting Phase {$phaseNumber}: {$phaseConfig['name']}", 'info');
-        
+
         $phaseStart = microtime(true);
-        
+
         $result = [
             'number' => $phaseNumber,
             'name' => $phaseConfig['name'],
@@ -138,13 +140,13 @@ class MasterOrchestrationService
 
         try {
             $agent = $this->getAgentForPhase($phaseNumber);
-            
+
             if ($this->dryRun) {
                 $agent->setDryRun(true);
             }
 
             $agentResult = $agent->execute();
-            
+
             $result['success'] = $agentResult['success'];
             $result['metrics'] = $agentResult['metrics'] ?? [];
             $result['output'] = $agentResult['output'] ?? [];
@@ -172,7 +174,7 @@ class MasterOrchestrationService
     }
 
     /**
-     * Get the appropriate agent for a phase
+     * Get the appropriate agent for a phase.
      */
     protected function getAgentForPhase(int $phase): object
     {
@@ -188,12 +190,12 @@ class MasterOrchestrationService
     }
 
     /**
-     * Generate final orchestration report
+     * Generate final orchestration report.
      */
     protected function generateFinalReport(array $results): string
     {
         $reportDir = ROOTPATH . $this->config->reportPath . '/' . $this->runId;
-        
+
         if (!is_dir($reportDir)) {
             mkdir($reportDir, 0755, true);
         }
@@ -212,7 +214,7 @@ class MasterOrchestrationService
     }
 
     /**
-     * Ensure required directories exist
+     * Ensure required directories exist.
      */
     protected function ensureDirectories(): void
     {
@@ -231,23 +233,23 @@ class MasterOrchestrationService
     }
 
     /**
-     * Log message
+     * Log message.
      */
     protected function log(string $message, string $level = 'info'): void
     {
         $timestamp = date('Y-m-d H:i:s');
         $logMessage = "[{$timestamp}] [{$level}] {$message}\n";
-        
+
         // Console output
         echo $logMessage;
-        
+
         // File logging
         $logFile = ROOTPATH . $this->config->logsPath . "/orchestration-{$this->runId}.log";
         file_put_contents($logFile, $logMessage, FILE_APPEND);
     }
 
     /**
-     * Get run ID
+     * Get run ID.
      */
     public function getRunId(): string
     {
@@ -255,7 +257,7 @@ class MasterOrchestrationService
     }
 
     /**
-     * Get phase results
+     * Get phase results.
      */
     public function getPhaseResults(): array
     {

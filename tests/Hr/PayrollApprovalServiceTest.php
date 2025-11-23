@@ -14,6 +14,7 @@ use Tests\Ci4\Foundation\FoundationDatabaseTestCase;
 class PayrollApprovalServiceTest extends FoundationDatabaseTestCase
 {
     private AuditService $auditService;
+
     private MakerCheckerService $makerChecker;
 
     protected function setUp(): void
@@ -32,12 +33,12 @@ class PayrollApprovalServiceTest extends FoundationDatabaseTestCase
 
         $payroll->generatePayslip($this->samplePayload('EMP-1', 'Alice A.'), $this->sampleContext('tenant-1', 'maker-1'));
 
-        $service   = new PayrollApprovalService($this->db, $this->makerChecker, $this->auditService);
-        $pending   = $service->listPending('tenant-1');
+        $service = new PayrollApprovalService($this->db, $this->makerChecker, $this->auditService);
+        $pending = $service->listPending('tenant-1');
         $this->assertCount(1, $pending);
 
         $approvalId = $pending[0]['id'];
-        $approved   = $service->approve($approvalId, ['actor_id' => 'checker-7', 'tenant_id' => 'tenant-1']);
+        $approved = $service->approve($approvalId, ['actor_id' => 'checker-7', 'tenant_id' => 'tenant-1']);
 
         $this->assertSame('approved', $approved['status']);
         $this->assertSame('checker-7', $approved['checker_id']);

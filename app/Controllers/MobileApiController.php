@@ -11,6 +11,7 @@ use App\Services\TenantService;
 class MobileApiController extends BaseController
 {
     protected MobileApiService $mobileService;
+
     protected TenantService $tenantService;
 
     public function __construct()
@@ -59,8 +60,8 @@ class MobileApiController extends BaseController
     public function classStudents(int $classId)
     {
         $schoolId = $this->request->getGet('school_id') ?? $this->tenantService->getCurrentSchoolId();
-        $page = (int)($this->request->getGet('page') ?? 1);
-        $perPage = (int)($this->request->getGet('per_page') ?? 20);
+        $page = (int) ($this->request->getGet('page') ?? 1);
+        $perPage = (int) ($this->request->getGet('per_page') ?? 20);
 
         if (!$schoolId) {
             return $this->response->setJSON(
@@ -79,8 +80,8 @@ class MobileApiController extends BaseController
     {
         $schoolId = $this->request->getGet('school_id') ?? $this->tenantService->getCurrentSchoolId();
         $status = $this->request->getGet('status');
-        $page = (int)($this->request->getGet('page') ?? 1);
-        $perPage = (int)($this->request->getGet('per_page') ?? 20);
+        $page = (int) ($this->request->getGet('page') ?? 1);
+        $perPage = (int) ($this->request->getGet('per_page') ?? 20);
 
         if (!$schoolId) {
             return $this->response->setJSON(
@@ -99,8 +100,8 @@ class MobileApiController extends BaseController
     {
         $schoolId = $this->request->getGet('school_id') ?? $this->tenantService->getCurrentSchoolId();
         $category = $this->request->getGet('category');
-        $page = (int)($this->request->getGet('page') ?? 1);
-        $perPage = (int)($this->request->getGet('per_page') ?? 20);
+        $page = (int) ($this->request->getGet('page') ?? 1);
+        $perPage = (int) ($this->request->getGet('per_page') ?? 20);
 
         if (!$schoolId) {
             return $this->response->setJSON(
@@ -118,7 +119,7 @@ class MobileApiController extends BaseController
     public function courses()
     {
         $schoolId = $this->request->getGet('school_id') ?? $this->tenantService->getCurrentSchoolId();
-        $classId = $this->request->getGet('class_id') ? (int)$this->request->getGet('class_id') : null;
+        $classId = $this->request->getGet('class_id') ? (int) $this->request->getGet('class_id') : null;
 
         if (!$schoolId) {
             return $this->response->setJSON(

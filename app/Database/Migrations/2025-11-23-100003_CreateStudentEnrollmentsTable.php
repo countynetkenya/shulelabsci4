@@ -66,7 +66,7 @@ class CreateStudentEnrollmentsTable extends Migration
         $this->forge->addKey('school_id');
         $this->forge->addKey('class_id');
         $this->forge->addKey(['school_id', 'status', 'student_id']); // Active enrollments lookup
-        
+
         // Foreign keys only for MySQL
         if ($this->db->DBDriver === 'MySQLi') {
             $this->forge->addForeignKey('student_id', 'users', 'id', 'CASCADE', 'CASCADE');
@@ -74,12 +74,12 @@ class CreateStudentEnrollmentsTable extends Migration
             $this->forge->addForeignKey('class_id', 'school_classes', 'id', 'SET NULL', 'CASCADE');
             $this->forge->addForeignKey('parent_id', 'users', 'id', 'SET NULL', 'CASCADE');
         }
-        
+
         $attributes = [];
         if ($this->db->DBDriver === 'MySQLi') {
             $attributes = ['ENGINE' => 'InnoDB'];
         }
-        
+
         $this->forge->createTable('student_enrollments', false, $attributes);
     }
 

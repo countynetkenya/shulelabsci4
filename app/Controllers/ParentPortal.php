@@ -2,20 +2,22 @@
 
 namespace App\Controllers;
 
-use App\Models\StudentEnrollmentModel;
-use App\Models\GradeModel;
 use App\Models\AssignmentModel;
+use App\Models\GradeModel;
+use App\Models\StudentEnrollmentModel;
 use App\Models\ThreadMessageModel;
 
 /**
- * ParentPortal Controller
+ * ParentPortal Controller.
  *
  * Parent portal for viewing children's academic progress
  */
 class ParentPortal extends BaseController
 {
     protected $data = [];
+
     protected GradeModel $gradeModel;
+
     protected AssignmentModel $assignmentModel;
 
     public function __construct()
@@ -26,7 +28,7 @@ class ParentPortal extends BaseController
     }
 
     /**
-     * Parent dashboard
+     * Parent dashboard.
      */
     public function index(): string
     {
@@ -40,7 +42,7 @@ class ParentPortal extends BaseController
     }
 
     /**
-     * View all children
+     * View all children.
      */
     public function children(): string
     {
@@ -53,7 +55,7 @@ class ParentPortal extends BaseController
     }
 
     /**
-     * View child's attendance
+     * View child's attendance.
      */
     public function attendance(int $childId): string
     {
@@ -73,7 +75,7 @@ class ParentPortal extends BaseController
     }
 
     /**
-     * View child's grades
+     * View child's grades.
      */
     public function grades(int $childId): string
     {
@@ -103,7 +105,7 @@ class ParentPortal extends BaseController
     }
 
     /**
-     * View child's assignments
+     * View child's assignments.
      */
     public function assignments(int $childId): string
     {
@@ -115,7 +117,7 @@ class ParentPortal extends BaseController
         }
 
         $this->data['child'] = $this->getChildInfo($childId);
-        
+
         // Get child's enrolled classes
         $enrollmentModel = new StudentEnrollmentModel();
         $enrolledClasses = $enrollmentModel->where('student_id', $childId)->findColumn('class_id');
@@ -139,7 +141,7 @@ class ParentPortal extends BaseController
     }
 
     /**
-     * Send message to teacher
+     * Send message to teacher.
      */
     public function sendMessage()
     {
@@ -175,7 +177,7 @@ class ParentPortal extends BaseController
             'name' => $session->get('name'),
             'email' => $session->get('email'),
             'usertypeID' => $session->get('usertypeID'),
-            'photo' => $session->get('photo')
+            'photo' => $session->get('photo'),
         ];
     }
 

@@ -2,9 +2,9 @@
 
 namespace Tests\Finance;
 
+use App\Services\FinanceService;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use App\Services\FinanceService;
 
 /**
  * @internal
@@ -14,25 +14,27 @@ final class FinanceServiceTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = false;
+
     protected FinanceService $service;
+
     protected static bool $migrated = false;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Run migrations only once for all tests
         if (!self::$migrated) {
             $migrate = \Config\Services::migrations();
             $migrate->latest();
             self::$migrated = true;
         }
-        
+
         $this->service = new FinanceService();
-        
+
         // Create minimal test data
         $db = \Config\Database::connect();
-        
+
         // Create school if not exists
         $existing = $db->table('schools')->where('id', 6)->get()->getRow();
         if (!$existing) {
@@ -44,7 +46,7 @@ final class FinanceServiceTest extends CIUnitTestCase
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
         }
-        
+
         // Create students if not exist
         $students = [50, 51, 52, 53, 54, 55, 56, 57];
         foreach ($students as $id) {

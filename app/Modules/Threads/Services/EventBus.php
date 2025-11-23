@@ -30,7 +30,7 @@ class EventBus
     public function dispatch(string $eventName, array $payload = []): EventDispatchResult
     {
         $successful = [];
-        $failures   = [];
+        $failures = [];
 
         foreach ($this->listeners[$eventName] ?? [] as $index => $listener) {
             $identifier = sprintf('%s#%d', $eventName, $index);

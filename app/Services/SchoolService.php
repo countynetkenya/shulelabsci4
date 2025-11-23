@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\SchoolModel;
 use App\Models\SchoolClassModel;
+use App\Models\SchoolModel;
 use App\Models\StudentEnrollmentModel;
 
 /**
@@ -12,7 +12,9 @@ use App\Models\StudentEnrollmentModel;
 class SchoolService
 {
     protected SchoolModel $schoolModel;
+
     protected SchoolClassModel $classModel;
+
     protected StudentEnrollmentModel $enrollmentModel;
 
     public function __construct()
@@ -28,7 +30,7 @@ class SchoolService
     public function getDashboardStats(int $schoolId): array
     {
         $school = $this->schoolModel->find($schoolId);
-        
+
         if (!$school) {
             throw new \RuntimeException('School not found');
         }
@@ -38,10 +40,13 @@ class SchoolService
         $totalEnrollments = $this->enrollmentModel->forSchool($schoolId)
             ->where('status', 'active')
             ->countAllResults();
-        
+
         // Get capacity utilization
         $classes = $this->classModel->forSchool($schoolId)->findAll();
-        $totalCapacity = array_sum(array_column($classes, 'max_capacity'));
+        $totalCapacity = 0;
+        foreach ($classes as $class) {
+            $totalCapacity += is_array($class) ? ($class['max_capacity'] ?? 0) : ($class->max_capacity ?? 0);
+        }
         $utilization = $totalCapacity > 0 ? ($totalEnrollments / $totalCapacity) * 100 : 0;
 
         return [
@@ -50,8 +55,8 @@ class SchoolService
             'total_students' => $totalEnrollments,
             'total_capacity' => $totalCapacity,
             'utilization_percent' => round($utilization, 2),
-            'subscription_tier' => $school['subscription_tier'] ?? 'Free',
-            'is_active' => (bool)($school['is_active'] ?? false),
+            'subscription_tier' => is_array($school) ? ($school['subscription_tier'] ?? 'Free') : ($school->subscription_tier ?? 'Free'),
+            'is_active' => is_array($school) ? (bool) ($school['is_active'] ?? false) : (bool) ($school->is_active ?? false),
         ];
     }
 
@@ -61,7 +66,7 @@ class SchoolService
     public function getSchoolOverview(int $schoolId): array
     {
         $stats = $this->getDashboardStats($schoolId);
-        
+
         // Get classes with enrollment counts
         $classes = $this->classModel->forSchool($schoolId)
             ->select('school_classes.*, COUNT(student_enrollments.id) as student_count')
@@ -81,7 +86,7 @@ class SchoolService
     public function canEnrollStudents(int $schoolId, int $count = 1): bool
     {
         $school = $this->schoolModel->find($schoolId);
-        
+
         if (!$school) {
             return false;
         }
@@ -90,7 +95,7 @@ class SchoolService
             ->where('status', 'active')
             ->countAllResults();
 
-        $maxStudents = $school['max_students'] ?? 0;
+        $maxStudents = is_array($school) ? ($school['max_students'] ?? 0) : ($school->max_students ?? 0);
 
         return ($currentEnrollments + $count) <= $maxStudents;
     }

@@ -1,0 +1,1591 @@
+[0;34m[2025-11-23 18:08:52][0m 
+[0;34m[2025-11-23 18:08:52][0m ════════════════════════════════════════════════════════════════════
+[0;34m[2025-11-23 18:08:52][0m   ShuleLabs AI Orchestration Engine v2.0
+[0;34m[2025-11-23 18:08:52][0m   Complete Autonomous Build - 6 Phases
+[0;34m[2025-11-23 18:08:52][0m ════════════════════════════════════════════════════════════════════
+[0;34m[2025-11-23 18:08:52][0m 
+[0;34m[2025-11-23 18:08:52][0m ╔════════════════════════════════════════════════════════════════╗
+[0;34m[2025-11-23 18:08:52][0m ║ PHASE 0: PRE-FLIGHT VALIDATION                                 ║
+[0;34m[2025-11-23 18:08:52][0m ╚════════════════════════════════════════════════════════════════╝
+[0;36mℹ️  [2025-11-23 18:08:52][0m Checking PHP version...
+[0;32m✅ [2025-11-23 18:08:52][0m PHP 8.3 detected
+[0;36mℹ️  [2025-11-23 18:08:52][0m Checking PHP extensions...
+[0;32m✅ [2025-11-23 18:08:52][0m Extension intl: installed
+[0;32m✅ [2025-11-23 18:08:52][0m Extension mbstring: installed
+[0;32m✅ [2025-11-23 18:08:52][0m Extension json: installed
+[0;32m✅ [2025-11-23 18:08:53][0m Extension xml: installed
+[0;32m✅ [2025-11-23 18:08:53][0m Extension curl: installed
+[1;33m⚠️  [2025-11-23 18:08:53][0m Extension zip: MISSING
+[1;33m⚠️  [2025-11-23 18:08:53][0m Extension gd: MISSING
+[1;33m⚠️  [2025-11-23 18:08:53][0m Missing extensions: zip gd
+[0;36mℹ️  [2025-11-23 18:08:53][0m Auto-installing missing extensions...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+php8.3-zip is already the newest version (8.3.6-0ubuntu0.24.04.5).
+0 upgraded, 0 newly installed, 0 to remove and 12 not upgraded.
+Reading package lists...
+Building dependency tree...
+Reading state information...
+php8.3-gd is already the newest version (8.3.6-0ubuntu0.24.04.5).
+0 upgraded, 0 newly installed, 0 to remove and 12 not upgraded.
+[0;36mℹ️  [2025-11-23 18:08:55][0m Testing database connection...
+[0;36mℹ️  [2025-11-23 18:08:55][0m Checking disk space...
+[0;32m✅ [2025-11-23 18:08:55][0m Disk space: 19GB available
+[0;36mℹ️  [2025-11-23 18:08:55][0m Checking Git repository...
+[0;32m✅ [2025-11-23 18:08:55][0m Git repository detected
+[1;33m⚠️  [2025-11-23 18:08:55][0m Uncommitted changes detected
+[0;36mℹ️  [2025-11-23 18:08:55][0m Scanning for PHP reserved keywords in planned classes...
+[0;32m✅ [2025-11-23 18:08:55][0m No reserved keywords detected in class names
+[0;36mℹ️  [2025-11-23 18:08:55][0m Checking file permissions...
+[0;32m✅ [2025-11-23 18:08:55][0m writable/ directory is writable
+[0;36mℹ️  [2025-11-23 18:08:55][0m Checking Composer...
+[0;32m✅ [2025-11-23 18:08:55][0m Composer installed
+./composer.json is valid
+[0;32m✅ [2025-11-23 18:08:55][0m composer.json is valid
+[0;32m✅ [2025-11-23 18:08:55][0m Phase 0 complete in 3 seconds
+[0;34m[2025-11-23 18:08:55][0m ╔════════════════════════════════════════════════════════════════╗
+[0;34m[2025-11-23 18:08:55][0m ║ PHASE 1: DATABASE-FIRST FOUNDATION                             ║
+[0;34m[2025-11-23 18:08:55][0m ╚════════════════════════════════════════════════════════════════╝
+[0;36mℹ️  [2025-11-23 18:08:55][0m Running database migrations...
+Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+
+CodeIgniter v4.6.3 Command Line Tool - Server Time: 2025-11-23 18:08:55 UTC+00:00
+
+Running all new migrations...
+Migrations complete.
+[0;32m✅ [2025-11-23 18:08:55][0m Migrations executed successfully
+[0;36mℹ️  [2025-11-23 18:08:55][0m Verifying database schema...
+[0;32m✅ [2025-11-23 18:08:55][0m Database has 31 tables
+[0;32m✅ [2025-11-23 18:08:55][0m Phase 1 complete in 0 seconds
+[0;34m[2025-11-23 18:08:55][0m ╔════════════════════════════════════════════════════════════════╗
+[0;34m[2025-11-23 18:08:55][0m ║ PHASE 2: TEST-DRIVEN DEVELOPMENT                               ║
+[0;34m[2025-11-23 18:08:55][0m ╚════════════════════════════════════════════════════════════════╝
+[0;36mℹ️  [2025-11-23 18:08:55][0m Running test suite...
+Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+PHPUnit 10.5.58 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.3.14
+Configuration: /workspaces/shulelabsci4/phpunit.xml
+
+.........Starting CI4 users backfill from CI3 tables...
+Table systemadmin does not exist, skipping.
+Migrated 0 users from systemadmin
+Table user does not exist, skipping.
+Migrated 0 users from user
+Table teacher does not exist, skipping.
+Migrated 0 users from teacher
+Table student does not exist, skipping.
+Migrated 0 users from student
+Table parents does not exist, skipping.
+Migrated 0 users from parents
+Total users migrated: 0
+...................................................F..  63 / 206 ( 30%)
+...........E..F.FFRF.FR.FFF.F........FF..................EF.FFF 126 / 206 ( 61%)
+FFFFF....FEFEFFFFFF........EF.FFEEFFFF......................... 189 / 206 ( 91%)
+.....EF.FFFFEFF.F                                               206 / 206 (100%)
+
+Time: 00:03.948, Memory: 26.00 MB
+
+Audit Service (Tests\Ci4\Foundation\AuditService)
+ ✔ Record event persists hash chain
+ ✔ Verify integrity detects tampering
+ ✔ Seal day persists seal record
+
+Database Compatibility Service (Tests\Ci4\Compat\DatabaseCompatibilityService)
+ ✔ Audit detects missing tables
+ ✔ Audit detects missing columns
+ ✔ Audit passes when schema is complete
+ ✔ Generate sql patches for missing columns
+ ✔ Add experimental tables adds okr tables
+ ✔ Generate migration content
+
+Database Config (Tests\Ci4\Config\DatabaseConfig)
+ ✔ Database config reads from env
+ ✔ Default database config has correct structure
+ ✔ Tests config uses in memory s q lite
+
+Document Catalog (Tests\Ci4\Library\DocumentCatalog)
+ ✔ Register document uploads to drive issues qr and audits
+
+Enrollment Service (Tests\Foundation\EnrollmentService)
+ ✔ Enroll student
+ ✔ Enroll student with parent
+ ✔ Enroll student in non existent class
+ ✔ Cannot enroll duplicate student
+ ✔ Transfer class
+ ✔ Transfer to non existent class
+ ✔ Get class enrollments
+ ✔ Withdraw student
+ ✔ Withdraw non existent enrollment
+ ✔ Get class enrollments excludes withdrawn
+
+Event Bus (Tests\Ci4\Threads\EventBus)
+ ✔ Dispatch invokes all subscribers and captures failures
+
+Finance Service (Tests\Finance\FinanceService)
+ ✔ Get school invoices
+ ✔ Create invoice
+ ✔ Record payment
+ ✔ Record full payment
+ ✔ Get invoice details
+ ✔ Get payment stats
+ ✔ Get outstanding invoices
+ ✔ Get fee structure
+ ✔ Set fee structure
+ ✔ Update fee structure
+
+Gamification Service (Tests\Ci4\Gamification\GamificationService)
+ ✔ Handle recognition awarded increments points and awards badges
+
+Hr Service (Tests\Hr\HrService)
+ ✔ Get school staff
+ ✔ Get school staff with role filter
+ ✔ Assign teacher
+ ✔ Cannot assign teacher twice
+ ✔ Remove teacher
+ ✘ Get teacher classes
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Hr/HrServiceTest.php:179
+   │
+ ✘ Assign teacher to class
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Hr/HrServiceTest.php:187
+   │
+ ✔ Cannot assign teacher to class in different school
+ ✔ Get staff stats
+ ✔ Staff stats excludes students and parents
+
+Install Service (Tests\Ci4\Foundation\InstallService)
+ ✔ Is installed returns false when no tenants
+ ✔ Is installed returns true when tenants exist
+ ✔ Check database connection returns true
+ ✔ Check migrations returns success
+ ✔ Create tenants succeeds
+ ✔ Create tenants generates ids when not provided
+ ✔ Create admin user succeeds
+ ✔ Create admin user throws when username exists
+ ✔ Create admin user throws when email exists
+
+Integration Registry (Tests\Ci4\Foundation\IntegrationRegistry)
+ ✔ Register dispatch persists and enforces idempotency
+ ✔ Mark completed updates status and audit
+ ✔ Mark failed updates status and audit
+ ✔ Mark completed throws when dispatch missing
+ ✔ Claim pending dispatches returns processing rows
+
+Integration Service (Tests\Ci4\Integrations\IntegrationService)
+ ✔ Can register adapter
+ ✔ Can get registered adapter
+ ✔ Get registered adapters returns array
+ ✔ Check health returns status
+ ✔ Throws exception for unknown adapter
+
+Inventory Service (Tests\Inventory\InventoryService)
+ ✘ Add asset
+   │
+   │ ErrorException: Trying to access array offset on null
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:35
+   │
+ ✘ Get school assets
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:48
+   │
+ ✔ Get school assets by category
+ ✘ Update quantity in
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:71
+   │
+ ✘ Update quantity out
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:86
+   │
+ ✘ Cannot reduce below zero
+   │
+   │ Failed asserting that 'Asset not found' [ASCII](length: 15) contains "Insufficient quantity" [ASCII](length: 21).
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:98
+   │
+ ✘ Get asset transactions
+   │
+   │ Failed asserting that 0 is equal to 3 or is greater than 3.
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:113
+   │
+ ✘ Get low stock items
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:124
+   │
+ ✘ Get inventory stats
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:142
+   │
+ ✘ Search assets
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:153
+   │
+ ✘ Transfer asset
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:163
+   │
+
+Invoice Service (Tests\Ci4\Finance\InvoiceService)
+ ✔ Issue invoice commits ledger and records audit
+ ✔ Settle invoice creates ledger entries and updates status
+
+Learning Service (Tests\Learning\LearningService)
+ ✘ Get school courses
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:34
+   │
+ ✘ Create course
+   │
+   │ ErrorException: Trying to access array offset on null
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:46
+   │
+ ✘ Get course assignments
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:63
+   │
+ ✘ Create assignment
+   │
+   │ ErrorException: Trying to access array offset on null
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:86
+   │
+ ✘ Submit grade
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:102
+   │
+ ✘ Cannot exceed max points
+   │
+   │ Failed asserting that 'Assignment not found' [ASCII](length: 20) contains "exceed maximum" [ASCII](length: 14).
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:128
+   │
+ ✘ Update existing grade
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:146
+   │
+ ✘ Get student grades
+   │
+   │ Failed asserting that actual size 0 matches expected size 2.
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:174
+   │
+ ✘ Get course average
+   │
+   │ Failed asserting that null is not null.
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:192
+   │
+ ✘ Get assignment stats
+   │
+   │ Failed asserting that 0 matches expected 3.
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:213
+   │
+
+Ledger Service (Tests\Ci4\Foundation\LedgerService)
+ ✔ Commit transaction persists ledger and audit
+ ✔ Commit transaction throws when unbalanced
+ ✔ Commit transaction throws when period locked
+ ✔ Schedule reversal creates opposite entries
+
+Library Service (Tests\Library\LibraryService)
+ ✘ Add book
+   │
+   │ ErrorException: Trying to access array offset on null
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:35
+   │
+ ✘ Get school books
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:49
+   │
+ ✔ Get school books by category
+ ✘ Borrow book
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:74
+   │
+ ✘ Cannot borrow when no copies available
+   │
+   │ Failed asserting that 'Book not found' [ASCII](length: 14) contains "No copies available" [ASCII](length: 19).
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:95
+   │
+ ✘ Return book
+   │
+   │ ErrorException: Undefined array key "borrowing_id"
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:104
+   │
+ ✘ Cannot return book twice
+   │
+   │ ErrorException: Undefined array key "borrowing_id"
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:125
+   │
+ ✘ Get student borrowings
+   │
+   │ Failed asserting that actual size 0 matches expected size 2.
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:146
+   │
+ ✘ Get overdue books
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:158
+   │
+ ✘ Get library stats
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:174
+   │
+ ✘ Search books
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:186
+   │
+
+Local Storage Adapter (Tests\Ci4\Integrations\LocalStorageAdapter)
+ ✔ Get name returns correct value
+ ✔ Check status returns ok for writable path
+ ✔ List returns empty array for empty directory
+ ✔ Upload creates file in storage
+ ✔ List returns files in directory
+
+Maker Checker Service (Tests\Ci4\Foundation\MakerCheckerService)
+ ✔ Submit creates pending request and audit
+ ✔ Approve updates status and audit
+ ✔ Reject updates status and audit
+ ✔ Approve throws when request missing
+
+Mobile Api Service (Tests\Mobile\MobileApiService)
+ ✔ Format response
+ ✔ Format pagination
+ ✔ Get dashboard
+ ✔ Get student profile
+ ✔ Get class students
+ ✔ Get invoices
+ ✔ Get invoices with status
+ ✔ Get library books
+ ✔ Get courses
+ ✔ Get student grades
+ ✔ Pagination has more
+ ✔ Mobile invoice data simplified
+
+Moodle Dispatch Runner (Tests\Ci4\Learning\MoodleDispatchRunner)
+ ✔ Run grades processes queued dispatch
+ ✔ Run grades marks failed on exception
+ ✔ Run enrollments processes queued dispatch
+
+Moodle Sync Service (Tests\Ci4\Learning\MoodleSyncService)
+ ✔ Push grades registers dispatch and marks completed
+ ✔ Push grades marks failure when client throws
+ ✔ Sync enrollments uses integration registry
+ ✔ Push grades uses stable idempotency key
+
+Offline Snapshot Service (Tests\Ci4\Mobile\OfflineSnapshotService)
+ ✔ Issue and verify snapshot
+ ✔ Verification fails when signature is tampered
+ ✔ Rotate signing key retains previous keys for verification
+ ✔ Active key overrides fallback keys
+ ✔ Metadata retains numeric dataset keys
+ ✔ Verification fails when tenant id is missing
+ ✔ Verification fails when tenant id does not match snapshot
+
+Payroll Approval Service (Tests\Ci4\Hr\PayrollApprovalService)
+ ✔ List pending and approve
+ ✔ Reject requires reason
+ ✔ Summarise aggregates statuses
+
+Payroll Service (Tests\Ci4\Hr\PayrollService)
+ ✔ Generates kenyan payslip with statutory breakdown
+ ✔ Legacy period applies flat nssf and no shif
+
+Qr Service (Tests\Ci4\Foundation\QrService)
+ ✔ Issue token persists record and returns artifacts
+ ✔ Verify records scan
+ ✔ Verify throws for expired token
+
+School Service (Tests\Foundation\SchoolService)
+ ✔ Get dashboard stats
+ ✘ Get dashboard stats for school 1
+   │
+   │ Failed asserting that 27 matches expected 25.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:149
+   │
+ ✔ Get dashboard stats for school 2
+ ✔ Get school overview
+ ✔ Can enroll students
+ ✔ Can enroll students respects cap
+ ✔ Get available schools
+ ✔ Get dashboard stats throws for invalid school
+ ✔ School overview includes enrollment counts
+ ✔ Utilization calculation
+
+Snapshot Telemetry Service (Tests\Ci4\Mobile\SnapshotTelemetryService)
+ ✔ Telemetry aggregates issued verified and failures
+
+Soft Delete Manager (Tests\Ci4\Foundation\SoftDeleteManager)
+ ✔ Soft delete marks record and audits
+ ✔ Soft delete throws when record missing
+
+Tenant (Tests\Foundation\Tenant)
+ ✘ Tenant service exists
+   │
+   │ CodeIgniter\Database\Exceptions\DatabaseException: UNIQUE constraint failed: roles.id
+   │
+   │ /workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+   │ /workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1841
+   │ /workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2230
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:100
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:44
+   │
+ ✔ Set current school by session
+ ✔ Set current school by primary school
+ ✘ Switch school
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:227
+   │
+ ✔ Switch school fails for unauthorized user
+ ✘ Get user schools
+   │
+   │ Failed asserting that actual size 0 matches expected size 1.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:248
+   │
+ ✘ Has access to school
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:258
+   │
+ ⚠ Tenant model auto scoping
+ ✘ Tenant model for school
+   │
+   │ Failed asserting that an array is not empty.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:296
+   │
+ ✔ Tenant model without tenant
+ ✘ Tenant model for schools
+   │
+   │ Failed asserting that an array contains 1.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:318
+   │
+ ⚠ School 1 cannot see school 2 data
+ ✔ Data leakage prevention between schools
+ ✘ User can belong to multiple schools
+   │
+   │ Failed asserting that an array contains 1.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:404
+   │
+ ✘ Primary school identification
+   │
+   │ Failed asserting that null is not null.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:422
+   │
+ ✘ Get active schools
+   │
+   │ Failed asserting that actual size 10 matches expected size 5.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:435
+   │
+ ✔ Get school by code
+ ✘ Get school statistics
+   │
+   │ Failed asserting that 0 matches expected 2.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:458
+   │
+ ✔ Assign user to school
+ ✔ Set primary school
+
+Tenant Resolver (Tests\Ci4\Foundation\TenantResolver)
+ ✔ From identifiers resolves context
+ ✔ From request uses json header
+ ✔ From identifiers throws when unknown tenant
+
+Thread Service (Tests\Ci4\Threads\ThreadService)
+ ✔ Create thread persists dispatches and audits
+ ✔ Post message appends message and dispatches event
+
+Threads Service (Tests\Threads\ThreadsService)
+ ✘ Send message
+   │
+   │ ErrorException: Trying to access array offset on null
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:35
+   │
+ ✘ Get inbox
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:47
+   │
+ ✔ Get inbox unread only
+ ✘ Get sent messages
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:69
+   │
+ ✘ Mark as read
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:79
+   │
+ ✘ Delete message
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:94
+   │
+ ✘ Cannot delete others message
+   │
+   │ Failed asserting that 'Message not found' [ASCII](length: 17) contains "Unauthorized" [ASCII](length: 12).
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:109
+   │
+ ✘ Create announcement
+   │
+   │ ErrorException: Trying to access array offset on null
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:121
+   │
+ ✘ Get announcements
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:133
+   │
+ ✘ Deactivate announcement
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:143
+   │
+ ✔ Get unread count
+ ✘ Get message thread
+   │
+   │ Failed asserting that 0 is equal to 3 or is greater than 3.
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:171
+   │
+
+Transfer Service (Tests\Ci4\Inventory\TransferService)
+ ✔ Initiate transfer queues approval issues qr and records audit
+ ✔ Complete transfer approves maker checker on acceptance
+ ✔ Complete transfer throws exception on already completed transfer
+ ✔ Complete transfer throws exception when transfer is not pending
+
+User Migration Service (Tests\Ci4\Services\UserMigrationService)
+ ✔ Find and migrate user returns null when user not found
+ ✔ Extract school i d handles null school i d
+ ✔ Extract school i d returns string when set
+ ✔ Extract created at returns current date when not set
+ ✔ Extract created at uses create date when available
+ ✔ Extract updated at prefers modify date
+ ✔ Extract updated at falls back to create date
+
+There were 2 risky tests:
+
+1) Tests\Foundation\TenantTest::testTenantModelAutoScoping
+This test did not perform any assertions
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:268
+
+2) Tests\Foundation\TenantTest::testSchool1CannotSeeSchool2Data
+This test did not perform any assertions
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:327
+
+ERRORS!
+Tests: 206, Assertions: 664, Errors: 9, Failures: 44, PHPUnit Deprecations: 1, Risky: 2.
+[1;33m⚠️  [2025-11-23 18:08:59][0m Some tests failed (this is expected in TDD)
+[0;36mℹ️  [2025-11-23 18:08:59][0m Generating code coverage report...
+Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+PHPUnit 10.5.58 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.3.14
+Configuration: /workspaces/shulelabsci4/phpunit.xml
+
+.........Starting CI4 users backfill from CI3 tables...
+Table systemadmin does not exist, skipping.
+Migrated 0 users from systemadmin
+Table user does not exist, skipping.
+Migrated 0 users from user
+Table teacher does not exist, skipping.
+Migrated 0 users from teacher
+Table student does not exist, skipping.
+Migrated 0 users from student
+Table parents does not exist, skipping.
+Migrated 0 users from parents
+Total users migrated: 0
+...................................................F..  63 / 206 ( 30%)
+...........E..F.FFRF.FR.FFF.F........FF..................EF.FFF 126 / 206 ( 61%)
+FFFFF....FEFEFFFFFF........EF.FFEEFFFF......................... 189 / 206 ( 91%)
+.....EF.FFFFEFF.F                                               206 / 206 (100%)
+
+Time: 00:03.824, Memory: 24.00 MB
+
+There was 1 PHPUnit test runner warning:
+
+1) XDEBUG_MODE=coverage (environment variable) or xdebug.mode=coverage (PHP configuration setting) has to be set
+
+--
+
+There were 9 errors:
+
+1) Tests\Foundation\TenantTest::testTenantServiceExists
+CodeIgniter\Database\Exceptions\DatabaseException: UNIQUE constraint failed: roles.id
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1841
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2230
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:100
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:44
+
+Caused by
+CodeIgniter\Database\Exceptions\DatabaseException: UNIQUE constraint failed: roles.id
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:181
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1841
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2230
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:100
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:44
+
+Caused by
+SQLite3Exception: UNIQUE constraint failed: roles.id
+
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/SQLite3/Connection.php:175
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:729
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:646
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1841
+/workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2230
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:100
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:44
+
+2) Tests\Inventory\InventoryServiceTest::testAddAsset
+ErrorException: Trying to access array offset on null
+
+/workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:35
+
+3) Tests\Learning\LearningServiceTest::testCreateCourse
+ErrorException: Trying to access array offset on null
+
+/workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:46
+
+4) Tests\Learning\LearningServiceTest::testCreateAssignment
+ErrorException: Trying to access array offset on null
+
+/workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:86
+
+5) Tests\Library\LibraryServiceTest::testAddBook
+ErrorException: Trying to access array offset on null
+
+/workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:35
+
+6) Tests\Library\LibraryServiceTest::testReturnBook
+ErrorException: Undefined array key "borrowing_id"
+
+/workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:104
+
+7) Tests\Library\LibraryServiceTest::testCannotReturnBookTwice
+ErrorException: Undefined array key "borrowing_id"
+
+/workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:125
+
+8) Tests\Threads\ThreadsServiceTest::testSendMessage
+ErrorException: Trying to access array offset on null
+
+/workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:35
+
+9) Tests\Threads\ThreadsServiceTest::testCreateAnnouncement
+ErrorException: Trying to access array offset on null
+
+/workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:121
+
+--
+
+There were 44 failures:
+
+1) Tests\Foundation\SchoolServiceTest::testGetDashboardStatsForSchool1
+Failed asserting that 27 matches expected 25.
+
+/workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:149
+
+2) Tests\Foundation\TenantTest::testSwitchSchool
+Failed asserting that false is true.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:227
+
+3) Tests\Foundation\TenantTest::testGetUserSchools
+Failed asserting that actual size 0 matches expected size 1.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:248
+
+4) Tests\Foundation\TenantTest::testHasAccessToSchool
+Failed asserting that false is true.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:258
+
+5) Tests\Foundation\TenantTest::testTenantModelForSchool
+Failed asserting that an array is not empty.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:296
+
+6) Tests\Foundation\TenantTest::testTenantModelForSchools
+Failed asserting that an array contains 1.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:318
+
+7) Tests\Foundation\TenantTest::testUserCanBelongToMultipleSchools
+Failed asserting that an array contains 1.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:404
+
+8) Tests\Foundation\TenantTest::testPrimarySchoolIdentification
+Failed asserting that null is not null.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:422
+
+9) Tests\Foundation\TenantTest::testGetActiveSchools
+Failed asserting that actual size 10 matches expected size 5.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:435
+
+10) Tests\Foundation\TenantTest::testGetSchoolStatistics
+Failed asserting that 0 matches expected 2.
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:458
+
+11) Tests\Hr\HrServiceTest::testGetTeacherClasses
+Failed asserting that 0 is greater than 0.
+
+/workspaces/shulelabsci4/tests/Hr/HrServiceTest.php:179
+
+12) Tests\Hr\HrServiceTest::testAssignTeacherToClass
+Failed asserting that false is true.
+
+/workspaces/shulelabsci4/tests/Hr/HrServiceTest.php:187
+
+13) Tests\Inventory\InventoryServiceTest::testGetSchoolAssets
+Failed asserting that 0 is greater than 0.
+
+/workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:48
+
+14) Tests\Inventory\InventoryServiceTest::testUpdateQuantityIn
+Failed asserting that false is true.
+
+/workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:71
+
+15) Tests\Inventory\InventoryServiceTest::testUpdateQuantityOut
+Failed asserting that false is true.
+
+/workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:86
+
+16) Tests\Inventory\InventoryServiceTest::testCannotReduceBelowZero
+Failed asserting that 'Asset not found' [ASCII](length: 15) contains "Insufficient quantity" [ASCII](length: 21).
+
+/workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:98
+
+17) Tests\Inventory\InventoryServiceTest::testGetAssetTransactions
+Failed asserting that 0 is equal to 3 or is greater than 3.
+
+/workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:113
+
+18) Tests\Inventory\InventoryServiceTest::testGetLowStockItems
+Failed asserting that 0 is greater than 0.
+
+/workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:124
+
+19) Tests\Inventory\InventoryServiceTest::testGetInventoryStats
+Failed asserting that 0 is greater than 0.
+
+/workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:142
+
+20) Tests\Inventory\InventoryServiceTest::testSearchAssets
+Failed asserting that 0 is greater than 0.
+
+/workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:153
+
+21) Tests\Inventory\InventoryServiceTest::testTransferAsset
+Failed asserting that false is true.
+
+/workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:163
+
+22) Tests\Learning\LearningServiceTest::testGetSchoolCourses
+Failed asserting that 0 is greater than 0.
+
+/workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:34
+
+23) Tests\Learning\LearningServiceTest::testGetCourseAssignments
+Failed asserting that 0 is greater than 0.
+
+/workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:63
+
+24) Tests\Learning\LearningServiceTest::testSubmitGrade
+Failed asserting that false is true.
+
+/workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:102
+
+25) Tests\Learning\LearningServiceTest::testCannotExceedMaxPoints
+Failed asserting that 'Assignment not found' [ASCII](length: 20) contains "exceed maximum" [ASCII](length: 14).
+
+/workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:128
+
+26) Tests\Learning\LearningServiceTest::testUpdateExistingGrade
+Failed asserting that false is true.
+
+/workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:146
+
+27) Tests\Learning\LearningServiceTest::testGetStudentGrades
+Failed asserting that actual size 0 matches expected size 2.
+
+/workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:174
+
+28) Tests\Learning\LearningServiceTest::testGetCourseAverage
+Failed asserting that null is not null.
+
+/workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:192
+
+29) Tests\Learning\LearningServiceTest::testGetAssignmentStats
+Failed asserting that 0 matches expected 3.
+
+/workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:213
+
+30) Tests\Library\LibraryServiceTest::testGetSchoolBooks
+Failed asserting that 0 is greater than 0.
+
+/workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:49
+
+31) Tests\Library\LibraryServiceTest::testBorrowBook
+Failed asserting that false is true.
+
+/workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:74
+
+32) Tests\Library\LibraryServiceTest::testCannotBorrowWhenNoCopiesAvailable
+Failed asserting that 'Book not found' [ASCII](length: 14) contains "No copies available" [ASCII](length: 19).
+
+/workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:95
+
+33) Tests\Library\LibraryServiceTest::testGetStudentBorrowings
+Failed asserting that actual size 0 matches expected size 2.
+
+/workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:146
+
+34) Tests\Library\LibraryServiceTest::testGetOverdueBooks
+Failed asserting that 0 is greater than 0.
+
+/workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:158
+
+35) Tests\Library\LibraryServiceTest::testGetLibraryStats
+Failed asserting that 0 is greater than 0.
+
+/workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:174
+
+36) Tests\Library\LibraryServiceTest::testSearchBooks
+Failed asserting that 0 is greater than 0.
+
+/workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:186
+
+37) Tests\Threads\ThreadsServiceTest::testGetInbox
+Failed asserting that 0 is greater than 0.
+
+/workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:47
+
+38) Tests\Threads\ThreadsServiceTest::testGetSentMessages
+Failed asserting that 0 is greater than 0.
+
+/workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:69
+
+39) Tests\Threads\ThreadsServiceTest::testMarkAsRead
+Failed asserting that false is true.
+
+/workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:79
+
+40) Tests\Threads\ThreadsServiceTest::testDeleteMessage
+Failed asserting that false is true.
+
+/workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:94
+
+41) Tests\Threads\ThreadsServiceTest::testCannotDeleteOthersMessage
+Failed asserting that 'Message not found' [ASCII](length: 17) contains "Unauthorized" [ASCII](length: 12).
+
+/workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:109
+
+42) Tests\Threads\ThreadsServiceTest::testGetAnnouncements
+Failed asserting that 0 is greater than 0.
+
+/workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:133
+
+43) Tests\Threads\ThreadsServiceTest::testDeactivateAnnouncement
+Failed asserting that false is true.
+
+/workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:143
+
+44) Tests\Threads\ThreadsServiceTest::testGetMessageThread
+Failed asserting that 0 is equal to 3 or is greater than 3.
+
+/workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:171
+
+--
+
+There were 2 risky tests:
+
+1) Tests\Foundation\TenantTest::testTenantModelAutoScoping
+This test did not perform any assertions
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:268
+
+2) Tests\Foundation\TenantTest::testSchool1CannotSeeSchool2Data
+This test did not perform any assertions
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:327
+
+ERRORS!
+Tests: 206, Assertions: 664, Errors: 9, Failures: 44, PHPUnit Warnings: 1, PHPUnit Deprecations: 1, Risky: 2.
+[0;32m✅ [2025-11-23 18:09:03][0m Phase 2 complete in 8 seconds
+[0;34m[2025-11-23 18:09:03][0m ╔════════════════════════════════════════════════════════════════╗
+[0;34m[2025-11-23 18:09:03][0m ║ PHASE 3: PROGRESSIVE FEATURE BUILDING                          ║
+[0;34m[2025-11-23 18:09:03][0m ╚════════════════════════════════════════════════════════════════╝
+[0;36mℹ️  [2025-11-23 18:09:03][0m This phase requires AI code generation
+[0;36mℹ️  [2025-11-23 18:09:03][0m Invoke with: @Copilot orchestrate feature [name]
+[0;36mℹ️  [2025-11-23 18:09:03][0m Running continuous validation...
+[0;32m✅ [2025-11-23 18:09:04][0m Syntax check passed
+[0;32m✅ [2025-11-23 18:09:04][0m Phase 3 complete in 1 seconds
+[0;34m[2025-11-23 18:09:04][0m ╔════════════════════════════════════════════════════════════════╗
+[0;34m[2025-11-23 18:09:04][0m ║ PHASE 4: CONTINUOUS INTEGRATION                                ║
+[0;34m[2025-11-23 18:09:04][0m ╚════════════════════════════════════════════════════════════════╝
+[0;36mℹ️  [2025-11-23 18:09:04][0m Running full test suite...
+Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+PHPUnit 10.5.58 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.3.14
+Configuration: /workspaces/shulelabsci4/phpunit.xml
+
+.........Starting CI4 users backfill from CI3 tables...
+Table systemadmin does not exist, skipping.
+Migrated 0 users from systemadmin
+Table user does not exist, skipping.
+Migrated 0 users from user
+Table teacher does not exist, skipping.
+Migrated 0 users from teacher
+Table student does not exist, skipping.
+Migrated 0 users from student
+Table parents does not exist, skipping.
+Migrated 0 users from parents
+Total users migrated: 0
+...................................................F..  63 / 206 ( 30%)
+...........E..F.FFRF.FR.FFF.F........FF..................EF.FFF 126 / 206 ( 61%)
+FFFFF....FEFEFFFFFF........EF.FFEEFFFF......................... 189 / 206 ( 91%)
+.....EF.FFFFEFF.F                                               206 / 206 (100%)
+
+Time: 00:03.919, Memory: 26.00 MB
+
+Audit Service (Tests\Ci4\Foundation\AuditService)
+ ✔ Record event persists hash chain
+ ✔ Verify integrity detects tampering
+ ✔ Seal day persists seal record
+
+Database Compatibility Service (Tests\Ci4\Compat\DatabaseCompatibilityService)
+ ✔ Audit detects missing tables
+ ✔ Audit detects missing columns
+ ✔ Audit passes when schema is complete
+ ✔ Generate sql patches for missing columns
+ ✔ Add experimental tables adds okr tables
+ ✔ Generate migration content
+
+Database Config (Tests\Ci4\Config\DatabaseConfig)
+ ✔ Database config reads from env
+ ✔ Default database config has correct structure
+ ✔ Tests config uses in memory s q lite
+
+Document Catalog (Tests\Ci4\Library\DocumentCatalog)
+ ✔ Register document uploads to drive issues qr and audits
+
+Enrollment Service (Tests\Foundation\EnrollmentService)
+ ✔ Enroll student
+ ✔ Enroll student with parent
+ ✔ Enroll student in non existent class
+ ✔ Cannot enroll duplicate student
+ ✔ Transfer class
+ ✔ Transfer to non existent class
+ ✔ Get class enrollments
+ ✔ Withdraw student
+ ✔ Withdraw non existent enrollment
+ ✔ Get class enrollments excludes withdrawn
+
+Event Bus (Tests\Ci4\Threads\EventBus)
+ ✔ Dispatch invokes all subscribers and captures failures
+
+Finance Service (Tests\Finance\FinanceService)
+ ✔ Get school invoices
+ ✔ Create invoice
+ ✔ Record payment
+ ✔ Record full payment
+ ✔ Get invoice details
+ ✔ Get payment stats
+ ✔ Get outstanding invoices
+ ✔ Get fee structure
+ ✔ Set fee structure
+ ✔ Update fee structure
+
+Gamification Service (Tests\Ci4\Gamification\GamificationService)
+ ✔ Handle recognition awarded increments points and awards badges
+
+Hr Service (Tests\Hr\HrService)
+ ✔ Get school staff
+ ✔ Get school staff with role filter
+ ✔ Assign teacher
+ ✔ Cannot assign teacher twice
+ ✔ Remove teacher
+ ✘ Get teacher classes
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Hr/HrServiceTest.php:179
+   │
+ ✘ Assign teacher to class
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Hr/HrServiceTest.php:187
+   │
+ ✔ Cannot assign teacher to class in different school
+ ✔ Get staff stats
+ ✔ Staff stats excludes students and parents
+
+Install Service (Tests\Ci4\Foundation\InstallService)
+ ✔ Is installed returns false when no tenants
+ ✔ Is installed returns true when tenants exist
+ ✔ Check database connection returns true
+ ✔ Check migrations returns success
+ ✔ Create tenants succeeds
+ ✔ Create tenants generates ids when not provided
+ ✔ Create admin user succeeds
+ ✔ Create admin user throws when username exists
+ ✔ Create admin user throws when email exists
+
+Integration Registry (Tests\Ci4\Foundation\IntegrationRegistry)
+ ✔ Register dispatch persists and enforces idempotency
+ ✔ Mark completed updates status and audit
+ ✔ Mark failed updates status and audit
+ ✔ Mark completed throws when dispatch missing
+ ✔ Claim pending dispatches returns processing rows
+
+Integration Service (Tests\Ci4\Integrations\IntegrationService)
+ ✔ Can register adapter
+ ✔ Can get registered adapter
+ ✔ Get registered adapters returns array
+ ✔ Check health returns status
+ ✔ Throws exception for unknown adapter
+
+Inventory Service (Tests\Inventory\InventoryService)
+ ✘ Add asset
+   │
+   │ ErrorException: Trying to access array offset on null
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:35
+   │
+ ✘ Get school assets
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:48
+   │
+ ✔ Get school assets by category
+ ✘ Update quantity in
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:71
+   │
+ ✘ Update quantity out
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:86
+   │
+ ✘ Cannot reduce below zero
+   │
+   │ Failed asserting that 'Asset not found' [ASCII](length: 15) contains "Insufficient quantity" [ASCII](length: 21).
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:98
+   │
+ ✘ Get asset transactions
+   │
+   │ Failed asserting that 0 is equal to 3 or is greater than 3.
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:113
+   │
+ ✘ Get low stock items
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:124
+   │
+ ✘ Get inventory stats
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:142
+   │
+ ✘ Search assets
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:153
+   │
+ ✘ Transfer asset
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Inventory/InventoryServiceTest.php:163
+   │
+
+Invoice Service (Tests\Ci4\Finance\InvoiceService)
+ ✔ Issue invoice commits ledger and records audit
+ ✔ Settle invoice creates ledger entries and updates status
+
+Learning Service (Tests\Learning\LearningService)
+ ✘ Get school courses
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:34
+   │
+ ✘ Create course
+   │
+   │ ErrorException: Trying to access array offset on null
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:46
+   │
+ ✘ Get course assignments
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:63
+   │
+ ✘ Create assignment
+   │
+   │ ErrorException: Trying to access array offset on null
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:86
+   │
+ ✘ Submit grade
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:102
+   │
+ ✘ Cannot exceed max points
+   │
+   │ Failed asserting that 'Assignment not found' [ASCII](length: 20) contains "exceed maximum" [ASCII](length: 14).
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:128
+   │
+ ✘ Update existing grade
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:146
+   │
+ ✘ Get student grades
+   │
+   │ Failed asserting that actual size 0 matches expected size 2.
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:174
+   │
+ ✘ Get course average
+   │
+   │ Failed asserting that null is not null.
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:192
+   │
+ ✘ Get assignment stats
+   │
+   │ Failed asserting that 0 matches expected 3.
+   │
+   │ /workspaces/shulelabsci4/tests/Learning/LearningServiceTest.php:213
+   │
+
+Ledger Service (Tests\Ci4\Foundation\LedgerService)
+ ✔ Commit transaction persists ledger and audit
+ ✔ Commit transaction throws when unbalanced
+ ✔ Commit transaction throws when period locked
+ ✔ Schedule reversal creates opposite entries
+
+Library Service (Tests\Library\LibraryService)
+ ✘ Add book
+   │
+   │ ErrorException: Trying to access array offset on null
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:35
+   │
+ ✘ Get school books
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:49
+   │
+ ✔ Get school books by category
+ ✘ Borrow book
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:74
+   │
+ ✘ Cannot borrow when no copies available
+   │
+   │ Failed asserting that 'Book not found' [ASCII](length: 14) contains "No copies available" [ASCII](length: 19).
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:95
+   │
+ ✘ Return book
+   │
+   │ ErrorException: Undefined array key "borrowing_id"
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:104
+   │
+ ✘ Cannot return book twice
+   │
+   │ ErrorException: Undefined array key "borrowing_id"
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:125
+   │
+ ✘ Get student borrowings
+   │
+   │ Failed asserting that actual size 0 matches expected size 2.
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:146
+   │
+ ✘ Get overdue books
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:158
+   │
+ ✘ Get library stats
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:174
+   │
+ ✘ Search books
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Library/LibraryServiceTest.php:186
+   │
+
+Local Storage Adapter (Tests\Ci4\Integrations\LocalStorageAdapter)
+ ✔ Get name returns correct value
+ ✔ Check status returns ok for writable path
+ ✔ List returns empty array for empty directory
+ ✔ Upload creates file in storage
+ ✔ List returns files in directory
+
+Maker Checker Service (Tests\Ci4\Foundation\MakerCheckerService)
+ ✔ Submit creates pending request and audit
+ ✔ Approve updates status and audit
+ ✔ Reject updates status and audit
+ ✔ Approve throws when request missing
+
+Mobile Api Service (Tests\Mobile\MobileApiService)
+ ✔ Format response
+ ✔ Format pagination
+ ✔ Get dashboard
+ ✔ Get student profile
+ ✔ Get class students
+ ✔ Get invoices
+ ✔ Get invoices with status
+ ✔ Get library books
+ ✔ Get courses
+ ✔ Get student grades
+ ✔ Pagination has more
+ ✔ Mobile invoice data simplified
+
+Moodle Dispatch Runner (Tests\Ci4\Learning\MoodleDispatchRunner)
+ ✔ Run grades processes queued dispatch
+ ✔ Run grades marks failed on exception
+ ✔ Run enrollments processes queued dispatch
+
+Moodle Sync Service (Tests\Ci4\Learning\MoodleSyncService)
+ ✔ Push grades registers dispatch and marks completed
+ ✔ Push grades marks failure when client throws
+ ✔ Sync enrollments uses integration registry
+ ✔ Push grades uses stable idempotency key
+
+Offline Snapshot Service (Tests\Ci4\Mobile\OfflineSnapshotService)
+ ✔ Issue and verify snapshot
+ ✔ Verification fails when signature is tampered
+ ✔ Rotate signing key retains previous keys for verification
+ ✔ Active key overrides fallback keys
+ ✔ Metadata retains numeric dataset keys
+ ✔ Verification fails when tenant id is missing
+ ✔ Verification fails when tenant id does not match snapshot
+
+Payroll Approval Service (Tests\Ci4\Hr\PayrollApprovalService)
+ ✔ List pending and approve
+ ✔ Reject requires reason
+ ✔ Summarise aggregates statuses
+
+Payroll Service (Tests\Ci4\Hr\PayrollService)
+ ✔ Generates kenyan payslip with statutory breakdown
+ ✔ Legacy period applies flat nssf and no shif
+
+Qr Service (Tests\Ci4\Foundation\QrService)
+ ✔ Issue token persists record and returns artifacts
+ ✔ Verify records scan
+ ✔ Verify throws for expired token
+
+School Service (Tests\Foundation\SchoolService)
+ ✔ Get dashboard stats
+ ✘ Get dashboard stats for school 1
+   │
+   │ Failed asserting that 27 matches expected 25.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/SchoolServiceTest.php:149
+   │
+ ✔ Get dashboard stats for school 2
+ ✔ Get school overview
+ ✔ Can enroll students
+ ✔ Can enroll students respects cap
+ ✔ Get available schools
+ ✔ Get dashboard stats throws for invalid school
+ ✔ School overview includes enrollment counts
+ ✔ Utilization calculation
+
+Snapshot Telemetry Service (Tests\Ci4\Mobile\SnapshotTelemetryService)
+ ✔ Telemetry aggregates issued verified and failures
+
+Soft Delete Manager (Tests\Ci4\Foundation\SoftDeleteManager)
+ ✔ Soft delete marks record and audits
+ ✔ Soft delete throws when record missing
+
+Tenant (Tests\Foundation\Tenant)
+ ✘ Tenant service exists
+   │
+   │ CodeIgniter\Database\Exceptions\DatabaseException: UNIQUE constraint failed: roles.id
+   │
+   │ /workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseConnection.php:684
+   │ /workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:1841
+   │ /workspaces/shulelabsci4/vendor/codeigniter4/framework/system/Database/BaseBuilder.php:2230
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:100
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:44
+   │
+ ✔ Set current school by session
+ ✔ Set current school by primary school
+ ✘ Switch school
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:227
+   │
+ ✔ Switch school fails for unauthorized user
+ ✘ Get user schools
+   │
+   │ Failed asserting that actual size 0 matches expected size 1.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:248
+   │
+ ✘ Has access to school
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:258
+   │
+ ⚠ Tenant model auto scoping
+ ✘ Tenant model for school
+   │
+   │ Failed asserting that an array is not empty.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:296
+   │
+ ✔ Tenant model without tenant
+ ✘ Tenant model for schools
+   │
+   │ Failed asserting that an array contains 1.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:318
+   │
+ ⚠ School 1 cannot see school 2 data
+ ✔ Data leakage prevention between schools
+ ✘ User can belong to multiple schools
+   │
+   │ Failed asserting that an array contains 1.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:404
+   │
+ ✘ Primary school identification
+   │
+   │ Failed asserting that null is not null.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:422
+   │
+ ✘ Get active schools
+   │
+   │ Failed asserting that actual size 10 matches expected size 5.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:435
+   │
+ ✔ Get school by code
+ ✘ Get school statistics
+   │
+   │ Failed asserting that 0 matches expected 2.
+   │
+   │ /workspaces/shulelabsci4/tests/Foundation/TenantTest.php:458
+   │
+ ✔ Assign user to school
+ ✔ Set primary school
+
+Tenant Resolver (Tests\Ci4\Foundation\TenantResolver)
+ ✔ From identifiers resolves context
+ ✔ From request uses json header
+ ✔ From identifiers throws when unknown tenant
+
+Thread Service (Tests\Ci4\Threads\ThreadService)
+ ✔ Create thread persists dispatches and audits
+ ✔ Post message appends message and dispatches event
+
+Threads Service (Tests\Threads\ThreadsService)
+ ✘ Send message
+   │
+   │ ErrorException: Trying to access array offset on null
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:35
+   │
+ ✘ Get inbox
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:47
+   │
+ ✔ Get inbox unread only
+ ✘ Get sent messages
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:69
+   │
+ ✘ Mark as read
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:79
+   │
+ ✘ Delete message
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:94
+   │
+ ✘ Cannot delete others message
+   │
+   │ Failed asserting that 'Message not found' [ASCII](length: 17) contains "Unauthorized" [ASCII](length: 12).
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:109
+   │
+ ✘ Create announcement
+   │
+   │ ErrorException: Trying to access array offset on null
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:121
+   │
+ ✘ Get announcements
+   │
+   │ Failed asserting that 0 is greater than 0.
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:133
+   │
+ ✘ Deactivate announcement
+   │
+   │ Failed asserting that false is true.
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:143
+   │
+ ✔ Get unread count
+ ✘ Get message thread
+   │
+   │ Failed asserting that 0 is equal to 3 or is greater than 3.
+   │
+   │ /workspaces/shulelabsci4/tests/Threads/ThreadsServiceTest.php:171
+   │
+
+Transfer Service (Tests\Ci4\Inventory\TransferService)
+ ✔ Initiate transfer queues approval issues qr and records audit
+ ✔ Complete transfer approves maker checker on acceptance
+ ✔ Complete transfer throws exception on already completed transfer
+ ✔ Complete transfer throws exception when transfer is not pending
+
+User Migration Service (Tests\Ci4\Services\UserMigrationService)
+ ✔ Find and migrate user returns null when user not found
+ ✔ Extract school i d handles null school i d
+ ✔ Extract school i d returns string when set
+ ✔ Extract created at returns current date when not set
+ ✔ Extract created at uses create date when available
+ ✔ Extract updated at prefers modify date
+ ✔ Extract updated at falls back to create date
+
+There were 2 risky tests:
+
+1) Tests\Foundation\TenantTest::testTenantModelAutoScoping
+This test did not perform any assertions
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:268
+
+2) Tests\Foundation\TenantTest::testSchool1CannotSeeSchool2Data
+This test did not perform any assertions
+
+/workspaces/shulelabsci4/tests/Foundation/TenantTest.php:327
+
+ERRORS!
+Tests: 206, Assertions: 664, Errors: 9, Failures: 44, PHPUnit Deprecations: 1, Risky: 2.

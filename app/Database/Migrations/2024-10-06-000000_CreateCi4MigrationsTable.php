@@ -5,7 +5,7 @@ namespace App\Database\Migrations;
 use CodeIgniter\Database\Migration;
 
 /**
- * Create CI4 Migrations History Table
+ * Create CI4 Migrations History Table.
  *
  * This migration creates the migrations table that will store CI4's
  * migration history, separate from the legacy CI3 'migrations' table.
@@ -73,7 +73,7 @@ class CreateCi4MigrationsTable extends Migration
         ]);
 
         $this->forge->addKey('id', true);
-        
+
         // Use ifNotExists to make this migration idempotent
         // Safe to run multiple times without errors
         $this->forge->createTable('migrations', true);

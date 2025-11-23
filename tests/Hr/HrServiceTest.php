@@ -2,9 +2,9 @@
 
 namespace Tests\Hr;
 
+use App\Services\HrService;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use App\Services\HrService;
 
 /**
  * @internal
@@ -14,31 +14,33 @@ final class HrServiceTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $refresh = false;
+
     protected HrService $service;
+
     protected static bool $migrated = false;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Run migrations only once for all tests
         if (!self::$migrated) {
             $migrate = \Config\Services::migrations();
             $migrate->latest();
             self::$migrated = true;
         }
-        
+
         $this->service = new HrService();
-        
+
         // Create minimal test data
         $db = \Config\Database::connect();
-        
+
         // Create schools
         $schools = [
             ['id' => 6, 'school_name' => 'Nairobi Primary', 'school_code' => 'NRB001', 'max_students' => 500],
             ['id' => 7, 'school_name' => 'Mombasa Secondary', 'school_code' => 'MSA001', 'max_students' => 600],
         ];
-        
+
         foreach ($schools as $school) {
             $existing = $db->table('schools')->where('id', $school['id'])->get()->getRow();
             if (!$existing) {
@@ -46,7 +48,7 @@ final class HrServiceTest extends CIUnitTestCase
                 $db->table('schools')->insert($school);
             }
         }
-        
+
         // Create classes
         for ($i = 1; $i <= 3; $i++) {
             $existing = $db->table('school_classes')->where('id', $i)->get()->getRow();
@@ -60,7 +62,7 @@ final class HrServiceTest extends CIUnitTestCase
                 ]);
             }
         }
-        
+
         // Create users (teachers and staff) - includes IDs referenced in tests
         $teacherIds = [25, 26, 101, 102, 103, 104, 105];
         foreach ($teacherIds as $i) {
@@ -76,7 +78,7 @@ final class HrServiceTest extends CIUnitTestCase
                 ]);
             }
         }
-        
+
         // Assign teachers to school
         foreach ($teacherIds as $i) {
             $existing = $db->table('school_users')->where('user_id', $i)->where('school_id', 6)->get()->getRow();
@@ -90,7 +92,7 @@ final class HrServiceTest extends CIUnitTestCase
                 ]);
             }
         }
-        
+
         // Assign teacher 25 to class 1 (for testGetTeacherClasses)
         $existing = $db->table('school_classes')->where('id', 1)->get()->getRow();
         if ($existing && !$existing->class_teacher_id) {
@@ -104,7 +106,7 @@ final class HrServiceTest extends CIUnitTestCase
 
         $this->assertIsArray($staff);
         $this->assertGreaterThan(0, count($staff));
-        
+
         // Should have teachers and admins, not students
         foreach ($staff as $member) {
             $this->assertNotEquals('Student', $member['role_name']);
@@ -117,7 +119,7 @@ final class HrServiceTest extends CIUnitTestCase
         $teachers = $this->service->getSchoolStaff(6, 'Teacher');
 
         $this->assertIsArray($teachers);
-        
+
         foreach ($teachers as $teacher) {
             $this->assertEquals('Teacher', $teacher['role_name']);
         }

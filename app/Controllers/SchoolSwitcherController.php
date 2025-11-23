@@ -22,7 +22,7 @@ class SchoolSwitcherController extends BaseController
     public function index()
     {
         $userId = auth()->id();
-        
+
         if (!$userId) {
             return redirect()->to('/login');
         }
@@ -54,7 +54,7 @@ class SchoolSwitcherController extends BaseController
             return redirect()->back()->with('error', 'Invalid request');
         }
 
-        $success = $this->tenantService->switchSchool((int)$schoolId, $userId);
+        $success = $this->tenantService->switchSchool((int) $schoolId, $userId);
 
         if (!$success) {
             return redirect()->back()->with('error', 'You do not have access to this school');
@@ -78,7 +78,7 @@ class SchoolSwitcherController extends BaseController
             ])->setStatusCode(400);
         }
 
-        $success = $this->tenantService->switchSchool((int)$schoolId, $userId);
+        $success = $this->tenantService->switchSchool((int) $schoolId, $userId);
 
         if (!$success) {
             return $this->response->setJSON([

@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 /**
- * Dashboard Controller
+ * Dashboard Controller.
  *
  * Main dashboard for authenticated users
  */
@@ -17,7 +17,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Dashboard index
+     * Dashboard index.
      *
      * @return string
      */
@@ -31,11 +31,11 @@ class Dashboard extends BaseController
             'email' => $session->get('email'),
             'usertypeID' => $session->get('usertypeID'),
             'schoolID' => $session->get('schoolID'),
-            'photo' => $session->get('photo')
+            'photo' => $session->get('photo'),
         ];
 
         // Get usertype name
-        $usertypeID = (int)$session->get('usertypeID');
+        $usertypeID = (int) $session->get('usertypeID');
         $usertypes = [
             0 => 'Super Admin',
             1 => 'Admin',
@@ -44,7 +44,7 @@ class Dashboard extends BaseController
             4 => 'Parent',
             5 => 'Accountant',
             6 => 'Librarian',
-            7 => 'Receptionist'
+            7 => 'Receptionist',
         ];
 
         $this->data['usertype'] = $usertypes[$usertypeID] ?? 'User';

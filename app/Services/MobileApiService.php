@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use App\Services\TenantService;
-
 /**
  * MobileApiService - Mobile-first API responses.
  */
@@ -126,7 +124,7 @@ class MobileApiService
         $paginatedInvoices = array_slice($invoices, $offset, $perPage);
 
         // Simplify invoice data for mobile
-        $mobileInvoices = array_map(function($invoice) {
+        $mobileInvoices = array_map(function ($invoice) {
             return [
                 'id' => $invoice['id'],
                 'student_id' => $invoice['student_id'],
@@ -156,7 +154,7 @@ class MobileApiService
         $paginatedBooks = array_slice($books, $offset, $perPage);
 
         // Simplify book data for mobile
-        $mobileBooks = array_map(function($book) {
+        $mobileBooks = array_map(function ($book) {
             return [
                 'id' => $book['id'],
                 'title' => $book['title'],
@@ -182,7 +180,7 @@ class MobileApiService
         $courses = $learningService->getSchoolCourses($schoolId, $classId);
 
         // Simplify course data for mobile
-        $mobileCourses = array_map(function($course) {
+        $mobileCourses = array_map(function ($course) {
             return [
                 'id' => $course['id'],
                 'name' => $course['course_name'],
@@ -204,7 +202,7 @@ class MobileApiService
         $average = $learningService->getCourseAverage($studentId, $courseId);
 
         // Simplify grade data
-        $mobileGrades = array_map(function($item) {
+        $mobileGrades = array_map(function ($item) {
             return [
                 'assignment' => $item['assignment']['title'],
                 'due_date' => $item['assignment']['due_date'],

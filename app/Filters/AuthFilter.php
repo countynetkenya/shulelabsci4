@@ -7,14 +7,14 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
 /**
- * Auth Filter
+ * Auth Filter.
  *
  * Ensures user is authenticated before accessing protected routes
  */
 class AuthFilter implements FilterInterface
 {
     /**
-     * Check if user is logged in
+     * Check if user is logged in.
      *
      * @param RequestInterface $request
      * @param array<int|string, mixed>|null $arguments
@@ -35,7 +35,7 @@ class AuthFilter implements FilterInterface
     }
 
     /**
-     * After filter - not used
+     * After filter - not used.
      *
      * @param RequestInterface $request
      * @param ResponseInterface $response

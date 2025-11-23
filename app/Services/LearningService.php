@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\CourseModel;
 use App\Models\AssignmentModel;
+use App\Models\CourseModel;
 use App\Models\GradeModel;
 
 /**
@@ -12,7 +12,9 @@ use App\Models\GradeModel;
 class LearningService
 {
     protected CourseModel $courseModel;
+
     protected AssignmentModel $assignmentModel;
+
     protected GradeModel $gradeModel;
 
     public function __construct()

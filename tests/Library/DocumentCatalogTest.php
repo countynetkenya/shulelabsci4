@@ -15,7 +15,7 @@ class DocumentCatalogTest extends TestCase
     public function testRegisterDocumentUploadsToDriveIssuesQrAndAudits(): void
     {
         $drive = $this->createMock(DriveAdapterInterface::class);
-        $qr    = $this->createMock(QrService::class);
+        $qr = $this->createMock(QrService::class);
         $audit = $this->createMock(AuditService::class);
 
         $catalog = new DocumentCatalog($drive, $qr, $audit);

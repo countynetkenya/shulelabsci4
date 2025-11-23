@@ -11,6 +11,7 @@ use App\Services\TenantService;
 class FinanceController extends BaseController
 {
     protected FinanceService $financeService;
+
     protected TenantService $tenantService;
 
     public function __construct()
@@ -25,7 +26,7 @@ class FinanceController extends BaseController
     public function invoices()
     {
         $schoolId = $this->tenantService->getCurrentSchoolId();
-        
+
         if (!$schoolId) {
             return redirect()->to('/school/select');
         }
@@ -56,7 +57,7 @@ class FinanceController extends BaseController
             ])->setStatusCode(400);
         }
 
-        $result = $this->financeService->createInvoice((int)$studentId, $schoolId, $items, $dueDate);
+        $result = $this->financeService->createInvoice((int) $studentId, $schoolId, $items, $dueDate);
 
         return $this->response->setJSON($result);
     }
@@ -78,7 +79,7 @@ class FinanceController extends BaseController
             ])->setStatusCode(400);
         }
 
-        $result = $this->financeService->recordPayment((int)$invoiceId, (float)$amount, $method, $reference);
+        $result = $this->financeService->recordPayment((int) $invoiceId, (float) $amount, $method, $reference);
 
         return $this->response->setJSON($result);
     }

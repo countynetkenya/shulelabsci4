@@ -29,7 +29,7 @@ abstract class TenantModel extends Model
     {
         if ($this->useTenant && $this->hasColumn($this->tenantColumn)) {
             $tenantService = service('tenant');
-            $schoolId      = $tenantService->getCurrentSchoolId();
+            $schoolId = $tenantService->getCurrentSchoolId();
 
             if ($schoolId) {
                 $this->where($this->table . '.' . $this->tenantColumn, $schoolId);
@@ -89,9 +89,9 @@ abstract class TenantModel extends Model
     {
         if ($this->useTenant && $this->hasColumn($this->tenantColumn)) {
             $tenantService = service('tenant');
-            $schoolId      = $tenantService->getCurrentSchoolId();
+            $schoolId = $tenantService->getCurrentSchoolId();
 
-            if ($schoolId && is_array($data) && ! isset($data[$this->tenantColumn])) {
+            if ($schoolId && is_array($data) && !isset($data[$this->tenantColumn])) {
                 $data[$this->tenantColumn] = $schoolId;
             }
         }

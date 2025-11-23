@@ -15,7 +15,9 @@ use PHPUnit\Framework\TestCase;
 class ThreadServiceTest extends TestCase
 {
     private ThreadRepositoryInterface&MockObject $repository;
+
     private AuditService&MockObject $audit;
+
     private EventBus&MockObject $eventBus;
 
     protected function setUp(): void
@@ -23,8 +25,8 @@ class ThreadServiceTest extends TestCase
         parent::setUp();
 
         $this->repository = $this->createMock(ThreadRepositoryInterface::class);
-        $this->audit      = $this->createMock(AuditService::class);
-        $this->eventBus   = $this->createMock(EventBus::class);
+        $this->audit = $this->createMock(AuditService::class);
+        $this->eventBus = $this->createMock(EventBus::class);
     }
 
     public function testCreateThreadPersistsDispatchesAndAudits(): void

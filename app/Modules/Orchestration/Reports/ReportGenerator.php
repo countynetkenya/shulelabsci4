@@ -7,11 +7,10 @@ namespace Modules\Orchestration\Reports;
 use Modules\Orchestration\Config\OrchestrationConfig;
 
 /**
- * Report Generator
- * 
+ * Report Generator.
+ *
  * Generates HTML and JSON reports for orchestration results
- * 
- * @package Modules\Orchestration\Reports
+ *
  * @version 1.0.0
  */
 class ReportGenerator
@@ -24,20 +23,20 @@ class ReportGenerator
     }
 
     /**
-     * Generate orchestration summary report
+     * Generate orchestration summary report.
      */
     public function generateOrchestrationReport(array $results, string $outputDir): string
     {
         $htmlFile = "{$outputDir}/orchestration-report.html";
-        
+
         $html = $this->generateReportHtml($results);
         file_put_contents($htmlFile, $html);
-        
+
         return $htmlFile;
     }
 
     /**
-     * Generate HTML report
+     * Generate HTML report.
      */
     protected function generateReportHtml(array $results): string
     {
@@ -45,17 +44,17 @@ class ReportGenerator
         $success = $results['success'] ? 'SUCCESS' : 'FAILED';
         $statusClass = $results['success'] ? 'success' : 'error';
         $duration = $results['duration'] ?? 0;
-        
+
         $phasesHtml = '';
         foreach ($results['phases'] ?? [] as $phase) {
             $phaseStatus = $phase['success'] ? '✅' : '❌';
-            $phasesHtml .= "<tr>";
+            $phasesHtml .= '<tr>';
             $phasesHtml .= "<td>{$phaseStatus}</td>";
             $phasesHtml .= "<td>Phase {$phase['number']}</td>";
             $phasesHtml .= "<td>{$phase['name']}</td>";
             $phasesHtml .= "<td>{$phase['duration']}s</td>";
-            $phasesHtml .= "<td>" . ($phase['success'] ? 'Success' : 'Failed') . "</td>";
-            $phasesHtml .= "</tr>";
+            $phasesHtml .= '<td>' . ($phase['success'] ? 'Success' : 'Failed') . '</td>';
+            $phasesHtml .= '</tr>';
         }
 
         return <<<HTML

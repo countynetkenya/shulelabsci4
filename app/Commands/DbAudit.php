@@ -7,7 +7,7 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
 /**
- * Database Audit and Upgrade Command
+ * Database Audit and Upgrade Command.
  *
  * Audits CI3 database for CI4 compatibility and optionally applies upgrades
  *
@@ -18,10 +18,15 @@ use CodeIgniter\CLI\CLI;
 class DbAudit extends BaseCommand
 {
     protected $group = 'Database';
+
     protected $name = 'db:audit';
+
     protected $description = 'Audit database for CI4 compatibility';
+
     protected $usage = 'db:audit [options]';
+
     protected $arguments = [];
+
     protected $options = [
         '--format' => 'Output format (table|json|yaml). Default: table',
         '--include-experimental' => 'Include experimental/feature-flagged modules',
@@ -30,7 +35,7 @@ class DbAudit extends BaseCommand
     ];
 
     /**
-     * Run the audit command
+     * Run the audit command.
      *
      * @param array<int|string, mixed> $params
      * @return int
@@ -106,7 +111,7 @@ class DbAudit extends BaseCommand
     }
 
     /**
-     * Display audit findings
+     * Display audit findings.
      *
      * @param array<string, mixed> $findings
      * @param string $format
@@ -131,7 +136,7 @@ class DbAudit extends BaseCommand
     }
 
     /**
-     * Display findings as table
+     * Display findings as table.
      *
      * @param array<string, mixed> $findings
      * @return void
@@ -196,7 +201,7 @@ class DbAudit extends BaseCommand
     }
 
     /**
-     * Display findings as YAML
+     * Display findings as YAML.
      *
      * @param array<string, mixed> $findings
      * @return void
@@ -206,14 +211,14 @@ class DbAudit extends BaseCommand
         $yaml = "missing_tables:\n";
         foreach ($findings['missing_tables'] as $missing) {
             $yaml .= "  - table: {$missing['table']}\n";
-            $yaml .= "    columns: " . count($missing['spec']['columns']) . "\n";
+            $yaml .= '    columns: ' . count($missing['spec']['columns']) . "\n";
         }
 
         $yaml .= "\nmissing_columns:\n";
         foreach ($findings['missing_columns'] as $missing) {
             $yaml .= "  - table: {$missing['table']}\n";
             $yaml .= "    column: {$missing['column']}\n";
-            $yaml .= "    type: " . ($missing['spec']['type'] ?? 'N/A') . "\n";
+            $yaml .= '    type: ' . ($missing['spec']['type'] ?? 'N/A') . "\n";
         }
 
         $yaml .= "\nmissing_indexes:\n";

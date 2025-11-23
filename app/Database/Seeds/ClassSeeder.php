@@ -12,7 +12,7 @@ class ClassSeeder extends Seeder
     public function run()
     {
         $db = \Config\Database::connect();
-        
+
         echo "\n📚 Creating classes for multi-school system...\n";
 
         // School 1: Nairobi Primary (6 classes)
@@ -75,7 +75,9 @@ class ClassSeeder extends Seeder
 
         foreach ($classes as $class) {
             $existing = $db->table('school_classes')->where('school_id', $schoolId)->where('class_name', $class['class_name'])->get()->getRow();
-            if ($existing) continue;
+            if ($existing) {
+                continue;
+            }
 
             $db->table('school_classes')->insert([
                 'school_id' => $schoolId,
@@ -91,6 +93,8 @@ class ClassSeeder extends Seeder
             $created++;
         }
 
-        if ($created > 0) echo "   ✓ {$names[$schoolId]}: {$created} classes\n";
+        if ($created > 0) {
+            echo "   ✓ {$names[$schoolId]}: {$created} classes\n";
+        }
     }
 }

@@ -51,7 +51,7 @@ class QrService
         $this->db->table('qr_tokens')->insert($record);
 
         $verificationUrl = ($context['base_url'] ?? 'https://schoolos.shulelabs.com') . '/verify/' . $token;
-        
+
         // Generate QR code (using SVG writer - no GD extension required)
         $qrCode = new QrCode($verificationUrl);
         $writer = new SvgWriter();
@@ -78,7 +78,7 @@ class QrService
             ->get()
             ->getFirstRow('array');
 
-        if (! $row) {
+        if (!$row) {
             throw new RuntimeException('QR token not found.');
         }
 

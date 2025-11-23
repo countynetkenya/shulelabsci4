@@ -16,16 +16,19 @@ use PHPUnit\Framework\TestCase;
 class TransferServiceTest extends TestCase
 {
     private TransferRepositoryInterface&MockObject $repository;
+
     private QrService&MockObject $qrService;
+
     private AuditService&MockObject $auditService;
+
     private MakerCheckerService&MockObject $makerChecker;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->repository   = $this->createMock(TransferRepositoryInterface::class);
-        $this->qrService    = $this->createMock(QrService::class);
+        $this->repository = $this->createMock(TransferRepositoryInterface::class);
+        $this->qrService = $this->createMock(QrService::class);
         $this->auditService = $this->createMock(AuditService::class);
         $this->makerChecker = $this->createMock(MakerCheckerService::class);
     }

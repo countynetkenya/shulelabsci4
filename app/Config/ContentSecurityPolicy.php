@@ -20,7 +20,7 @@ class ContentSecurityPolicy extends BaseConfig
     // -------------------------------------------------------------------------
 
     /**
-     * Default CSP report context
+     * Default CSP report context.
      */
     public bool $reportOnly = false;
 
@@ -43,7 +43,7 @@ class ContentSecurityPolicy extends BaseConfig
     // -------------------------------------------------------------------------
 
     /**
-     * Will default to self if not overridden
+     * Will default to self if not overridden.
      *
      * @var list<string>|string|null
      */
@@ -80,7 +80,7 @@ class ContentSecurityPolicy extends BaseConfig
     public $baseURI;
 
     /**
-     * Lists the URLs for workers and embedded frame contents
+     * Lists the URLs for workers and embedded frame contents.
      *
      * @var list<string>|string
      */
@@ -160,17 +160,17 @@ class ContentSecurityPolicy extends BaseConfig
     public $sandbox;
 
     /**
-     * Nonce tag for style
+     * Nonce tag for style.
      */
     public string $styleNonceTag = '{csp-style-nonce}';
 
     /**
-     * Nonce tag for script
+     * Nonce tag for script.
      */
     public string $scriptNonceTag = '{csp-script-nonce}';
 
     /**
-     * Replace nonce tag automatically
+     * Replace nonce tag automatically.
      */
     public bool $autoNonce = true;
 }

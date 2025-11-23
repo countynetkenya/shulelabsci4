@@ -40,7 +40,7 @@ class PayrollApprovalService
      */
     public function listPending(?string $tenantId = null): array
     {
-        $builder = $this->db->table('ci4_maker_checker_requests');
+        $builder = $this->db->table('maker_checker_requests');
         $builder->where('action_key', 'payroll.payslip');
         $builder->where('status', 'pending');
 
@@ -60,7 +60,7 @@ class PayrollApprovalService
      */
     public function summarise(?string $tenantId = null): array
     {
-        $builder = $this->db->table('ci4_maker_checker_requests');
+        $builder = $this->db->table('maker_checker_requests');
         $builder->select('status, COUNT(*) AS total');
         $builder->where('action_key', 'payroll.payslip');
 
@@ -121,12 +121,12 @@ class PayrollApprovalService
      */
     private function fetchAndFormat(int $requestId): array
     {
-        $row = $this->db->table('ci4_maker_checker_requests')
+        $row = $this->db->table('maker_checker_requests')
             ->where('id', $requestId)
             ->get()
             ->getFirstRow('array');
 
-        if (! $row) {
+        if (!$row) {
             throw new RuntimeException('Maker checker request not found.');
         }
 
@@ -142,7 +142,7 @@ class PayrollApprovalService
         $payload = [];
 
         try {
-            if (! empty($row['payload_json'])) {
+            if (!empty($row['payload_json'])) {
                 $payload = json_decode((string) $row['payload_json'], true, 512, JSON_THROW_ON_ERROR);
             }
         } catch (JsonException $exception) {

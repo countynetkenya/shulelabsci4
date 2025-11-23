@@ -5,7 +5,7 @@ namespace App\Models;
 use CodeIgniter\Model;
 
 /**
- * SystemAdmin Model
+ * SystemAdmin Model.
  *
  * Handles system admin operations
  * Compatible with CI3 database schema
@@ -13,12 +13,15 @@ use CodeIgniter\Model;
 class SystemAdminModel extends Model
 {
     protected $table = 'systemadmin';
+
     protected $primaryKey = 'systemadminID';
+
     protected $returnType = 'object';
+
     protected $allowedFields = ['name', 'username', 'password', 'email', 'photo', 'usertypeID', 'schoolID', 'active'];
 
     /**
-     * Check if user is super admin
+     * Check if user is super admin.
      *
      * @param int $usertypeID
      * @param int $loginuserID

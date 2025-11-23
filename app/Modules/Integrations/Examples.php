@@ -1,15 +1,15 @@
 <?php
 
 /**
- * ⚠️ EXAMPLE FILE - NOT FOR PRODUCTION USE
- * 
+ * ⚠️ EXAMPLE FILE - NOT FOR PRODUCTION USE.
+ *
  * Example: Using the Integrations Module
  *
  * This file demonstrates how to use the IntegrationService to:
  * 1. Register adapters
  * 2. Execute integration operations
  * 3. Handle errors and retries
- * 
+ *
  * This file contains echo statements for demonstration purposes only.
  * Do not include this file in production code.
  */
@@ -17,9 +17,9 @@
 // Bootstrap CodeIgniter (adjust path as needed)
 // require_once __DIR__ . '/../../../vendor/autoload.php';
 
-use Modules\Integrations\Services\Adapters\Storage\LocalStorageAdapter;
-use Modules\Integrations\Services\Adapters\Payment\MpesaAdapter;
 use Modules\Integrations\Services\Adapters\Communication\SmsAdapter;
+use Modules\Integrations\Services\Adapters\Payment\MpesaAdapter;
+use Modules\Integrations\Services\Adapters\Storage\LocalStorageAdapter;
 
 // Example 1: Using Local Storage
 function exampleLocalStorage()
@@ -60,7 +60,7 @@ function exampleLocalStorage()
             ['tenant_id' => 'school123']
         );
 
-        echo "Files found: " . count($response['files']) . "\n";
+        echo 'Files found: ' . count($response['files']) . "\n";
         foreach ($response['files'] as $file) {
             echo "  - {$file['name']} ({$file['size']} bytes)\n";
         }
@@ -158,7 +158,7 @@ function exampleHealthCheck()
         echo "  Message: {$health['message']}\n";
 
         if (isset($health['details'])) {
-            echo "  Details: " . json_encode($health['details']) . "\n";
+            echo '  Details: ' . json_encode($health['details']) . "\n";
         }
     } catch (\RuntimeException $e) {
         echo "Error checking health: {$e->getMessage()}\n";
@@ -200,7 +200,7 @@ function exampleErrorHandling()
         echo "Second call - Message ID: {$response2['message_id']}\n";
 
         // Both should have the same message_id due to idempotency
-        echo "Same result: " . ($response1['message_id'] === $response2['message_id'] ? 'Yes' : 'No') . "\n";
+        echo 'Same result: ' . ($response1['message_id'] === $response2['message_id'] ? 'Yes' : 'No') . "\n";
     } catch (\RuntimeException $e) {
         echo "Error: {$e->getMessage()}\n";
     }

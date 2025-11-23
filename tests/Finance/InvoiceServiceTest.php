@@ -15,16 +15,18 @@ use PHPUnit\Framework\TestCase;
 class InvoiceServiceTest extends TestCase
 {
     private InvoiceRepositoryInterface&MockObject $repository;
+
     private LedgerService&MockObject $ledgerService;
+
     private AuditService&MockObject $auditService;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->repository   = $this->createMock(InvoiceRepositoryInterface::class);
+        $this->repository = $this->createMock(InvoiceRepositoryInterface::class);
         $this->ledgerService = $this->createMock(LedgerService::class);
-        $this->auditService  = $this->createMock(AuditService::class);
+        $this->auditService = $this->createMock(AuditService::class);
     }
 
     public function testIssueInvoiceCommitsLedgerAndRecordsAudit(): void

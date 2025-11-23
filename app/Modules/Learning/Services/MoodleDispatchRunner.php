@@ -67,7 +67,7 @@ class MoodleDispatchRunner
             $payload = [];
 
             try {
-                if (! empty($dispatch['payload_json'])) {
+                if (!empty($dispatch['payload_json'])) {
                     $payload = json_decode((string) $dispatch['payload_json'], true, 512, JSON_THROW_ON_ERROR);
                 }
             } catch (JsonException $exception) {
@@ -82,7 +82,7 @@ class MoodleDispatchRunner
 
             try {
                 $response = $this->client->{$clientMethod}($payload);
-                if (! is_array($response)) {
+                if (!is_array($response)) {
                     $response = ['status' => (string) $response];
                 }
 

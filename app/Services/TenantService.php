@@ -15,7 +15,9 @@ use CodeIgniter\HTTP\RequestInterface;
 class TenantService
 {
     protected ?int $currentSchoolId = null;
+
     protected ?array $currentSchool = null;
+
     protected RequestInterface $request;
 
     public function __construct(RequestInterface $request)
@@ -86,12 +88,12 @@ class TenantService
     {
         // Verify user has access to this school
         $schoolUserModel = model(SchoolUserModel::class);
-        $access           = $schoolUserModel->where([
+        $access = $schoolUserModel->where([
             'school_id' => $schoolId,
             'user_id'   => $userId,
         ])->first();
 
-        if (! $access) {
+        if (!$access) {
             return false;
         }
 
@@ -130,7 +132,7 @@ class TenantService
     public function hasAccessToSchool(int $userId, int $schoolId): bool
     {
         $schoolUserModel = model(SchoolUserModel::class);
-        $access           = $schoolUserModel->where([
+        $access = $schoolUserModel->where([
             'school_id' => $schoolId,
             'user_id'   => $userId,
         ])->first();
@@ -146,10 +148,10 @@ class TenantService
     private function loadSchool(int $schoolId): void
     {
         $schoolModel = model(SchoolModel::class);
-        $school      = $schoolModel->find($schoolId);
+        $school = $schoolModel->find($schoolId);
 
         if ($school && $school['is_active']) {
-            $this->currentSchool   = $school;
+            $this->currentSchool = $school;
             $this->currentSchoolId = $schoolId;
         }
     }
@@ -162,10 +164,10 @@ class TenantService
     private function loadSchoolByCode(string $code): void
     {
         $schoolModel = model(SchoolModel::class);
-        $school      = $schoolModel->where('school_code', $code)->first();
+        $school = $schoolModel->where('school_code', $code)->first();
 
         if ($school && $school['is_active']) {
-            $this->currentSchool   = $school;
+            $this->currentSchool = $school;
             $this->currentSchoolId = $school['id'];
             session()->set('current_school_id', $school['id']);
         }
@@ -179,7 +181,7 @@ class TenantService
     private function loadUserPrimarySchool(int $userId): void
     {
         $schoolUserModel = model(SchoolUserModel::class);
-        $primary          = $schoolUserModel->where([
+        $primary = $schoolUserModel->where([
             'user_id'           => $userId,
             'is_primary_school' => true,
         ])->first();
@@ -226,6 +228,6 @@ class TenantService
     {
         session()->remove('current_school_id');
         $this->currentSchoolId = null;
-        $this->currentSchool   = null;
+        $this->currentSchool = null;
     }
 }

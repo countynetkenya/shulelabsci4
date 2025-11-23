@@ -2,19 +2,19 @@
 
 namespace App\Database\Seeds;
 
-use CodeIgniter\Database\Seeder;
 use App\Libraries\HashCompat;
+use CodeIgniter\Database\Seeder;
 
 /**
- * CI4 Default Superadmin Seeder
- * 
+ * CI4 Default Superadmin Seeder.
+ *
  * Creates a default CI4-native superadmin account for fresh installations
  * or when CI3 tables are empty/broken.
- * 
+ *
  * Default Credentials:
  * - Username: admin_ci4
  * - Password: ChangeMe123!
- * 
+ *
  * IMPORTANT: Change the password immediately after first login!
  */
 class Ci4DefaultSuperadminSeeder extends Seeder

@@ -7,7 +7,6 @@ declare(strict_types=1);
  * the application whether it is embedded in a monorepo under `ci4/`
  * or checked out as a standalone project.
  */
-
 $ci4Root = realpath(__DIR__ . '/..');
 if ($ci4Root === false) {
     throw new RuntimeException('Unable to resolve CI4 root directory');

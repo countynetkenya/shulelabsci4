@@ -3,7 +3,7 @@
 namespace Modules\Reports\Services;
 
 /**
- * Security Assessment Report Generator
+ * Security Assessment Report Generator.
  */
 class SecurityAssessmentReportService
 {

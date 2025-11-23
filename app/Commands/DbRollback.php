@@ -8,7 +8,7 @@ use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
 /**
- * Database Rollback Command
+ * Database Rollback Command.
  *
  * Rollback the last schema migration
  *
@@ -18,10 +18,15 @@ use CodeIgniter\CLI\CLI;
 class DbRollback extends BaseCommand
 {
     protected $group = 'Database';
+
     protected $name = 'db:rollback';
+
     protected $description = 'Rollback database schema migrations';
+
     protected $usage = 'db:rollback [options]';
+
     protected $arguments = [];
+
     protected $options = [
         '--steps' => 'Number of migrations to rollback (default: 1)',
         '--to-version' => 'Rollback to a specific version',
@@ -29,7 +34,7 @@ class DbRollback extends BaseCommand
     ];
 
     /**
-     * Run the rollback command
+     * Run the rollback command.
      */
     public function run(array $params)
     {
@@ -137,7 +142,7 @@ class DbRollback extends BaseCommand
     }
 
     /**
-     * List available migrations
+     * List available migrations.
      */
     protected function listMigrations(SchemaVersionService $versionService): void
     {

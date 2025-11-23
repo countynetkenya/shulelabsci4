@@ -7,14 +7,14 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
 /**
- * Admin Filter
+ * Admin Filter.
  *
  * Restricts access to admin-only routes
  */
 class AdminFilter implements FilterInterface
 {
     /**
-     * Check if user is admin
+     * Check if user is admin.
      *
      * @param RequestInterface $request
      * @param array<int|string, mixed>|null $arguments
@@ -42,7 +42,7 @@ class AdminFilter implements FilterInterface
     }
 
     /**
-     * After filter - not used
+     * After filter - not used.
      *
      * @param RequestInterface $request
      * @param ResponseInterface $response

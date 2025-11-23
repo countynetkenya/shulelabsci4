@@ -5,74 +5,89 @@ declare(strict_types=1);
 namespace Modules\Orchestration\Config;
 
 /**
- * Orchestration Configuration
- * 
+ * Orchestration Configuration.
+ *
  * Configuration for the Master Orchestration Agent
- * 
- * @package Modules\Orchestration\Config
+ *
  * @version 1.0.0
  */
 class OrchestrationConfig
 {
     /**
-     * Enable/disable orchestration
+     * Enable/disable orchestration.
      */
     public bool $enabled = true;
 
     /**
-     * Maximum execution timeout (seconds)
+     * Maximum execution timeout (seconds).
      */
     public int $timeout = 1800; // 30 minutes
 
     /**
-     * Number of retries on failure
+     * Number of retries on failure.
      */
     public int $retryCount = 3;
 
     /**
-     * Phase toggles
+     * Phase toggles.
      */
     public bool $enableBackupPhase = true;
+
     public bool $enableCodeGeneration = true;
+
     public bool $enableBuildValidation = true;
+
     public bool $enableMergeIntegration = true;
+
     public bool $enableDeployment = true;
+
     public bool $enableReports = true;
 
     /**
-     * Deployment targets
+     * Deployment targets.
      */
     public bool $deployToStaging = true;
+
     public bool $deployToProduction = false; // Disabled by default for safety
+
     public bool $productionApprovalRequired = true;
 
     /**
-     * Notification settings
+     * Notification settings.
      */
     public bool $notifyOnStart = true;
+
     public bool $notifyOnCompletion = true;
+
     public bool $notifyOnError = true;
+
     public array $notificationChannels = ['log']; // email, slack, log
 
     /**
-     * Report settings
+     * Report settings.
      */
     public bool $generatePdfReports = false; // Disabled for initial implementation
+
     public bool $generateHtmlReports = true;
+
     public bool $publishToDashboard = true;
+
     public bool $emailReports = false;
 
     /**
-     * Backup settings
+     * Backup settings.
      */
     public string $backupDirectory = 'backups';
+
     public int $backupRetentionDays = 30;
+
     public bool $compressBackups = true;
 
     /**
-     * Code generation settings
+     * Code generation settings.
      */
     public int $targetLinesOfCode = 4095;
+
     public array $targetModules = [
         'Foundation',
         'Hr',
@@ -85,29 +100,36 @@ class OrchestrationConfig
     ];
 
     /**
-     * Test settings
+     * Test settings.
      */
     public int $targetTestCount = 192;
+
     public float $targetCodeCoverage = 85.5;
+
     public bool $failOnCoverageMiss = false;
 
     /**
-     * Quality gates
+     * Quality gates.
      */
     public bool $enforceCodeStyle = true;
+
     public bool $enforceStaticAnalysis = true;
+
     public bool $enforceSecurityScan = true;
+
     public int $maxCyclomaticComplexity = 10;
 
     /**
-     * Paths
+     * Paths.
      */
     public string $reportPath = 'writable/reports';
+
     public string $logsPath = 'writable/logs/orchestration';
+
     public string $tempPath = 'writable/temp/orchestration';
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -116,11 +138,11 @@ class OrchestrationConfig
     }
 
     /**
-     * Load configuration from environment variables
+     * Load configuration from environment variables.
      */
     protected function loadFromEnvironment(): void
     {
-        $this->enabled = getenv('ORCHESTRATION_ENABLED') !== false 
+        $this->enabled = getenv('ORCHESTRATION_ENABLED') !== false
             ? filter_var(getenv('ORCHESTRATION_ENABLED'), FILTER_VALIDATE_BOOLEAN)
             : $this->enabled;
 
@@ -168,7 +190,7 @@ class OrchestrationConfig
     }
 
     /**
-     * Load configuration from file
+     * Load configuration from file.
      */
     public static function fromFile(string $path): self
     {
@@ -189,7 +211,7 @@ class OrchestrationConfig
     }
 
     /**
-     * Get phase configuration
+     * Get phase configuration.
      */
     public function getPhaseConfig(int $phase): array
     {
@@ -235,7 +257,7 @@ class OrchestrationConfig
     }
 
     /**
-     * Validate configuration
+     * Validate configuration.
      */
     public function validate(): array
     {

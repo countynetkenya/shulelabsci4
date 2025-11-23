@@ -14,7 +14,7 @@ class GamificationServiceTest extends TestCase
     public function testHandleRecognitionAwardedIncrementsPointsAndAwardsBadges(): void
     {
         $repository = $this->createMock(LeaderboardRepositoryInterface::class);
-        $audit      = $this->createMock(AuditService::class);
+        $audit = $this->createMock(AuditService::class);
 
         $service = new GamificationService($repository, $audit);
 

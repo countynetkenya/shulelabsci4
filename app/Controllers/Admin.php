@@ -2,25 +2,28 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
-use App\Models\RoleModel;
-use App\Models\SchoolModel;
-use App\Models\SchoolClassModel;
-use App\Models\StudentEnrollmentModel;
 use App\Models\GradeModel;
 use App\Models\InvoiceModel;
+use App\Models\RoleModel;
+use App\Models\SchoolClassModel;
+use App\Models\SchoolModel;
+use App\Models\StudentEnrollmentModel;
+use App\Models\UserModel;
 use CodeIgniter\HTTP\RedirectResponse;
 
 /**
- * Admin Controller
+ * Admin Controller.
  *
  * Admin panel for system administration
  */
 class Admin extends BaseController
 {
     protected $data = [];
+
     protected UserModel $userModel;
+
     protected RoleModel $roleModel;
+
     protected SchoolModel $schoolModel;
 
     public function __construct()
@@ -32,7 +35,7 @@ class Admin extends BaseController
     }
 
     /**
-     * Admin panel index/dashboard
+     * Admin panel index/dashboard.
      */
     public function index(): string
     {
@@ -43,7 +46,7 @@ class Admin extends BaseController
             'name' => $session->get('name'),
             'email' => $session->get('email'),
             'usertypeID' => $session->get('usertypeID'),
-            'photo' => $session->get('photo')
+            'photo' => $session->get('photo'),
         ];
 
         // Dashboard statistics
@@ -58,7 +61,7 @@ class Admin extends BaseController
     }
 
     /**
-     * User management - List all users
+     * User management - List all users.
      */
     public function users(): string
     {
@@ -70,7 +73,7 @@ class Admin extends BaseController
     }
 
     /**
-     * Create new user
+     * Create new user.
      */
     public function createUser()
     {
@@ -118,7 +121,7 @@ class Admin extends BaseController
     }
 
     /**
-     * Update user
+     * Update user.
      */
     public function updateUser(int $id)
     {
@@ -152,7 +155,7 @@ class Admin extends BaseController
     }
 
     /**
-     * Delete user
+     * Delete user.
      */
     public function deleteUser(int $id): RedirectResponse
     {
@@ -170,7 +173,7 @@ class Admin extends BaseController
     }
 
     /**
-     * School management
+     * School management.
      */
     public function schools(): string
     {
@@ -181,7 +184,7 @@ class Admin extends BaseController
     }
 
     /**
-     * Update school settings
+     * Update school settings.
      */
     public function updateSchool()
     {
@@ -212,7 +215,7 @@ class Admin extends BaseController
     }
 
     /**
-     * System settings
+     * System settings.
      */
     public function settings(): string
     {
@@ -224,7 +227,7 @@ class Admin extends BaseController
     }
 
     /**
-     * Update system settings
+     * Update system settings.
      */
     public function updateSettings()
     {
@@ -243,16 +246,16 @@ class Admin extends BaseController
     }
 
     /**
-     * Reports - Attendance, grades, enrollment
+     * Reports - Attendance, grades, enrollment.
      */
     public function reports(): string
     {
         $this->data['user'] = $this->getUserData();
-        
+
         // Get summary data for reports
         $enrollmentModel = new StudentEnrollmentModel();
         $gradeModel = new GradeModel();
-        
+
         $this->data['report_data'] = [
             'total_enrollments' => $enrollmentModel->countAllResults(),
             'recent_grades' => $gradeModel->orderBy('created_at', 'DESC')->limit(10)->find(),
@@ -263,12 +266,12 @@ class Admin extends BaseController
     }
 
     /**
-     * Finance - View invoices and payments
+     * Finance - View invoices and payments.
      */
     public function finance(): string
     {
         $this->data['user'] = $this->getUserData();
-        
+
         $invoiceModel = new InvoiceModel();
         $this->data['invoices'] = $invoiceModel->orderBy('created_at', 'DESC')->limit(50)->find();
         $this->data['finance_summary'] = [
@@ -289,7 +292,7 @@ class Admin extends BaseController
             'name' => $session->get('name'),
             'email' => $session->get('email'),
             'usertypeID' => $session->get('usertypeID'),
-            'photo' => $session->get('photo')
+            'photo' => $session->get('photo'),
         ];
     }
 
@@ -309,17 +312,17 @@ class Admin extends BaseController
     {
         $classModel = new SchoolClassModel();
         $enrollmentModel = new StudentEnrollmentModel();
-        
+
         $classes = $classModel->findAll();
         $result = [];
-        
+
         foreach ($classes as $class) {
             $result[] = [
                 'class_name' => $class['class_name'] ?? 'Unknown',
                 'student_count' => $enrollmentModel->where('class_id', $class['classesID'] ?? $class['id'])->countAllResults(),
             ];
         }
-        
+
         return $result;
     }
 }
