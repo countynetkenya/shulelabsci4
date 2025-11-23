@@ -151,7 +151,7 @@ public array $globals = [
 
 ```sql
 -- Roles table
-CREATE TABLE ci4_roles (
+CREATE TABLE roles (
     id INT PRIMARY KEY AUTO_INCREMENT,
     role_name VARCHAR(100) NOT NULL,
     role_slug VARCHAR(50) NOT NULL UNIQUE,
@@ -162,13 +162,13 @@ CREATE TABLE ci4_roles (
 );
 
 -- User-Role assignments
-CREATE TABLE ci4_user_roles (
+CREATE TABLE user_roles (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     role_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES ci4_users(id) ON DELETE CASCADE,
-    FOREIGN KEY (role_id) REFERENCES ci4_roles(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE,
     UNIQUE KEY unique_user_role (user_id, role_id)
 );
 ```
@@ -239,9 +239,9 @@ class AuthorizationFilter implements FilterInterface
     {
         // Get user's roles
         $db = \Config\Database::connect();
-        $roles = $db->table('ci4_user_roles ur')
+        $roles = $db->table('user_roles ur')
             ->select('r.permissions')
-            ->join('ci4_roles r', 'r.id = ur.role_id')
+            ->join('roles r', 'r.id = ur.role_id')
             ->where('ur.user_id', $user->id)
             ->get()
             ->getResult();
@@ -318,7 +318,7 @@ CREATE TABLE audit_events (
     INDEX idx_tenant_id (tenant_id),
     INDEX idx_user_id (user_id),
     INDEX idx_created_at (created_at),
-    FOREIGN KEY (tenant_id) REFERENCES ci4_tenant_catalog(id) ON DELETE RESTRICT
+    FOREIGN KEY (tenant_id) REFERENCES tenant_catalog(id) ON DELETE RESTRICT
 );
 ```
 

@@ -7,7 +7,7 @@ use CodeIgniter\Database\Migration;
 /**
  * Create CI4 Migrations History Table
  *
- * This migration creates the ci4_migrations table that will store CI4's
+ * This migration creates the migrations table that will store CI4's
  * migration history, separate from the legacy CI3 'migrations' table.
  *
  * CI3's migrations table uses a different structure (no 'id' column) that
@@ -19,7 +19,7 @@ use CodeIgniter\Database\Migration;
 class CreateCi4MigrationsTable extends Migration
 {
     /**
-     * Create the ci4_migrations table with the standard CI4 schema.
+     * Create the migrations table with the standard CI4 schema.
      *
      * The table structure matches what CI4's MigrationRunner expects:
      * - id: Auto-increment primary key (required by CI4, missing in CI3)
@@ -76,17 +76,17 @@ class CreateCi4MigrationsTable extends Migration
         
         // Use ifNotExists to make this migration idempotent
         // Safe to run multiple times without errors
-        $this->forge->createTable('ci4_migrations', true);
+        $this->forge->createTable('migrations', true);
     }
 
     /**
-     * Drop the ci4_migrations table.
+     * Drop the migrations table.
      *
      * WARNING: This will delete all CI4 migration history.
      * Only use during development or when completely resetting CI4.
      */
     public function down()
     {
-        $this->forge->dropTable('ci4_migrations', true);
+        $this->forge->dropTable('migrations', true);
     }
 }

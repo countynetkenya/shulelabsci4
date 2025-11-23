@@ -25,16 +25,16 @@ class HrService
     public function getSchoolStaff(int $schoolId, ?string $roleFilter = null): array
     {
         $builder = $this->schoolUserModel
-            ->select('school_users.*, ci4_users.username, ci4_users.email, ci4_users.full_name, ci4_roles.role_name')
-            ->join('ci4_users', 'ci4_users.id = school_users.user_id')
-            ->join('ci4_roles', 'ci4_roles.id = school_users.role_id')
+            ->select('school_users.*, users.username, users.email, users.full_name, roles.role_name')
+            ->join('users', 'users.id = school_users.user_id')
+            ->join('roles', 'roles.id = school_users.role_id')
             ->where('school_users.school_id', $schoolId);
 
         if ($roleFilter) {
-            $builder->where('ci4_roles.role_name', $roleFilter);
+            $builder->where('roles.role_name', $roleFilter);
         } else {
             // Exclude students and parents (get only staff)
-            $builder->whereNotIn('ci4_roles.role_name', ['Student', 'Parent']);
+            $builder->whereNotIn('roles.role_name', ['Student', 'Parent']);
         }
 
         return $builder->findAll();

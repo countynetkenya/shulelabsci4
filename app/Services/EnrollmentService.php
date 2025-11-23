@@ -120,8 +120,8 @@ class EnrollmentService
     public function getClassEnrollments(int $classId): array
     {
         return $this->enrollmentModel
-            ->select('student_enrollments.*, ci4_users.username, ci4_users.email, ci4_users.full_name')
-            ->join('ci4_users', 'ci4_users.id = student_enrollments.student_id')
+            ->select('student_enrollments.*, users.username, users.email, users.full_name')
+            ->join('users', 'users.id = student_enrollments.student_id')
             ->where('student_enrollments.class_id', $classId)
             ->where('student_enrollments.status', 'active')
             ->findAll();

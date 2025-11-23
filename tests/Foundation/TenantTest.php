@@ -221,7 +221,7 @@ class TenantTest extends CIUnitTestCase
         // Create a multi-school user (e.g., teacher in 2 schools)
         $db = \Config\Database::connect();
 
-        $userId = $db->table('ci4_users')->insert([
+        $userId = $db->table('users')->insert([
             'username'      => 'multiteacher',
             'email'         => 'multiteacher@test.local',
             'password_hash' => password_hash('Test@123', PASSWORD_BCRYPT),
@@ -260,7 +260,7 @@ class TenantTest extends CIUnitTestCase
 
         // Cleanup
         $db->table('school_users')->where('user_id', $userId)->delete();
-        $db->table('ci4_users')->where('id', $userId)->delete();
+        $db->table('users')->where('id', $userId)->delete();
     }
 
     public function testPrimarySchoolIdentification()
@@ -319,7 +319,7 @@ class TenantTest extends CIUnitTestCase
         $db = \Config\Database::connect();
 
         // Create test user
-        $userId = $db->table('ci4_users')->insert([
+        $userId = $db->table('users')->insert([
             'username'      => 'testuser_assign',
             'email'         => 'testuser_assign@test.local',
             'password_hash' => password_hash('Test@123', PASSWORD_BCRYPT),
@@ -347,7 +347,7 @@ class TenantTest extends CIUnitTestCase
 
         // Cleanup
         $db->table('school_users')->where('user_id', $userId)->delete();
-        $db->table('ci4_users')->where('id', $userId)->delete();
+        $db->table('users')->where('id', $userId)->delete();
     }
 
     public function testSetPrimarySchool()
@@ -355,7 +355,7 @@ class TenantTest extends CIUnitTestCase
         $db = \Config\Database::connect();
 
         // Create test user with 2 schools
-        $userId = $db->table('ci4_users')->insert([
+        $userId = $db->table('users')->insert([
             'username'      => 'testuser_primary',
             'email'         => 'testuser_primary@test.local',
             'password_hash' => password_hash('Test@123', PASSWORD_BCRYPT),
@@ -406,6 +406,6 @@ class TenantTest extends CIUnitTestCase
 
         // Cleanup
         $db->table('school_users')->where('user_id', $userId)->delete();
-        $db->table('ci4_users')->where('id', $userId)->delete();
+        $db->table('users')->where('id', $userId)->delete();
     }
 }

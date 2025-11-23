@@ -61,8 +61,8 @@ CREATE TABLE school_users (
     is_primary_school BOOLEAN DEFAULT FALSE,
     joined_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (school_id) REFERENCES schools(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES ci4_users(id) ON DELETE CASCADE,
-    FOREIGN KEY (role_id) REFERENCES ci4_roles(id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (role_id) REFERENCES roles(id),
     UNIQUE KEY unique_school_user (school_id, user_id)
 );
 
@@ -78,7 +78,7 @@ CREATE TABLE school_classes (
     max_capacity INT DEFAULT 40,
     room_number VARCHAR(20),
     FOREIGN KEY (school_id) REFERENCES schools(id) ON DELETE CASCADE,
-    FOREIGN KEY (class_teacher_id) REFERENCES ci4_users(id) ON DELETE SET NULL
+    FOREIGN KEY (class_teacher_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
 -- Student Enrollments
@@ -91,10 +91,10 @@ CREATE TABLE student_enrollments (
     status ENUM('active', 'suspended', 'graduated', 'transferred', 'withdrawn') DEFAULT 'active',
     admission_number VARCHAR(50),
     parent_id INT,
-    FOREIGN KEY (student_id) REFERENCES ci4_users(id) ON DELETE CASCADE,
+    FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (school_id) REFERENCES schools(id) ON DELETE CASCADE,
     FOREIGN KEY (class_id) REFERENCES school_classes(id) ON DELETE SET NULL,
-    FOREIGN KEY (parent_id) REFERENCES ci4_users(id) ON DELETE SET NULL,
+    FOREIGN KEY (parent_id) REFERENCES users(id) ON DELETE SET NULL,
     UNIQUE KEY unique_admission (school_id, admission_number)
 );
 ```
@@ -980,7 +980,7 @@ SELECT
     e.status,
     c.class_name,
     sc.school_name
-FROM ci4_users s
+FROM users s
 JOIN student_enrollments e ON s.id = e.student_id
 JOIN school_classes c ON e.class_id = c.id
 JOIN schools sc ON e.school_id = sc.id;

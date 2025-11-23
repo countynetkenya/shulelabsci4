@@ -79,18 +79,18 @@ This command:
 When you run migrations, the following tables are created:
 
 ### Core Tables (App namespace)
-- `ci4_migrations` - Migration tracking
-- `ci4_users` - Normalized user identity
-- `ci4_roles` - Role definitions
-- `ci4_user_roles` - User-role assignments
+- `migrations` - Migration tracking
+- `users` - Normalized user identity
+- `roles` - Role definitions
+- `user_roles` - User-role assignments
 
 ### Foundation Module Tables (Modules namespace)
-- `ci4_audit_events`, `ci4_audit_seals` - Audit logging
-- `ci4_ledger_transactions`, `ci4_ledger_entries`, `ci4_ledger_period_locks` - Financial ledger
-- `ci4_integration_dispatches` - Integration registry
-- `ci4_qr_tokens`, `ci4_qr_scans` - QR code system
-- `ci4_maker_checker_requests` - Approval workflows
-- `ci4_tenant_catalog` - Multi-tenancy
+- `audit_events`, `audit_seals` - Audit logging
+- `ledger_transactions`, `ledger_entries`, `ledger_period_locks` - Financial ledger
+- `integration_dispatches` - Integration registry
+- `qr_tokens`, `qr_scans` - QR code system
+- `maker_checker_requests` - Approval workflows
+- `tenant_catalog` - Multi-tenancy
 
 ## Adding New Module Migrations
 

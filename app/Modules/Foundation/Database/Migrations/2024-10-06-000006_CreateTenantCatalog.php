@@ -18,11 +18,11 @@ class CreateTenantCatalog extends Migration
         ]);
         $this->forge->addKey(['id', 'tenant_type'], true);
         $this->forge->addKey('tenant_type');
-        $this->forge->createTable('ci4_tenant_catalog', true);
+        $this->forge->createTable('tenant_catalog', true);
     }
 
     public function down(): void
     {
-        $this->forge->dropTable('ci4_tenant_catalog', true);
+        $this->forge->dropTable('tenant_catalog', true);
     }
 }

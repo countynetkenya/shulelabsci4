@@ -125,8 +125,8 @@ school_classes: 0 records (pending)
 student_enrollments: 0 records (pending)
 
 -- Existing Tables
-ci4_users: 218 total (23 original + 195 new)
-ci4_roles: 8 roles
+users: 218 total (23 original + 195 new)
+roles: 8 roles
 ci4_migrations: 8 migrations
 ```
 
@@ -385,7 +385,7 @@ sqlite3 writable/database.db "SELECT * FROM schools;"
 sqlite3 writable/database.db "SELECT s.school_name, COUNT(su.user_id) FROM schools s LEFT JOIN school_users su ON s.id = su.school_id GROUP BY s.id;"
 
 # Check specific school users
-sqlite3 writable/database.db "SELECT u.username, u.email, r.role_name FROM ci4_users u JOIN school_users su ON u.id = su.user_id JOIN ci4_roles r ON su.role_id = r.id WHERE su.school_id = 1;"
+sqlite3 writable/database.db "SELECT u.username, u.email, r.role_name FROM users u JOIN school_users su ON u.id = su.user_id JOIN roles r ON su.role_id = r.id WHERE su.school_id = 1;"
 ```
 
 ### Test Login

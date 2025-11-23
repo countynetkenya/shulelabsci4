@@ -9,7 +9,7 @@ use CodeIgniter\Model;
  */
 class RoleModel extends Model
 {
-    protected $table = 'ci4_roles';
+    protected $table = 'roles';
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
     protected $returnType = 'array';

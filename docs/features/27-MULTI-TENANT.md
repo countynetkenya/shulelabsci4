@@ -5,7 +5,7 @@
 
 ## Overview
 
-ShuleLabs is architected with **multi-tenancy by design** from Phase 1 onwards. The `ci4_tenant_catalog` table stores organisations, schools, and warehouses, enabling a single installation to serve multiple schools with proper data isolation and tenant context resolution.
+ShuleLabs is architected with **multi-tenancy by design** from Phase 1 onwards. The `tenant_catalog` table stores organisations, schools, and warehouses, enabling a single installation to serve multiple schools with proper data isolation and tenant context resolution.
 
 **Key Point**: Multi-tenancy is not a Phase 3 feature being introduced for the first time. Instead, **Phase 1 and Phase 2 establish tenant-aware code paths**, while **Phase 3 focuses on tenant orchestration and productization** (management UI, billing, custom branding, etc.).
 
@@ -26,7 +26,7 @@ ShuleLabs is architected with **multi-tenancy by design** from Phase 1 onwards. 
 ### Multi-Tenancy Across Phases
 
 1. **Phase 1 (Complete)**: Tenant-aware foundation
-   - `ci4_tenant_catalog` table for storing organisations, schools, warehouses
+   - `tenant_catalog` table for storing organisations, schools, warehouses
    - `TenantResolver` service for resolving tenant context from requests
    - Tenant-scoped audit logging (all events include `tenant_id`)
    - Database schema designed with row-level `tenant_id` on applicable tables
@@ -62,7 +62,7 @@ ShuleLabs is architected with **multi-tenancy by design** from Phase 1 onwards. 
 
 ### Requirements
 
-- `ci4_tenant_catalog` table (created via Foundation module migration)
+- `tenant_catalog` table (created via Foundation module migration)
 - TenantResolver service for resolving tenant context from requests
 - Tenant identification via headers (X-Tenant-Context, X-School-ID, X-Organisation-ID) or query parameters
 
@@ -72,7 +72,7 @@ The multi-tenant foundation is implemented in the Foundation module:
 
 - **Migration**: `app/Modules/Foundation/Database/Migrations/2024-10-06-000006_CreateTenantCatalog.php`
 - **Service**: `app/Modules/Foundation/Services/TenantResolver.php`
-- **Table**: `ci4_tenant_catalog` with columns: `id`, `tenant_type`, `name`, `metadata`, `created_at`, `updated_at`
+- **Table**: `tenant_catalog` with columns: `id`, `tenant_type`, `name`, `metadata`, `created_at`, `updated_at`
 
 ### Tenant Types
 
@@ -230,7 +230,7 @@ ShuleLabs provides a web-based installer to bootstrap the first organisation, sc
 
 3. Follow the three-step wizard:
    - **Environment check**: Verifies database and migrations
-   - **Organisation & School setup**: Creates first tenant entries in `ci4_tenant_catalog`
+   - **Organisation & School setup**: Creates first tenant entries in `tenant_catalog`
    - **Admin account**: Creates Super Admin user linked to the school
 
 4. Set `app.installed = true` in `.env` after completion
@@ -240,7 +240,7 @@ ShuleLabs provides a web-based installer to bootstrap the first organisation, sc
 Insert tenant records directly:
 
 ```php
-$db->table('ci4_tenant_catalog')->insert([
+$db->table('tenant_catalog')->insert([
     'id' => 'org-1',
     'tenant_type' => 'organisation',
     'name' => 'My Organisation',
@@ -248,7 +248,7 @@ $db->table('ci4_tenant_catalog')->insert([
     'created_at' => date('Y-m-d H:i:s'),
 ]);
 
-$db->table('ci4_tenant_catalog')->insert([
+$db->table('tenant_catalog')->insert([
     'id' => 'school-1',
     'tenant_type' => 'school',
     'name' => 'My School',
@@ -292,7 +292,7 @@ CREATE TABLE students (
     first_name VARCHAR(100) NOT NULL,
     -- ... other columns
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (school_id) REFERENCES ci4_tenant_catalog(id),
+    FOREIGN KEY (school_id) REFERENCES tenant_catalog(id),
     UNIQUE KEY unique_admission_per_school (school_id, admission_number)
 );
 ```
@@ -305,16 +305,16 @@ CREATE TABLE fee_structures (
     name VARCHAR(100) NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
     -- ... other columns
-    FOREIGN KEY (school_id) REFERENCES ci4_tenant_catalog(id)
+    FOREIGN KEY (school_id) REFERENCES tenant_catalog(id)
 );
 ```
 
 ### Global Tables (No Tenant Scoping)
 
 Some tables are intentionally global and not scoped to tenants:
-- `ci4_users` (users can belong to multiple schools)
-- `ci4_roles` (role definitions are shared)
-- `ci4_migrations` (system metadata)
+- `users` (users can belong to multiple schools)
+- `roles` (role definitions are shared)
+- `migrations` (system metadata)
 - `audit_seals` (cryptographic seals are global)
 
 User-to-school mapping is handled via:

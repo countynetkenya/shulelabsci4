@@ -9,7 +9,7 @@ use CodeIgniter\Model;
  */
 class IntegrationLogModel extends Model
 {
-    protected $table         = 'ci4_integration_logs';
+    protected $table         = 'integration_logs';
     protected $primaryKey    = 'id';
     protected $allowedFields = [
         'integration_id',

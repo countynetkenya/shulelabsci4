@@ -66,7 +66,7 @@
 1. Subdomain: `school01.shulelabs.com` → School ID 1
 2. Session: `$_SESSION['school_id']`
 3. Header: `X-School-ID` (for API calls)
-4. User Context: Automatic from `ci4_school_users` table
+4. User Context: Automatic from `school_users` table
 
 ## Component Analysis
 

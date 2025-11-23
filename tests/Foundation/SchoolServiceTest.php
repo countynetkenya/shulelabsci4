@@ -80,9 +80,9 @@ final class SchoolServiceTest extends CIUnitTestCase
         
         // Create students - 33 to 62 (30 students total)
         for ($i = 33; $i <= 62; $i++) {
-            $existing = $db->table('ci4_users')->where('id', $i)->get()->getRow();
+            $existing = $db->table('users')->where('id', $i)->get()->getRow();
             if (!$existing) {
-                $db->table('ci4_users')->insert([
+                $db->table('users')->insert([
                     'id' => $i,
                     'username' => "student{$i}",
                     'email' => "student{$i}@test.com",

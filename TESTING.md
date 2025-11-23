@@ -395,10 +395,10 @@ php spark db:seed
 ### Database Inspection
 ```bash
 # SQLite
-sqlite3 writable/database.db "SELECT * FROM ci4_users;"
+sqlite3 writable/database.db "SELECT * FROM users;"
 
 # MySQL
-mysql -u shulelabs -p -e "SELECT * FROM ci4_users;" shulelabs_test
+mysql -u shulelabs -p -e "SELECT * FROM users;" shulelabs_test
 ```
 
 ---

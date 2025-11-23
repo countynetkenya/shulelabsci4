@@ -113,9 +113,9 @@ class TenantService
         $schoolUserModel = model(SchoolUserModel::class);
 
         return $schoolUserModel
-            ->select('schools.*, school_users.role_id, school_users.is_primary_school, ci4_roles.role_name')
+            ->select('schools.*, school_users.role_id, school_users.is_primary_school, roles.role_name')
             ->join('schools', 'schools.id = school_users.school_id')
-            ->join('ci4_roles', 'ci4_roles.id = school_users.role_id')
+            ->join('roles', 'roles.id = school_users.role_id')
             ->where('school_users.user_id', $userId)
             ->where('schools.is_active', true)
             ->findAll();

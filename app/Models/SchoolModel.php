@@ -123,9 +123,9 @@ class SchoolModel extends Model
 
         // Get teacher count
         $teacherCount = $db->table('school_users')
-            ->join('ci4_roles', 'ci4_roles.id = school_users.role_id')
+            ->join('roles', 'roles.id = school_users.role_id')
             ->where('school_users.school_id', $schoolId)
-            ->where('ci4_roles.name', 'Teacher')
+            ->where('roles.name', 'Teacher')
             ->countAllResults();
 
         // Get class count

@@ -226,10 +226,10 @@ Response (JSON/HTML)
 ### Database Schema Layers
 
 1. **CI4 Core Tables**: User authentication and roles
-   - `ci4_users`
-   - `ci4_roles`
-   - `ci4_user_roles`
-   - `ci4_migrations`
+   - `users`
+   - `roles`
+   - `user_roles`
+   - `migrations`
 
 2. **Foundation Tables**: Audit and ledger
    - `audit_events`
@@ -394,7 +394,7 @@ CREATE TABLE students (
     admission_number VARCHAR(50) NOT NULL,
     first_name VARCHAR(100) NOT NULL,
     -- ... other columns
-    FOREIGN KEY (school_id) REFERENCES ci4_tenant_catalog(id),
+    FOREIGN KEY (school_id) REFERENCES tenant_catalog(id),
     UNIQUE KEY unique_admission_per_school (school_id, admission_number)
 );
 
@@ -405,23 +405,23 @@ CREATE TABLE fee_structures (
     name VARCHAR(100) NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
     -- ... other columns
-    FOREIGN KEY (school_id) REFERENCES ci4_tenant_catalog(id)
+    FOREIGN KEY (school_id) REFERENCES tenant_catalog(id)
 );
 ```
 
 **Global Tables** (No Tenant Scoping):
-- `ci4_users` (users can access multiple schools)
-- `ci4_roles` (role definitions are shared)
-- `ci4_migrations` (system metadata)
+- `users` (users can access multiple schools)
+- `roles` (role definitions are shared)
+- `migrations` (system metadata)
 - `audit_seals` (cryptographic integrity)
 
 ### Tenant Catalog Table
 
-**Table**: `ci4_tenant_catalog`
+**Table**: `tenant_catalog`
 
 **Schema**:
 ```sql
-CREATE TABLE ci4_tenant_catalog (
+CREATE TABLE tenant_catalog (
     id VARCHAR(50) PRIMARY KEY,
     tenant_type ENUM('organisation', 'school', 'warehouse') NOT NULL,
     name VARCHAR(200) NOT NULL,
@@ -434,7 +434,7 @@ CREATE TABLE ci4_tenant_catalog (
 **Example Data**:
 ```sql
 -- Organisation
-INSERT INTO ci4_tenant_catalog VALUES (
+INSERT INTO tenant_catalog VALUES (
     'org-1', 
     'organisation', 
     'County Education Network',
@@ -443,7 +443,7 @@ INSERT INTO ci4_tenant_catalog VALUES (
 );
 
 -- School
-INSERT INTO ci4_tenant_catalog VALUES (
+INSERT INTO tenant_catalog VALUES (
     'school-1',
     'school',
     'Nairobi Primary School',

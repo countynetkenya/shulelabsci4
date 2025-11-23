@@ -91,18 +91,18 @@ For high-security or compliance needs:
 
 The database is organized into logical layers:
 
-### 1. CI4 Core Tables (Prefix: `ci4_`)
+### 1. CI4 Core Tables (Prefix: ``)
 
 Authentication and framework tables:
-- `ci4_users` - User accounts (global, can access multiple schools)
-- `ci4_roles` - Role definitions (global)
-- `ci4_user_roles` - User-to-role assignments (global)
-- `ci4_migrations` - Migration history (global)
+- `users` - User accounts (global, can access multiple schools)
+- `roles` - Role definitions (global)
+- `user_roles` - User-to-role assignments (global)
+- `migrations` - Migration history (global)
 
-### 2. Tenant Catalog (Prefix: `ci4_`)
+### 2. Tenant Catalog (Prefix: ``)
 
 Multi-tenant infrastructure:
-- `ci4_tenant_catalog` - Organisations, schools, warehouses (global tenant registry)
+- `tenant_catalog` - Organisations, schools, warehouses (global tenant registry)
 
 ### 3. Foundation Tables
 
@@ -125,13 +125,13 @@ Domain-specific tables for each module:
 
 ## Tenant Catalog
 
-### ci4_tenant_catalog Table
+### tenant_catalog Table
 
 **Purpose**: Central registry of all tenants (organisations, schools, warehouses)
 
 **Schema**:
 ```sql
-CREATE TABLE ci4_tenant_catalog (
+CREATE TABLE tenant_catalog (
     id VARCHAR(50) PRIMARY KEY,  -- Tenant identifier (e.g., 'school-1', 'org-1')
     tenant_type ENUM('organisation', 'school', 'warehouse') NOT NULL,
     name VARCHAR(200) NOT NULL,  -- Display name
@@ -145,7 +145,7 @@ CREATE TABLE ci4_tenant_catalog (
 **Example Data**:
 ```sql
 -- Organisation
-INSERT INTO ci4_tenant_catalog VALUES (
+INSERT INTO tenant_catalog VALUES (
     'org-1',
     'organisation',
     'County Education Network',
@@ -154,7 +154,7 @@ INSERT INTO ci4_tenant_catalog VALUES (
 );
 
 -- School (belongs to organisation)
-INSERT INTO ci4_tenant_catalog VALUES (
+INSERT INTO tenant_catalog VALUES (
     'school-1',
     'school',
     'Nairobi Primary School',
@@ -163,7 +163,7 @@ INSERT INTO ci4_tenant_catalog VALUES (
 );
 
 -- Warehouse (for inventory)
-INSERT INTO ci4_tenant_catalog VALUES (
+INSERT INTO tenant_catalog VALUES (
     'warehouse-1',
     'warehouse',
     'Central Warehouse',
@@ -186,7 +186,7 @@ Tables that contain tenant-specific data and include `tenant_id` (or equivalent)
 ```sql
 CREATE TABLE students (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    school_id VARCHAR(50) NOT NULL,  -- Tenant scoping (FK to ci4_tenant_catalog)
+    school_id VARCHAR(50) NOT NULL,  -- Tenant scoping (FK to tenant_catalog)
     admission_number VARCHAR(50) NOT NULL,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
@@ -202,7 +202,7 @@ CREATE TABLE students (
     updated_by INT,
     deleted_at TIMESTAMP NULL,
     -- Foreign keys
-    FOREIGN KEY (school_id) REFERENCES ci4_tenant_catalog(id) ON DELETE RESTRICT,
+    FOREIGN KEY (school_id) REFERENCES tenant_catalog(id) ON DELETE RESTRICT,
     -- Indexes
     INDEX idx_school_id (school_id),
     INDEX idx_deleted_at (deleted_at),
@@ -211,7 +211,7 @@ CREATE TABLE students (
 ```
 
 **Key Points**:
-- `school_id` is the tenant scoping column (references `ci4_tenant_catalog.id`)
+- `school_id` is the tenant scoping column (references `tenant_catalog.id`)
 - Unique constraints include `school_id` to prevent cross-tenant conflicts
 - All queries must filter by `school_id`
 
@@ -233,7 +233,7 @@ CREATE TABLE fee_structures (
     updated_by INT,
     deleted_at TIMESTAMP NULL,
     -- Foreign keys
-    FOREIGN KEY (school_id) REFERENCES ci4_tenant_catalog(id) ON DELETE RESTRICT,
+    FOREIGN KEY (school_id) REFERENCES tenant_catalog(id) ON DELETE RESTRICT,
     -- Indexes
     INDEX idx_school_id (school_id),
     INDEX idx_is_active (is_active),
@@ -245,7 +245,7 @@ CREATE TABLE fee_structures (
 
 When creating a new tenant-scoped table:
 - ✅ Include `school_id` (or `organisation_id`, `warehouse_id`) column
-- ✅ Add foreign key to `ci4_tenant_catalog(id)`
+- ✅ Add foreign key to `tenant_catalog(id)`
 - ✅ Add index on tenant scoping column
 - ✅ Include tenant scoping column in unique constraints
 - ✅ Add standard audit columns (`created_at`, `updated_at`, `created_by`, `updated_by`, `deleted_at`)
@@ -255,12 +255,12 @@ When creating a new tenant-scoped table:
 
 Tables that are intentionally global (not scoped to tenants):
 
-### ci4_users Table
+### users Table
 
 Users can access multiple schools, so they are global:
 
 ```sql
-CREATE TABLE ci4_users (
+CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -280,22 +280,22 @@ Option 1: Store in `metadata` JSON field:
 
 Option 2: Separate mapping table (future):
 ```sql
-CREATE TABLE ci4_user_school_assignments (
+CREATE TABLE user_school_assignments (
     user_id INT NOT NULL,
     school_id VARCHAR(50) NOT NULL,
     role_id INT,  -- Role at this school
     is_default BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (user_id, school_id),
-    FOREIGN KEY (user_id) REFERENCES ci4_users(id),
-    FOREIGN KEY (school_id) REFERENCES ci4_tenant_catalog(id),
-    FOREIGN KEY (role_id) REFERENCES ci4_roles(id)
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (school_id) REFERENCES tenant_catalog(id),
+    FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 ```
 
 ### Other Global Tables
 
-- `ci4_roles` - Role definitions (shared across all tenants)
-- `ci4_migrations` - Database migration history (system metadata)
+- `roles` - Role definitions (shared across all tenants)
+- `migrations` - Database migration history (system metadata)
 - `audit_seals` - Daily audit log seals (cryptographic integrity, not tenant-specific)
 
 ## Naming Conventions
@@ -303,7 +303,7 @@ CREATE TABLE ci4_user_school_assignments (
 ### Table Names
 - **Plural**: Use plural nouns (e.g., `students`, `invoices`, `books`)
 - **Lowercase**: All lowercase with underscores (e.g., `fee_structures`, `class_subjects`)
-- **CI4 Prefix**: Framework tables prefixed with `ci4_` (e.g., `ci4_users`, `ci4_roles`)
+- **CI4 Prefix**: Framework tables prefixed with `` (e.g., `users`, `roles`)
 
 ### Column Names
 - **Lowercase**: All lowercase with underscores (e.g., `first_name`, `date_of_birth`)
@@ -376,7 +376,7 @@ class CreateStudents extends Migration
         $this->forge->addKey('school_id');
         $this->forge->addKey('deleted_at');
         $this->forge->addUniqueKey(['school_id', 'admission_number']);
-        $this->forge->addForeignKey('school_id', 'ci4_tenant_catalog', 'id', 'RESTRICT', 'RESTRICT');
+        $this->forge->addForeignKey('school_id', 'tenant_catalog', 'id', 'RESTRICT', 'RESTRICT');
         
         $this->forge->createTable('students');
     }

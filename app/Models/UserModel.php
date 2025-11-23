@@ -8,11 +8,11 @@ use CodeIgniter\Model;
  * User Model
  *
  * Handles user authentication using CI4-native user tables
- * Uses ci4_users table exclusively for authentication
+ * Uses users table exclusively for authentication
  */
 class UserModel extends Model
 {
-    protected $table = 'ci4_users';
+    protected $table = 'users';
     protected $primaryKey = 'id';
     protected $returnType = 'object';
     protected $useTimestamps = true;
@@ -73,9 +73,9 @@ class UserModel extends Model
         }
 
         // Get roles
-        $roles = $this->db->table('ci4_user_roles ur')
+        $roles = $this->db->table('user_roles ur')
             ->select('r.id, r.role_name, r.role_slug, r.ci3_usertype_id, r.description')
-            ->join('ci4_roles r', 'r.id = ur.role_id')
+            ->join('roles r', 'r.id = ur.role_id')
             ->where('ur.user_id', $userId)
             ->get()
             ->getResult();
@@ -98,9 +98,9 @@ class UserModel extends Model
      */
     public function getUserPrimaryRole(int $userId): ?object
     {
-        return $this->db->table('ci4_user_roles ur')
+        return $this->db->table('user_roles ur')
             ->select('r.*')
-            ->join('ci4_roles r', 'r.id = ur.role_id')
+            ->join('roles r', 'r.id = ur.role_id')
             ->where('ur.user_id', $userId)
             ->orderBy('ur.id', 'ASC')
             ->limit(1)
@@ -115,9 +115,9 @@ class UserModel extends Model
      */
     public function getUsersWithRoles(): array
     {
-        $users = $this->select('ci4_users.*, r.role_name, r.id as role_id')
-            ->join('ci4_user_roles ur', 'ur.user_id = ci4_users.id', 'left')
-            ->join('ci4_roles r', 'r.id = ur.role_id', 'left')
+        $users = $this->select('users.*, r.role_name, r.id as role_id')
+            ->join('user_roles ur', 'ur.user_id = users.id', 'left')
+            ->join('roles r', 'r.id = ur.role_id', 'left')
             ->findAll();
 
         return $users;
@@ -132,8 +132,8 @@ class UserModel extends Model
      */
     public function hasRole(int $userId, string $roleSlug): bool
     {
-        $count = $this->db->table('ci4_user_roles ur')
-            ->join('ci4_roles r', 'r.id = ur.role_id')
+        $count = $this->db->table('user_roles ur')
+            ->join('roles r', 'r.id = ur.role_id')
             ->where('ur.user_id', $userId)
             ->where('r.role_slug', $roleSlug)
             ->countAllResults();
@@ -143,7 +143,7 @@ class UserModel extends Model
 
     /**
      * Legacy method: Get user for signin (backward compatibility)
-     * Now uses ci4_users table instead of multiple CI3 tables
+     * Now uses users table instead of multiple CI3 tables
      *
      * @param string $username
      * @param string $hashedPassword
@@ -162,7 +162,7 @@ class UserModel extends Model
             $user->userID = $user->id;
             $user->name = $user->full_name;
             $user->active = $user->is_active;
-            $user->user_table = 'ci4_users';
+            $user->user_table = 'users';
 
             // Get primary role to set usertypeID
             $role = $this->getUserPrimaryRole($user->id);

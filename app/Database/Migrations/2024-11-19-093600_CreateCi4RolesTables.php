@@ -7,7 +7,7 @@ use CodeIgniter\Database\Migration;
 /**
  * Create CI4 Roles and User Roles Tables
  * 
- * This migration creates the ci4_roles and ci4_user_roles tables
+ * This migration creates the roles and user_roles tables
  * for managing user roles in CI4, and seeds the default roles
  * with their CI3 usertypeID mappings.
  */
@@ -15,7 +15,7 @@ class CreateCi4RolesTables extends Migration
 {
     public function up()
     {
-        // Create ci4_roles table
+        // Create roles table
         $this->forge->addField([
             'id' => [
                 'type' => 'INT',
@@ -68,9 +68,9 @@ class CreateCi4RolesTables extends Migration
                 'COLLATE' => 'utf8mb4_general_ci',
             ];
         }
-        $this->forge->createTable('ci4_roles', true, $attributes);
+        $this->forge->createTable('roles', true, $attributes);
 
-        // Create ci4_user_roles pivot table
+        // Create user_roles pivot table
         $this->forge->addField([
             'id' => [
                 'type' => 'INT',
@@ -110,7 +110,7 @@ class CreateCi4RolesTables extends Migration
                 'COLLATE' => 'utf8mb4_general_ci',
             ];
         }
-        $this->forge->createTable('ci4_user_roles', true, $attributes);
+        $this->forge->createTable('user_roles', true, $attributes);
 
         // Seed default roles
         $this->seedDefaultRoles();
@@ -118,8 +118,8 @@ class CreateCi4RolesTables extends Migration
 
     public function down()
     {
-        $this->forge->dropTable('ci4_user_roles', true);
-        $this->forge->dropTable('ci4_roles', true);
+        $this->forge->dropTable('user_roles', true);
+        $this->forge->dropTable('roles', true);
     }
 
     /**
@@ -128,7 +128,7 @@ class CreateCi4RolesTables extends Migration
     private function seedDefaultRoles(): void
     {
         // Check if roles already exist to prevent duplicates
-        $existingCount = $this->db->table('ci4_roles')->countAllResults();
+        $existingCount = $this->db->table('roles')->countAllResults();
         if ($existingCount > 0) {
             return; // Roles already seeded
         }
@@ -200,6 +200,6 @@ class CreateCi4RolesTables extends Migration
             ],
         ];
 
-        $this->db->table('ci4_roles')->insertBatch($roles);
+        $this->db->table('roles')->insertBatch($roles);
     }
 }

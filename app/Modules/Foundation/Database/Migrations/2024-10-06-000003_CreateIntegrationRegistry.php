@@ -25,11 +25,11 @@ class CreateIntegrationRegistry extends Migration
         $this->forge->addKey('id', true);
         $this->forge->addKey(['channel', 'idempotency_key'], false, true);
         $this->forge->addKey('status');
-        $this->forge->createTable('ci4_integration_dispatches', true);
+        $this->forge->createTable('integration_dispatches', true);
     }
 
     public function down(): void
     {
-        $this->forge->dropTable('ci4_integration_dispatches', true);
+        $this->forge->dropTable('integration_dispatches', true);
     }
 }

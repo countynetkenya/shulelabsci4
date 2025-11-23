@@ -24,7 +24,7 @@ class InstallServiceTest extends FoundationDatabaseTestCase
 
     public function testIsInstalledReturnsTrueWhenTenantsExist(): void
     {
-        $this->db->table('ci4_tenant_catalog')->insert([
+        $this->db->table('tenant_catalog')->insert([
             'id' => 'org-test',
             'tenant_type' => 'organisation',
             'name' => 'Test Org',
@@ -64,7 +64,7 @@ class InstallServiceTest extends FoundationDatabaseTestCase
         $this->assertSame('test-school', $result['school_id']);
 
         // Verify organisation was created
-        $org = $this->db->table('ci4_tenant_catalog')
+        $org = $this->db->table('tenant_catalog')
             ->where('id', 'test-org')
             ->where('tenant_type', 'organisation')
             ->get()
@@ -74,7 +74,7 @@ class InstallServiceTest extends FoundationDatabaseTestCase
         $this->assertSame('Test Organisation', $org->name);
 
         // Verify school was created
-        $school = $this->db->table('ci4_tenant_catalog')
+        $school = $this->db->table('tenant_catalog')
             ->where('id', 'test-school')
             ->where('tenant_type', 'school')
             ->get()
@@ -108,7 +108,7 @@ class InstallServiceTest extends FoundationDatabaseTestCase
         $this->seedRoles();
 
         // Create school tenant
-        $this->db->table('ci4_tenant_catalog')->insert([
+        $this->db->table('tenant_catalog')->insert([
             'id' => 'school-1',
             'tenant_type' => 'school',
             'name' => 'Test School',
@@ -128,7 +128,7 @@ class InstallServiceTest extends FoundationDatabaseTestCase
         $this->assertGreaterThan(0, $userId);
 
         // Verify user was created
-        $user = $this->db->table('ci4_users')->where('id', $userId)->get()->getRow();
+        $user = $this->db->table('users')->where('id', $userId)->get()->getRow();
 
         $this->assertNotNull($user);
         $this->assertSame('admin', $user->username);
@@ -141,7 +141,7 @@ class InstallServiceTest extends FoundationDatabaseTestCase
         $this->assertSame($expectedHash, $user->password_hash);
 
         // Verify role assignment
-        $roleAssignment = $this->db->table('ci4_user_roles')
+        $roleAssignment = $this->db->table('user_roles')
             ->where('user_id', $userId)
             ->get()
             ->getRow();
@@ -149,7 +149,7 @@ class InstallServiceTest extends FoundationDatabaseTestCase
         $this->assertNotNull($roleAssignment);
 
         // Verify it's the super admin role
-        $role = $this->db->table('ci4_roles')
+        $role = $this->db->table('roles')
             ->where('id', $roleAssignment->role_id)
             ->get()
             ->getRow();
@@ -162,7 +162,7 @@ class InstallServiceTest extends FoundationDatabaseTestCase
         $this->seedRoles();
 
         // Create existing user
-        $this->db->table('ci4_users')->insert([
+        $this->db->table('users')->insert([
             'username' => 'admin',
             'email' => 'other@test.com',
             'password_hash' => hash('sha512', 'test'),
@@ -190,7 +190,7 @@ class InstallServiceTest extends FoundationDatabaseTestCase
         $this->seedRoles();
 
         // Create existing user
-        $this->db->table('ci4_users')->insert([
+        $this->db->table('users')->insert([
             'username' => 'other',
             'email' => 'admin@test.com',
             'password_hash' => hash('sha512', 'test'),
@@ -218,7 +218,7 @@ class InstallServiceTest extends FoundationDatabaseTestCase
         // Create roles table
         $prefix = $this->db->getPrefix();
         $this->db->simpleQuery("DROP TABLE IF EXISTS {$prefix}roles");
-        $this->db->simpleQuery("DROP TABLE IF EXISTS {$prefix}ci4_user_roles");
+        $this->db->simpleQuery("DROP TABLE IF EXISTS {$prefix}user_roles");
         $this->db->simpleQuery("DROP TABLE IF EXISTS {$prefix}users");
 
         $this->db->simpleQuery(<<<SQL
@@ -234,7 +234,7 @@ CREATE TABLE {$prefix}roles (
 SQL);
 
         $this->db->simpleQuery(<<<SQL
-CREATE TABLE {$prefix}ci4_user_roles (
+CREATE TABLE {$prefix}user_roles (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     role_id INTEGER NOT NULL,
@@ -260,7 +260,7 @@ CREATE TABLE {$prefix}users (
 SQL);
 
         // Insert super admin role
-        $this->db->table('ci4_roles')->insert([
+        $this->db->table('roles')->insert([
             'role_name' => 'Super Admin',
             'role_slug' => 'super_admin',
             'ci3_usertype_id' => 0,

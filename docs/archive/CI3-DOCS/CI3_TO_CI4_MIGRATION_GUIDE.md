@@ -24,7 +24,7 @@ This guide covers the complete process for migrating a ShuleLabs CI3 database to
 
 **What Changed:**
 - **Before:** CI4 authenticated against CI3 tables (student, teacher, parents, user, systemadmin)
-- **Now:** CI4 uses its own `ci4_users`, `ci4_roles`, and `ci4_user_roles` tables
+- **Now:** CI4 uses its own `users`, `roles`, and `user_roles` tables
 - **Migration:** Automatic one-time backfill from CI3 tables to CI4 tables during initial migration
 - **Independence:** After migration, CI4 authentication operates independently of CI3
 
@@ -44,18 +44,18 @@ This guide covers the complete process for migrating a ShuleLabs CI3 database to
 
 CI4 introduces three new tables for user management:
 
-**1. `ci4_users`** - Main user identity table
+**1. `users`** - Main user identity table
 - Replaces multi-table CI3 approach (student, teacher, parents, user, systemadmin)
 - Contains: username, email, password_hash, full_name, photo, schoolID, is_active
 - Tracks original CI3 source via `ci3_user_id` and `ci3_user_table` fields
 - One user record per person, regardless of role
 
-**2. `ci4_roles`** - Role definitions
+**2. `roles`** - Role definitions
 - 8 pre-seeded roles: super_admin, admin, teacher, student, parent, accountant, librarian, receptionist
 - Maps to CI3 usertypeID for backward compatibility
 - Enables future role expansion beyond CI3's fixed types
 
-**3. `ci4_user_roles`** - User-to-role assignments
+**3. `user_roles`** - User-to-role assignments
 - Many-to-many relationship between users and roles
 - Allows users to have multiple roles (future enhancement)
 
@@ -64,16 +64,16 @@ CI4 introduces three new tables for user management:
 When you run `php spark migrate --all` on a database with existing CI3 user tables:
 
 1. **Create CI4 Tables**
-   - Creates `ci4_users`, `ci4_roles`, `ci4_user_roles`
+   - Creates `users`, `roles`, `user_roles`
    - Adds proper indexes and foreign key relationships
 
 2. **Seed Roles**
-   - Populates `ci4_roles` with 8 default roles
+   - Populates `roles` with 8 default roles
    - Maps each role to corresponding CI3 usertypeID (0-7)
 
 3. **Backfill Users** (Automatic)
    - Scans CI3 tables: systemadmin, user, teacher, student, parents
-   - Copies each user to `ci4_users` with:
+   - Copies each user to `users` with:
      - Original username and password hash (unchanged)
      - User metadata (name, email, photo, schoolID, active status)
      - CI3 source tracking (ci3_user_id, ci3_user_table)
@@ -82,7 +82,7 @@ When you run `php spark migrate --all` on a database with existing CI3 user tabl
 
 4. **Result**
    - All CI3 users can now log in via CI4
-   - CI4 authenticates against `ci4_users` only
+   - CI4 authenticates against `users` only
    - CI3 tables remain unchanged and functional
    - Both systems can operate independently
 
@@ -101,7 +101,7 @@ When you run `php spark migrate --all` on a database with existing CI3 user tabl
 - No data is removed or modified in CI3 tables
 
 **After migration:**
-- CI4 authenticates exclusively from `ci4_users`
+- CI4 authenticates exclusively from `users`
 - CI3 can still use its original tables if running in parallel
 - No runtime synchronization between CI3 and CI4 user tables
 - Changes in CI3 won't automatically appear in CI4 (one-time migration only)
@@ -174,7 +174,7 @@ When you run `php spark migrate --all` on a database with existing CI3 user tabl
 
 **Approach**:
 - Use in-place migration (Strategy 1)
-- Add `ci4_` prefix to all new CI4-specific tables
+- Add `` prefix to all new CI4-specific tables
 - Share critical tables like `school_sessions` without prefix
 - Clear visual separation between CI3 and CI4 tables
 
@@ -187,10 +187,10 @@ When you run `php spark migrate --all` on a database with existing CI3 user tabl
 **Implementation**:
 ```bash
 # Audit with prefix
-php spark db:audit --prefix=ci4_
+php spark db:audit --prefix=
 
 # Upgrade with prefix
-php spark db:upgrade --apply --prefix=ci4_
+php spark db:upgrade --apply --prefix=
 ```
 
 ---
@@ -349,7 +349,7 @@ php spark migrate:status
 
 ### When to Use Prefixes
 
-Use table prefixes (`ci4_`) when:
+Use table prefixes (``) when:
 - You want clear separation between CI3 and CI4 tables
 - Multiple developers need to identify table ownership
 - Planning to archive/remove CI3 tables later
@@ -361,15 +361,15 @@ Use table prefixes (`ci4_`) when:
 
 ```bash
 # Audit with prefix
-php spark db:audit --prefix=ci4_
+php spark db:audit --prefix=
 
 # Upgrade with prefix
-php spark db:upgrade --apply --prefix=ci4_
+php spark db:upgrade --apply --prefix=
 
 # Results in tables like:
-# - ci4_audit_events
-# - ci4_idempotency_keys
-# - ci4_menu_overrides
+# - audit_events
+# - idempotency_keys
+# - menu_overrides
 # - school_sessions (shared, no prefix)
 ```
 
@@ -563,7 +563,7 @@ FLUSH PRIVILEGES;
 ```bash
 # Skip existing tables (automatic in db:upgrade)
 # Or use prefix to separate
-php spark db:upgrade --apply --prefix=ci4_
+php spark db:upgrade --apply --prefix=
 ```
 
 ---
@@ -683,20 +683,20 @@ If you encounter issues not covered in this guide:
 # Audit Commands
 php spark db:audit                              # Basic audit
 php spark db:audit --format=json                # JSON output
-php spark db:audit --prefix=ci4_                # With table prefix
+php spark db:audit --prefix=                # With table prefix
 php spark db:audit --validate-data              # Include data validation
 php spark db:audit --include-experimental       # Include OKR tables
 
 # Upgrade Commands
 php spark db:upgrade --dry-run                  # Preview changes
 php spark db:upgrade --apply                    # Apply changes
-php spark db:upgrade --apply --prefix=ci4_      # With prefix
+php spark db:upgrade --apply --prefix=      # With prefix
 php spark db:upgrade --migrations               # Generate migration files
 
 # Backfill Commands
 php spark db:backfill --dry-run                 # Preview data fixes
 php spark db:backfill --apply                   # Apply data fixes
-php spark db:backfill --prefix=ci4_             # With prefix
+php spark db:backfill --prefix=             # With prefix
 
 # Standalone Script (no Spark)
 php ci4/scripts/ci3-db-upgrade.php \

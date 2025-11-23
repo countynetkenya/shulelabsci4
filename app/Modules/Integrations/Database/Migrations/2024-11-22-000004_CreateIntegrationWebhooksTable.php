@@ -53,11 +53,11 @@ class CreateIntegrationWebhooksTable extends Migration
         $this->forge->addKey(['integration_id']);
         $this->forge->addKey(['event_type']);
         $this->forge->addKey(['is_active']);
-        $this->forge->createTable('ci4_integration_webhooks', true);
+        $this->forge->createTable('integration_webhooks', true);
     }
 
     public function down(): void
     {
-        $this->forge->dropTable('ci4_integration_webhooks', true);
+        $this->forge->dropTable('integration_webhooks', true);
     }
 }

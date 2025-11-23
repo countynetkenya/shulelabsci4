@@ -72,7 +72,7 @@ class CreateSchoolClassesTable extends Migration
         // Foreign keys only for MySQL
         if ($this->db->DBDriver === 'MySQLi') {
             $this->forge->addForeignKey('school_id', 'schools', 'id', 'CASCADE', 'CASCADE');
-            $this->forge->addForeignKey('class_teacher_id', 'ci4_users', 'id', 'SET NULL', 'CASCADE');
+            $this->forge->addForeignKey('class_teacher_id', 'users', 'id', 'SET NULL', 'CASCADE');
         }
         
         $attributes = [];

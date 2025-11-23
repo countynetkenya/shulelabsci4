@@ -53,8 +53,8 @@ class StudentEnrollmentModel extends TenantModel
                               parents.last_name as parent_last_name,
                               parents.email as parent_email,
                               school_classes.class_name')
-            ->join('ci4_users as students', 'students.id = student_enrollments.student_id')
-            ->join('ci4_users as parents', 'parents.id = student_enrollments.parent_id', 'left')
+            ->join('users as students', 'students.id = student_enrollments.student_id')
+            ->join('users as parents', 'parents.id = student_enrollments.parent_id', 'left')
             ->join('school_classes', 'school_classes.id = student_enrollments.class_id', 'left')
             ->find($enrollmentId);
     }
@@ -75,8 +75,8 @@ class StudentEnrollmentModel extends TenantModel
      */
     public function getClassStudents(int $classId, string $status = 'active'): array
     {
-        return $this->select('student_enrollments.*, ci4_users.first_name, ci4_users.last_name, ci4_users.email')
-            ->join('ci4_users', 'ci4_users.id = student_enrollments.student_id')
+        return $this->select('student_enrollments.*, users.first_name, users.last_name, users.email')
+            ->join('users', 'users.id = student_enrollments.student_id')
             ->where('student_enrollments.class_id', $classId)
             ->where('student_enrollments.status', $status)
             ->findAll();
@@ -88,11 +88,11 @@ class StudentEnrollmentModel extends TenantModel
     public function getParentChildren(int $parentId): array
     {
         return $this->select('student_enrollments.*, 
-                              ci4_users.first_name, 
-                              ci4_users.last_name, 
-                              ci4_users.email,
+                              users.first_name, 
+                              users.last_name, 
+                              users.email,
                               school_classes.class_name')
-            ->join('ci4_users', 'ci4_users.id = student_enrollments.student_id')
+            ->join('users', 'users.id = student_enrollments.student_id')
             ->join('school_classes', 'school_classes.id = student_enrollments.class_id', 'left')
             ->where('student_enrollments.parent_id', $parentId)
             ->where('student_enrollments.status', 'active')

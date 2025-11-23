@@ -64,9 +64,9 @@ final class HrServiceTest extends CIUnitTestCase
         // Create users (teachers and staff) - includes IDs referenced in tests
         $teacherIds = [25, 26, 101, 102, 103, 104, 105];
         foreach ($teacherIds as $i) {
-            $existing = $db->table('ci4_users')->where('id', $i)->get()->getRow();
+            $existing = $db->table('users')->where('id', $i)->get()->getRow();
             if (!$existing) {
-                $db->table('ci4_users')->insert([
+                $db->table('users')->insert([
                     'id' => $i,
                     'username' => "teacher{$i}",
                     'email' => "teacher{$i}@test.com",

@@ -279,7 +279,7 @@ public function up()
     $this->forge->addKey('id', true);
     $this->forge->addKey('email');
     $this->forge->addKey('is_active');
-    $this->forge->createTable('ci4_users');
+    $this->forge->createTable('users');
 }
 ```
 
@@ -293,7 +293,7 @@ mysql -e "SHOW TABLES FROM shulelabs_dev"
 # Expected: 18 tables created
 
 # Verify indexes:
-mysql -e "SHOW INDEX FROM ci4_users"
+mysql -e "SHOW INDEX FROM users"
 # Expected: id (PRIMARY), email (UNIQUE), is_active (INDEX)
 ```
 
@@ -311,7 +311,7 @@ use CodeIgniter\Model;
 
 class UserModel extends Model
 {
-    protected $table = 'ci4_users';
+    protected $table = 'users';
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
     protected $returnType = 'array';
@@ -325,7 +325,7 @@ class UserModel extends Model
     
     // Validation rules auto-generated from schema
     protected $validationRules = [
-        'email' => 'required|valid_email|is_unique[ci4_users.email,id,{id}]',
+        'email' => 'required|valid_email|is_unique[users.email,id,{id}]',
         'password' => 'required|min_length[8]',
         'first_name' => 'required|max_length[100]',
         'last_name' => 'required|max_length[100]',
@@ -335,9 +335,9 @@ class UserModel extends Model
     public function roles()
     {
         return $this->asArray()
-                    ->select('ci4_roles.*')
-                    ->join('ci4_user_roles', 'ci4_user_roles.user_id = ci4_users.id')
-                    ->join('ci4_roles', 'ci4_roles.id = ci4_user_roles.role_id')
+                    ->select('roles.*')
+                    ->join('user_roles', 'user_roles.user_id = users.id')
+                    ->join('roles', 'roles.id = user_roles.role_id')
                     ->findAll();
     }
 }
@@ -415,7 +415,7 @@ class AdminControllerTest extends CIUnitTestCase
         $result->assertStatus(200);
         $result->assertSee('User created successfully');
         
-        $this->seeInDatabase('ci4_users', [
+        $this->seeInDatabase('users', [
             'email' => 'newuser@example.com',
             'first_name' => 'John',
         ]);

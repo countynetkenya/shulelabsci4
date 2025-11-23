@@ -42,9 +42,9 @@ class SchoolUserModel extends Model
      */
     public function getUserSchools(int $userId): array
     {
-        return $this->select('schools.*, school_users.role_id, school_users.is_primary_school, ci4_roles.role_name')
+        return $this->select('schools.*, school_users.role_id, school_users.is_primary_school, roles.role_name')
             ->join('schools', 'schools.id = school_users.school_id')
-            ->join('ci4_roles', 'ci4_roles.id = school_users.role_id')
+            ->join('roles', 'roles.id = school_users.role_id')
             ->where('school_users.user_id', $userId)
             ->where('schools.is_active', true)
             ->findAll();
@@ -55,9 +55,9 @@ class SchoolUserModel extends Model
      */
     public function getSchoolUsers(int $schoolId, ?int $roleId = null): array
     {
-        $builder = $this->select('ci4_users.*, school_users.role_id, ci4_roles.role_name')
-            ->join('ci4_users', 'ci4_users.id = school_users.user_id')
-            ->join('ci4_roles', 'ci4_roles.id = school_users.role_id')
+        $builder = $this->select('users.*, school_users.role_id, roles.role_name')
+            ->join('users', 'users.id = school_users.user_id')
+            ->join('roles', 'roles.id = school_users.role_id')
             ->where('school_users.school_id', $schoolId);
 
         if ($roleId) {

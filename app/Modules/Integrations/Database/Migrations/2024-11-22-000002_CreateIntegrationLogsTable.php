@@ -79,11 +79,11 @@ class CreateIntegrationLogsTable extends Migration
         $this->forge->addKey(['idempotency_key']);
         $this->forge->addKey(['tenant_id']);
         $this->forge->addKey(['created_at']);
-        $this->forge->createTable('ci4_integration_logs', true);
+        $this->forge->createTable('integration_logs', true);
     }
 
     public function down(): void
     {
-        $this->forge->dropTable('ci4_integration_logs', true);
+        $this->forge->dropTable('integration_logs', true);
     }
 }

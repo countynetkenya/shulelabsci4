@@ -41,7 +41,7 @@ class InstallService
 
         // Fallback: check if there are any organisation or school tenants
         try {
-            $count = $this->db->table('ci4_tenant_catalog')
+            $count = $this->db->table('tenant_catalog')
                 ->whereIn('tenant_type', ['organisation', 'school'])
                 ->countAllResults();
             
@@ -73,10 +73,10 @@ class InstallService
     public function checkMigrations(): array
     {
         $requiredTables = [
-            'ci4_tenant_catalog',
-            'ci4_users',
-            'ci4_roles',
-            'ci4_user_roles',
+            'tenant_catalog',
+            'users',
+            'roles',
+            'user_roles',
         ];
 
         $missing = [];
@@ -115,7 +115,7 @@ class InstallService
                 $orgMetadata['country'] = $data['country'];
             }
 
-            $this->db->table('ci4_tenant_catalog')->insert([
+            $this->db->table('tenant_catalog')->insert([
                 'id' => $orgId,
                 'tenant_type' => 'organisation',
                 'name' => $data['organisation_name'],
@@ -130,7 +130,7 @@ class InstallService
                 $schoolMetadata['curriculum'] = $data['curriculum'];
             }
 
-            $this->db->table('ci4_tenant_catalog')->insert([
+            $this->db->table('tenant_catalog')->insert([
                 'id' => $schoolId,
                 'tenant_type' => 'school',
                 'name' => $data['school_name'],
@@ -168,7 +168,7 @@ class InstallService
 
         try {
             // Check if username already exists
-            $existing = $this->db->table('ci4_users')
+            $existing = $this->db->table('users')
                 ->where('username', $data['username'])
                 ->get()
                 ->getRow();
@@ -179,7 +179,7 @@ class InstallService
 
             // Check if email already exists
             if (!empty($data['email'])) {
-                $existingEmail = $this->db->table('ci4_users')
+                $existingEmail = $this->db->table('users')
                     ->where('email', $data['email'])
                     ->get()
                     ->getRow();
@@ -196,7 +196,7 @@ class InstallService
             $passwordHash = hash('sha512', $data['password']);
 
             // Create user
-            $this->db->table('ci4_users')->insert([
+            $this->db->table('users')->insert([
                 'username' => $data['username'],
                 'email' => $data['email'],
                 'password_hash' => $passwordHash,
@@ -210,7 +210,7 @@ class InstallService
             $userId = (int) $this->db->insertID();
 
             // Get Super Admin role
-            $superAdminRole = $this->db->table('ci4_roles')
+            $superAdminRole = $this->db->table('roles')
                 ->where('role_slug', 'super_admin')
                 ->get()
                 ->getRow();
@@ -220,7 +220,7 @@ class InstallService
             }
 
             // Assign Super Admin role to user
-            $this->db->table('ci4_user_roles')->insert([
+            $this->db->table('user_roles')->insert([
                 'user_id' => $userId,
                 'role_id' => $superAdminRole->id,
                 'created_at' => date('Y-m-d H:i:s'),

@@ -44,8 +44,8 @@ class SchoolClassModel extends TenantModel
      */
     public function getClassWithTeacher(int $classId): ?array
     {
-        return $this->select('school_classes.*, ci4_users.first_name, ci4_users.last_name, ci4_users.email')
-            ->join('ci4_users', 'ci4_users.id = school_classes.class_teacher_id', 'left')
+        return $this->select('school_classes.*, users.first_name, users.last_name, users.email')
+            ->join('users', 'users.id = school_classes.class_teacher_id', 'left')
             ->find($classId);
     }
 

@@ -117,7 +117,7 @@ try {
 
 **Example**:
 ```php
-$forge->createTable('ci4_users', 
+$forge->createTable('users', 
     false, 
     $this->db->DBDriver === 'MySQLi' ? ['ENGINE' => 'InnoDB'] : []
 );

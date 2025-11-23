@@ -49,8 +49,8 @@ class CreateSchoolUsersTable extends Migration
         // Foreign keys only for MySQL
         if ($this->db->DBDriver === 'MySQLi') {
             $this->forge->addForeignKey('school_id', 'schools', 'id', 'CASCADE', 'CASCADE');
-            $this->forge->addForeignKey('user_id', 'ci4_users', 'id', 'CASCADE', 'CASCADE');
-            $this->forge->addForeignKey('role_id', 'ci4_roles', 'id', 'CASCADE', 'CASCADE');
+            $this->forge->addForeignKey('user_id', 'users', 'id', 'CASCADE', 'CASCADE');
+            $this->forge->addForeignKey('role_id', 'roles', 'id', 'CASCADE', 'CASCADE');
         }
         
         $attributes = [];

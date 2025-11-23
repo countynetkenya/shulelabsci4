@@ -55,11 +55,11 @@ class CreateIntegrationAuthTokensTable extends Migration
         $this->forge->addKey('id', true);
         $this->forge->addKey(['integration_id']);
         $this->forge->addKey(['expires_at']);
-        $this->forge->createTable('ci4_integration_auth_tokens', true);
+        $this->forge->createTable('integration_auth_tokens', true);
     }
 
     public function down(): void
     {
-        $this->forge->dropTable('ci4_integration_auth_tokens', true);
+        $this->forge->dropTable('integration_auth_tokens', true);
     }
 }

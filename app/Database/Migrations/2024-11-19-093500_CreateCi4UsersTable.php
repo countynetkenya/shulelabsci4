@@ -7,7 +7,7 @@ use CodeIgniter\Database\Migration;
 /**
  * Create CI4 Users Table
  * 
- * This migration creates the ci4_users table that will serve as the
+ * This migration creates the users table that will serve as the
  * normalized identity store for all user types in CI4, replacing the
  * CI3 multi-table approach (student, teacher, parents, user, systemadmin).
  */
@@ -98,11 +98,11 @@ class CreateCi4UsersTable extends Migration
                 'COLLATE' => 'utf8mb4_general_ci',
             ];
         }
-        $this->forge->createTable('ci4_users', true, $attributes);
+        $this->forge->createTable('users', true, $attributes);
     }
 
     public function down()
     {
-        $this->forge->dropTable('ci4_users', true);
+        $this->forge->dropTable('users', true);
     }
 }

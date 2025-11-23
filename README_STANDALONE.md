@@ -4,8 +4,8 @@ This is the standalone CodeIgniter 4 version of ShuleLabs School Management Syst
 
 ## Features
 
-- **CI4-Native Authentication System**: Independent user authentication with normalized `ci4_users` table
-- **Role-Based Access Control**: Flexible role management via `ci4_roles` and `ci4_user_roles` tables
+- **CI4-Native Authentication System**: Independent user authentication with normalized `users` table
+- **Role-Based Access Control**: Flexible role management via `roles` and `ci4_user_roles` tables
 - **Multi-User Type Support**: Super admin, admin, teacher, student, parent, accountant, librarian, receptionist
 - **Automatic CI3 Migration**: Seamlessly backfills user data from existing CI3 tables on first run
 - **School Selection**: Support for users with access to multiple schools
@@ -93,7 +93,7 @@ SESSION_SAVE_PATH=school_sessions
 
 ### 4. Database Setup
 
-CI4 now uses its own normalized user schema (`ci4_users`, `ci4_roles`, `ci4_user_roles`) that is completely independent from CI3.
+CI4 now uses its own normalized user schema (`users`, `roles`, `ci4_user_roles`) that is completely independent from CI3.
 
 **For Fresh Installation (Recommended - Web-Based Installer):**
 
@@ -129,10 +129,10 @@ php spark migrate --all
 ```
 
 This will:
-- Create the `ci4_users` table for all user identities
-- Create the `ci4_roles` and `ci4_user_roles` tables for role management
+- Create the `users` table for all user identities
+- Create the `roles` and `ci4_user_roles` tables for role management
 - Seed 8 default roles (super_admin, admin, teacher, student, parent, accountant, librarian, receptionist)
-- **Automatically backfill** all users from CI3 tables into `ci4_users`
+- **Automatically backfill** all users from CI3 tables into `users`
 - Preserve original passwords (CI3-compatible hashes) for seamless login
 
 4. (Optional) Seed a default CI4 superadmin if you don't have any CI3 users:
@@ -235,7 +235,7 @@ Your existing CI3 credentials will work seamlessly after migration:
 **IMPORTANT:** 
 - All CI3 passwords are preserved during migration and will work with CI4
 - Change default passwords immediately after first login!
-- The CI4 authentication now uses the `ci4_users` table instead of the legacy CI3 tables
+- The CI4 authentication now uses the `users` table instead of the legacy CI3 tables
 
 ## Directory Structure
 
@@ -274,7 +274,7 @@ ci4/
 
 ## User Types & Roles
 
-The system supports the following user roles in the `ci4_roles` table:
+The system supports the following user roles in the `roles` table:
 
 | Role | CI3 usertypeID | Description |
 |------|---------------|-------------|
@@ -291,19 +291,19 @@ Users can have multiple roles assigned via the `ci4_user_roles` pivot table.
 
 ## Authentication Flow
 
-**CI4 now authenticates exclusively against the `ci4_users` table:**
+**CI4 now authenticates exclusively against the `users` table:**
 
 1. User visits `/auth/signin`
-2. Username is looked up in `ci4_users` table
+2. Username is looked up in `users` table
 3. Password is hashed using SHA-512 with encryption key (CI3 compatible via `HashCompat`)
-4. Hashed password is compared against `password_hash` field in `ci4_users`
-5. On success, user roles are loaded from `ci4_user_roles` and `ci4_roles`
+4. Hashed password is compared against `password_hash` field in `users`
+5. On success, user roles are loaded from `ci4_user_roles` and `roles`
 6. Session is created in `school_sessions` table
 7. User with multiple schools sees school selection page
 8. After school selection (or if single school), redirect to dashboard
 9. Super admins are redirected to admin panel
 
-**Key Change:** CI4 no longer queries CI3 tables (student, teacher, parents, user, systemadmin) for authentication. All authentication is handled by the normalized `ci4_users` table.
+**Key Change:** CI4 no longer queries CI3 tables (student, teacher, parents, user, systemadmin) for authentication. All authentication is handled by the normalized `users` table.
 
 ## Database Sessions
 
@@ -326,7 +326,7 @@ This allows optional session sharing between CI3 and CI4 during migration, thoug
 
 CI4 uses three primary tables for user management:
 
-**ci4_users** - Main user identity store:
+**users** - Main user identity store:
 - `id` - Primary key
 - `username` - Unique username
 - `email` - User email
@@ -339,7 +339,7 @@ CI4 uses three primary tables for user management:
 - `is_active` - Active status flag
 - `created_at`, `updated_at` - Timestamps
 
-**ci4_roles** - Role definitions:
+**roles** - Role definitions:
 - `id` - Primary key
 - `role_name` - Display name
 - `role_slug` - URL-friendly identifier
@@ -348,13 +348,13 @@ CI4 uses three primary tables for user management:
 
 **ci4_user_roles** - User-to-role assignments:
 - `id` - Primary key
-- `user_id` - References ci4_users.id
-- `role_id` - References ci4_roles.id
+- `user_id` - References users.id
+- `role_id` - References roles.id
 
 ## Security Considerations
 
 1. **Encryption Key**: Must match CI3 installation for password compatibility during migration
-2. **Independent Authentication**: CI4 uses its own `ci4_users` table, not CI3 user tables
+2. **Independent Authentication**: CI4 uses its own `users` table, not CI3 user tables
 3. **Password Migration**: Existing CI3 passwords are preserved as SHA-512 hashes and work seamlessly
 4. **Future Upgrade Path**: Passwords can be upgraded to bcrypt/Argon2 on next login
 5. **CSRF Protection**: Enabled globally (except auth routes)
@@ -390,14 +390,14 @@ ENCRYPTION_KEY=your_32_character_or_longer_key_here
 
 **For CI4 users (after migration):**
 
-1. Verify the `ci4_users` table has been populated:
+1. Verify the `users` table has been populated:
    ```sql
-   SELECT * FROM ci4_users WHERE username='admin';
+   SELECT * FROM users WHERE username='admin';
    ```
 
 2. Check that the user is active:
    ```sql
-   UPDATE ci4_users SET is_active=1 WHERE username='admin';
+   UPDATE users SET is_active=1 WHERE username='admin';
    ```
 
 3. Verify the encryption key in `.env` matches your CI3 installation (for migrated users)
@@ -407,14 +407,14 @@ ENCRYPTION_KEY=your_32_character_or_longer_key_here
    $hash = hash('sha512', 'password' . getenv('ENCRYPTION_KEY'));
    echo $hash;
    ```
-   Compare with the `password_hash` field in `ci4_users`
+   Compare with the `password_hash` field in `users`
 
 5. Check user has an assigned role:
    ```sql
    SELECT u.username, r.role_name 
-   FROM ci4_users u
+   FROM users u
    LEFT JOIN ci4_user_roles ur ON u.id = ur.user_id
-   LEFT JOIN ci4_roles r ON ur.role_id = r.id
+   LEFT JOIN roles r ON ur.role_id = r.id
    WHERE u.username='admin';
    ```
 
@@ -718,7 +718,7 @@ The CI4 runtime now uses its own normalized user schema and no longer depends on
    php spark migrate --all
    ```
    This will:
-   - Create `ci4_users`, `ci4_roles`, and `ci4_user_roles` tables
+   - Create `users`, `roles`, and `ci4_user_roles` tables
    - Seed default roles
    - **Automatically backfill all users from CI3 tables** (student, teacher, parents, user, systemadmin)
    - Preserve original passwords (CI3-compatible hashes)
@@ -726,20 +726,20 @@ The CI4 runtime now uses its own normalized user schema and no longer depends on
 3. **Verify the migration:**
    ```bash
    # Check that users were migrated
-   php spark db:query "SELECT COUNT(*) as total FROM ci4_users"
+   php spark db:query "SELECT COUNT(*) as total FROM users"
    
    # Check roles were seeded
-   php spark db:query "SELECT * FROM ci4_roles"
+   php spark db:query "SELECT * FROM roles"
    ```
 
 4. **Test authentication:**
    - Existing CI3 usernames and passwords will work with CI4
-   - CI4 now authenticates against `ci4_users` instead of CI3 tables
+   - CI4 now authenticates against `users` instead of CI3 tables
    - Session sharing via `school_sessions` still works (optional)
 
 5. **Both systems can run in parallel:**
    - CI3 continues using its original tables (student, teacher, etc.)
-   - CI4 uses its own `ci4_users` table
+   - CI4 uses its own `users` table
    - Users are synchronized at migration time, not at runtime
    - Changes in CI3 users won't automatically reflect in CI4 (and vice versa)
 
@@ -753,7 +753,7 @@ The CI4 runtime now uses its own normalized user schema and no longer depends on
 ### Key Differences from Previous Approach
 
 **Before:** CI4 authenticated against CI3 tables (multi-table lookup)
-**Now:** CI4 authenticates against its own `ci4_users` table exclusively
+**Now:** CI4 authenticates against its own `users` table exclusively
 
 **Before:** User tables were shared between CI3 and CI4
 **Now:** CI4 has its own user schema with role-based access control
@@ -765,7 +765,7 @@ The CI4 runtime now uses its own normalized user schema and no longer depends on
 
 - **Password compatibility:** CI4 uses the same SHA-512 + ENCRYPTION_KEY hashing as CI3
 - **Session compatibility:** Both can share `school_sessions` table (optional)
-- **Migration tracking:** `ci4_users` stores original CI3 user ID and table name for reference
+- **Migration tracking:** `users` stores original CI3 user ID and table name for reference
 
 ### Fresh Installation (No CI3)
 

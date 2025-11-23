@@ -9,7 +9,7 @@ use CodeIgniter\Model;
  */
 class OfflineQueueModel extends Model
 {
-    protected $table         = 'ci4_integration_offline_queue';
+    protected $table         = 'integration_offline_queue';
     protected $primaryKey    = 'id';
     protected $allowedFields = [
         'adapter_name',

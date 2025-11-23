@@ -63,11 +63,11 @@ class CreateIntegrationWebhookLogsTable extends Migration
         $this->forge->addKey(['adapter_name', 'event_type']);
         $this->forge->addKey(['status']);
         $this->forge->addKey(['created_at']);
-        $this->forge->createTable('ci4_integration_webhook_logs', true);
+        $this->forge->createTable('integration_webhook_logs', true);
     }
 
     public function down(): void
     {
-        $this->forge->dropTable('ci4_integration_webhook_logs', true);
+        $this->forge->dropTable('integration_webhook_logs', true);
     }
 }

@@ -9,7 +9,7 @@ use CodeIgniter\Model;
  */
 class IntegrationModel extends Model
 {
-    protected $table         = 'ci4_integration_integrations';
+    protected $table         = 'integration_integrations';
     protected $primaryKey    = 'id';
     protected $allowedFields = [
         'name',
@@ -29,7 +29,7 @@ class IntegrationModel extends Model
     protected $returnType = 'array';
 
     protected $validationRules = [
-        'name'          => 'required|max_length[100]|is_unique[ci4_integration_integrations.name,id,{id}]',
+        'name'          => 'required|max_length[100]|is_unique[integration_integrations.name,id,{id}]',
         'type'          => 'required|max_length[50]',
         'adapter_class' => 'required|max_length[255]',
         'is_active'     => 'in_list[0,1]',

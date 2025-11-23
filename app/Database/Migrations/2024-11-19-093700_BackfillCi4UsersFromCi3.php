@@ -7,7 +7,7 @@ use CodeIgniter\Database\Migration;
 /**
  * Backfill CI4 Users from CI3 Tables
  * 
- * This migration backfills the ci4_users and ci4_user_roles tables
+ * This migration backfills the users and user_roles tables
  * from existing CI3 user tables (systemadmin, user, teacher, student, parents).
  * 
  * It is idempotent - safe to run multiple times, as it checks for existing data.
@@ -42,12 +42,12 @@ class BackfillCi4UsersFromCi3 extends Migration
 
     public function up()
     {
-        // Check if ci4_users already has data
-        $existingUsers = $this->db->table('ci4_users')->countAllResults();
+        // Check if users already has data
+        $existingUsers = $this->db->table('users')->countAllResults();
         
         if ($existingUsers > 0) {
             echo "CI4 users table already has {$existingUsers} records. Skipping backfill to prevent duplicates.\n";
-            echo "If you want to re-run the backfill, please truncate ci4_users and ci4_user_roles first.\n";
+            echo "If you want to re-run the backfill, please truncate users and user_roles first.\n";
             return;
         }
 
@@ -68,10 +68,10 @@ class BackfillCi4UsersFromCi3 extends Migration
     {
         // Optionally clear CI4 users that were backfilled
         // Uncomment if you want rollback to remove data
-        // $this->db->table('ci4_user_roles')->truncate();
-        // $this->db->table('ci4_users')->truncate();
+        // $this->db->table('user_roles')->truncate();
+        // $this->db->table('users')->truncate();
         
-        echo "Backfill rollback: Data preserved. To remove, manually truncate ci4_users and ci4_user_roles.\n";
+        echo "Backfill rollback: Data preserved. To remove, manually truncate users and user_roles.\n";
     }
 
     /**
@@ -104,7 +104,7 @@ class BackfillCi4UsersFromCi3 extends Migration
 
         foreach ($users as $user) {
             try {
-                // Prepare user data for ci4_users
+                // Prepare user data for users
                 $ci4UserData = [
                     'username' => $user->username ?? '',
                     'email' => $user->email ?? null,
@@ -126,7 +126,7 @@ class BackfillCi4UsersFromCi3 extends Migration
                 }
 
                 // Check for duplicate username
-                $existingUser = $this->db->table('ci4_users')
+                $existingUser = $this->db->table('users')
                     ->where('username', $ci4UserData['username'])
                     ->get()
                     ->getRow();
@@ -136,22 +136,22 @@ class BackfillCi4UsersFromCi3 extends Migration
                     continue;
                 }
 
-                // Insert into ci4_users
-                $this->db->table('ci4_users')->insert($ci4UserData);
+                // Insert into users
+                $this->db->table('users')->insert($ci4UserData);
                 $newUserId = $this->db->insertID();
 
                 // Determine role based on usertypeID if present, otherwise use default
                 $usertypeId = isset($user->usertypeID) ? (int)$user->usertypeID : $defaultUsertypeId;
 
                 // Get the role ID for this usertype
-                $role = $this->db->table('ci4_roles')
+                $role = $this->db->table('roles')
                     ->where('ci3_usertype_id', $usertypeId)
                     ->get()
                     ->getRow();
 
                 if ($role) {
                     // Insert user-role mapping
-                    $this->db->table('ci4_user_roles')->insert([
+                    $this->db->table('user_roles')->insert([
                         'user_id' => $newUserId,
                         'role_id' => $role->id,
                         'created_at' => date('Y-m-d H:i:s'),

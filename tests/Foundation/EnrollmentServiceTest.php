@@ -55,9 +55,9 @@ final class EnrollmentServiceTest extends CIUnitTestCase
         }
         
         // Create users if not exist
-        $existingUser = $db->table('ci4_users')->where('id', 218)->get()->getRow();
+        $existingUser = $db->table('users')->where('id', 218)->get()->getRow();
         if (!$existingUser) {
-            $db->table('ci4_users')->insertBatch([
+            $db->table('users')->insertBatch([
                 ['id' => 218, 'username' => 'student218', 'email' => 'student218@test.com', 'full_name' => 'Student 218', 'password_hash' => password_hash('password', PASSWORD_DEFAULT), 'created_at' => date('Y-m-d H:i:s')],
                 ['id' => 219, 'username' => 'student219', 'email' => 'student219@test.com', 'full_name' => 'Student 219', 'password_hash' => password_hash('password', PASSWORD_DEFAULT), 'created_at' => date('Y-m-d H:i:s')],
                 ['id' => 33, 'username' => 'student33', 'email' => 'student33@test.com', 'full_name' => 'Student 33', 'password_hash' => password_hash('password', PASSWORD_DEFAULT), 'created_at' => date('Y-m-d H:i:s')],

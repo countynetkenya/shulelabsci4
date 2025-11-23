@@ -842,7 +842,7 @@ See: [Parent Engagement Feature Docs](features/26-PARENT-ENGAGEMENT.md)
 
 **Tenant-Aware Foundation** (✅ Complete in Phase 1/2):
 Phase 1 and Phase 2 are built with multi-tenancy by design:
-- **Tenant catalog**: `ci4_tenant_catalog` table stores organisations, schools, and warehouses
+- **Tenant catalog**: `tenant_catalog` table stores organisations, schools, and warehouses
 - **TenantResolver service**: Resolves tenant context from request headers (X-Tenant-Context, X-School-ID, X-Organisation-ID)
 - **Tenant-aware data model**: Core tables include `tenant_id` or equivalent for row-level isolation
 - **Tenant context propagation**: Controllers, services, and repositories use tenant context in business logic and queries

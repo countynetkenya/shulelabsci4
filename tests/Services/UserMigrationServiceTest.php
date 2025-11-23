@@ -11,7 +11,7 @@ use CodeIgniter\Test\DatabaseTestTrait;
 /**
  * Tests for UserMigrationService
  *
- * These tests verify the automatic user migration from CI3 tables to ci4_users
+ * These tests verify the automatic user migration from CI3 tables to users
  */
 class UserMigrationServiceTest extends CIUnitTestCase
 {

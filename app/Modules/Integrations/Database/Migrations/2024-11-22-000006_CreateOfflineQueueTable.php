@@ -92,11 +92,11 @@ class CreateOfflineQueueTable extends Migration
         $this->forge->addKey(['adapter_name']);
         $this->forge->addKey(['tenant_id', 'user_id']);
         $this->forge->addKey(['created_at']);
-        $this->forge->createTable('ci4_integration_offline_queue', true);
+        $this->forge->createTable('integration_offline_queue', true);
     }
 
     public function down(): void
     {
-        $this->forge->dropTable('ci4_integration_offline_queue', true);
+        $this->forge->dropTable('integration_offline_queue', true);
     }
 }

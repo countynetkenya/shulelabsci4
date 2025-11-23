@@ -259,14 +259,14 @@ Each module is **self-contained** with:
 ### CI4 Authentication
 - **Native CI4 authentication**
 - **Dual mode**: Session + JWT tokens
-- **Normalized schema**: `ci4_users`, `ci4_roles`, `ci4_user_roles`
+- **Normalized schema**: `users`, `roles`, `user_roles`
 - **Migration support**: Auto-backfill from CI3 tables
 - **Compatible passwords**: SHA-512 maintained for migration
 
 ### CI4 User Schema
 
 ```sql
-CREATE TABLE ci4_users (
+CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(100) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,

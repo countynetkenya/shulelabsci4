@@ -69,10 +69,10 @@ class CreateStudentEnrollmentsTable extends Migration
         
         // Foreign keys only for MySQL
         if ($this->db->DBDriver === 'MySQLi') {
-            $this->forge->addForeignKey('student_id', 'ci4_users', 'id', 'CASCADE', 'CASCADE');
+            $this->forge->addForeignKey('student_id', 'users', 'id', 'CASCADE', 'CASCADE');
             $this->forge->addForeignKey('school_id', 'schools', 'id', 'CASCADE', 'CASCADE');
             $this->forge->addForeignKey('class_id', 'school_classes', 'id', 'SET NULL', 'CASCADE');
-            $this->forge->addForeignKey('parent_id', 'ci4_users', 'id', 'SET NULL', 'CASCADE');
+            $this->forge->addForeignKey('parent_id', 'users', 'id', 'SET NULL', 'CASCADE');
         }
         
         $attributes = [];

@@ -63,11 +63,11 @@ class CreateIntegrationsTable extends Migration
         $this->forge->addKey('type');
         $this->forge->addKey('is_active');
         $this->forge->addKey('tenant_id');
-        $this->forge->createTable('ci4_integration_integrations', true);
+        $this->forge->createTable('integration_integrations', true);
     }
 
     public function down(): void
     {
-        $this->forge->dropTable('ci4_integration_integrations', true);
+        $this->forge->dropTable('integration_integrations', true);
     }
 }

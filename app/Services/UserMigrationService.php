@@ -9,7 +9,7 @@ use Modules\Foundation\Services\AuditService;
 /**
  * User Migration Service
  *
- * Handles automatic migration of users from legacy CI3 tables to ci4_users
+ * Handles automatic migration of users from legacy CI3 tables to users
  * during the authentication process.
  */
 class UserMigrationService
@@ -57,7 +57,7 @@ class UserMigrationService
     }
 
     /**
-     * Find user in CI3 tables and backfill to ci4_users if found
+     * Find user in CI3 tables and backfill to users if found
      *
      * @param string $username
      * @return object|null User object if found and migrated, null otherwise
@@ -109,12 +109,12 @@ class UserMigrationService
     }
 
     /**
-     * Migrate a CI3 user to ci4_users
+     * Migrate a CI3 user to users
      *
      * @param object $ci3User
      * @param string $tableName
      * @param array $config
-     * @return object|null Migrated user object from ci4_users, null on failure
+     * @return object|null Migrated user object from users, null on failure
      */
     protected function migrateUser(object $ci3User, string $tableName, array $config): ?object
     {
@@ -125,7 +125,7 @@ class UserMigrationService
         try {
             $this->db->transStart();
 
-            // Prepare user data for ci4_users
+            // Prepare user data for users
             $ci4UserData = [
                 'username' => $ci3User->username ?? '',
                 'email' => $ci3User->email ?? null,
@@ -140,22 +140,22 @@ class UserMigrationService
                 'updated_at' => $this->extractUpdatedAt($ci3User),
             ];
 
-            // Insert into ci4_users
-            $this->db->table('ci4_users')->insert($ci4UserData);
+            // Insert into users
+            $this->db->table('users')->insert($ci4UserData);
             $newUserId = $this->db->insertID();
 
             // Determine role based on usertypeID if present, otherwise use default
             $usertypeId = isset($ci3User->usertypeID) ? (int)$ci3User->usertypeID : $defaultUsertypeId;
 
             // Get the role ID for this usertype
-            $role = $this->db->table('ci4_roles')
+            $role = $this->db->table('roles')
                 ->where('ci3_usertype_id', $usertypeId)
                 ->get()
                 ->getRow();
 
             if ($role) {
                 // Insert user-role mapping
-                $this->db->table('ci4_user_roles')->insert([
+                $this->db->table('user_roles')->insert([
                     'user_id' => $newUserId,
                     'role_id' => $role->id,
                     'created_at' => date('Y-m-d H:i:s'),
@@ -172,7 +172,7 @@ class UserMigrationService
             // Log the migration in audit trail
             $this->logMigration($newUserId, $ci3User, $tableName);
 
-            log_message('info', "UserMigrationService::migrateUser() - Successfully migrated user {$ci3User->username} from {$tableName} to ci4_users (new ID: {$newUserId})");
+            log_message('info', "UserMigrationService::migrateUser() - Successfully migrated user {$ci3User->username} from {$tableName} to users (new ID: {$newUserId})");
 
             // Fetch and return the newly created user
             return $this->userModel->find($newUserId);

@@ -48,9 +48,9 @@ final class FinanceServiceTest extends CIUnitTestCase
         // Create students if not exist
         $students = [50, 51, 52, 53, 54, 55, 56, 57];
         foreach ($students as $id) {
-            $existingUser = $db->table('ci4_users')->where('id', $id)->get()->getRow();
+            $existingUser = $db->table('users')->where('id', $id)->get()->getRow();
             if (!$existingUser) {
-                $db->table('ci4_users')->insert([
+                $db->table('users')->insert([
                     'id' => $id,
                     'username' => "student{$id}",
                     'email' => "student{$id}@test.com",
