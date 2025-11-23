@@ -37,7 +37,132 @@ class TenantTest extends CIUnitTestCase
             $migrate = \Config\Services::migrations();
             $migrate->latest();
             self::$migrated = true;
+            
+            // Seed test data for multi-school tenant tests
+            $this->seedTestData();
         }
+    }
+    
+    /**
+     * Seed comprehensive test data for tenant isolation tests
+     */
+    protected function seedTestData(): void
+    {
+        $db = \Config\Database::connect();
+        
+        // Create schools
+        $db->table('schools')->insertBatch([
+            [
+                'school_id'   => 1,
+                'school_name' => 'Test School 1',
+                'school_code' => 'TS001',
+                'status'      => 'active',
+                'created_at'  => date('Y-m-d H:i:s'),
+                'updated_at'  => date('Y-m-d H:i:s'),
+            ],
+            [
+                'school_id'   => 2,
+                'school_name' => 'Test School 2',
+                'school_code' => 'TS002',
+                'status'      => 'active',
+                'created_at'  => date('Y-m-d H:i:s'),
+                'updated_at'  => date('Y-m-d H:i:s'),
+            ],
+            [
+                'school_id'   => 3,
+                'school_name' => 'Test School 3',
+                'school_code' => 'TS003',
+                'status'      => 'inactive',
+                'created_at'  => date('Y-m-d H:i:s'),
+                'updated_at'  => date('Y-m-d H:i:s'),
+            ],
+        ]);
+        
+        // Create roles
+        $db->table('roles')->insertBatch([
+            ['role_id' => 1, 'role_name' => 'SuperAdmin', 'created_at' => date('Y-m-d H:i:s')],
+            ['role_id' => 2, 'role_name' => 'SchoolAdmin', 'created_at' => date('Y-m-d H:i:s')],
+            ['role_id' => 3, 'role_name' => 'Teacher', 'created_at' => date('Y-m-d H:i:s')],
+            ['role_id' => 4, 'role_name' => 'Student', 'created_at' => date('Y-m-d H:i:s')],
+        ]);
+        
+        // Create test users
+        $db->table('users')->insertBatch([
+            [
+                'user_id'       => 24,
+                'username'      => 'schooladmin100',
+                'email'         => 'admin1@test.local',
+                'password_hash' => password_hash('Test@123', PASSWORD_BCRYPT),
+                'full_name'     => 'School Admin 1',
+                'created_at'    => date('Y-m-d H:i:s'),
+                'updated_at'    => date('Y-m-d H:i:s'),
+                'is_active'     => 1,
+            ],
+            [
+                'user_id'       => 64,
+                'username'      => 'schooladmin200',
+                'email'         => 'admin2@test.local',
+                'password_hash' => password_hash('Test@123', PASSWORD_BCRYPT),
+                'full_name'     => 'School Admin 2',
+                'created_at'    => date('Y-m-d H:i:s'),
+                'updated_at'    => date('Y-m-d H:i:s'),
+                'is_active'     => 1,
+            ],
+        ]);
+        
+        // Create user-school mappings
+        $db->table('school_users')->insertBatch([
+            [
+                'user_id'           => 24,
+                'school_id'         => 1,
+                'role_id'           => 2, // SchoolAdmin
+                'is_primary_school' => 1,
+                'joined_at'         => date('Y-m-d H:i:s'),
+            ],
+            [
+                'user_id'           => 64,
+                'school_id'         => 2,
+                'role_id'           => 2, // SchoolAdmin
+                'is_primary_school' => 1,
+                'joined_at'         => date('Y-m-d H:i:s'),
+            ],
+        ]);
+        
+        // Create sample enrollment data for tenant isolation testing
+        $db->table('student_enrollments')->insertBatch([
+            [
+                'school_id'      => 1,
+                'student_id'     => 101,
+                'class_id'       => 1,
+                'enrollment_date' => date('Y-m-d'),
+                'status'         => 'active',
+                'created_at'     => date('Y-m-d H:i:s'),
+            ],
+            [
+                'school_id'      => 1,
+                'student_id'     => 102,
+                'class_id'       => 1,
+                'enrollment_date' => date('Y-m-d'),
+                'status'         => 'active',
+                'created_at'     => date('Y-m-d H:i:s'),
+            ],
+            [
+                'school_id'      => 2,
+                'student_id'     => 201,
+                'class_id'       => 2,
+                'enrollment_date' => date('Y-m-d'),
+                'status'         => 'active',
+                'created_at'     => date('Y-m-d H:i:s'),
+            ],
+            [
+                'school_id'      => 2,
+                'student_id'     => 202,
+                'class_id'       => 2,
+                'enrollment_date' => date('Y-m-d'),
+                'status'         => 'active',
+                'created_at'     => date('Y-m-d H:i:s'),
+            ],
+        ]);
     }
 
     protected function tearDown(): void

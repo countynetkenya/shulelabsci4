@@ -125,7 +125,7 @@ class SchoolModel extends Model
         $teacherCount = $db->table('school_users')
             ->join('roles', 'roles.id = school_users.role_id')
             ->where('school_users.school_id', $schoolId)
-            ->where('roles.name', 'Teacher')
+            ->where('roles.role_name', 'Teacher')
             ->countAllResults();
 
         // Get class count
