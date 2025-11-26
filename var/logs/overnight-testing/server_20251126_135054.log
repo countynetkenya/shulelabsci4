@@ -1,0 +1,13 @@
+Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+
+CodeIgniter v4.6.3 Command Line Tool - Server Time: 2025-11-26 13:50:54 UTC+00:00
+
+CodeIgniter development server started on http://localhost:8080
+Press Control-C to stop.
+[Wed Nov 26 13:50:54 2025] Failed to listen on localhost:8080 (reason: Address already in use)
+CodeIgniter development server started on http://localhost:8081
+Press Control-C to stop.
+[Wed Nov 26 13:50:54 2025] PHP 8.3.14 Development Server (http://localhost:8081) started
+[Wed Nov 26 13:51:06 2025] [::1]:34028 Accepted
+[Wed Nov 26 13:51:06 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:51:06 2025] [::1]:34028 Closing
