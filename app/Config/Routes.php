@@ -43,6 +43,7 @@ $routes->get('dashboard', 'Dashboard::index', ['filter' => 'auth']);
 
 // Admin Panel (Admin only)
 $routes->group('admin', ['filter' => ['auth', 'admin']], static function ($routes) {
+    // Legacy routes
     $routes->get('/', 'Admin::index');
     $routes->get('users', 'Admin::users');
     $routes->post('users/create', 'Admin::createUser');
@@ -54,10 +55,33 @@ $routes->group('admin', ['filter' => ['auth', 'admin']], static function ($route
     $routes->post('settings/update', 'Admin::updateSettings');
     $routes->get('reports', 'Admin::reports');
     $routes->get('finance', 'Admin::finance');
+
+    // New module controllers & pages
+    $routes->get('dashboard', 'Modules\\Admin\\Controllers\\Dashboard::index');
+    // Students
+    $routes->get('students', 'Modules\\Admin\\Controllers\\Students::index');
+    $routes->get('students/create', 'Modules\\Admin\\Controllers\\Students::create');
+    $routes->post('students/store', 'Modules\\Admin\\Controllers\\Students::store');
+    // Teachers
+    $routes->get('teachers', 'Modules\\Admin\\Controllers\\Teachers::index');
+    $routes->get('teachers/create', 'Modules\\Admin\\Controllers\\Teachers::create');
+    $routes->post('teachers/store', 'Modules\\Admin\\Controllers\\Teachers::store');
+    // Classes
+    $routes->get('classes', 'Modules\\Admin\\Controllers\\Classes::index');
+    $routes->get('classes/create', 'Modules\\Admin\\Controllers\\Classes::create');
+    $routes->post('classes/store', 'Modules\\Admin\\Controllers\\Classes::store');
+    // SuperAdmin management
+    $routes->get('schools', 'App\\Controllers\\Admin\\Schools::index');
+    $routes->get('schools/create', 'App\\Controllers\\Admin\\Schools::create');
+    $routes->post('schools/store', 'App\\Controllers\\Admin\\Schools::store');
+    $routes->get('users', 'App\\Controllers\\Admin\\Users::index');
+    $routes->get('users/create', 'App\\Controllers\\Admin\\Users::create');
+    $routes->post('users/store', 'App\\Controllers\\Admin\\Users::store');
 });
 
 // Teacher Portal (Teacher role only)
 $routes->group('teacher', ['filter' => 'auth'], static function ($routes) {
+    // Legacy
     $routes->get('/', 'Teacher::index');
     $routes->get('classes', 'Teacher::classes');
     $routes->get('class/(:num)/students', 'Teacher::students/$1');
@@ -66,16 +90,27 @@ $routes->group('teacher', ['filter' => 'auth'], static function ($routes) {
     $routes->get('grading', 'Teacher::grading');
     $routes->post('grade/submit', 'Teacher::submitGrade');
     $routes->post('announcement/create', 'Teacher::createAnnouncement');
+
+    // New module pages
+    $routes->get('dashboard', 'Modules\\Teacher\\Controllers\\Dashboard::index');
+    $routes->get('gradebook', 'Modules\\Teacher\\Controllers\\Gradebook::index');
+    $routes->get('attendance', 'Modules\\Teacher\\Controllers\\Attendance::index');
 });
 
 // Student Portal (Student role only)
 $routes->group('student', ['filter' => 'auth'], static function ($routes) {
+    // Legacy
     $routes->get('/', 'Student::index');
     $routes->get('courses', 'Student::courses');
     $routes->get('course/(:num)/materials', 'Student::materials/$1');
     $routes->get('assignments', 'Student::assignments');
     $routes->post('assignment/submit', 'Student::submitAssignment');
     $routes->get('grades', 'Student::grades');
+
+    // New module pages
+    $routes->get('dashboard', 'Modules\\Student\\Controllers\\Dashboard::index');
+    $routes->get('library', 'Modules\\Student\\Controllers\\Library::index');
+    $routes->get('attendance', 'Modules\\Student\\Controllers\\Attendance::index');
 });
 
 // Parent Portal (Parent role only)
