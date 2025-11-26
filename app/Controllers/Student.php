@@ -160,9 +160,9 @@ class Student extends BaseController
         $studentId = session()->get('loginuserID');
 
         $this->data['grades'] = $this->gradeModel
-            ->select('grades.*, assignments.title as assignment_title, ci4_users.full_name as teacher_name')
+            ->select('grades.*, assignments.title as assignment_title, users.full_name as teacher_name')
             ->join('assignments', 'assignments.assignmentsID = grades.assignment_id', 'left')
-            ->join('ci4_users', 'ci4_users.id = grades.teacher_id', 'left')
+            ->join('users', 'users.id = grades.teacher_id', 'left')
             ->where('grades.student_id', $studentId)
             ->orderBy('grades.created_at', 'DESC')
             ->findAll();

@@ -84,8 +84,8 @@ class Teacher extends BaseController
 
         $enrollmentModel = new StudentEnrollmentModel();
         $this->data['students'] = $enrollmentModel
-            ->select('student_enrollments.*, ci4_users.full_name, ci4_users.email')
-            ->join('ci4_users', 'ci4_users.id = student_enrollments.student_id')
+                ->select('student_enrollments.*, users.full_name, users.email')
+                ->join('users', 'users.id = student_enrollments.student_id')
             ->where('student_enrollments.class_id', $classId)
             ->findAll();
 

@@ -13,7 +13,7 @@ use CodeIgniter\HTTP\RedirectResponse;
  * Auth Controller.
  *
  * Handles user authentication (signin/signout)
- * Uses CI4-native user tables (ci4_users, ci4_roles, ci4_user_roles)
+ * Uses unprefixed tables (users, roles, user_roles)
  * Supports automatic migration from CI3 tables during signin
  * Maintains CI3-compatible password hashing via HashCompat
  */
@@ -135,9 +135,9 @@ class Auth extends BaseController
         // Find user by username (any status to provide detailed feedback)
         $user = $this->userModel->findByUsernameAnyStatus($username);
 
-        // If user not found in ci4_users, check CI3 tables and migrate
+        // If user not found in users, check CI3 tables and migrate
         if (!$user) {
-            log_message('info', 'Auth::processSignin() - User not found in ci4_users, checking CI3 tables: ' . $username);
+            log_message('info', 'Auth::processSignin() - User not found in users, checking CI3 tables: ' . $username);
             $user = $this->userMigrationService->findAndMigrateUser($username);
 
             if (!$user) {
@@ -192,7 +192,7 @@ class Auth extends BaseController
         $user->userID = $user->id;
         $user->name = $user->full_name;
         $user->active = $user->is_active;
-        $user->user_table = $user->ci3_user_table ?? 'ci4_users';
+        $user->user_table = $user->ci3_user_table ?? 'users';
 
         // Get primary role to set usertypeID
         $role = $this->userModel->getUserPrimaryRole($user->id);

@@ -65,10 +65,10 @@ class Dashboard extends BaseController
     private function getTotalStudents(): int
     {
         $db = \Config\Database::connect();
-        return (int) $db->table('ci4_users')
-            ->join('ci4_user_roles', 'ci4_users.id = ci4_user_roles.user_id')
-            ->join('ci4_roles', 'ci4_user_roles.role_id = ci4_roles.id')
-            ->where('ci4_roles.name', 'student')
+            return (int) $db->table('users')
+                ->join('user_roles', 'users.id = user_roles.user_id')
+                ->join('roles', 'user_roles.role_id = roles.id')
+                ->where('roles.name', 'student')
             ->countAllResults();
     }
 
@@ -78,10 +78,10 @@ class Dashboard extends BaseController
     private function getTotalTeachers(): int
     {
         $db = \Config\Database::connect();
-        return (int) $db->table('ci4_users')
-            ->join('ci4_user_roles', 'ci4_users.id = ci4_user_roles.user_id')
-            ->join('ci4_roles', 'ci4_user_roles.role_id = ci4_roles.id')
-            ->where('ci4_roles.name', 'teacher')
+            return (int) $db->table('users')
+                ->join('user_roles', 'users.id = user_roles.user_id')
+                ->join('roles', 'user_roles.role_id = roles.id')
+                ->where('roles.name', 'teacher')
             ->countAllResults();
     }
 
@@ -93,9 +93,9 @@ class Dashboard extends BaseController
         $db = \Config\Database::connect();
         
         // Get recent logins
-        $recentLogins = $db->table('ci4_users')
-            ->select('ci4_users.username, ci4_users.email, ci4_users.last_login')
-            ->orderBy('ci4_users.last_login', 'DESC')
+            $recentLogins = $db->table('users')
+                ->select('users.username, users.email, users.last_login')
+                ->orderBy('users.last_login', 'DESC')
             ->limit(10)
             ->get()
             ->getResultArray();

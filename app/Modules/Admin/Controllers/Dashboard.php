@@ -60,10 +60,10 @@ class Dashboard extends BaseController
     {
         $db = \Config\Database::connect();
         return (int) $db->table('school_users')
-            ->join('ci4_user_roles', 'school_users.user_id = ci4_user_roles.user_id')
-            ->join('ci4_roles', 'ci4_user_roles.role_id = ci4_roles.id')
-            ->where('school_users.school_id', $this->schoolID)
-            ->where('ci4_roles.name', 'student')
+              ->join('user_roles', 'school_users.user_id = user_roles.user_id')
+              ->join('roles', 'user_roles.role_id = roles.id')
+              ->where('school_users.school_id', $this->schoolID)
+              ->where('roles.name', 'student')
             ->countAllResults();
     }
 
@@ -74,10 +74,10 @@ class Dashboard extends BaseController
     {
         $db = \Config\Database::connect();
         return (int) $db->table('school_users')
-            ->join('ci4_user_roles', 'school_users.user_id = ci4_user_roles.user_id')
-            ->join('ci4_roles', 'ci4_user_roles.role_id = ci4_roles.id')
-            ->where('school_users.school_id', $this->schoolID)
-            ->where('ci4_roles.name', 'teacher')
+              ->join('user_roles', 'school_users.user_id = user_roles.user_id')
+              ->join('roles', 'user_roles.role_id = roles.id')
+              ->where('school_users.school_id', $this->schoolID)
+              ->where('roles.name', 'teacher')
             ->countAllResults();
     }
 

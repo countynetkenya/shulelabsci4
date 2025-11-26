@@ -200,3 +200,157 @@ Press Control-C to stop.
 [Wed Nov 26 13:23:13 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
 [Wed Nov 26 13:23:13 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
 [Wed Nov 26 13:23:13 2025] [::1]:58852 Closing
+[Wed Nov 26 13:23:59 2025] [::1]:35158 Accepted
+[Wed Nov 26 13:23:59 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:23:59 2025] [::1]:35158 Closing
+[Wed Nov 26 13:24:01 2025] [::1]:35172 Accepted
+[Wed Nov 26 13:24:01 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:01 2025] [::1]:35172 Closing
+[Wed Nov 26 13:24:03 2025] [::1]:35188 Accepted
+[Wed Nov 26 13:24:03 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:03 2025] [::1]:35188 Closing
+[Wed Nov 26 13:24:04 2025] [::1]:35764 Accepted
+[Wed Nov 26 13:24:04 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:05 2025] [::1]:35764 Closing
+[Wed Nov 26 13:24:05 2025] [::1]:35766 Accepted
+[Wed Nov 26 13:24:05 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:05 2025] [::1]:35766 Closing
+[Wed Nov 26 13:24:05 2025] [::1]:35782 Accepted
+[Wed Nov 26 13:24:05 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:05 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:05 2025] [::1]:35782 Closing
+[Wed Nov 26 13:24:28 2025] [::1]:58804 Accepted
+[Wed Nov 26 13:24:28 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:28 2025] [::1]:58804 Closing
+[Wed Nov 26 13:24:28 2025] [::1]:58816 Accepted
+[Wed Nov 26 13:24:28 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:28 2025] [::1]:58816 Closing
+[Wed Nov 26 13:24:29 2025] [::1]:58820 Accepted
+[Wed Nov 26 13:24:29 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:29 2025] [::1]:58820 Closing
+[Wed Nov 26 13:24:29 2025] [::1]:58830 Accepted
+[Wed Nov 26 13:24:29 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:29 2025] [::1]:58830 Closing
+[Wed Nov 26 13:24:29 2025] [::1]:58838 Accepted
+[Wed Nov 26 13:24:29 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:29 2025] [::1]:58838 Closing
+[Wed Nov 26 13:24:39 2025] [::1]:59714 Accepted
+[Wed Nov 26 13:24:39 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:39 2025] [::1]:59714 Closing
+[Wed Nov 26 13:24:39 2025] [::1]:59728 Accepted
+[Wed Nov 26 13:24:39 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:39 2025] [::1]:59728 Closing
+[Wed Nov 26 13:24:41 2025] [::1]:59740 Accepted
+[Wed Nov 26 13:24:41 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:41 2025] [::1]:59740 Closing
+[Wed Nov 26 13:24:41 2025] [::1]:59752 Accepted
+[Wed Nov 26 13:24:41 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:41 2025] [::1]:59752 Closing
+[Wed Nov 26 13:24:41 2025] [::1]:59758 Accepted
+[Wed Nov 26 13:24:41 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:41 2025] [::1]:59758 Closing
+[Wed Nov 26 13:24:42 2025] [::1]:59766 Accepted
+[Wed Nov 26 13:24:42 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:42 2025] [::1]:59766 [200]: GET /assets/inilabs/inilabs.css
+[Wed Nov 26 13:24:42 2025] [::1]:59766 Closing
+[Wed Nov 26 13:24:42 2025] [::1]:59774 Accepted
+[Wed Nov 26 13:24:42 2025] [::1]:59780 Accepted
+[Wed Nov 26 13:24:42 2025] [::1]:59784 Accepted
+[Wed Nov 26 13:24:42 2025] [::1]:59800 Accepted
+[Wed Nov 26 13:24:42 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:42 2025] [::1]:59774 [200]: GET /assets/bootstrap/bootstrap.min.css
+[Wed Nov 26 13:24:42 2025] [::1]:59774 Closing
+[Wed Nov 26 13:24:42 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:42 2025] [::1]:59780 [200]: GET /assets/fonts/font-awesome.css
+[Wed Nov 26 13:24:42 2025] [::1]:59780 Closing
+[Wed Nov 26 13:24:42 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:42 2025] [::1]:59784 [200]: GET /assets/inilabs/responsive.css
+[Wed Nov 26 13:24:42 2025] [::1]:59784 Closing
+[Wed Nov 26 13:24:42 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:42 2025] [::1]:59800 [200]: GET /assets/inilabs/jquery.js
+[Wed Nov 26 13:24:42 2025] [::1]:59800 Closing
+[Wed Nov 26 13:24:43 2025] [::1]:59812 Accepted
+[Wed Nov 26 13:24:43 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:43 2025] [::1]:59812 [200]: GET /assets/bootstrap/bootstrap.min.js
+[Wed Nov 26 13:24:43 2025] [::1]:59812 Closing
+[Wed Nov 26 13:24:43 2025] [::1]:59822 Accepted
+[Wed Nov 26 13:24:43 2025] [::1]:59828 Accepted
+[Wed Nov 26 13:24:43 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:43 2025] [::1]:59822 Closing
+[Wed Nov 26 13:24:43 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:43 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:43 2025] [::1]:59828 Closing
+[Wed Nov 26 13:24:44 2025] [::1]:58778 Accepted
+[Wed Nov 26 13:24:44 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:44 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:44 2025] [::1]:58778 Closing
+[Wed Nov 26 13:24:45 2025] [::1]:58782 Accepted
+[Wed Nov 26 13:24:45 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:45 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:24:46 2025] [::1]:58782 Closing
+[Wed Nov 26 13:25:30 2025] [::1]:54902 Accepted
+[Wed Nov 26 13:25:30 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:25:30 2025] [::1]:54902 Closing
+[Wed Nov 26 13:25:31 2025] [::1]:54918 Accepted
+[Wed Nov 26 13:25:31 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:25:31 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:25:31 2025] [::1]:54918 Closing
+[Wed Nov 26 13:25:31 2025] [::1]:54932 Accepted
+[Wed Nov 26 13:25:31 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:25:31 2025] [::1]:54932 Closing
+[Wed Nov 26 13:25:32 2025] [::1]:54946 Accepted
+[Wed Nov 26 13:25:32 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:25:32 2025] [::1]:54946 Closing
+[Wed Nov 26 13:25:33 2025] [::1]:54954 Accepted
+[Wed Nov 26 13:25:33 2025] [::1]:54970 Accepted
+[Wed Nov 26 13:25:33 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:25:33 2025] [::1]:54954 Closing
+[Wed Nov 26 13:25:33 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:25:33 2025] [::1]:54970 Closing
+[Wed Nov 26 13:25:57 2025] [::1]:54546 Accepted
+[Wed Nov 26 13:25:57 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:25:57 2025] [::1]:54546 Closing
+[Wed Nov 26 13:25:58 2025] [::1]:54550 Accepted
+[Wed Nov 26 13:25:58 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:25:58 2025] [::1]:54550 Closing
+[Wed Nov 26 13:26:00 2025] [::1]:54562 Accepted
+[Wed Nov 26 13:26:00 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:26:00 2025] [::1]:54562 Closing
+[Wed Nov 26 13:26:00 2025] [::1]:54568 Accepted
+[Wed Nov 26 13:26:00 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:26:00 2025] [::1]:54568 Closing
+[Wed Nov 26 13:26:01 2025] [::1]:54570 Accepted
+[Wed Nov 26 13:26:01 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:26:01 2025] [::1]:54570 [200]: GET /assets/fonts/font-awesome.css
+[Wed Nov 26 13:26:01 2025] [::1]:54570 Closing
+[Wed Nov 26 13:26:01 2025] [::1]:54574 Accepted
+[Wed Nov 26 13:26:01 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:26:01 2025] [::1]:54574 [200]: GET /assets/inilabs/inilabs.css
+[Wed Nov 26 13:26:01 2025] [::1]:54574 Closing
+[Wed Nov 26 13:26:01 2025] [::1]:54588 Accepted
+[Wed Nov 26 13:26:01 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:26:01 2025] [::1]:54588 [200]: GET /assets/inilabs/responsive.css
+[Wed Nov 26 13:26:01 2025] [::1]:54588 Closing
+[Wed Nov 26 13:26:01 2025] [::1]:54598 Accepted
+[Wed Nov 26 13:26:01 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:26:01 2025] [::1]:54598 [200]: GET /assets/inilabs/jquery.js
+[Wed Nov 26 13:26:01 2025] [::1]:54598 Closing
+[Wed Nov 26 13:26:02 2025] [::1]:54610 Accepted
+[Wed Nov 26 13:26:02 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:26:02 2025] [::1]:54610 [200]: GET /assets/bootstrap/bootstrap.min.js
+[Wed Nov 26 13:26:02 2025] [::1]:54610 Closing
+[Wed Nov 26 13:26:04 2025] [::1]:40358 Accepted
+[Wed Nov 26 13:26:04 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:26:04 2025] [::1]:40358 [200]: GET /assets/bootstrap/bootstrap.min.css
+[Wed Nov 26 13:26:04 2025] [::1]:40358 Closing
+[Wed Nov 26 13:26:06 2025] [::1]:40370 Accepted
+[Wed Nov 26 13:26:06 2025] [::1]:40380 Accepted
+[Wed Nov 26 13:26:06 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:26:06 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:26:06 2025] [::1]:40370 Closing
+[Wed Nov 26 13:26:06 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:26:06 2025] [::1]:40380 Closing
+[Wed Nov 26 13:26:10 2025] [::1]:40382 Accepted
+[Wed Nov 26 13:26:10 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:26:10 2025] Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[Wed Nov 26 13:26:10 2025] [::1]:40382 Closing
