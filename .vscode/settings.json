@@ -214,6 +214,53 @@
     "./*.sh": true,
     "./bin/*": true,
     "./scripts/*": true,
+    "ls -la": true,
+    "echo": true,
+    "date": true,
+    "/^ls -la writable\\/logs\\/ && tail -100 writable\\/logs\\/log-\\$\\(date \\+%Y-%m-%d\\)\\.log 2>\\/dev\\/null \\|\\| echo \"No CI log for today\"$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^.*php spark.*&&.*echo.*$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^.*php spark.*$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^.*&& echo.*$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^ls -la .* && tail.*$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^tail.*writable\\/logs.*$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^.*writable\\/logs.*$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^.*\\$\\(date.*$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^.*2>\\/dev\\/null.*$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^.*\\|\\|.*$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^.*&&.*$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
     "/^.*$/": {
       "approve": true,
       "matchCommandLine": true

@@ -74,4 +74,39 @@ This command initiates the Master Orchestration Agent which executes all 6 phase
 **See**: [Master Orchestration Agent](../docs/agents/master-orchestration-agent.md) for complete details.
 
 ---
+
+## Overnight Web Testing Command
+
+### Autonomous Multi-Role Testing & Validation
+
+Trigger comprehensive overnight testing across all user roles and workflows:
+
+```
+@Copilot OVERNIGHT WEB TESTING - AUTONOMOUS MULTI-ROLE VALIDATION!
+```
+
+This command initiates the Overnight Web Testing Agent which executes 8 phases:
+1. **ENVIRONMENT SETUP** (30 min) - Test server, authentication, logging
+2. **SUPERADMIN TESTING** (60 min) - School management, users, settings
+3. **ADMIN TESTING** (6 hours) - All 4 schools, students, teachers, finance
+4. **TEACHER TESTING** (60 min) - Classes, gradebook, assignments
+5. **STUDENT TESTING** (45 min) - Dashboard, library, assignments
+6. **CROSS-CUTTING** (90 min) - Links, APIs, mobile responsiveness
+7. **BUG FIXING** (90 min) - Auto-fix issues, generate missing code
+8. **FINAL VALIDATION** (60 min) - Re-test, reports, commit fixes
+
+**Total Execution Time**: 6-8 hours (overnight)
+
+**Deliverables**:
+- 100% workflow coverage across all roles
+- All broken links identified and fixed
+- Missing pages/features auto-generated
+- API endpoints validated (95+ endpoints)
+- 5 comprehensive test reports
+- All fixes committed to git
+- Production-ready system
+
+**See**: [Overnight Web Testing Agent](../docs/agents/overnight-web-testing-agent.md) for complete details.
+
+---
 Ensure to review and update this document regularly to adapt to new architectural changes or emerging technologies related to mobile and web development.

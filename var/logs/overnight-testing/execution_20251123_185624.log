@@ -1,0 +1,99 @@
+Xdebug: [Step Debug] Could not connect to debugging client. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port).
+[34m[2025-11-23 18:56:24] [INFO] === Overnight Web Testing Started ===
+[0m[34m[2025-11-23 18:56:24] [INFO] Start Time: 2025-11-23 18:56:24
+[0m[34m[2025-11-23 18:56:24] [INFO] Expected Duration: 6-8 hours
+[0m[34m[2025-11-23 18:56:24] [INFO] Total Phases: 8
+[0m[34m[2025-11-23 18:56:24] [INFO] Starting autonomous overnight testing...
+[0m[34m[2025-11-23 18:56:24] [INFO] ========================================
+[0m[34m[2025-11-23 18:56:24] [INFO] Phase 1/8: Environment Setup & Authentication
+[0m[34m[2025-11-23 18:56:24] [INFO] Progress: 12.5% | Elapsed: 0 minutes
+[0m[34m[2025-11-23 18:56:24] [INFO] ========================================
+[0m[34m[2025-11-23 18:56:24] [INFO] Testing server availability...
+[0m[32m[2025-11-23 18:56:25] [SUCCESS] ✅ Server is running
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing authentication for all users...
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing login for: admin@shulelabs.local
+[0m[31m[2025-11-23 18:56:25] [ERROR] ❌ Login failed for admin@shulelabs.local (HTTP 404)
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing login for: schooladmin1@shulelabs.local
+[0m[31m[2025-11-23 18:56:25] [ERROR] ❌ Login failed for schooladmin1@shulelabs.local (HTTP 404)
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing login for: schooladmin2@shulelabs.local
+[0m[31m[2025-11-23 18:56:25] [ERROR] ❌ Login failed for schooladmin2@shulelabs.local (HTTP 404)
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing login for: teacher1@shulelabs.local
+[0m[31m[2025-11-23 18:56:25] [ERROR] ❌ Login failed for teacher1@shulelabs.local (HTTP 404)
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing login for: teacher2@shulelabs.local
+[0m[31m[2025-11-23 18:56:25] [ERROR] ❌ Login failed for teacher2@shulelabs.local (HTTP 404)
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing login for: student1@shulelabs.local
+[0m[31m[2025-11-23 18:56:25] [ERROR] ❌ Login failed for student1@shulelabs.local (HTTP 404)
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing login for: student2@shulelabs.local
+[0m[31m[2025-11-23 18:56:25] [ERROR] ❌ Login failed for student2@shulelabs.local (HTTP 404)
+[0m[32m[2025-11-23 18:56:25] [SUCCESS] Phase 1 completed
+[0m[34m[2025-11-23 18:56:25] [INFO] ========================================
+[0m[34m[2025-11-23 18:56:25] [INFO] Phase 2/8: SuperAdmin Testing
+[0m[34m[2025-11-23 18:56:25] [INFO] Progress: 25% | Elapsed: 0.02 minutes
+[0m[34m[2025-11-23 18:56:25] [INFO] ========================================
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing login for: admin@shulelabs.local
+[0m[31m[2025-11-23 18:56:25] [ERROR] ❌ Login failed for admin@shulelabs.local (HTTP 404)
+[0m[31m[2025-11-23 18:56:25] [ERROR] Cannot proceed with superadmin tests - authentication failed
+[0m[34m[2025-11-23 18:56:25] [INFO] ========================================
+[0m[34m[2025-11-23 18:56:25] [INFO] Phase 3/8: Admin Testing (All Schools)
+[0m[34m[2025-11-23 18:56:25] [INFO] Progress: 37.5% | Elapsed: 0.02 minutes
+[0m[34m[2025-11-23 18:56:25] [INFO] ========================================
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing School 1 Admin: schooladmin1@shulelabs.local
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing login for: schooladmin1@shulelabs.local
+[0m[31m[2025-11-23 18:56:25] [ERROR] ❌ Login failed for schooladmin1@shulelabs.local (HTTP 404)
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing School 2 Admin: schooladmin2@shulelabs.local
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing login for: schooladmin2@shulelabs.local
+[0m[31m[2025-11-23 18:56:25] [ERROR] ❌ Login failed for schooladmin2@shulelabs.local (HTTP 404)
+[0m[32m[2025-11-23 18:56:25] [SUCCESS] Phase 3 completed
+[0m[34m[2025-11-23 18:56:25] [INFO] ========================================
+[0m[34m[2025-11-23 18:56:25] [INFO] Phase 4/8: Teacher Testing
+[0m[34m[2025-11-23 18:56:25] [INFO] Progress: 50% | Elapsed: 0.02 minutes
+[0m[34m[2025-11-23 18:56:25] [INFO] ========================================
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing Teacher: teacher1@shulelabs.local
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing login for: teacher1@shulelabs.local
+[0m[31m[2025-11-23 18:56:25] [ERROR] ❌ Login failed for teacher1@shulelabs.local (HTTP 404)
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing Teacher: teacher2@shulelabs.local
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing login for: teacher2@shulelabs.local
+[0m[31m[2025-11-23 18:56:25] [ERROR] ❌ Login failed for teacher2@shulelabs.local (HTTP 404)
+[0m[32m[2025-11-23 18:56:25] [SUCCESS] Phase 4 completed
+[0m[34m[2025-11-23 18:56:25] [INFO] ========================================
+[0m[34m[2025-11-23 18:56:25] [INFO] Phase 5/8: Student Testing
+[0m[34m[2025-11-23 18:56:25] [INFO] Progress: 62.5% | Elapsed: 0.02 minutes
+[0m[34m[2025-11-23 18:56:25] [INFO] ========================================
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing Student: student1@shulelabs.local
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing login for: student1@shulelabs.local
+[0m[31m[2025-11-23 18:56:25] [ERROR] ❌ Login failed for student1@shulelabs.local (HTTP 404)
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing Student: student2@shulelabs.local
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing login for: student2@shulelabs.local
+[0m[31m[2025-11-23 18:56:25] [ERROR] ❌ Login failed for student2@shulelabs.local (HTTP 404)
+[0m[32m[2025-11-23 18:56:25] [SUCCESS] Phase 5 completed
+[0m[34m[2025-11-23 18:56:25] [INFO] ========================================
+[0m[34m[2025-11-23 18:56:25] [INFO] Phase 6/8: Cross-Cutting Concerns (Links, APIs, Mobile)
+[0m[34m[2025-11-23 18:56:25] [INFO] Progress: 75% | Elapsed: 0.03 minutes
+[0m[34m[2025-11-23 18:56:25] [INFO] ========================================
+[0m[34m[2025-11-23 18:56:25] [INFO] Testing API endpoints...
+[0m[32m[2025-11-23 18:56:26] [SUCCESS] Phase 6 completed
+[0m[34m[2025-11-23 18:56:26] [INFO] ========================================
+[0m[34m[2025-11-23 18:56:26] [INFO] Phase 7/8: Bug Fixing & Code Generation
+[0m[34m[2025-11-23 18:56:26] [INFO] Progress: 87.5% | Elapsed: 0.03 minutes
+[0m[34m[2025-11-23 18:56:26] [INFO] ========================================
+[0m[34m[2025-11-23 18:56:26] [INFO] Analyzing issues found...
+[0m[34m[2025-11-23 18:56:26] [INFO] Total issues: 14
+[0m[34m[2025-11-23 18:56:26] [INFO]   Authentication: 14 issues
+[0m[32m[2025-11-23 18:56:26] [SUCCESS] Phase 7 completed
+[0m[34m[2025-11-23 18:56:26] [INFO] ========================================
+[0m[34m[2025-11-23 18:56:26] [INFO] Phase 8/8: Final Validation & Reporting
+[0m[34m[2025-11-23 18:56:26] [INFO] Progress: 100% | Elapsed: 0.03 minutes
+[0m[34m[2025-11-23 18:56:26] [INFO] ========================================
+[0m[34m[2025-11-23 18:56:26] [INFO] Generated: Executive Summary Report
+[0m[34m[2025-11-23 18:56:26] [INFO] Generated: Issue Report
+[0m[34m[2025-11-23 18:56:26] [INFO] Generated: Test Results Report
+[0m[34m[2025-11-23 18:56:26] [INFO] Generated: Role-Based Report
+[0m[34m[2025-11-23 18:56:26] [INFO] Generated: Cross-School Validation Report
+[0m[32m[2025-11-23 18:56:26] [SUCCESS] All reports generated in: /workspaces/shulelabsci4/scripts/../docs/reports/overnight-testing-20251123
+[0m[32m[2025-11-23 18:56:26] [SUCCESS] Phase 8 completed
+[0m[32m[2025-11-23 18:56:26] [SUCCESS] ========================================
+[0m[32m[2025-11-23 18:56:26] [SUCCESS] ✅ OVERNIGHT TESTING COMPLETED
+[0m[32m[2025-11-23 18:56:26] [SUCCESS] Duration: 0.03 minutes
+[0m[32m[2025-11-23 18:56:26] [SUCCESS] Reports generated in: /workspaces/shulelabsci4/scripts/../docs/reports/overnight-testing-20251123
+[0m[32m[2025-11-23 18:56:26] [SUCCESS] ========================================
+[0m
