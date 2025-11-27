@@ -75,12 +75,12 @@ class CreateSettingTable extends Migration
                 'null' => true,
             ],
         ]);
-        
+
         $this->forge->addKey('id', true);
         $this->forge->addKey('settingID');
         $this->forge->addKey('schoolID');
         $this->forge->createTable('setting');
-        
+
         // Insert default setting for system
         $this->db->table('setting')->insert([
             'settingID' => 1,

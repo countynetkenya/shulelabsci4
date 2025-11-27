@@ -6,21 +6,30 @@ use CodeIgniter\Model;
 
 class HostelBedModel extends Model
 {
-    protected $table            = 'hostel_beds';
-    protected $primaryKey       = 'id';
+    protected $table = 'hostel_beds';
+
+    protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
-    protected $returnType       = 'object';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = [
-        'room_id', 'bed_number', 'status'
+
+    protected $returnType = 'object';
+
+    protected $useSoftDeletes = false;
+
+    protected $protectFields = true;
+
+    protected $allowedFields = [
+        'room_id', 'bed_number', 'status',
     ];
 
     // Dates
     protected $useTimestamps = true;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
+
+    protected $dateFormat = 'datetime';
+
+    protected $createdField = 'created_at';
+
+    protected $updatedField = 'updated_at';
 
     // Validation
     protected $validationRules = [

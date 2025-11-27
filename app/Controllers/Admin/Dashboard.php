@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use App\Models\UserModel;
 
 /**
- * SuperAdmin Dashboard Controller
- * 
+ * SuperAdmin Dashboard Controller.
+ *
  * Provides system-wide overview for superadmin users
  */
 class Dashboard extends BaseController
@@ -20,7 +20,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Display superadmin dashboard
+     * Display superadmin dashboard.
      */
     public function index()
     {
@@ -43,7 +43,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get total number of schools
+     * Get total number of schools.
      */
     private function getTotalSchools(): int
     {
@@ -52,7 +52,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get total number of users
+     * Get total number of users.
      */
     private function getTotalUsers(): int
     {
@@ -60,56 +60,56 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get total number of students
+     * Get total number of students.
      */
     private function getTotalStudents(): int
     {
         $db = \Config\Database::connect();
-            return (int) $db->table('users')
-                ->join('user_roles', 'users.id = user_roles.user_id')
-                ->join('roles', 'user_roles.role_id = roles.id')
-                ->where('roles.name', 'student')
-            ->countAllResults();
+        return (int) $db->table('users')
+            ->join('user_roles', 'users.id = user_roles.user_id')
+            ->join('roles', 'user_roles.role_id = roles.id')
+            ->where('roles.name', 'student')
+        ->countAllResults();
     }
 
     /**
-     * Get total number of teachers
+     * Get total number of teachers.
      */
     private function getTotalTeachers(): int
     {
         $db = \Config\Database::connect();
-            return (int) $db->table('users')
-                ->join('user_roles', 'users.id = user_roles.user_id')
-                ->join('roles', 'user_roles.role_id = roles.id')
-                ->where('roles.name', 'teacher')
-            ->countAllResults();
+        return (int) $db->table('users')
+            ->join('user_roles', 'users.id = user_roles.user_id')
+            ->join('roles', 'user_roles.role_id = roles.id')
+            ->where('roles.name', 'teacher')
+        ->countAllResults();
     }
 
     /**
-     * Get recent activity across all schools
+     * Get recent activity across all schools.
      */
     private function getRecentActivity(): array
     {
         $db = \Config\Database::connect();
-        
+
         // Get recent logins
-            $recentLogins = $db->table('users')
-                ->select('users.username, users.email, users.last_login')
-                ->orderBy('users.last_login', 'DESC')
-            ->limit(10)
-            ->get()
-            ->getResultArray();
+        $recentLogins = $db->table('users')
+            ->select('users.username, users.email, users.last_login')
+            ->orderBy('users.last_login', 'DESC')
+        ->limit(10)
+        ->get()
+        ->getResultArray();
 
         return $recentLogins ?? [];
     }
 
     /**
-     * Get system statistics
+     * Get system statistics.
      */
     private function getSystemStats(): array
     {
         $db = \Config\Database::connect();
-        
+
         return [
             'active_sessions' => 0, // Placeholder
             'total_assignments' => $db->table('assignments')->countAllResults(),
@@ -121,13 +121,13 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Check if current user is superadmin
+     * Check if current user is superadmin.
      */
     private function isSuperAdmin(): bool
     {
         $session = session();
         $userID = $session->get('userID');
-        
+
         if (!$userID) {
             return false;
         }

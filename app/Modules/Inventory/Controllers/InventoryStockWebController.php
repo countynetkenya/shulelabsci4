@@ -3,16 +3,19 @@
 namespace Modules\Inventory\Controllers;
 
 use App\Controllers\BaseController;
-use Modules\Inventory\Services\StockService;
-use Modules\Inventory\Services\InventoryService;
-use Modules\Inventory\Models\InventoryLocationModel;
 use Modules\Inventory\Models\InventoryItemModel;
+use Modules\Inventory\Models\InventoryLocationModel;
+use Modules\Inventory\Services\InventoryService;
+use Modules\Inventory\Services\StockService;
 
 class InventoryStockWebController extends BaseController
 {
     protected $stockService;
+
     protected $inventoryService;
+
     protected $locationModel;
+
     protected $itemModel;
 
     public function __construct()
@@ -65,11 +68,11 @@ class InventoryStockWebController extends BaseController
             $userId = session()->get('user_id') ?? 1; // Fallback
 
             $this->inventoryService->transferStock(
-                (int)$this->request->getPost('item_id'),
-                (int)$this->request->getPost('from_location_id'),
-                (int)$this->request->getPost('to_location_id'),
-                (int)$this->request->getPost('quantity'),
-                (int)$userId
+                (int) $this->request->getPost('item_id'),
+                (int) $this->request->getPost('from_location_id'),
+                (int) $this->request->getPost('to_location_id'),
+                (int) $this->request->getPost('quantity'),
+                (int) $userId
             );
 
             return redirect()->to('inventory/stock')->with('message', 'Transfer initiated successfully');

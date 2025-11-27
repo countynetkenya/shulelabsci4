@@ -8,10 +8,11 @@ use Modules\Hostel\Models\HostelModel;
 class HostelController extends ResourceController
 {
     protected $modelName = HostelModel::class;
-    protected $format    = 'json';
+
+    protected $format = 'json';
 
     /**
-     * Return an array of resource objects, themselves in array format
+     * Return an array of resource objects, themselves in array format.
      *
      * @return mixed
      */
@@ -21,7 +22,7 @@ class HostelController extends ResourceController
     }
 
     /**
-     * Return the properties of a resource object
+     * Return the properties of a resource object.
      *
      * @param mixed $id
      *
@@ -37,7 +38,7 @@ class HostelController extends ResourceController
     }
 
     /**
-     * Create a new resource object, from "posted" parameters
+     * Create a new resource object, from "posted" parameters.
      *
      * @return mixed
      */
@@ -53,7 +54,7 @@ class HostelController extends ResourceController
     }
 
     /**
-     * Add or update a model resource, from "posted" properties
+     * Add or update a model resource, from "posted" properties.
      *
      * @param mixed $id
      *
@@ -75,7 +76,7 @@ class HostelController extends ResourceController
     }
 
     /**
-     * Delete the designated resource object from the model
+     * Delete the designated resource object from the model.
      *
      * @param mixed $id
      *

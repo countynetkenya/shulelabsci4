@@ -5,13 +5,14 @@ namespace App\Modules\Student\Controllers;
 use App\Controllers\BaseController;
 
 /**
- * Library Controller for Student Module
- * 
+ * Library Controller for Student Module.
+ *
  * Manages library book browsing and borrowing for students
  */
 class Library extends BaseController
 {
     protected $userID;
+
     protected $schoolID;
 
     public function __construct()
@@ -21,7 +22,7 @@ class Library extends BaseController
     }
 
     /**
-     * Display library books
+     * Display library books.
      */
     public function index()
     {
@@ -30,7 +31,7 @@ class Library extends BaseController
         }
 
         $db = \Config\Database::connect();
-        
+
         // Get available books
         $books = $db->table('library_books')
             ->select('library_books.*, 
@@ -52,7 +53,7 @@ class Library extends BaseController
     }
 
     /**
-     * Borrow a book
+     * Borrow a book.
      */
     public function borrow($bookID)
     {
@@ -61,10 +62,10 @@ class Library extends BaseController
         }
 
         $db = \Config\Database::connect();
-        
+
         // Check if book is available
         $book = $db->table('library_books')->where('id', $bookID)->get()->getRow();
-        
+
         if (!$book) {
             return redirect()->to('/student/library')->with('error', 'Book not found.');
         }
@@ -107,7 +108,7 @@ class Library extends BaseController
     }
 
     /**
-     * Return a book
+     * Return a book.
      */
     public function return($borrowingID)
     {
@@ -116,7 +117,7 @@ class Library extends BaseController
         }
 
         $db = \Config\Database::connect();
-        
+
         // Verify borrowing belongs to this student
         $borrowing = $db->table('library_borrowings')
             ->where('id', $borrowingID)
@@ -143,7 +144,7 @@ class Library extends BaseController
     }
 
     /**
-     * View book details
+     * View book details.
      */
     public function view($bookID)
     {
@@ -152,7 +153,7 @@ class Library extends BaseController
         }
 
         $db = \Config\Database::connect();
-        
+
         $book = $db->table('library_books')
             ->where('id', $bookID)
             ->get()
@@ -178,12 +179,12 @@ class Library extends BaseController
     }
 
     /**
-     * Get books borrowed by this student
+     * Get books borrowed by this student.
      */
     private function getMyBorrowings(): array
     {
         $db = \Config\Database::connect();
-        
+
         return $db->table('library_borrowings')
             ->select('library_borrowings.*, library_books.title, library_books.author, library_books.isbn')
             ->join('library_books', 'library_borrowings.book_id = library_books.id')

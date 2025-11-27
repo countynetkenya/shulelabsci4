@@ -5,13 +5,14 @@ namespace App\Modules\Student\Controllers;
 use App\Controllers\BaseController;
 
 /**
- * Student Dashboard Controller
- * 
+ * Student Dashboard Controller.
+ *
  * Dashboard for student users showing their classes, assignments, and grades
  */
 class Dashboard extends BaseController
 {
     protected $userID;
+
     protected $schoolID;
 
     public function __construct()
@@ -21,7 +22,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Display student dashboard
+     * Display student dashboard.
      */
     public function index()
     {
@@ -44,7 +45,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get student information
+     * Get student information.
      */
     private function getStudentInfo(): ?object
     {
@@ -59,12 +60,12 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get classes enrolled by this student
+     * Get classes enrolled by this student.
      */
     private function getMyClasses(): array
     {
         $db = \Config\Database::connect();
-        
+
         return $db->table('student_enrollments')
             ->select('school_classes.*, student_enrollments.enrollment_date')
             ->join('school_classes', 'student_enrollments.class_id = school_classes.id')
@@ -74,12 +75,12 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get pending assignments
+     * Get pending assignments.
      */
     private function getPendingAssignments(): array
     {
         $db = \Config\Database::connect();
-        
+
         return $db->table('assignments')
             ->select('assignments.*, school_classes.name as class_name, courses.name as course_name')
             ->join('student_enrollments', 'assignments.class_id = student_enrollments.class_id')
@@ -94,12 +95,12 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get recent grades
+     * Get recent grades.
      */
     private function getRecentGrades(): array
     {
         $db = \Config\Database::connect();
-        
+
         return $db->table('grades')
             ->select('grades.*, courses.name as course_name, courses.code as course_code')
             ->join('courses', 'grades.course_id = courses.id', 'left')
@@ -111,7 +112,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get attendance statistics
+     * Get attendance statistics.
      */
     private function getAttendanceStats(): array
     {
@@ -125,12 +126,12 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get fee balance
+     * Get fee balance.
      */
     private function getFeeBalance(): array
     {
         $db = \Config\Database::connect();
-        
+
         // Total invoiced
         $totalInvoiced = $db->table('invoices')
             ->selectSum('amount', 'total')
@@ -156,7 +157,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get today's class schedule
+     * Get today's class schedule.
      */
     private function getTodaySchedule(): array
     {

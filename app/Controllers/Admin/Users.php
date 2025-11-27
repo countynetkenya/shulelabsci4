@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use App\Models\UserModel;
 
 /**
- * Users Controller for SuperAdmin
- * 
+ * Users Controller for SuperAdmin.
+ *
  * Manages user records across the entire system
  */
 class Users extends BaseController
@@ -20,7 +20,7 @@ class Users extends BaseController
     }
 
     /**
-     * List all users
+     * List all users.
      */
     public function index()
     {
@@ -29,7 +29,7 @@ class Users extends BaseController
         }
 
         $db = \Config\Database::connect();
-        
+
         $users = $db->table('users')
             ->select('users.*, roles.name as role_name, schools.name as school_name')
             ->join('user_roles', 'users.id = user_roles.user_id', 'left')
@@ -49,7 +49,7 @@ class Users extends BaseController
     }
 
     /**
-     * Show create user form
+     * Show create user form.
      */
     public function create()
     {
@@ -67,7 +67,7 @@ class Users extends BaseController
     }
 
     /**
-     * Store new user
+     * Store new user.
      */
     public function store()
     {
@@ -76,7 +76,7 @@ class Users extends BaseController
         }
 
         $validation = \Config\Services::validation();
-        
+
         $rules = [
             'username' => 'required|min_length[3]|max_length[50]|is_unique[users.username]',
             'email' => 'required|valid_email|is_unique[users.email]',
@@ -142,7 +142,7 @@ class Users extends BaseController
     }
 
     /**
-     * Show edit user form
+     * Show edit user form.
      */
     public function edit($id)
     {
@@ -151,13 +151,13 @@ class Users extends BaseController
         }
 
         $user = $this->userModel->find($id);
-        
+
         if (!$user) {
             return redirect()->to('/admin/users')->with('error', 'User not found.');
         }
 
         $db = \Config\Database::connect();
-        
+
         // Get user's current role
         $userRole = $db->table('user_roles')
             ->where('user_id', $id)
@@ -183,7 +183,7 @@ class Users extends BaseController
     }
 
     /**
-     * Update user
+     * Update user.
      */
     public function update($id)
     {
@@ -192,7 +192,7 @@ class Users extends BaseController
         }
 
         $validation = \Config\Services::validation();
-        
+
         $rules = [
             'username' => "required|min_length[3]|max_length[50]|is_unique[users.username,id,{$id}]",
             'email' => "required|valid_email|is_unique[users.email,id,{$id}]",
@@ -263,7 +263,7 @@ class Users extends BaseController
     }
 
     /**
-     * Delete user
+     * Delete user.
      */
     public function delete($id)
     {
@@ -279,7 +279,7 @@ class Users extends BaseController
     }
 
     /**
-     * Get all roles
+     * Get all roles.
      */
     private function getRoles(): array
     {
@@ -291,7 +291,7 @@ class Users extends BaseController
     }
 
     /**
-     * Get all schools
+     * Get all schools.
      */
     private function getSchools(): array
     {
@@ -303,13 +303,13 @@ class Users extends BaseController
     }
 
     /**
-     * Check if current user is superadmin
+     * Check if current user is superadmin.
      */
     private function isSuperAdmin(): bool
     {
         $session = session();
         $userID = $session->get('userID');
-        
+
         if (!$userID) {
             return false;
         }

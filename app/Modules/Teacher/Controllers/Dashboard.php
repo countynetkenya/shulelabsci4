@@ -5,13 +5,14 @@ namespace App\Modules\Teacher\Controllers;
 use App\Controllers\BaseController;
 
 /**
- * Teacher Dashboard Controller
- * 
+ * Teacher Dashboard Controller.
+ *
  * Dashboard for teacher users showing their classes and assignments
  */
 class Dashboard extends BaseController
 {
     protected $userID;
+
     protected $schoolID;
 
     public function __construct()
@@ -21,7 +22,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Display teacher dashboard
+     * Display teacher dashboard.
      */
     public function index()
     {
@@ -43,7 +44,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get teacher information
+     * Get teacher information.
      */
     private function getTeacherInfo(): ?object
     {
@@ -58,12 +59,12 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get classes assigned to this teacher
+     * Get classes assigned to this teacher.
      */
     private function getMyClasses(): array
     {
         $db = \Config\Database::connect();
-        
+
         // Get classes where this teacher is the class teacher or teaches a subject
         return $db->table('school_classes')
             ->select('school_classes.*, COUNT(DISTINCT student_enrollments.student_id) as student_count')
@@ -75,12 +76,12 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get total students taught by this teacher
+     * Get total students taught by this teacher.
      */
     private function getTotalStudents(): int
     {
         $db = \Config\Database::connect();
-        
+
         return (int) $db->table('student_enrollments')
             ->join('school_classes', 'student_enrollments.class_id = school_classes.id')
             ->where('school_classes.school_id', $this->schoolID)
@@ -88,12 +89,12 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get upcoming assignments
+     * Get upcoming assignments.
      */
     private function getUpcomingAssignments(): array
     {
         $db = \Config\Database::connect();
-        
+
         return $db->table('assignments')
             ->select('assignments.*, school_classes.name as class_name')
             ->join('school_classes', 'assignments.class_id = school_classes.id', 'left')
@@ -105,12 +106,12 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get recent grades submitted
+     * Get recent grades submitted.
      */
     private function getRecentGrades(): array
     {
         $db = \Config\Database::connect();
-        
+
         return $db->table('grades')
             ->select('grades.*, users.username as student_name, courses.name as course_name')
             ->join('users', 'grades.student_id = users.id', 'left')
@@ -122,7 +123,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get today's class schedule
+     * Get today's class schedule.
      */
     private function getTodaySchedule(): array
     {

@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Inventory;
 
+use App\Database\Seeds\InventoryV2Seeder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\FeatureTestTrait;
-use App\Database\Seeds\InventoryV2Seeder;
 
 class InventoryApiTest extends CIUnitTestCase
 {
@@ -13,9 +13,13 @@ class InventoryApiTest extends CIUnitTestCase
     use FeatureTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = null;
+
     protected $seed = InventoryV2Seeder::class;
 
     public function testInitiateTransfer()
@@ -26,9 +30,9 @@ class InventoryApiTest extends CIUnitTestCase
         $shop = $this->db->table('inventory_locations')->where('name', 'Shop')->get()->getRow();
 
         $data = [
-            'item_id' => (int)$item->id,
-            'from_location_id' => (int)$warehouse->id,
-            'to_location_id' => (int)$shop->id,
+            'item_id' => (int) $item->id,
+            'from_location_id' => (int) $warehouse->id,
+            'to_location_id' => (int) $shop->id,
             'quantity' => 10,
         ];
 
@@ -38,7 +42,7 @@ class InventoryApiTest extends CIUnitTestCase
 
         $result->assertStatus(201);
         $result->assertJSONFragment(['message' => 'Transfer initiated successfully']);
-        
+
         // Verify DB
         $transfer = $this->db->table('inventory_transfers')->get()->getRow();
         $this->assertEquals(10, $transfer->quantity);
@@ -53,16 +57,16 @@ class InventoryApiTest extends CIUnitTestCase
         $shop = $this->db->table('inventory_locations')->where('name', 'Shop')->get()->getRow();
 
         $data = [
-            'item_id' => (int)$item->id,
-            'from_location_id' => (int)$warehouse->id,
-            'to_location_id' => (int)$shop->id,
+            'item_id' => (int) $item->id,
+            'from_location_id' => (int) $warehouse->id,
+            'to_location_id' => (int) $shop->id,
             'quantity' => 10,
         ];
 
         $initResult = $this->withBody(json_encode($data))
                            ->withHeaders(['Content-Type' => 'application/json'])
                            ->post('api/inventory/transfers');
-        
+
         $json = json_decode($initResult->getJSON());
         $transferId = $json->transfer_id;
 
@@ -90,10 +94,10 @@ class InventoryApiTest extends CIUnitTestCase
                        ->get('api/inventory/stock');
 
         $result->assertStatus(200);
-        
+
         // Decode JSON to verify structure
         $json = json_decode($result->getJSON(), true);
-        
+
         $this->assertIsArray($json);
         $this->assertNotEmpty($json);
         $this->assertEquals('Math Book', $json[0]['item_name']);

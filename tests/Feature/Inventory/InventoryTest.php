@@ -3,23 +3,26 @@
 namespace Tests\Feature\Inventory;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 
 class InventoryTest extends CIUnitTestCase
 {
     use FeatureTestTrait;
     use DatabaseTestTrait;
 
-    protected $migrate     = true;
+    protected $migrate = true;
+
     protected $migrateOnce = false;
-    protected $refresh     = true;
-    protected $namespace   = 'App';
+
+    protected $refresh = true;
+
+    protected $namespace = 'App';
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Disable CSRF for testing API
         $filters = config('Filters');
         if (isset($filters->globals['before']['csrf'])) {
@@ -50,13 +53,13 @@ class InventoryTest extends CIUnitTestCase
             'sku'         => 'TEST-001',
             'type'        => 'physical',
             'quantity'    => 10,
-            'unit_cost'   => 50.00
+            'unit_cost'   => 50.00,
         ];
 
         $result = $this->withBody(json_encode($data))
                        ->withHeaders(['Content-Type' => 'application/json'])
                        ->post('/api/inventory/items');
-        
+
         $result->assertStatus(201);
     }
 }

@@ -31,7 +31,7 @@ class ItemsService
             'sku' => 'required|is_unique[inventory_items.sku,id,' . ($id ?? 0) . ']',
             'category_id' => 'required|integer',
         ];
-        
+
         $validation = \Config\Services::validation();
         $validation->setRules($rules);
 

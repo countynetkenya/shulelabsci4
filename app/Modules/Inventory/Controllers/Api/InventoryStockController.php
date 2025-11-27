@@ -10,6 +10,7 @@ use Modules\Inventory\Services\StockService;
 class InventoryStockController extends ResourceController
 {
     protected $format = 'json';
+
     protected StockService $service;
 
     public function __construct()

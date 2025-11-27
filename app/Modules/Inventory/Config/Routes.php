@@ -28,7 +28,7 @@ class Routes
             $routes->post('items', 'ItemsApiController::create');
             $routes->put('items/(:num)', 'ItemsApiController::update/$1');
             $routes->delete('items/(:num)', 'ItemsApiController::delete/$1');
-            
+
             // Stock
             $routes->get('stock', 'InventoryStockController::index');
 

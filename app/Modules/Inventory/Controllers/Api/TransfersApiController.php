@@ -6,11 +6,11 @@ namespace Modules\Inventory\Controllers\Api;
 
 use CodeIgniter\RESTful\ResourceController;
 use Modules\Inventory\Services\InventoryService;
-use CodeIgniter\HTTP\ResponseInterface;
 
 class TransfersApiController extends ResourceController
 {
     protected $format = 'json';
+
     protected InventoryService $inventoryService;
 
     public function __construct()
@@ -20,7 +20,7 @@ class TransfersApiController extends ResourceController
 
     /**
      * Initiate a stock transfer
-     * POST /api/inventory/transfers
+     * POST /api/inventory/transfers.
      */
     public function create()
     {
@@ -42,16 +42,16 @@ class TransfersApiController extends ResourceController
             $userId = session()->get('user_id') ?? 1; // Fallback to 1 for dev/test if not set
 
             $transferId = $this->inventoryService->transferStock(
-                (int)$data['item_id'],
-                (int)$data['from_location_id'],
-                (int)$data['to_location_id'],
-                (int)$data['quantity'],
-                (int)$userId
+                (int) $data['item_id'],
+                (int) $data['from_location_id'],
+                (int) $data['to_location_id'],
+                (int) $data['quantity'],
+                (int) $userId
             );
 
             return $this->respondCreated([
                 'message' => 'Transfer initiated successfully',
-                'transfer_id' => $transferId
+                'transfer_id' => $transferId,
             ]);
 
         } catch (\Exception $e) {
@@ -61,7 +61,7 @@ class TransfersApiController extends ResourceController
 
     /**
      * Confirm a stock transfer
-     * POST /api/inventory/transfers/(:num)/confirm
+     * POST /api/inventory/transfers/(:num)/confirm.
      */
     public function confirm($id = null)
     {
@@ -72,10 +72,10 @@ class TransfersApiController extends ResourceController
         try {
             $userId = session()->get('user_id') ?? 1; // Fallback
 
-            $this->inventoryService->confirmTransfer((int)$id, (int)$userId);
+            $this->inventoryService->confirmTransfer((int) $id, (int) $userId);
 
             return $this->respond([
-                'message' => 'Transfer confirmed successfully'
+                'message' => 'Transfer confirmed successfully',
             ]);
 
         } catch (\Exception $e) {
