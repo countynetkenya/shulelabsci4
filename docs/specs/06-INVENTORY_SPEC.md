@@ -154,3 +154,43 @@ CREATE TABLE inventory_issues (
 *   **Locations**: "Main Warehouse", "Uniform Shop".
 *   **Items**: "Math Book" (Physical), "Tuition" (Service), "Grade 1 Kit" (Bundle).
 *   **Scenario**: Transfer 10 Books from Warehouse to Shop. Verify stock decreases in Warehouse and increases in Shop *only after* receipt.
+
+---
+
+## Part 4: Architectural Safeguards (Senior Architect Review)
+
+### 4.1 Concurrency Control (The "Race Condition" Fix)
+**Risk**: Two users selling the last item simultaneously.
+**Mandate**: Use **Atomic Decrements** in the Service Layer.
+```php
+// BAD
+$item->quantity -= $qty;
+$item->save();
+
+// GOOD
+$db->table('inventory_stock')
+   ->where('item_id', $id)
+   ->where('location_id', $loc)
+   ->where('quantity >=', $qty) // Safety check
+   ->decrement('quantity', $qty);
+```
+
+### 4.2 Transaction Boundaries (The "Partial Failure" Fix)
+**Risk**: Stock deducted but Thread notification fails.
+**Mandate**: Wrap all multi-step operations in DB Transactions.
+```php
+$this->db->transStart();
+// 1. Deduct Stock
+// 2. Create Transfer Record
+// 3. Create Thread
+$this->db->transComplete();
+```
+
+### 4.3 Migration Strategy (Data Loss Prevention)
+**Risk**: Dropping `inventory_items.quantity` loses existing data.
+**Plan**:
+1.  Create `inventory_locations` and `inventory_stock` tables.
+2.  **Seed**: Create default "Main Store" location.
+3.  **Migrate Data**: Loop through all items, move `quantity` to `inventory_stock` (linked to Main Store).
+4.  **Cleanup**: Drop `quantity` column from `inventory_items`.
+
