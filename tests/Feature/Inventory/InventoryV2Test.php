@@ -2,19 +2,23 @@
 
 namespace Tests\Feature\Inventory;
 
+use App\Database\Seeds\InventoryV2Seeder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use Modules\Inventory\Services\InventoryService;
-use App\Database\Seeds\InventoryV2Seeder;
 
 class InventoryV2Test extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = null; // Run all migrations including Modules
+
     protected $seed = InventoryV2Seeder::class;
 
     protected $inventoryService;
@@ -58,7 +62,7 @@ class InventoryV2Test extends CIUnitTestCase
                         ->where('item_id', $item->id)
                         ->where('location_id', $shop->id)
                         ->get()->getRow();
-        
+
         if ($shopStock) {
             $this->assertEquals(0, $shopStock->quantity);
         } else {
@@ -69,10 +73,10 @@ class InventoryV2Test extends CIUnitTestCase
         $transfer = $db->table('inventory_transfers')->where('id', $transferId)->get()->getRow();
         $this->assertNotNull($transfer);
         $this->assertEquals('pending', $transfer->status);
-        
+
         // 4. Confirm Receipt
         $this->inventoryService->confirmTransfer($transferId, $user->id);
-        
+
         // 5. Assert Shop stock = 10
         $shopStock = $db->table('inventory_stock')
                         ->where('item_id', $item->id)

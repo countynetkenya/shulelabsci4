@@ -65,7 +65,7 @@ class AddHostelBeds extends Migration
                 ],
             ]);
             // SQLite FK addition is tricky on existing tables, usually requires copy/rebuild.
-            // We will skip adding the FK constraint strictly here to avoid SQLite complexity 
+            // We will skip adding the FK constraint strictly here to avoid SQLite complexity
             // or just rely on the column.
             // $this->forge->addForeignKey('bed_id', 'hostel_beds', 'id', 'CASCADE', 'CASCADE');
         }
@@ -73,11 +73,11 @@ class AddHostelBeds extends Migration
 
     public function down()
     {
-        // SQLite doesn't support dropping FKs easily without table recreation, 
+        // SQLite doesn't support dropping FKs easily without table recreation,
         // but for this context we'll just drop the column which is supported in newer SQLite or ignore
         // In standard CI4/SQLite, dropping column might require table rebuild.
         // For now, let's just try dropping the table and column.
-        
+
         $this->forge->dropColumn('hostel_allocations', 'bed_id');
         $this->forge->dropTable('hostel_beds');
     }

@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Inventory;
 
+use App\Database\Seeds\InventoryV2Seeder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\FeatureTestTrait;
-use App\Database\Seeds\InventoryV2Seeder;
 
 class InventoryWebTest extends CIUnitTestCase
 {
@@ -13,9 +13,13 @@ class InventoryWebTest extends CIUnitTestCase
     use FeatureTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = null;
+
     protected $seed = InventoryV2Seeder::class;
 
     public function testStockList()

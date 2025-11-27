@@ -3,18 +3,21 @@
 namespace Tests\Feature\Finance;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 
 class FinanceTest extends CIUnitTestCase
 {
     use FeatureTestTrait;
     use DatabaseTestTrait;
 
-    protected $migrate     = true;
+    protected $migrate = true;
+
     protected $migrateOnce = false;
-    protected $refresh     = true;
-    protected $namespace   = 'App'; // Or null to run all
+
+    protected $refresh = true;
+
+    protected $namespace = 'App'; // Or null to run all
 
     protected function setUp(): void
     {
@@ -27,10 +30,10 @@ class FinanceTest extends CIUnitTestCase
     {
         // We expect this to return 200 and contain the seeded data
         $result = $this->call('get', 'api/finance/invoices/1');
-        
+
         $result->assertStatus(200);
         // Check if the JSON contains the specific amount (integer in JSON)
-        $result->assertSee('15000'); 
+        $result->assertSee('15000');
     }
 
     public function testWebDashboardReturnsOk()

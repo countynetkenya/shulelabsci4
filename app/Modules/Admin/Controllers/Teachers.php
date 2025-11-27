@@ -6,13 +6,14 @@ use App\Controllers\BaseController;
 use App\Models\UserModel;
 
 /**
- * Teachers Controller for Admin Module
- * 
+ * Teachers Controller for Admin Module.
+ *
  * Manages teacher records within a school
  */
 class Teachers extends BaseController
 {
     protected $userModel;
+
     protected $schoolID;
 
     public function __construct()
@@ -22,7 +23,7 @@ class Teachers extends BaseController
     }
 
     /**
-     * List all teachers in the school
+     * List all teachers in the school.
      */
     public function index()
     {
@@ -31,7 +32,7 @@ class Teachers extends BaseController
         }
 
         $db = \Config\Database::connect();
-        
+
         $teachers = $db->table('users')
             ->select('users.*, school_users.school_id, schools.name as school_name')
             ->join('user_roles', 'users.id = user_roles.user_id')
@@ -53,7 +54,7 @@ class Teachers extends BaseController
     }
 
     /**
-     * Show create teacher form
+     * Show create teacher form.
      */
     public function create()
     {
@@ -70,7 +71,7 @@ class Teachers extends BaseController
     }
 
     /**
-     * Store new teacher
+     * Store new teacher.
      */
     public function store()
     {
@@ -79,7 +80,7 @@ class Teachers extends BaseController
         }
 
         $validation = \Config\Services::validation();
-        
+
         $rules = [
             'username' => 'required|min_length[3]|max_length[50]|is_unique[users.username]',
             'email' => 'required|valid_email|is_unique[users.email]',
@@ -112,7 +113,7 @@ class Teachers extends BaseController
 
             // Get teacher role
             $teacherRole = $db->table('roles')->where('name', 'teacher')->get()->getRow();
-            
+
             if ($teacherRole) {
                 // Assign teacher role
                 $db->table('user_roles')->insert([
@@ -145,7 +146,7 @@ class Teachers extends BaseController
     }
 
     /**
-     * Show edit teacher form
+     * Show edit teacher form.
      */
     public function edit($id)
     {
@@ -154,7 +155,7 @@ class Teachers extends BaseController
         }
 
         $teacher = $this->userModel->find($id);
-        
+
         if (!$teacher) {
             return redirect()->to('/admin/teachers')->with('error', 'Teacher not found.');
         }
@@ -169,7 +170,7 @@ class Teachers extends BaseController
     }
 
     /**
-     * Update teacher
+     * Update teacher.
      */
     public function update($id)
     {
@@ -178,7 +179,7 @@ class Teachers extends BaseController
         }
 
         $validation = \Config\Services::validation();
-        
+
         $rules = [
             'username' => "required|min_length[3]|max_length[50]|is_unique[users.username,id,{$id}]",
             'email' => "required|valid_email|is_unique[users.email,id,{$id}]",
@@ -212,7 +213,7 @@ class Teachers extends BaseController
     }
 
     /**
-     * Delete teacher
+     * Delete teacher.
      */
     public function delete($id)
     {
@@ -228,7 +229,7 @@ class Teachers extends BaseController
     }
 
     /**
-     * Get available subjects
+     * Get available subjects.
      */
     private function getSubjects(): array
     {

@@ -8,7 +8,8 @@ use Modules\Inventory\Models\InventoryItemModel;
 class InventoryItemController extends ResourceController
 {
     protected $modelName = InventoryItemModel::class;
-    protected $format    = 'json';
+
+    protected $format = 'json';
 
     public function index()
     {

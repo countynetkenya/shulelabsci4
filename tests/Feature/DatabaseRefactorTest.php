@@ -8,12 +8,13 @@ use CodeIgniter\Test\DatabaseTestTrait;
 class DatabaseRefactorTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
-    
+
     protected $refresh = false;
+
     protected $namespace = null;
-    
+
     /**
-     * Test 1: Users table exists and is accessible
+     * Test 1: Users table exists and is accessible.
      */
     public function testUsersTableAccessible()
     {
@@ -22,9 +23,9 @@ class DatabaseRefactorTest extends CIUnitTestCase
         $this->assertIsObject($result);
         $this->assertGreaterThanOrEqual(0, $result->getNumRows());
     }
-    
+
     /**
-     * Test 2: Roles table exists and is accessible
+     * Test 2: Roles table exists and is accessible.
      */
     public function testRolesTableAccessible()
     {
@@ -32,9 +33,9 @@ class DatabaseRefactorTest extends CIUnitTestCase
         $result = $db->table('roles')->limit(1)->get();
         $this->assertIsObject($result);
     }
-    
+
     /**
-     * Test 3: User-roles relationship works
+     * Test 3: User-roles relationship works.
      */
     public function testUserRolesJoinWorks()
     {
@@ -45,24 +46,24 @@ class DatabaseRefactorTest extends CIUnitTestCase
             ->join('roles', 'user_roles.role_id = roles.id', 'left')
             ->limit(5)
             ->get();
-        
+
         $this->assertIsObject($result);
     }
-    
+
     /**
-     * Test 4: Validation rules work with new table names
+     * Test 4: Validation rules work with new table names.
      */
     public function testValidationRulesWork()
     {
         $validation = \Config\Services::validation();
-        
+
         // Test is_unique rule parses correctly
         $rules = ['email' => 'is_unique[users.email]'];
         $this->assertTrue($validation->setRules($rules) !== false);
     }
-    
+
     /**
-     * Test 5: No ci4_ prefix references in codebase
+     * Test 5: No ci4_ prefix references in codebase.
      */
     public function testNoCi4PrefixInCodebase()
     {

@@ -5,8 +5,8 @@ namespace App\Modules\Admin\Controllers;
 use App\Controllers\BaseController;
 
 /**
- * Admin Dashboard Controller
- * 
+ * Admin Dashboard Controller.
+ *
  * School-specific dashboard for admin users
  */
 class Dashboard extends BaseController
@@ -19,7 +19,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Display admin dashboard for specific school
+     * Display admin dashboard for specific school.
      */
     public function index()
     {
@@ -42,7 +42,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get school information
+     * Get school information.
      */
     private function getSchoolInfo(): ?object
     {
@@ -54,7 +54,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get total students in this school
+     * Get total students in this school.
      */
     private function getTotalStudents(): int
     {
@@ -68,7 +68,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get total teachers in this school
+     * Get total teachers in this school.
      */
     private function getTotalTeachers(): int
     {
@@ -82,7 +82,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get total classes in this school
+     * Get total classes in this school.
      */
     private function getTotalClasses(): int
     {
@@ -93,12 +93,12 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get fee collection statistics
+     * Get fee collection statistics.
      */
     private function getFeeCollectionStats(): array
     {
         $db = \Config\Database::connect();
-        
+
         // Total expected fees
         $totalExpected = $db->table('invoices')
             ->selectSum('amount', 'total')
@@ -125,7 +125,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get recent activity in this school
+     * Get recent activity in this school.
      */
     private function getRecentActivity(): array
     {
@@ -134,7 +134,7 @@ class Dashboard extends BaseController
     }
 
     /**
-     * Get attendance statistics
+     * Get attendance statistics.
      */
     private function getAttendanceStats(): array
     {

@@ -5,13 +5,14 @@ namespace App\Modules\Teacher\Controllers;
 use App\Controllers\BaseController;
 
 /**
- * Gradebook Controller for Teacher Module
- * 
+ * Gradebook Controller for Teacher Module.
+ *
  * Manages grade entry and viewing for teachers
  */
 class Gradebook extends BaseController
 {
     protected $userID;
+
     protected $schoolID;
 
     public function __construct()
@@ -21,7 +22,7 @@ class Gradebook extends BaseController
     }
 
     /**
-     * Display gradebook interface
+     * Display gradebook interface.
      */
     public function index()
     {
@@ -39,7 +40,7 @@ class Gradebook extends BaseController
     }
 
     /**
-     * View grades for a specific class and course
+     * View grades for a specific class and course.
      */
     public function view($classID = null, $courseID = null)
     {
@@ -52,7 +53,7 @@ class Gradebook extends BaseController
         }
 
         $db = \Config\Database::connect();
-        
+
         // Get students in the class
         $students = $db->table('student_enrollments')
             ->select('users.id, users.username, users.first_name, users.last_name, grades.score, grades.grade, grades.id as grade_id')
@@ -79,7 +80,7 @@ class Gradebook extends BaseController
     }
 
     /**
-     * Save or update grade
+     * Save or update grade.
      */
     public function save()
     {
@@ -97,7 +98,7 @@ class Gradebook extends BaseController
         }
 
         $db = \Config\Database::connect();
-        
+
         // Check if grade exists
         $existing = $db->table('grades')
             ->where('student_id', $studentID)
@@ -131,7 +132,7 @@ class Gradebook extends BaseController
     }
 
     /**
-     * Get classes taught by this teacher
+     * Get classes taught by this teacher.
      */
     private function getMyClasses(): array
     {
@@ -144,7 +145,7 @@ class Gradebook extends BaseController
     }
 
     /**
-     * Get available courses
+     * Get available courses.
      */
     private function getCourses(): array
     {

@@ -6,21 +6,30 @@ use CodeIgniter\Model;
 
 class HostelRoomModel extends Model
 {
-    protected $table            = 'hostel_rooms';
-    protected $primaryKey       = 'id';
+    protected $table = 'hostel_rooms';
+
+    protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
-    protected $returnType       = 'object';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = [
-        'hostel_id', 'room_number', 'floor_number', 'capacity', 'cost_per_term', 'is_active'
+
+    protected $returnType = 'object';
+
+    protected $useSoftDeletes = false;
+
+    protected $protectFields = true;
+
+    protected $allowedFields = [
+        'hostel_id', 'room_number', 'floor_number', 'capacity', 'cost_per_term', 'is_active',
     ];
 
     // Dates
     protected $useTimestamps = true;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
+
+    protected $dateFormat = 'datetime';
+
+    protected $createdField = 'created_at';
+
+    protected $updatedField = 'updated_at';
 
     // Validation
     protected $validationRules = [
@@ -29,9 +38,11 @@ class HostelRoomModel extends Model
         'capacity'      => 'required|integer|greater_than[0]',
         'cost_per_term' => 'decimal',
     ];
+
     // Callbacks
     protected $allowCallbacks = true;
-    protected $afterInsert    = ['createBeds'];
+
+    protected $afterInsert = ['createBeds'];
 
     protected function createBeds(array $data)
     {
@@ -44,8 +55,8 @@ class HostelRoomModel extends Model
                 for ($i = 1; $i <= $capacity; $i++) {
                     $bedModel->insert([
                         'room_id'    => $roomId,
-                        'bed_number' => (string)$i,
-                        'status'     => 'available'
+                        'bed_number' => (string) $i,
+                        'status'     => 'available',
                     ]);
                 }
             }

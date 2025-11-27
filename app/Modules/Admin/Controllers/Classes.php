@@ -5,8 +5,8 @@ namespace App\Modules\Admin\Controllers;
 use App\Controllers\BaseController;
 
 /**
- * Classes Controller for Admin Module
- * 
+ * Classes Controller for Admin Module.
+ *
  * Manages class records within a school
  */
 class Classes extends BaseController
@@ -19,7 +19,7 @@ class Classes extends BaseController
     }
 
     /**
-     * List all classes in the school
+     * List all classes in the school.
      */
     public function index()
     {
@@ -28,7 +28,7 @@ class Classes extends BaseController
         }
 
         $db = \Config\Database::connect();
-        
+
         $classes = $db->table('school_classes')
             ->select('school_classes.*, COUNT(DISTINCT student_enrollments.student_id) as student_count')
             ->join('student_enrollments', 'school_classes.id = student_enrollments.class_id', 'left')
@@ -47,7 +47,7 @@ class Classes extends BaseController
     }
 
     /**
-     * Show create class form
+     * Show create class form.
      */
     public function create()
     {
@@ -64,7 +64,7 @@ class Classes extends BaseController
     }
 
     /**
-     * Store new class
+     * Store new class.
      */
     public function store()
     {
@@ -73,7 +73,7 @@ class Classes extends BaseController
         }
 
         $validation = \Config\Services::validation();
-        
+
         $rules = [
             'name' => 'required|max_length[100]',
             'grade_level' => 'permit_empty|max_length[50]',
@@ -101,7 +101,7 @@ class Classes extends BaseController
     }
 
     /**
-     * Show edit class form
+     * Show edit class form.
      */
     public function edit($id)
     {
@@ -115,7 +115,7 @@ class Classes extends BaseController
             ->where('school_id', $this->schoolID)
             ->get()
             ->getRow();
-        
+
         if (!$class) {
             return redirect()->to('/admin/classes')->with('error', 'Class not found.');
         }
@@ -130,7 +130,7 @@ class Classes extends BaseController
     }
 
     /**
-     * Update class
+     * Update class.
      */
     public function update($id)
     {
@@ -139,7 +139,7 @@ class Classes extends BaseController
         }
 
         $validation = \Config\Services::validation();
-        
+
         $rules = [
             'name' => 'required|max_length[100]',
             'grade_level' => 'permit_empty|max_length[50]',
@@ -166,7 +166,7 @@ class Classes extends BaseController
     }
 
     /**
-     * Delete class
+     * Delete class.
      */
     public function delete($id)
     {
@@ -175,7 +175,7 @@ class Classes extends BaseController
         }
 
         $db = \Config\Database::connect();
-        
+
         if ($db->table('school_classes')->where('id', $id)->where('school_id', $this->schoolID)->delete()) {
             return redirect()->to('/admin/classes')->with('success', 'Class deleted successfully.');
         }
@@ -184,7 +184,7 @@ class Classes extends BaseController
     }
 
     /**
-     * Get teachers for the current school
+     * Get teachers for the current school.
      */
     private function getSchoolTeachers(): array
     {

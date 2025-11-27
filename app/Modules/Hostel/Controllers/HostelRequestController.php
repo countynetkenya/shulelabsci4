@@ -8,7 +8,8 @@ use Modules\Hostel\Models\HostelRequestModel;
 class HostelRequestController extends ResourceController
 {
     protected $modelName = HostelRequestModel::class;
-    protected $format    = 'json';
+
+    protected $format = 'json';
 
     public function index()
     {

@@ -5,13 +5,14 @@ namespace App\Modules\Teacher\Controllers;
 use App\Controllers\BaseController;
 
 /**
- * Attendance Controller for Teacher Module
- * 
+ * Attendance Controller for Teacher Module.
+ *
  * Manages attendance marking and viewing for teachers
  */
 class Attendance extends BaseController
 {
     protected $userID;
+
     protected $schoolID;
 
     public function __construct()
@@ -21,7 +22,7 @@ class Attendance extends BaseController
     }
 
     /**
-     * Display attendance interface
+     * Display attendance interface.
      */
     public function index()
     {
@@ -39,7 +40,7 @@ class Attendance extends BaseController
     }
 
     /**
-     * Mark attendance for a class
+     * Mark attendance for a class.
      */
     public function mark($classID = null)
     {
@@ -52,9 +53,9 @@ class Attendance extends BaseController
         }
 
         $date = $this->request->getGet('date') ?? date('Y-m-d');
-        
+
         $db = \Config\Database::connect();
-        
+
         // Get students in the class
         $students = $db->table('student_enrollments')
             ->select('users.id, users.username, users.first_name, users.last_name')
@@ -81,7 +82,7 @@ class Attendance extends BaseController
     }
 
     /**
-     * Save attendance records
+     * Save attendance records.
      */
     public function save()
     {
@@ -104,12 +105,12 @@ class Attendance extends BaseController
         return $this->response->setJSON([
             'success' => true,
             'message' => 'Attendance saved successfully',
-            'note' => 'Attendance table needs to be created for actual storage'
+            'note' => 'Attendance table needs to be created for actual storage',
         ]);
     }
 
     /**
-     * View attendance report for a class
+     * View attendance report for a class.
      */
     public function report($classID = null)
     {
@@ -134,7 +135,7 @@ class Attendance extends BaseController
     }
 
     /**
-     * Get classes taught by this teacher
+     * Get classes taught by this teacher.
      */
     private function getMyClasses(): array
     {

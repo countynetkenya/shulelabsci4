@@ -3,12 +3,13 @@
 namespace Modules\Inventory\Controllers;
 
 use App\Controllers\BaseController;
-use Modules\Inventory\Models\InventoryItemModel;
 use Modules\Inventory\Models\InventoryCategoryModel;
+use Modules\Inventory\Models\InventoryItemModel;
 
 class InventoryWebController extends BaseController
 {
     protected $itemModel;
+
     protected $categoryModel;
 
     public function __construct()

@@ -8,7 +8,8 @@ use Modules\Hostel\Models\HostelAllocationModel;
 class HostelAllocationController extends ResourceController
 {
     protected $modelName = HostelAllocationModel::class;
-    protected $format    = 'json';
+
+    protected $format = 'json';
 
     public function index()
     {

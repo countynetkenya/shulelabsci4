@@ -34,7 +34,7 @@ class InventoryV2Seeder extends Seeder
 
         // Create Item
         $this->db->query('INSERT INTO "inventory_items" (category_id, name, sku, type, unit_cost, is_billable, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)', [
-            $categoryId, 'Math Book', 'MATH-001', 'physical', 10.00, 1, date('Y-m-d H:i:s')
+            $categoryId, 'Math Book', 'MATH-001', 'physical', 10.00, 1, date('Y-m-d H:i:s'),
         ]);
         $itemId = $this->db->insertID();
 
@@ -47,16 +47,16 @@ class InventoryV2Seeder extends Seeder
             'created_at' => date('Y-m-d H:i:s'),
         ]);
         $this->db->enableForeignKeyChecks();
-        
+
         // Create User for testing
         if ($this->db->table('users')->where('email', 'test@example.com')->countAllResults() == 0) {
-             $this->db->table('users')->insert([
-                'username' => 'testuser',
-                'email' => 'test@example.com',
-                'password_hash' => 'hash',
-                'full_name' => 'Test User',
-                'is_active' => 1,
-                'created_at' => date('Y-m-d H:i:s'),
+            $this->db->table('users')->insert([
+               'username' => 'testuser',
+               'email' => 'test@example.com',
+               'password_hash' => 'hash',
+               'full_name' => 'Test User',
+               'is_active' => 1,
+               'created_at' => date('Y-m-d H:i:s'),
             ]);
         }
     }

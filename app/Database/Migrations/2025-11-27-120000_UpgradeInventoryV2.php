@@ -68,7 +68,7 @@ class UpgradeInventoryV2 extends Migration
 
         // 5. Enhancement: Recreate inventory_items
         // We use explicit table recreation to be safe across all drivers (especially SQLite) when modifying columns and types.
-        
+
         // Create new table with desired schema
         $this->forge->addField([
             'id' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'auto_increment' => true],
@@ -88,14 +88,14 @@ class UpgradeInventoryV2 extends Migration
         $this->forge->addUniqueKey('sku');
         $this->forge->addForeignKey('category_id', 'inventory_categories', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('inventory_items_v2', true);
-        
+
         // Copy data
         $this->db->query("INSERT INTO inventory_items_v2 (id, category_id, name, sku, description, type, unit_cost, reorder_level, location, is_billable, created_at, updated_at)
                           SELECT id, category_id, name, sku, description, 'physical', unit_cost, reorder_level, location, 1, created_at, updated_at FROM inventory_items");
-                          
+
         // Drop old table
         $this->forge->dropTable('inventory_items');
-        
+
         // Rename new table
         $this->forge->renameTable('inventory_items_v2', 'inventory_items');
 
@@ -142,27 +142,27 @@ class UpgradeInventoryV2 extends Migration
     public function down()
     {
         // Reverse the process
-        
+
         // 1. Revert inventory_items changes
         // Add quantity back
         $this->forge->addColumn('inventory_items', [
-            'quantity' => ['type' => 'INT', 'constraint' => 11, 'default' => 0]
+            'quantity' => ['type' => 'INT', 'constraint' => 11, 'default' => 0],
         ]);
-        
+
         // Restore quantity from stock (summing up from all locations for simplicity, though data loss of location info is inevitable in down)
         $stocks = $this->db->table('inventory_stock')->get()->getResult();
         foreach ($stocks as $stock) {
-            $this->db->query("UPDATE inventory_items SET quantity = quantity + ? WHERE id = ?", [$stock->quantity, $stock->item_id]);
+            $this->db->query('UPDATE inventory_items SET quantity = quantity + ? WHERE id = ?', [$stock->quantity, $stock->item_id]);
         }
 
         // Revert type column
         $this->forge->addColumn('inventory_items', [
-            'old_type' => ['type' => 'ENUM', 'constraint' => ['consumable', 'asset'], 'default' => 'consumable']
+            'old_type' => ['type' => 'ENUM', 'constraint' => ['consumable', 'asset'], 'default' => 'consumable'],
         ]);
         $this->db->table('inventory_items')->update(['old_type' => 'consumable']); // Default fallback
         $this->forge->dropColumn('inventory_items', 'type');
         $this->forge->modifyColumn('inventory_items', [
-            'old_type' => ['name' => 'type', 'type' => 'ENUM', 'constraint' => ['consumable', 'asset'], 'default' => 'consumable']
+            'old_type' => ['name' => 'type', 'type' => 'ENUM', 'constraint' => ['consumable', 'asset'], 'default' => 'consumable'],
         ]);
         $this->forge->dropColumn('inventory_items', 'is_billable');
 
