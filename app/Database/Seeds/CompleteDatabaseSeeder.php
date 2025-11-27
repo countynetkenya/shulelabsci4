@@ -38,7 +38,7 @@ class CompleteDatabaseSeeder extends Seeder
         echo "👤 Creating SuperAdmin user...\n";
 
         // Check if super admin already exists
-        $existing = $this->db->table('ci4_users')
+        $existing = $this->db->table('users')
             ->where('email', 'admin@shulelabs.local')
             ->get()
             ->getRowArray();
@@ -48,8 +48,8 @@ class CompleteDatabaseSeeder extends Seeder
             return;
         }
 
-        // Create super admin user
-        $userId = $this->db->table('ci4_users')->insert([
+        // Create superadmin user
+        $this->db->table('users')->insert([
             'username' => 'superadmin',
             'email' => 'admin@shulelabs.local',
             'password_hash' => password_hash('Admin@123456', PASSWORD_DEFAULT),
@@ -67,13 +67,13 @@ class CompleteDatabaseSeeder extends Seeder
         $userId = $this->db->insertID();
 
         // Assign super_admin role
-        $superAdminRole = $this->db->table('ci4_roles')
+        $superAdminRole = $this->db->table('roles')
             ->where('role_slug', 'super_admin')
             ->get()
             ->getRowArray();
 
         if ($superAdminRole) {
-            $this->db->table('ci4_user_roles')->insert([
+            $this->db->table('user_roles')->insert([
                 'user_id' => $userId,
                 'role_id' => $superAdminRole['id'],
                 'created_at' => date('Y-m-d H:i:s'),
@@ -91,7 +91,7 @@ class CompleteDatabaseSeeder extends Seeder
         echo "\n👥 Creating test users...\n";
 
         // Get role IDs
-        $roles = $this->db->table('ci4_roles')->get()->getResultArray();
+        $roles = $this->db->table('roles')->get()->getResultArray();
         $roleMap = [];
         foreach ($roles as $role) {
             $roleMap[$role['role_slug']] = $role['id'];
@@ -123,19 +123,6 @@ class CompleteDatabaseSeeder extends Seeder
             ]);
         }
 
-        // Create 5 parents
-        echo "   Creating parents...\n";
-        for ($i = 1; $i <= 5; $i++) {
-            $this->createUser([
-                'username' => "parent{$i}",
-                'email' => "parent{$i}@shulelabs.local",
-                'password' => 'Parent@123',
-                'full_name' => "Parent {$i}",
-                'role_slug' => 'parent',
-                'role_id' => $roleMap['parent'],
-            ]);
-        }
-
         // Create 2 school admins
         echo "   Creating school admins...\n";
         for ($i = 1; $i <= 2; $i++) {
@@ -158,7 +145,7 @@ class CompleteDatabaseSeeder extends Seeder
     private function createUser(array $data): void
     {
         // Check if user already exists
-        $existing = $this->db->table('ci4_users')
+        $existing = $this->db->table('users')
             ->where('email', $data['email'])
             ->get()
             ->getRowArray();
@@ -168,7 +155,7 @@ class CompleteDatabaseSeeder extends Seeder
         }
 
         // Create user
-        $this->db->table('ci4_users')->insert([
+        $this->db->table('users')->insert([
             'username' => $data['username'],
             'email' => $data['email'],
             'password_hash' => password_hash($data['password'], PASSWORD_DEFAULT),
@@ -185,7 +172,7 @@ class CompleteDatabaseSeeder extends Seeder
         $userId = $this->db->insertID();
 
         // Assign role
-        $this->db->table('ci4_user_roles')->insert([
+        $this->db->table('user_roles')->insert([
             'user_id' => $userId,
             'role_id' => $data['role_id'],
             'created_at' => date('Y-m-d H:i:s'),

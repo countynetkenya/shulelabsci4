@@ -31,8 +31,6 @@ class UserModel extends Model
         'full_name',
         'photo',
         'schoolID',
-        'ci3_user_id',
-        'ci3_user_table',
         'is_active',
     ];
 
@@ -80,7 +78,7 @@ class UserModel extends Model
 
         // Get roles
         $roles = $this->db->table('user_roles ur')
-            ->select('r.id, r.role_name, r.role_slug, r.ci3_usertype_id, r.description')
+            ->select('r.id, r.role_name, r.role_slug, r.description')
             ->join('roles r', 'r.id = ur.role_id')
             ->where('ur.user_id', $userId)
             ->get()
@@ -88,9 +86,9 @@ class UserModel extends Model
 
         $user->roles = $roles;
 
-        // For backward compatibility, set usertypeID from primary role
         if (!empty($roles)) {
-            $user->usertypeID = $roles[0]->ci3_usertype_id;
+            // keep primary role reference without CI3 fields
+            $user->primaryRole = $roles[0];
         }
 
         return $user;
@@ -147,36 +145,5 @@ class UserModel extends Model
         return $count > 0;
     }
 
-    /**
-     * Legacy method: Get user for signin (backward compatibility)
-     * Now uses users table instead of multiple CI3 tables.
-     *
-     * @param string $username
-     * @param string $hashedPassword
-     * @return object|null
-     * @deprecated Use findByUsername() and verify password separately
-     */
-    public function getUserForSignin(string $username, string $hashedPassword): ?object
-    {
-        $user = $this->where('username', $username)
-            ->where('password_hash', $hashedPassword)
-            ->where('is_active', 1)
-            ->first();
-
-        if ($user) {
-            // Add legacy fields for backward compatibility
-            $user->userID = $user->id;
-            $user->name = $user->full_name;
-            $user->active = $user->is_active;
-            $user->user_table = 'users';
-
-            // Get primary role to set usertypeID
-            $role = $this->getUserPrimaryRole($user->id);
-            if ($role) {
-                $user->usertypeID = $role->ci3_usertype_id;
-            }
-        }
-
-        return $user;
-    }
+    // Removed deprecated CI3-compatible signin method
 }

@@ -54,6 +54,12 @@ See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for complete production setup instr
 - Mobile-first API design
 - Gamification (badges, achievements, leaderboards)
 
+## CI3 Compatibility Layer (Retained)
+- Purpose: Maintain operational compatibility with legacy CI3-era data and logs while running on CI4.
+- Scope: Selected helpers/services and the `loginlog` table exist to support legacy flows and migrations.
+- Configuration: No action required by default. You can remove the layer later by dropping legacy tables and deleting compatibility files when your data is fully migrated.
+- Impact: Does not affect the new unprefixed `users`, `roles`, `user_roles` schema or CI4 routing; it simply preserves backward compatibility where needed.
+
 ## Running Tests
 
 ```bash

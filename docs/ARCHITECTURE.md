@@ -17,6 +17,7 @@ ShuleLabs is built on a modular, API-first architecture using CodeIgniter 4 fram
 6. **Scalability**: Horizontal and vertical scaling supported
 7. **Maintainability**: Clear separation of concerns
 8. **Testability**: Comprehensive test coverage
+9. **Compatibility**: CI3 compatibility layer intentionally retained for legacy data/log support
 
 ## 🏢 High-Level Architecture
 
