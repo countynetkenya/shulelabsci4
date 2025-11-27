@@ -39,7 +39,7 @@ Detailed feature specifications.
 - [Hostel Module](specs/05-HOSTEL_SPEC.md)
 - [Inventory Module](specs/06-INVENTORY_SPEC.md)
 - [POS Module](specs/07-POS_SPEC.md)
-- [Wallets Module](specs/10-WALLETS_SPEC.md)
+- [Transport Module](specs/09-TRANSPORT_SPEC.md)
 
 ---
 
