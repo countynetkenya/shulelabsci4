@@ -21,6 +21,8 @@ Automated build systems, agents, and workflows.
 How-to guides for developers.
 - [Start Here](guides/START_HERE.md)
 - [**Module Development Standard**](development/MODULES.md) 👈 **(Read this for new features)**
+- [**Reports Development Guide**](development/REPORTS.md) 👈 **(Read this for reporting features)**
+- [Reports Integration Checklist](development/REPORTS_INTEGRATION_CHECKLIST.md)
 - [Developer Guide](guides/DEVELOPER_GUIDE.md)
 - [Testing Guide](guides/TESTING.md)
 - [Docker Setup](guides/DOCKER.md)
