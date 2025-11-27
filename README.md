@@ -28,10 +28,20 @@ php spark serve
 **Access**: http://localhost:8080  
 **Login**: admin@shulelabs.local / Admin@123456
 
-**See all test credentials**: [TESTING.md](TESTING.md)
+**See all test credentials**: [Testing Guide](docs/guides/TESTING.md)
 
 ### Production Setup (MySQL)
-See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for complete production setup instructions.
+See [Deployment Guide](docs/guides/DEPLOYMENT_GUIDE.md) for complete production setup instructions.
+
+## 📚 Documentation
+
+We have consolidated all documentation into a central knowledge base.
+👉 **[Start Here: Documentation Index](docs/00-INDEX.md)**
+
+### Key Resources
+- [Developer Guide](docs/guides/DEVELOPER_GUIDE.md)
+- [System Architecture](docs/architecture/ARCHITECTURE.md)
+- [Orchestration Guide](docs/orchestration/GUIDE.md)
 
 ## Features
 

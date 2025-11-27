@@ -2,7 +2,6 @@
   "version": "2.0.0",
   "name": "ShuleLabs AI Orchestration",
   "description": "Production-ready autonomous development system",
-  
   "phases": [
     {
       "id": 0,
@@ -20,7 +19,10 @@
         "check_file_permissions",
         "validate_composer"
       ],
-      "auto_fix": ["permissions", "extensions"]
+      "auto_fix": [
+        "permissions",
+        "extensions"
+      ]
     },
     {
       "id": 1,
@@ -47,7 +49,8 @@
         "generate_test_specs",
         "create_test_files",
         "run_tests",
-        "measure_coverage"
+        "measure_coverage",
+        "run_persona_simulation"
       ],
       "quality_gates": {
         "min_coverage": 85,
@@ -118,7 +121,6 @@
       "continuous": true
     }
   ],
-  
   "quality_standards": {
     "code_style": "PSR-12",
     "type_hints": "required",
@@ -129,30 +131,40 @@
       "database_queries_max": 10
     }
   },
-  
   "ai_agents": {
     "alpha": {
       "name": "Core Features Agent",
-      "features": ["auth", "admin"],
+      "features": [
+        "auth",
+        "admin"
+      ],
       "parallel": true
     },
     "beta": {
       "name": "Academic Features Agent",
-      "features": ["teacher", "student"],
+      "features": [
+        "teacher",
+        "student"
+      ],
       "parallel": true
     },
     "gamma": {
       "name": "Financial Features Agent",
-      "features": ["finance", "hr"],
+      "features": [
+        "finance",
+        "hr"
+      ],
       "parallel": true
     },
     "delta": {
       "name": "Communication Features Agent",
-      "features": ["parent", "messaging"],
+      "features": [
+        "parent",
+        "messaging"
+      ],
       "parallel": true
     }
   },
-  
   "success_criteria": {
     "execution_time_max_minutes": 20,
     "test_coverage_min_percent": 85,
@@ -161,12 +173,18 @@
     "data_integrity_min_percent": 100,
     "deployment_success": true
   },
-  
   "notifications": {
-    "channels": ["console", "log"],
-    "events": ["phase_complete", "error", "quality_gate_failed", "deployment_complete"]
+    "channels": [
+      "console",
+      "log"
+    ],
+    "events": [
+      "phase_complete",
+      "error",
+      "quality_gate_failed",
+      "deployment_complete"
+    ]
   },
-  
   "metadata": {
     "created": "2025-11-23",
     "validated_on_project": "ShuleLabs CI4",

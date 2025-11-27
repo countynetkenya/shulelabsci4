@@ -24,6 +24,21 @@ This initiates all 6 phases automatically:
 
 **Total Time**: 7 minutes 24 seconds
 
+## 🚦 Continuous Persona Testing (Traffic Simulator)
+
+We support "Live Role Simulation" where automated bots continuously patrol the application as specific users (Student, Teacher, Admin) to detect regressions in real-time.
+
+### How to Use
+1.  Run the launcher to get the commands:
+    ```bash
+    ./bin/enhancements/launch_personas.sh
+    ```
+2.  Open 3 new terminals in VS Code.
+3.  Paste the commands provided by the launcher.
+
+### Configuration
+Persona profiles are defined in `tests/personas/*.json`. You can add new endpoints to patrol by editing these files.
+
 ## What Gets Built
 
 ### Code Generation

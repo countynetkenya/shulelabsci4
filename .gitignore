@@ -44,3 +44,9 @@ Thumbs.db
 phpstan.neon.dist
 .phpcs-cache
 .psalm/
+
+# Local Development
+database.db
+database.sqlite
+public/school_sessions/
+
