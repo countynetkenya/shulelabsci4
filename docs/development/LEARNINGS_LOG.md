@@ -11,10 +11,18 @@ This document tracks the evolution of our development process. It is a "Living H
 4.  **SQLite Compatibility**: All migrations must be SQLite compatible (check Foreign Key constraints carefully).
 5.  **Route Standardization**: `Routes.php` must explicitly define `api` and `web` route groups.
 6.  **Ample Test Data**: Always create a Seeder (`Modules\X\Database\Seeds\XSeeder`) with realistic data scenarios before running tests. Document this data in the Spec.
+7.  **Universal Terminal Pattern**: For any module involving "Issuing" or "Selling" (POS, Library, Inventory), use the standard "Cart-Based" UI layout.
+8.  **Paperless Handshake**: Use the `Threads` module for digital confirmations (Transfers, Issues) instead of paper trails.
 
 ---
 
 ## 📜 History of Learnings
+
+### Cycle 08: POS & Inventory V2 (Nov 2025)
+- **Issue**: Siloed interfaces for Sales, Loans, and Issues.
+- **Fix**: Adopted "Universal Terminal" design pattern.
+- **Issue**: Paper-heavy workflows for stock transfer.
+- **Fix**: Implemented "Paperless Handshake" using Threads integration.
 
 ### Cycle 07: Finance Module (Nov 2025)
 - **Issue**: Tests were initially dry and didn't reflect real-world scenarios.

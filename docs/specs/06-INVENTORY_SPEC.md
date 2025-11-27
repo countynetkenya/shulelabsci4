@@ -1,115 +1,125 @@
 # 📦 Inventory & Assets Management Specification
 
-**Version**: 1.0.0
+**Version**: 2.0.0
 **Status**: Draft
 **Last Updated**: 2025-11-27
 
 ---
 
 ## Part 1: Feature Definition (The "What" & "Why")
-*Target Audience: Product Owners, Stakeholders, Developers*
 
 ### 1.1 Overview
-The Inventory & Assets module enables the school to track physical assets (furniture, computers) and consumable stock (stationery, lab chemicals). It aims to prevent theft, reduce wastage, and ensure timely procurement of essential supplies.
+The Inventory module is the "Supply Chain Brain" of the school. It manages **Physical Stock** (Uniforms, Books), **Service Items** (Tuition, Transport), and **Bundles** (Fee Packages). It supports **Multi-Store** operations (Main Store, Kitchen, Library) and **Paperless Transfers** using the Threads system for digital handshakes.
 
 ### 1.2 User Stories
-- As a **Store Manager**, I want to **record new stock purchases**, so that the system reflects accurate quantities.
-- As a **Store Manager**, I want to **issue items to staff or students**, so that I can track who is responsible for school property.
-- As an **Admin**, I want to **receive low-stock alerts**, so that I can approve purchases before we run out of critical supplies.
-- As a **Teacher**, I want to **request supplies** via the portal, so that I don't have to physically visit the store for every small need.
+- **As a Store Manager**, I want to transfer stock from "Main Warehouse" to "Uniform Shop" digitally, so that I don't need paper delivery notes.
+- **As a Parent**, I want to "Confirm Receipt" of my child's uniform via the app, so the school knows it was delivered.
+- **As a Bursar**, I want to sell a "Grade 1 Fee Package" that automatically deducts stock for the included uniform and textbooks.
+- **As a Librarian**, I want to search for books by `#Author` or `#Genre` tags.
 
 ### 1.3 User Workflows
-1.  **Receiving Stock (Purchase)**:
-    *   Store Manager logs in.
-    *   Navigates to "Inventory > Receive Stock".
-    *   Selects Supplier and Items.
-    *   Enters quantity and unit cost.
-    *   System updates stock levels and calculates average cost.
+1.  **Paperless Transfer (Store-to-Store)**:
+    *   Manager A (Warehouse) initiates transfer of 50 Shirts to Uniform Shop.
+    *   System creates `InventoryTransfer` (Status: `in_transit`) and a **Thread**.
+    *   Manager B (Uniform Shop) gets a Thread notification.
+    *   Manager B counts items and clicks "Receive" in the Thread/App.
+    *   System updates stock in both locations.
 
-2.  **Issuing Stock**:
-    *   Store Manager selects "Issue Item".
-    *   Scans item or searches by name.
-    *   Selects Recipient (Student or Staff).
-    *   System deducts stock and creates a transaction record.
-
-### 1.4 Acceptance Criteria
-- [ ] System prevents issuing more items than available in stock.
-- [ ] Low-stock threshold triggers a notification (visual or email).
-- [ ] All transactions (In/Out) are immutable and audit-logged.
-- [ ] Support for both "Consumable" (chalk, paper) and "Asset" (projector, desk) item types.
+2.  **Digital Issue (Store-to-Student)**:
+    *   Store Manager issues "Math Book" to Student.
+    *   System creates `InventoryIssue` (Status: `pending_confirmation`).
+    *   Student/Parent gets a Thread alert: "Please confirm receipt".
+    *   Parent clicks "Confirm".
+    *   System marks issue as `completed`.
 
 ---
 
 ## Part 2: Technical Specification (The "How")
-*Target Audience: Developers, Architects*
 
 ### 2.1 Database Schema
 
-#### `inventory_categories`
-Categorizes items (e.g., "Stationery", "Electronics", "Furniture").
+#### `inventory_locations` (Strict Table)
+Defines physical or logical stores.
 ```sql
-CREATE TABLE inventory_categories (
+CREATE TABLE inventory_locations (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    description TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    name VARCHAR(100) NOT NULL, -- "Main Warehouse", "Uniform Shop"
+    type ENUM('store', 'warehouse', 'kitchen', 'library') DEFAULT 'store',
+    manager_user_id INT NULL, -- Person responsible
+    created_at DATETIME
 );
 ```
 
-#### `inventory_suppliers`
-External vendors.
-```sql
-CREATE TABLE inventory_suppliers (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    contact_person VARCHAR(100),
-    phone VARCHAR(20),
-    email VARCHAR(100),
-    address TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-```
-
-#### `inventory_items`
-The master list of items.
+#### `inventory_items` (Enhanced)
+Supports Services and Bundles.
 ```sql
 CREATE TABLE inventory_items (
     id INT PRIMARY KEY AUTO_INCREMENT,
     category_id INT NOT NULL,
     name VARCHAR(150) NOT NULL,
-    sku VARCHAR(50) UNIQUE, -- Stock Keeping Unit / Barcode
-    description TEXT,
-    type ENUM('consumable', 'asset') NOT NULL DEFAULT 'consumable',
-    quantity INT DEFAULT 0,
-    unit_cost DECIMAL(10, 2) DEFAULT 0.00, -- Moving average cost
-    reorder_level INT DEFAULT 10,
-    location VARCHAR(100), -- e.g., "Shelf A3"
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (category_id) REFERENCES inventory_categories(id)
+    sku VARCHAR(50) UNIQUE,
+    type ENUM('physical', 'service', 'bundle') DEFAULT 'physical',
+    is_billable BOOLEAN DEFAULT TRUE,
+    expense_account_id INT NULL, -- For internal consumption
+    income_account_id INT NULL, -- For sales revenue
+    created_at DATETIME
 );
 ```
 
-#### `inventory_transactions`
-Ledger of all stock movements.
+#### `inventory_bundles`
+Defines the contents of a bundle (e.g., Fee Package).
 ```sql
-CREATE TABLE inventory_transactions (
+CREATE TABLE inventory_bundles (
+    parent_item_id INT, -- The Bundle
+    child_item_id INT,  -- The Component
+    quantity INT,
+    PRIMARY KEY (parent_item_id, child_item_id)
+);
+```
+
+#### `inventory_stock` (Multi-Store)
+Tracks quantity per location.
+```sql
+CREATE TABLE inventory_stock (
+    item_id INT,
+    location_id INT,
+    quantity DECIMAL(10, 2) DEFAULT 0.00,
+    reorder_level INT DEFAULT 10,
+    PRIMARY KEY (item_id, location_id)
+);
+```
+
+#### `inventory_transfers` (Paperless Movement)
+Tracks movement between stores.
+```sql
+CREATE TABLE inventory_transfers (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    item_id INT NOT NULL,
-    user_id INT NOT NULL, -- Who performed the action
-    recipient_id INT NULL, -- Who received the item (if applicable)
-    supplier_id INT NULL, -- Who supplied the item (if applicable)
-    type ENUM('receive', 'issue', 'adjustment', 'return') NOT NULL,
-    quantity INT NOT NULL, -- Positive for receive/return, Negative for issue
-    unit_price DECIMAL(10, 2), -- Cost at time of transaction
-    notes TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (item_id) REFERENCES inventory_items(id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (recipient_id) REFERENCES users(id),
-    FOREIGN KEY (supplier_id) REFERENCES inventory_suppliers(id)
+    from_location_id INT,
+    to_location_id INT,
+    item_id INT,
+    quantity DECIMAL(10, 2),
+    status ENUM('pending', 'in_transit', 'received', 'rejected') DEFAULT 'pending',
+    initiated_by INT, -- User ID
+    received_by INT, -- User ID
+    thread_id VARCHAR(36), -- Link to Threads Module
+    created_at DATETIME,
+    received_at DATETIME
+);
+```
+
+#### `inventory_issues` (Digital Handshake)
+Tracks items given to users.
+```sql
+CREATE TABLE inventory_issues (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    item_id INT,
+    recipient_type VARCHAR(50), -- 'student', 'staff'
+    recipient_id INT,
+    quantity DECIMAL(10, 2),
+    status ENUM('issued', 'confirmed', 'returned', 'lost') DEFAULT 'issued',
+    thread_id VARCHAR(36), -- Link to Threads Module
+    issued_at DATETIME,
+    confirmed_at DATETIME
 );
 ```
 
@@ -117,36 +127,30 @@ CREATE TABLE inventory_transactions (
 
 | Method | Endpoint | Description | Access |
 |:-------|:---------|:------------|:-------|
-| GET    | `/api/inventory/items` | List items with stock levels | Auth |
-| GET    | `/api/inventory/items/{id}` | Item details & history | Auth |
-| POST   | `/api/inventory/items` | Create new item | Admin/Store |
-| POST   | `/api/inventory/receive` | Record stock purchase | Store |
-| POST   | `/api/inventory/issue` | Issue item to user | Store |
-| GET    | `/api/inventory/alerts` | List low-stock items | Admin/Store |
+| GET    | `/api/inventory/locations` | List all stores | Staff |
+| GET    | `/api/inventory/stock/{location_id}` | Check stock in a store | Staff |
+| POST   | `/api/inventory/transfer` | Initiate transfer | Manager |
+| POST   | `/api/inventory/transfer/{id}/receive` | Confirm receipt | Manager |
+| POST   | `/api/inventory/issue` | Issue item to user | Staff |
+| POST   | `/api/inventory/issue/{id}/confirm` | User confirms receipt | Student/Parent |
 
-### 2.3 Models & Validation
+### 2.3 Threads Integration
+*   **Context Type**: `inventory_transfer` or `inventory_issue`.
+*   **Context ID**: The ID of the record.
+*   **Workflow**:
+    1.  On `create`, call `ThreadService::createThread()`.
+    2.  On `receive/confirm`, call `ThreadService::postMessage()` ("Item received").
 
-**InventoryItemModel**
-- `name`: required, max_length[150]
-- `sku`: is_unique[inventory_items.sku]
-- `quantity`: integer, greater_than_equal_to[0]
-- `reorder_level`: integer
-
-**InventoryTransactionModel**
-- `item_id`: required, exists[inventory_items.id]
-- `type`: in_list[receive,issue,adjustment,return]
-- `quantity`: required, integer, not_zero
-
-### 2.4 Integration Points
-- **Finance Module**: When stock is received (`receive`), a corresponding Expense record should ideally be created in Finance (future integration).
-- **Users Module**: Linking `recipient_id` to Students or Staff.
+### 2.4 Web Interface (Universal Terminal)
+*   **Controller**: `InventoryWebController`
+*   **Views**:
+    *   `transfer.php`: Dual-pane view (Source -> Destination).
+    *   `receive.php`: List of incoming transfers with "Accept" buttons.
+    *   `issue.php`: Universal Terminal (Select User -> Scan Items).
 
 ---
 
-## Part 3: Development Checklist
-- [ ] **Design**: Review and approve this document.
-- [ ] **Tests**: Write failing feature tests (TDD) for Issuing and Receiving.
-- [ ] **Scaffold**: Generate Models, Controllers, Migrations.
-- [ ] **Database**: Run migrations.
-- [ ] **Code**: Implement Transaction logic (updating `inventory_items.quantity` automatically).
-- [ ] **Review**: Verify stock calculations.
+## Part 3: Test Data Strategy
+*   **Locations**: "Main Warehouse", "Uniform Shop".
+*   **Items**: "Math Book" (Physical), "Tuition" (Service), "Grade 1 Kit" (Bundle).
+*   **Scenario**: Transfer 10 Books from Warehouse to Shop. Verify stock decreases in Warehouse and increases in Shop *only after* receipt.
