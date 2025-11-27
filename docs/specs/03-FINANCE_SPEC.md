@@ -111,3 +111,23 @@ CREATE TABLE finance_payments (
 ### 2.4 Integration Points
 - **Students Module**: Needs `student_id` validation.
 - **Auth Module**: Needs `user_id` for `recorded_by`.
+
+## Part 3: Test Data Strategy
+
+### 3.1 Seeding Strategy
+To ensure robust testing, we use `Modules\Finance\Database\Seeds\FinanceSeeder` to populate the database with realistic scenarios.
+
+#### Fee Structures
+- **Tuition**: 15,000 (Term 1 2025)
+- **Transport**: 5,000
+- **Lunch**: 3,000
+
+#### Student Scenarios (Student ID 1)
+1.  **Invoiced**: 15,000 (Tuition) + 5,000 (Transport) = 20,000 Total.
+2.  **Paid**: 10,000 via M-Pesa (Ref: QWE123RTY).
+3.  **Balance**: 10,000 Outstanding.
+
+### 3.2 Testing Focus
+- **API**: Verify that `GET /api/finance/invoices/1` returns the correct JSON structure and amounts.
+- **Web**: Verify that the Dashboard correctly aggregates these totals (Total Invoiced: 20,000, Collected: 10,000).
+

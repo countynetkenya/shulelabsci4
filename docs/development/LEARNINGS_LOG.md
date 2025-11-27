@@ -10,10 +10,17 @@ This document tracks the evolution of our development process. It is a "Living H
 3.  **TDD First**: Feature tests must exist and fail before Controller code is written.
 4.  **SQLite Compatibility**: All migrations must be SQLite compatible (check Foreign Key constraints carefully).
 5.  **Route Standardization**: `Routes.php` must explicitly define `api` and `web` route groups.
+6.  **Ample Test Data**: Always create a Seeder (`Modules\X\Database\Seeds\XSeeder`) with realistic data scenarios before running tests. Document this data in the Spec.
 
 ---
 
 ## 📜 History of Learnings
+
+### Cycle 07: Finance Module (Nov 2025)
+- **Issue**: Tests were initially dry and didn't reflect real-world scenarios.
+- **Fix**: Mandated the creation of a Module Seeder and a "Test Data Strategy" section in the Design Spec.
+- **Issue**: JSON number formatting in tests (`15000` vs `15000.00`).
+- **Fix**: Be flexible with data types in assertions or cast explicitly.
 
 ### Cycle 06: Inventory Module (Nov 2025)
 - **Issue**: Frontend was initially neglected.
