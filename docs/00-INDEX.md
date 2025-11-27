@@ -36,12 +36,42 @@ Context files for AI agents.
 System status and historical logs.
 - [Latest System Status](reports/LATEST_STATUS.md)
 ### 6. 📝 Specifications (`docs/specs/`)
-Detailed feature specifications.
+Detailed feature specifications for all modules.
+
+#### Core Modules
 - [Finance Module](specs/03-FINANCE_SPEC.md)
 - [Hostel Module](specs/05-HOSTEL_SPEC.md)
 - [Inventory Module](specs/06-INVENTORY_SPEC.md)
 - [POS Module](specs/07-POS_SPEC.md)
+- [Reports Module](specs/08-REPORTS_SPEC.md)
 - [Transport Module](specs/09-TRANSPORT_SPEC.md)
+- [Wallets Module](specs/10-WALLETS_SPEC.md)
+
+#### Application Modules
+- [Admissions Module](specs/11-ADMISSIONS_SPEC.md) 🆕
+- [Scheduler Module](specs/12-SCHEDULER_SPEC.md) 🆕
+- [Parent Engagement](specs/13-PARENT_ENGAGEMENT_SPEC.md) 🆕
+- [Learning Module](specs/14-LEARNING_SPEC.md) 🆕
+- [HR Module](specs/15-HR_SPEC.md) 🆕
+- [Library Module](specs/16-LIBRARY_SPEC.md) 🆕
+- [Gamification Module](specs/17-GAMIFICATION_SPEC.md) 🆕
+- [Threads Module](specs/18-THREADS_SPEC.md) 🆕
+- [Integrations Module](specs/19-INTEGRATIONS_SPEC.md) 🆕
+- [Mobile Module](specs/20-MOBILE_SPEC.md) 🆕
+- [Portals Module](specs/21-PORTALS_SPEC.md) 🆕
+
+#### Platform Infrastructure
+- [Foundation Module](specs/22-FOUNDATION_SPEC.md) 🆕
+- [Security Framework](specs/23-SECURITY_SPEC.md) 🆕
+- [Audit Module](specs/24-AUDIT_SPEC.md) 🆕
+- [Approval Workflows](specs/25-APPROVAL_WORKFLOWS_SPEC.md) 🆕
+- [Monitoring Module](specs/26-MONITORING_SPEC.md) 🆕
+
+#### Phase 3 - Future Modules
+- [Analytics & AI](specs/27-ANALYTICS_AI_SPEC.md) 🆕
+- [Governance Module](specs/28-GOVERNANCE_SPEC.md) 🆕
+- [AI Extensions](specs/29-AI_EXTENSIONS_SPEC.md) 🆕
+- [Multi-Tenant](specs/30-MULTI_TENANT_SPEC.md) 🆕
 
 ---
 
