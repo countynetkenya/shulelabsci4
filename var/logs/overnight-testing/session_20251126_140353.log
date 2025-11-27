@@ -1,0 +1,138 @@
+[2025-11-26 14:03:53] [INFO] === Overnight Web Testing Started ===
+[2025-11-26 14:03:53] [INFO] Start Time: 2025-11-26 14:03:53
+[2025-11-26 14:03:53] [INFO] Expected Duration: 6-8 hours
+[2025-11-26 14:03:53] [INFO] Total Phases: 8
+[2025-11-26 14:03:53] [INFO] Starting autonomous overnight testing...
+[2025-11-26 14:03:53] [INFO] ========================================
+[2025-11-26 14:03:53] [INFO] Phase 1/8: Environment Setup & Authentication
+[2025-11-26 14:03:53] [INFO] Progress: 12.5% | Elapsed: 0 minutes
+[2025-11-26 14:03:53] [INFO] ========================================
+[2025-11-26 14:03:53] [INFO] Testing server availability...
+[2025-11-26 14:03:54] [SUCCESS] ✅ Server is running
+[2025-11-26 14:03:54] [INFO] Testing authentication for all users...
+[2025-11-26 14:03:54] [INFO] Testing login for: admin@shulelabs.local
+[2025-11-26 14:03:54] [SUCCESS] ✅ Login successful for admin@shulelabs.local
+[2025-11-26 14:03:54] [INFO] Testing login for: schooladmin1@shulelabs.local
+[2025-11-26 14:03:54] [SUCCESS] ✅ Login successful for schooladmin1@shulelabs.local
+[2025-11-26 14:03:54] [INFO] Testing login for: schooladmin2@shulelabs.local
+[2025-11-26 14:03:54] [SUCCESS] ✅ Login successful for schooladmin2@shulelabs.local
+[2025-11-26 14:03:54] [INFO] Testing login for: teacher1@shulelabs.local
+[2025-11-26 14:03:54] [SUCCESS] ✅ Login successful for teacher1@shulelabs.local
+[2025-11-26 14:03:54] [INFO] Testing login for: teacher2@shulelabs.local
+[2025-11-26 14:03:54] [SUCCESS] ✅ Login successful for teacher2@shulelabs.local
+[2025-11-26 14:03:54] [INFO] Testing login for: student1@shulelabs.local
+[2025-11-26 14:03:54] [SUCCESS] ✅ Login successful for student1@shulelabs.local
+[2025-11-26 14:03:54] [INFO] Testing login for: student2@shulelabs.local
+[2025-11-26 14:03:54] [SUCCESS] ✅ Login successful for student2@shulelabs.local
+[2025-11-26 14:03:54] [SUCCESS] Phase 1 completed
+[2025-11-26 14:03:54] [INFO] ========================================
+[2025-11-26 14:03:54] [INFO] Phase 2/8: SuperAdmin Testing
+[2025-11-26 14:03:54] [INFO] Progress: 25% | Elapsed: 0.02 minutes
+[2025-11-26 14:03:54] [INFO] ========================================
+[2025-11-26 14:03:54] [INFO] Testing login for: admin@shulelabs.local
+[2025-11-26 14:03:54] [SUCCESS] ✅ Login successful for admin@shulelabs.local
+[2025-11-26 14:03:55] [SUCCESS] ✅ Page accessible: /admin/dashboard
+[2025-11-26 14:03:56] [SUCCESS] ✅ Page accessible: /admin/schools
+[2025-11-26 14:03:57] [SUCCESS] ✅ Page accessible: /admin/users
+[2025-11-26 14:03:58] [SUCCESS] ✅ Page accessible: /admin/settings
+[2025-11-26 14:03:59] [SUCCESS] ✅ Page accessible: /admin/schools/create
+[2025-11-26 14:04:00] [SUCCESS] ✅ Page accessible: /admin/users/create
+[2025-11-26 14:04:00] [SUCCESS] Phase 2 completed
+[2025-11-26 14:04:00] [INFO] ========================================
+[2025-11-26 14:04:00] [INFO] Phase 3/8: Admin Testing (All Schools)
+[2025-11-26 14:04:00] [INFO] Progress: 37.5% | Elapsed: 0.12 minutes
+[2025-11-26 14:04:00] [INFO] ========================================
+[2025-11-26 14:04:00] [INFO] Testing School 1 Admin: schooladmin1@shulelabs.local
+[2025-11-26 14:04:00] [INFO] Testing login for: schooladmin1@shulelabs.local
+[2025-11-26 14:04:00] [SUCCESS] ✅ Login successful for schooladmin1@shulelabs.local
+[2025-11-26 14:04:01] [SUCCESS] ✅ Page accessible: /admin/dashboard
+[2025-11-26 14:04:02] [SUCCESS] ✅ Page accessible: /admin/students
+[2025-11-26 14:04:03] [SUCCESS] ✅ Page accessible: /admin/teachers
+[2025-11-26 14:04:04] [SUCCESS] ✅ Page accessible: /admin/classes
+[2025-11-26 14:04:05] [SUCCESS] ✅ Page accessible: /admin/finance
+[2025-11-26 14:04:06] [SUCCESS] ✅ Page accessible: /admin/students/create
+[2025-11-26 14:04:07] [SUCCESS] ✅ Page accessible: /admin/teachers/create
+[2025-11-26 14:04:08] [SUCCESS] ✅ Page accessible: /admin/classes/create
+[2025-11-26 14:04:08] [INFO] Testing School 2 Admin: schooladmin2@shulelabs.local
+[2025-11-26 14:04:08] [INFO] Testing login for: schooladmin2@shulelabs.local
+[2025-11-26 14:04:08] [SUCCESS] ✅ Login successful for schooladmin2@shulelabs.local
+[2025-11-26 14:04:09] [SUCCESS] ✅ Page accessible: /admin/dashboard
+[2025-11-26 14:04:10] [SUCCESS] ✅ Page accessible: /admin/students
+[2025-11-26 14:04:11] [SUCCESS] ✅ Page accessible: /admin/teachers
+[2025-11-26 14:04:12] [SUCCESS] ✅ Page accessible: /admin/classes
+[2025-11-26 14:04:13] [SUCCESS] ✅ Page accessible: /admin/finance
+[2025-11-26 14:04:14] [SUCCESS] ✅ Page accessible: /admin/students/create
+[2025-11-26 14:04:15] [SUCCESS] ✅ Page accessible: /admin/teachers/create
+[2025-11-26 14:04:16] [SUCCESS] ✅ Page accessible: /admin/classes/create
+[2025-11-26 14:04:16] [SUCCESS] Phase 3 completed
+[2025-11-26 14:04:16] [INFO] ========================================
+[2025-11-26 14:04:16] [INFO] Phase 4/8: Teacher Testing
+[2025-11-26 14:04:16] [INFO] Progress: 50% | Elapsed: 0.39 minutes
+[2025-11-26 14:04:16] [INFO] ========================================
+[2025-11-26 14:04:16] [INFO] Testing Teacher: teacher1@shulelabs.local
+[2025-11-26 14:04:16] [INFO] Testing login for: teacher1@shulelabs.local
+[2025-11-26 14:04:16] [SUCCESS] ✅ Login successful for teacher1@shulelabs.local
+[2025-11-26 14:04:17] [SUCCESS] ✅ Page accessible: /teacher/dashboard
+[2025-11-26 14:04:18] [SUCCESS] ✅ Page accessible: /teacher/classes
+[2025-11-26 14:04:19] [SUCCESS] ✅ Page accessible: /teacher/gradebook
+[2025-11-26 14:04:20] [SUCCESS] ✅ Page accessible: /teacher/assignments
+[2025-11-26 14:04:21] [SUCCESS] ✅ Page accessible: /teacher/attendance
+[2025-11-26 14:04:21] [INFO] Testing Teacher: teacher2@shulelabs.local
+[2025-11-26 14:04:21] [INFO] Testing login for: teacher2@shulelabs.local
+[2025-11-26 14:04:21] [SUCCESS] ✅ Login successful for teacher2@shulelabs.local
+[2025-11-26 14:04:22] [SUCCESS] ✅ Page accessible: /teacher/dashboard
+[2025-11-26 14:04:23] [SUCCESS] ✅ Page accessible: /teacher/classes
+[2025-11-26 14:04:24] [SUCCESS] ✅ Page accessible: /teacher/gradebook
+[2025-11-26 14:04:25] [SUCCESS] ✅ Page accessible: /teacher/assignments
+[2025-11-26 14:04:26] [SUCCESS] ✅ Page accessible: /teacher/attendance
+[2025-11-26 14:04:26] [SUCCESS] Phase 4 completed
+[2025-11-26 14:04:26] [INFO] ========================================
+[2025-11-26 14:04:26] [INFO] Phase 5/8: Student Testing
+[2025-11-26 14:04:26] [INFO] Progress: 62.5% | Elapsed: 0.56 minutes
+[2025-11-26 14:04:26] [INFO] ========================================
+[2025-11-26 14:04:26] [INFO] Testing Student: student1@shulelabs.local
+[2025-11-26 14:04:26] [INFO] Testing login for: student1@shulelabs.local
+[2025-11-26 14:04:26] [SUCCESS] ✅ Login successful for student1@shulelabs.local
+[2025-11-26 14:04:27] [SUCCESS] ✅ Page accessible: /student/dashboard
+[2025-11-26 14:04:28] [SUCCESS] ✅ Page accessible: /student/assignments
+[2025-11-26 14:04:29] [SUCCESS] ✅ Page accessible: /student/library
+[2025-11-26 14:04:29] [SUCCESS] ✅ Page accessible: /student/grades
+[2025-11-26 14:04:30] [SUCCESS] ✅ Page accessible: /student/attendance
+[2025-11-26 14:04:31] [INFO] Testing Student: student2@shulelabs.local
+[2025-11-26 14:04:31] [INFO] Testing login for: student2@shulelabs.local
+[2025-11-26 14:04:31] [SUCCESS] ✅ Login successful for student2@shulelabs.local
+[2025-11-26 14:04:31] [SUCCESS] ✅ Page accessible: /student/dashboard
+[2025-11-26 14:04:32] [SUCCESS] ✅ Page accessible: /student/assignments
+[2025-11-26 14:04:33] [SUCCESS] ✅ Page accessible: /student/library
+[2025-11-26 14:04:34] [SUCCESS] ✅ Page accessible: /student/grades
+[2025-11-26 14:04:36] [SUCCESS] ✅ Page accessible: /student/attendance
+[2025-11-26 14:04:36] [SUCCESS] Phase 5 completed
+[2025-11-26 14:04:36] [INFO] ========================================
+[2025-11-26 14:04:36] [INFO] Phase 6/8: Cross-Cutting Concerns (Links, APIs, Mobile)
+[2025-11-26 14:04:36] [INFO] Progress: 75% | Elapsed: 0.72 minutes
+[2025-11-26 14:04:36] [INFO] ========================================
+[2025-11-26 14:04:36] [INFO] Testing API endpoints...
+[2025-11-26 14:04:36] [SUCCESS] Phase 6 completed
+[2025-11-26 14:04:36] [INFO] ========================================
+[2025-11-26 14:04:36] [INFO] Phase 7/8: Bug Fixing & Code Generation
+[2025-11-26 14:04:36] [INFO] Progress: 87.5% | Elapsed: 0.73 minutes
+[2025-11-26 14:04:36] [INFO] ========================================
+[2025-11-26 14:04:36] [INFO] Analyzing issues found...
+[2025-11-26 14:04:36] [INFO] Total issues: 0
+[2025-11-26 14:04:36] [SUCCESS] Phase 7 completed
+[2025-11-26 14:04:36] [INFO] ========================================
+[2025-11-26 14:04:36] [INFO] Phase 8/8: Final Validation & Reporting
+[2025-11-26 14:04:36] [INFO] Progress: 100% | Elapsed: 0.73 minutes
+[2025-11-26 14:04:36] [INFO] ========================================
+[2025-11-26 14:04:36] [INFO] Generated: Executive Summary Report
+[2025-11-26 14:04:36] [INFO] Generated: Issue Report
+[2025-11-26 14:04:36] [INFO] Generated: Test Results Report
+[2025-11-26 14:04:36] [INFO] Generated: Role-Based Report
+[2025-11-26 14:04:36] [INFO] Generated: Cross-School Validation Report
+[2025-11-26 14:04:36] [SUCCESS] All reports generated in: /workspaces/shulelabsci4/scripts/../docs/reports/overnight-testing-20251126
+[2025-11-26 14:04:36] [SUCCESS] Phase 8 completed
+[2025-11-26 14:04:36] [SUCCESS] ========================================
+[2025-11-26 14:04:36] [SUCCESS] ✅ OVERNIGHT TESTING COMPLETED
+[2025-11-26 14:04:36] [SUCCESS] Duration: 0.73 minutes
+[2025-11-26 14:04:36] [SUCCESS] Reports generated in: /workspaces/shulelabsci4/scripts/../docs/reports/overnight-testing-20251126
+[2025-11-26 14:04:36] [SUCCESS] ========================================
