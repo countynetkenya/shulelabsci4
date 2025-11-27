@@ -133,12 +133,12 @@ class Dashboard extends BaseController
         }
 
         $db = \Config\Database::connect();
-        $role = $db->table('ci4_users')
-            ->select('ci4_roles.name')
-            ->join('ci4_user_roles', 'ci4_users.id = ci4_user_roles.user_id')
-            ->join('ci4_roles', 'ci4_user_roles.role_id = ci4_roles.id')
-            ->where('ci4_users.id', $userID)
-            ->where('ci4_roles.name', 'superadmin')
+        $role = $db->table('users')
+            ->select('roles.name')
+            ->join('user_roles', 'users.id = user_roles.user_id')
+            ->join('roles', 'user_roles.role_id = roles.id')
+            ->where('users.id', $userID)
+            ->where('roles.name', 'superadmin')
             ->get()
             ->getRow();
 

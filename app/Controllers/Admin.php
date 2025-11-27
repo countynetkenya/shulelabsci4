@@ -83,8 +83,8 @@ class Admin extends BaseController
 
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'username' => 'required|min_length[3]|is_unique[ci4_users.username]',
-            'email' => 'required|valid_email|is_unique[ci4_users.email]',
+            'username' => 'required|min_length[3]|is_unique[users.username]',
+            'email' => 'required|valid_email|is_unique[users.email]',
             'full_name' => 'required|min_length[3]',
             'password' => 'required|min_length[8]',
             'role_id' => 'required|integer',
@@ -109,7 +109,7 @@ class Admin extends BaseController
         if ($userId) {
             // Assign role
             $roleId = $this->request->getPost('role_id');
-            db_connect()->table('ci4_user_roles')->insert([
+            db_connect()->table('user_roles')->insert([
                 'user_id' => $userId,
                 'role_id' => $roleId,
             ]);
@@ -303,7 +303,7 @@ class Admin extends BaseController
             return 0;
         }
 
-        return db_connect()->table('ci4_user_roles')
+        return db_connect()->table('user_roles')
             ->where('role_id', $role['id'])
             ->countAllResults();
     }

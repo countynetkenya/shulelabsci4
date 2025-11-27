@@ -22,8 +22,8 @@ class Ci4DefaultSuperadminSeeder extends Seeder
     public function run()
     {
         // Check if a superadmin already exists
-        $existingSuperadmin = $this->db->table('ci4_user_roles ur')
-            ->join('ci4_roles r', 'r.id = ur.role_id')
+        $existingSuperadmin = $this->db->table('user_roles ur')
+            ->join('roles r', 'r.id = ur.role_id')
             ->where('r.role_slug', 'super_admin')
             ->countAllResults();
 
@@ -58,18 +58,18 @@ class Ci4DefaultSuperadminSeeder extends Seeder
             'updated_at' => date('Y-m-d H:i:s'),
         ];
 
-        $this->db->table('ci4_users')->insert($userData);
+        $this->db->table('users')->insert($userData);
         $userId = $this->db->insertID();
 
         // Get super_admin role
-        $superAdminRole = $this->db->table('ci4_roles')
+        $superAdminRole = $this->db->table('roles')
             ->where('role_slug', 'super_admin')
             ->get()
             ->getRow();
 
         if ($superAdminRole) {
             // Assign super_admin role
-            $this->db->table('ci4_user_roles')->insert([
+            $this->db->table('user_roles')->insert([
                 'user_id' => $userId,
                 'role_id' => $superAdminRole->id,
                 'created_at' => date('Y-m-d H:i:s'),

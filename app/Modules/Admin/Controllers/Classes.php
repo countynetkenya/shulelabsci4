@@ -189,14 +189,14 @@ class Classes extends BaseController
     private function getSchoolTeachers(): array
     {
         $db = \Config\Database::connect();
-        return $db->table('ci4_users')
-            ->select('ci4_users.id, ci4_users.username, ci4_users.first_name, ci4_users.last_name')
-            ->join('ci4_user_roles', 'ci4_users.id = ci4_user_roles.user_id')
-            ->join('ci4_roles', 'ci4_user_roles.role_id = ci4_roles.id')
-            ->join('school_users', 'ci4_users.id = school_users.user_id')
-            ->where('ci4_roles.name', 'teacher')
+        return $db->table('users')
+            ->select('users.id, users.username, users.first_name, users.last_name')
+            ->join('user_roles', 'users.id = user_roles.user_id')
+            ->join('roles', 'user_roles.role_id = roles.id')
+            ->join('school_users', 'users.id = school_users.user_id')
+            ->where('roles.name', 'teacher')
             ->where('school_users.school_id', $this->schoolID)
-            ->orderBy('ci4_users.username', 'ASC')
+            ->orderBy('users.username', 'ASC')
             ->get()
             ->getResultArray() ?? [];
     }

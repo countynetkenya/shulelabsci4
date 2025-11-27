@@ -55,11 +55,11 @@ class Gradebook extends BaseController
         
         // Get students in the class
         $students = $db->table('student_enrollments')
-            ->select('ci4_users.id, ci4_users.username, ci4_users.first_name, ci4_users.last_name, grades.score, grades.grade, grades.id as grade_id')
-            ->join('ci4_users', 'student_enrollments.student_id = ci4_users.id')
-            ->join('grades', 'ci4_users.id = grades.student_id AND grades.course_id = ' . $courseID, 'left')
+            ->select('users.id, users.username, users.first_name, users.last_name, grades.score, grades.grade, grades.id as grade_id')
+            ->join('users', 'student_enrollments.student_id = users.id')
+            ->join('grades', 'users.id = grades.student_id AND grades.course_id = ' . $courseID, 'left')
             ->where('student_enrollments.class_id', $classID)
-            ->orderBy('ci4_users.username', 'ASC')
+            ->orderBy('users.username', 'ASC')
             ->get()
             ->getResultArray();
 

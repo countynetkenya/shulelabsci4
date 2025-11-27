@@ -57,10 +57,10 @@ class Attendance extends BaseController
         
         // Get students in the class
         $students = $db->table('student_enrollments')
-            ->select('ci4_users.id, ci4_users.username, ci4_users.first_name, ci4_users.last_name')
-            ->join('ci4_users', 'student_enrollments.student_id = ci4_users.id')
+            ->select('users.id, users.username, users.first_name, users.last_name')
+            ->join('users', 'student_enrollments.student_id = users.id')
             ->where('student_enrollments.class_id', $classID)
-            ->orderBy('ci4_users.username', 'ASC')
+            ->orderBy('users.username', 'ASC')
             ->get()
             ->getResultArray();
 

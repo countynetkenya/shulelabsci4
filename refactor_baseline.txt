@@ -1,4 +1,0 @@
-=== PRE-REFACTOR BASELINE ===
-ci4_user_roles: 24
-ci4_users: 76
-ci4_roles: 30

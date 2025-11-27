@@ -88,9 +88,9 @@ class ParentPortal extends BaseController
 
         $this->data['child'] = $this->getChildInfo($childId);
         $this->data['grades'] = $this->gradeModel
-            ->select('grades.*, assignments.title as assignment_title, ci4_users.full_name as teacher_name')
+            ->select('grades.*, assignments.title as assignment_title, users.full_name as teacher_name')
             ->join('assignments', 'assignments.assignmentsID = grades.assignment_id', 'left')
-            ->join('ci4_users', 'ci4_users.id = grades.teacher_id', 'left')
+            ->join('users', 'users.id = grades.teacher_id', 'left')
             ->where('grades.student_id', $childId)
             ->orderBy('grades.created_at', 'DESC')
             ->findAll();
@@ -185,12 +185,12 @@ class ParentPortal extends BaseController
     {
         // Get children linked to this parent
         return db_connect()->table('student_parent')
-            ->select('ci4_users.id, ci4_users.full_name, ci4_users.email, ci4_users.photo, school_classes.class_name')
-            ->join('ci4_users', 'ci4_users.id = student_parent.student_id')
-            ->join('student_enrollments', 'student_enrollments.student_id = ci4_users.id', 'left')
+            ->select('users.id, users.full_name, users.email, users.photo, school_classes.class_name')
+            ->join('users', 'users.id = student_parent.student_id')
+            ->join('student_enrollments', 'student_enrollments.student_id = users.id', 'left')
             ->join('school_classes', 'school_classes.classesID = student_enrollments.class_id', 'left')
             ->where('student_parent.parent_id', $parentId)
-            ->groupBy('ci4_users.id')
+            ->groupBy('users.id')
             ->get()
             ->getResultArray();
     }
@@ -207,11 +207,11 @@ class ParentPortal extends BaseController
 
     private function getChildInfo(int $childId): array
     {
-        return db_connect()->table('ci4_users')
-            ->select('ci4_users.*, school_classes.class_name')
-            ->join('student_enrollments', 'student_enrollments.student_id = ci4_users.id', 'left')
+        return db_connect()->table('users')
+            ->select('users.*, school_classes.class_name')
+            ->join('student_enrollments', 'student_enrollments.student_id = users.id', 'left')
             ->join('school_classes', 'school_classes.classesID = student_enrollments.class_id', 'left')
-            ->where('ci4_users.id', $childId)
+            ->where('users.id', $childId)
             ->get()
             ->getRowArray();
     }

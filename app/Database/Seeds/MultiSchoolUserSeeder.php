@@ -80,14 +80,14 @@ class MultiSchoolUserSeeder extends Seeder
         $db = \Config\Database::connect();
 
         return [
-            'superadmin'   => $db->table('ci4_roles')->where('role_name', 'Super Admin')->get()->getRow()->id ?? 1,
-            'admin'        => $db->table('ci4_roles')->where('role_name', 'Admin')->get()->getRow()->id ?? 2,
-            'teacher'      => $db->table('ci4_roles')->where('role_name', 'Teacher')->get()->getRow()->id ?? 3,
-            'student'      => $db->table('ci4_roles')->where('role_name', 'Student')->get()->getRow()->id ?? 4,
-            'parent'       => $db->table('ci4_roles')->where('role_name', 'Parent')->get()->getRow()->id ?? 5,
-            'accountant'   => $db->table('ci4_roles')->where('role_name', 'Accountant')->get()->getRow()->id ?? 6,
-            'librarian'    => $db->table('ci4_roles')->where('role_name', 'Librarian')->get()->getRow()->id ?? 7,
-            'receptionist' => $db->table('ci4_roles')->where('role_name', 'Receptionist')->get()->getRow()->id ?? 8,
+            'superadmin'   => $db->table('roles')->where('role_name', 'Super Admin')->get()->getRow()->id ?? 1,
+            'admin'        => $db->table('roles')->where('role_name', 'Admin')->get()->getRow()->id ?? 2,
+            'teacher'      => $db->table('roles')->where('role_name', 'Teacher')->get()->getRow()->id ?? 3,
+            'student'      => $db->table('roles')->where('role_name', 'Student')->get()->getRow()->id ?? 4,
+            'parent'       => $db->table('roles')->where('role_name', 'Parent')->get()->getRow()->id ?? 5,
+            'accountant'   => $db->table('roles')->where('role_name', 'Accountant')->get()->getRow()->id ?? 6,
+            'librarian'    => $db->table('roles')->where('role_name', 'Librarian')->get()->getRow()->id ?? 7,
+            'receptionist' => $db->table('roles')->where('role_name', 'Receptionist')->get()->getRow()->id ?? 8,
         ];
     }
 
@@ -223,7 +223,7 @@ class MultiSchoolUserSeeder extends Seeder
         $data['updated_at'] = date('Y-m-d H:i:s');
         $data['is_active'] = 1;
 
-        $db->table('ci4_users')->insert($data);
+        $db->table('users')->insert($data);
 
         return $db->insertID();
     }

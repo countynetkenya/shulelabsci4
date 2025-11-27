@@ -30,13 +30,13 @@ class Users extends BaseController
 
         $db = \Config\Database::connect();
         
-        $users = $db->table('ci4_users')
-            ->select('ci4_users.*, ci4_roles.name as role_name, schools.name as school_name')
-            ->join('ci4_user_roles', 'ci4_users.id = ci4_user_roles.user_id', 'left')
-            ->join('ci4_roles', 'ci4_user_roles.role_id = ci4_roles.id', 'left')
-            ->join('school_users', 'ci4_users.id = school_users.user_id', 'left')
+        $users = $db->table('users')
+            ->select('users.*, roles.name as role_name, schools.name as school_name')
+            ->join('user_roles', 'users.id = user_roles.user_id', 'left')
+            ->join('roles', 'user_roles.role_id = roles.id', 'left')
+            ->join('school_users', 'users.id = school_users.user_id', 'left')
             ->join('schools', 'school_users.school_id = schools.id', 'left')
-            ->orderBy('ci4_users.username', 'ASC')
+            ->orderBy('users.username', 'ASC')
             ->get()
             ->getResultArray();
 
@@ -78,8 +78,8 @@ class Users extends BaseController
         $validation = \Config\Services::validation();
         
         $rules = [
-            'username' => 'required|min_length[3]|max_length[50]|is_unique[ci4_users.username]',
-            'email' => 'required|valid_email|is_unique[ci4_users.email]',
+            'username' => 'required|min_length[3]|max_length[50]|is_unique[users.username]',
+            'email' => 'required|valid_email|is_unique[users.email]',
             'password' => 'required|min_length[6]',
             'first_name' => 'required|max_length[100]',
             'last_name' => 'required|max_length[100]',
@@ -105,12 +105,12 @@ class Users extends BaseController
                 'created_at' => date('Y-m-d H:i:s'),
             ];
 
-            $db->table('ci4_users')->insert($userData);
+            $db->table('users')->insert($userData);
             $userID = $db->insertID();
 
             // Assign role
             $roleID = $this->request->getPost('role_id');
-            $db->table('ci4_user_roles')->insert([
+            $db->table('user_roles')->insert([
                 'user_id' => $userID,
                 'role_id' => $roleID,
                 'created_at' => date('Y-m-d H:i:s'),
@@ -159,7 +159,7 @@ class Users extends BaseController
         $db = \Config\Database::connect();
         
         // Get user's current role
-        $userRole = $db->table('ci4_user_roles')
+        $userRole = $db->table('user_roles')
             ->where('user_id', $id)
             ->get()
             ->getRow();
@@ -194,8 +194,8 @@ class Users extends BaseController
         $validation = \Config\Services::validation();
         
         $rules = [
-            'username' => "required|min_length[3]|max_length[50]|is_unique[ci4_users.username,id,{$id}]",
-            'email' => "required|valid_email|is_unique[ci4_users.email,id,{$id}]",
+            'username' => "required|min_length[3]|max_length[50]|is_unique[users.username,id,{$id}]",
+            'email' => "required|valid_email|is_unique[users.email,id,{$id}]",
             'first_name' => 'required|max_length[100]',
             'last_name' => 'required|max_length[100]',
             'role_id' => 'required|integer',
@@ -225,12 +225,12 @@ class Users extends BaseController
                 $userData['password_hash'] = password_hash($password, PASSWORD_BCRYPT);
             }
 
-            $db->table('ci4_users')->where('id', $id)->update($userData);
+            $db->table('users')->where('id', $id)->update($userData);
 
             // Update role
             $roleID = $this->request->getPost('role_id');
-            $db->table('ci4_user_roles')->where('user_id', $id)->delete();
-            $db->table('ci4_user_roles')->insert([
+            $db->table('user_roles')->where('user_id', $id)->delete();
+            $db->table('user_roles')->insert([
                 'user_id' => $id,
                 'role_id' => $roleID,
                 'created_at' => date('Y-m-d H:i:s'),
@@ -284,7 +284,7 @@ class Users extends BaseController
     private function getRoles(): array
     {
         $db = \Config\Database::connect();
-        return $db->table('ci4_roles')
+        return $db->table('roles')
             ->orderBy('name', 'ASC')
             ->get()
             ->getResultArray() ?? [];
@@ -315,12 +315,12 @@ class Users extends BaseController
         }
 
         $db = \Config\Database::connect();
-        $role = $db->table('ci4_users')
-            ->select('ci4_roles.name')
-            ->join('ci4_user_roles', 'ci4_users.id = ci4_user_roles.user_id')
-            ->join('ci4_roles', 'ci4_user_roles.role_id = ci4_roles.id')
-            ->where('ci4_users.id', $userID)
-            ->where('ci4_roles.name', 'superadmin')
+        $role = $db->table('users')
+            ->select('roles.name')
+            ->join('user_roles', 'users.id = user_roles.user_id')
+            ->join('roles', 'user_roles.role_id = roles.id')
+            ->where('users.id', $userID)
+            ->where('roles.name', 'superadmin')
             ->get()
             ->getRow();
 

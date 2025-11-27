@@ -32,15 +32,15 @@ class Teachers extends BaseController
 
         $db = \Config\Database::connect();
         
-        $teachers = $db->table('ci4_users')
-            ->select('ci4_users.*, school_users.school_id, schools.name as school_name')
-            ->join('ci4_user_roles', 'ci4_users.id = ci4_user_roles.user_id')
-            ->join('ci4_roles', 'ci4_user_roles.role_id = ci4_roles.id')
-            ->join('school_users', 'ci4_users.id = school_users.user_id', 'left')
+        $teachers = $db->table('users')
+            ->select('users.*, school_users.school_id, schools.name as school_name')
+            ->join('user_roles', 'users.id = user_roles.user_id')
+            ->join('roles', 'user_roles.role_id = roles.id')
+            ->join('school_users', 'users.id = school_users.user_id', 'left')
             ->join('schools', 'school_users.school_id = schools.id', 'left')
-            ->where('ci4_roles.name', 'teacher')
+            ->where('roles.name', 'teacher')
             ->where('school_users.school_id', $this->schoolID)
-            ->orderBy('ci4_users.username', 'ASC')
+            ->orderBy('users.username', 'ASC')
             ->get()
             ->getResultArray();
 
@@ -81,8 +81,8 @@ class Teachers extends BaseController
         $validation = \Config\Services::validation();
         
         $rules = [
-            'username' => 'required|min_length[3]|max_length[50]|is_unique[ci4_users.username]',
-            'email' => 'required|valid_email|is_unique[ci4_users.email]',
+            'username' => 'required|min_length[3]|max_length[50]|is_unique[users.username]',
+            'email' => 'required|valid_email|is_unique[users.email]',
             'password' => 'required|min_length[6]',
             'first_name' => 'required|max_length[100]',
             'last_name' => 'required|max_length[100]',
@@ -107,15 +107,15 @@ class Teachers extends BaseController
                 'created_at' => date('Y-m-d H:i:s'),
             ];
 
-            $db->table('ci4_users')->insert($userData);
+            $db->table('users')->insert($userData);
             $userID = $db->insertID();
 
             // Get teacher role
-            $teacherRole = $db->table('ci4_roles')->where('name', 'teacher')->get()->getRow();
+            $teacherRole = $db->table('roles')->where('name', 'teacher')->get()->getRow();
             
             if ($teacherRole) {
                 // Assign teacher role
-                $db->table('ci4_user_roles')->insert([
+                $db->table('user_roles')->insert([
                     'user_id' => $userID,
                     'role_id' => $teacherRole->id,
                     'created_at' => date('Y-m-d H:i:s'),
@@ -180,8 +180,8 @@ class Teachers extends BaseController
         $validation = \Config\Services::validation();
         
         $rules = [
-            'username' => "required|min_length[3]|max_length[50]|is_unique[ci4_users.username,id,{$id}]",
-            'email' => "required|valid_email|is_unique[ci4_users.email,id,{$id}]",
+            'username' => "required|min_length[3]|max_length[50]|is_unique[users.username,id,{$id}]",
+            'email' => "required|valid_email|is_unique[users.email,id,{$id}]",
             'first_name' => 'required|max_length[100]',
             'last_name' => 'required|max_length[100]',
         ];

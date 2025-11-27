@@ -48,11 +48,11 @@ class Dashboard extends BaseController
     private function getTeacherInfo(): ?object
     {
         $db = \Config\Database::connect();
-        return $db->table('ci4_users')
-            ->select('ci4_users.*, schools.name as school_name')
-            ->join('school_users', 'ci4_users.id = school_users.user_id', 'left')
+        return $db->table('users')
+            ->select('users.*, schools.name as school_name')
+            ->join('school_users', 'users.id = school_users.user_id', 'left')
             ->join('schools', 'school_users.school_id = schools.id', 'left')
-            ->where('ci4_users.id', $this->userID)
+            ->where('users.id', $this->userID)
             ->get()
             ->getRow();
     }
@@ -112,8 +112,8 @@ class Dashboard extends BaseController
         $db = \Config\Database::connect();
         
         return $db->table('grades')
-            ->select('grades.*, ci4_users.username as student_name, courses.name as course_name')
-            ->join('ci4_users', 'grades.student_id = ci4_users.id', 'left')
+            ->select('grades.*, users.username as student_name, courses.name as course_name')
+            ->join('users', 'grades.student_id = users.id', 'left')
             ->join('courses', 'grades.course_id = courses.id', 'left')
             ->orderBy('grades.created_at', 'DESC')
             ->limit(10)

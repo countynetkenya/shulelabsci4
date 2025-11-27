@@ -67,17 +67,25 @@ class ResetUnprefixedAuthTables extends Migration
             ['role_name'=>'Teacher','role_slug'=>'teacher','ci3_usertype_id'=>2,'created_at'=>date('Y-m-d H:i:s')],
             ['role_name'=>'Student','role_slug'=>'student','ci3_usertype_id'=>3,'created_at'=>date('Y-m-d H:i:s')],
         ];
-        $this->db->table('roles')->insertBatch($roles);
+        
+        foreach ($roles as $role) {
+            if ($this->db->table('roles')->where('role_slug', $role['role_slug'])->countAllResults() === 0) {
+                $this->db->table('roles')->insert($role);
+            }
+        }
 
-        $this->db->table('users')->insert([
-            'username' => 'superadmin',
-            'email' => 'admin@shulelabs.local',
-            'password_hash' => password_hash('Admin@123456', PASSWORD_DEFAULT),
-            'full_name' => 'System Administrator',
-            'is_active' => 1,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-        ]);
+        // Check if superadmin user exists
+        if ($this->db->table('users')->where('username', 'superadmin')->countAllResults() === 0) {
+            $this->db->table('users')->insert([
+                'username' => 'superadmin',
+                'email' => 'admin@shulelabs.local',
+                'password_hash' => password_hash('Admin@123456', PASSWORD_DEFAULT),
+                'full_name' => 'System Administrator',
+                'is_active' => 1,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+        }
         $adminId = $this->db->insertID();
         $superRole = $this->db->table('roles')->where('role_slug','superadmin')->get()->getRow();
         if ($superRole) {

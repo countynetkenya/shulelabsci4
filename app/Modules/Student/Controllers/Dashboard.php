@@ -49,11 +49,11 @@ class Dashboard extends BaseController
     private function getStudentInfo(): ?object
     {
         $db = \Config\Database::connect();
-        return $db->table('ci4_users')
-            ->select('ci4_users.*, schools.name as school_name')
-            ->join('school_users', 'ci4_users.id = school_users.user_id', 'left')
+        return $db->table('users')
+            ->select('users.*, schools.name as school_name')
+            ->join('school_users', 'users.id = school_users.user_id', 'left')
             ->join('schools', 'school_users.school_id = schools.id', 'left')
-            ->where('ci4_users.id', $this->userID)
+            ->where('users.id', $this->userID)
             ->get()
             ->getRow();
     }
