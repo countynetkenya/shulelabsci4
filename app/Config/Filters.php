@@ -58,9 +58,9 @@ class Filters extends BaseFilters
             'pagecache',  // Web Page Caching
         ],
         'after' => [
-            'pagecache',   // Web Page Caching
-            'performance', // Performance Metrics
-            'toolbar',     // Debug Toolbar
+            // 'pagecache',   // Web Page Caching
+            // 'performance', // Performance Metrics
+            // 'toolbar',     // Debug Toolbar
         ],
     ];
 
@@ -76,7 +76,7 @@ class Filters extends BaseFilters
     public array $globals = [
         'before' => [
             // 'honeypot',
-            'csrf' => ['except' => ['auth/signin', 'auth/signout']],
+            'csrf' => ['except' => ['auth/signin', 'auth/signout', 'api/*']],
             // 'invalidchars',
         ],
         'after' => [

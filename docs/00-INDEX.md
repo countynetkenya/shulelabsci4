@@ -33,7 +33,12 @@ Context files for AI agents.
 ### 5. 📊 Reports (`docs/reports/`)
 System status and historical logs.
 - [Latest System Status](reports/LATEST_STATUS.md)
-- [Archive](reports/archive/)
+### 6. 📝 Specifications (`docs/specs/`)
+Detailed feature specifications.
+- [Finance Module](specs/03-FINANCE_SPEC.md)
+- [Hostel Module](specs/05-HOSTEL_SPEC.md)
+- [Inventory Module](specs/06-INVENTORY_SPEC.md)
+- [POS Module](specs/07-POS_SPEC.md)
 
 ---
 

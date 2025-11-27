@@ -20,6 +20,47 @@ Complete database schema documentation for ShuleLabs CI4, including multi-tenant
 - [Migration Strategy](#migration-strategy)
 - [References](#references)
 
+### Inventory V2 Tables
+
+#### `inventory_locations`
+Stores/Warehouses.
+- `id` (PK)
+- `name`
+- `description`
+- `is_default` (Boolean)
+
+#### `inventory_categories`
+Item categories.
+- `id` (PK)
+- `name`
+
+#### `inventory_items`
+Product catalog.
+- `id` (PK)
+- `category_id` (FK)
+- `name`
+- `sku` (Unique)
+- `type` (Enum: 'physical', 'service', 'bundle')
+- `unit_cost`
+- `is_billable`
+
+#### `inventory_stock`
+Current stock levels per location.
+- `id` (PK)
+- `item_id` (FK)
+- `location_id` (FK)
+- `quantity`
+
+#### `inventory_transfers`
+Stock movement records.
+- `id` (PK)
+- `item_id` (FK)
+- `from_location_id` (FK)
+- `to_location_id` (FK)
+- `quantity`
+- `status` (Enum: 'pending', 'completed', 'cancelled')
+- `initiated_by` (FK)
+
 ## Database Design Principles
 
 ShuleLabs follows these core database design principles:

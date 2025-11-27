@@ -13,10 +13,20 @@ This document tracks the evolution of our development process. It is a "Living H
 6.  **Ample Test Data**: Always create a Seeder (`Modules\X\Database\Seeds\XSeeder`) with realistic data scenarios before running tests. Document this data in the Spec.
 7.  **Universal Terminal Pattern**: For any module involving "Issuing" or "Selling" (POS, Library, Inventory), use the standard "Cart-Based" UI layout.
 8.  **Paperless Handshake**: Use the `Threads` module for digital confirmations (Transfers, Issues) instead of paper trails.
+9.  **API Response Hygiene**: Ensure API Controllers explicitly disable Debug Toolbar and CSRF filters in `app/Config/Filters.php` to prevent HTML injection into JSON responses.
+10. **Strict Schema Validation**: When writing tests, verify that Enum values in factories/seeders match the database schema exactly (e.g., `physical` vs `consumable`).
 
 ---
 
 ## 📜 History of Learnings
+
+### Cycle 09: Inventory V2 Completion (Nov 2025)
+- **Issue**: API Tests failing due to HTML being injected into JSON responses.
+- **Fix**: Explicitly disabled Debug Toolbar and CSRF for `api/*` routes in `Filters.php`.
+- **Issue**: SQLite `CHECK` constraint failures in tests.
+- **Fix**: Ensured test data (Seeders/Factories) strictly matches the Enum values defined in Migrations (`physical` vs `consumable`).
+- **Issue**: Controller naming conflicts (`StockApiController` vs `InventoryStockController`).
+- **Fix**: Adopted explicit naming convention `[Module][Entity]Controller` to avoid collisions.
 
 ### Cycle 08: POS & Inventory V2 (Nov 2025)
 - **Issue**: Siloed interfaces for Sales, Loans, and Issues.

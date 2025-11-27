@@ -7,7 +7,7 @@ namespace Modules\Inventory\Controllers\Api;
 use CodeIgniter\RESTful\ResourceController;
 use Modules\Inventory\Services\StockService;
 
-class StockApiController extends ResourceController
+class InventoryStockController extends ResourceController
 {
     protected $format = 'json';
     protected StockService $service;

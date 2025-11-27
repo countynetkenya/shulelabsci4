@@ -48,6 +48,12 @@ We have consolidated all documentation into a central knowledge base.
 ### Core Modules
 - **Foundation** - Multi-tenant architecture, system configuration
 - **HR** - User management, roles, permissions (8 role types)
+- **Finance** - Fee management, invoicing, payments
+- **Inventory** - Stock tracking, multi-store transfers, asset management
+- **Hostel** - Dormitory management, bed allocation
+- **Learning** - LMS features (Courses, Assignments)
+
+## 🧪 Testing
 - **Finance** - Invoices, payments, M-Pesa integration
 - **Learning** - Courses, assignments, grading, attendance
 - **Library** - Book cataloging, borrowing, inventory

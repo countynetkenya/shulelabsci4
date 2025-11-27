@@ -48,7 +48,7 @@ class InventoryTest extends CIUnitTestCase
             'category_id' => $categoryId,
             'name'        => 'Test Item',
             'sku'         => 'TEST-001',
-            'type'        => 'consumable',
+            'type'        => 'physical',
             'quantity'    => 10,
             'unit_cost'   => 50.00
         ];

@@ -14,7 +14,7 @@ class InventoryItemModel extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [
         'category_id', 'name', 'sku', 'description', 'type', 
-        'quantity', 'unit_cost', 'reorder_level', 'location'
+        'unit_cost', 'reorder_level', 'location', 'is_billable'
     ];
 
     // Dates
@@ -28,7 +28,7 @@ class InventoryItemModel extends Model
         'category_id' => 'required|integer',
         'name'        => 'required|max_length[150]',
         'sku'         => 'permit_empty|is_unique[inventory_items.sku,id,{id}]',
-        'type'        => 'required|in_list[consumable,asset]',
+        'type'        => 'required|in_list[physical,service,bundle]',
         'quantity'    => 'integer|greater_than_equal_to[0]',
         'unit_cost'   => 'decimal',
     ];
