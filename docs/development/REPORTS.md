@@ -83,9 +83,10 @@ class StudentFinanceTab implements EmbeddedReportInterface
 
     public function getSummaryWidget(int $entityId): array
     {
+        $schoolId = $this->tenantService->getValidatedSchoolId();
         $balance = $this->invoiceModel
             ->where('student_id', $entityId)
-            ->where('school_id', session('school_id'))
+            ->where('school_id', $schoolId)
             ->selectSum('balance')
             ->first();
 
@@ -270,10 +271,12 @@ use CodeIgniter\Database\BaseBuilder;
 class AgedReceivablesReport implements ReportDefinitionInterface
 {
     private $db;
+    private TenantService $tenantService;
 
     public function __construct()
     {
         $this->db = db_connect();
+        $this->tenantService = service('tenant');
     }
 
     public function getKey(): string
@@ -323,7 +326,7 @@ class AgedReceivablesReport implements ReportDefinitionInterface
 
     public function buildQuery(array $filters): BaseBuilder
     {
-        $schoolId = session('school_id');
+        $schoolId = $this->tenantService->getValidatedSchoolId();
 
         $builder = $this->db->table('finance_invoices i')
             ->select([
@@ -770,7 +773,8 @@ public function getDrillDownRoute(array $row): ?string
 
     // Check if user can view THIS specific student (tenant isolation)
     $student = $this->studentModel->find($row['student_id']);
-    if ($student['school_id'] !== session('school_id')) {
+    $schoolId = $this->tenantService->getValidatedSchoolId();
+    if ($student['school_id'] !== $schoolId) {
         return null;
     }
 
@@ -868,6 +872,7 @@ class Student360Report implements ReportDefinitionInterface
     private FinanceService $financeService;
     private AcademicService $academicService;
     private LibraryService $libraryService;
+    private TenantService $tenantService;
 
     public function __construct(
         FinanceService $financeService,
@@ -877,15 +882,18 @@ class Student360Report implements ReportDefinitionInterface
         $this->financeService = $financeService;
         $this->academicService = $academicService;
         $this->libraryService = $libraryService;
+        $this->tenantService = service('tenant');
     }
 
     public function buildQuery(array $filters): BaseBuilder
     {
+        $schoolId = $this->tenantService->getValidatedSchoolId();
+
         // Start with students table
         $builder = $this->db->table('users u')
             ->select('u.id, u.first_name, u.last_name')
             ->where('u.role', 'student')
-            ->where('u.school_id', session('school_id'));
+            ->where('u.school_id', $schoolId);
 
         // Join aggregated finance data
         $builder->join('(SELECT student_id, SUM(balance) as outstanding FROM finance_invoices GROUP BY student_id) fin',
