@@ -3,7 +3,6 @@
 namespace App\Modules\Security\Services;
 
 use App\Modules\Security\Models\TwoFactorAuthModel;
-use RuntimeException;
 
 /**
  * TwoFactorService - Handles 2FA setup and verification.
@@ -11,6 +10,7 @@ use RuntimeException;
 class TwoFactorService
 {
     private TwoFactorAuthModel $twoFactorModel;
+
     private string $encryptionKey;
 
     public function __construct(?TwoFactorAuthModel $model = null)

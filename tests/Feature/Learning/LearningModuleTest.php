@@ -3,8 +3,8 @@
 namespace Tests\Feature\Learning;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 
 /**
  * LearningModuleTest - Web and API tests for Learning module.
@@ -17,7 +17,9 @@ class LearningModuleTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $migrateOnce = true;
+
     protected $seedOnce = true;
+
     protected $seed = 'WaveModulesSeeder';
 
     // ============= TEACHER ROLE TESTS =============

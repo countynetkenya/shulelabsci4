@@ -10,10 +10,15 @@ use CodeIgniter\Model;
 class TwoFactorAuthModel extends Model
 {
     protected $table = 'two_factor_auth';
+
     protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
+
     protected $returnType = 'array';
+
     protected $useSoftDeletes = false;
+
     protected $protectFields = true;
 
     protected $allowedFields = [
@@ -22,7 +27,9 @@ class TwoFactorAuthModel extends Model
     ];
 
     protected $useTimestamps = true;
+
     protected $createdField = 'created_at';
+
     protected $updatedField = '';
 
     protected $casts = [

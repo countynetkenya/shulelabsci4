@@ -10,10 +10,15 @@ use CodeIgniter\Model;
 class AuditEventModel extends Model
 {
     protected $table = 'audit_events';
+
     protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
+
     protected $returnType = 'array';
+
     protected $useSoftDeletes = false;
+
     protected $protectFields = true;
 
     protected $allowedFields = [
@@ -23,7 +28,9 @@ class AuditEventModel extends Model
     ];
 
     protected $useTimestamps = true;
+
     protected $createdField = 'created_at';
+
     protected $updatedField = '';
 
     protected $casts = [

@@ -10,10 +10,15 @@ use CodeIgniter\Model;
 class JobQueueModel extends Model
 {
     protected $table = 'job_queue';
+
     protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
+
     protected $returnType = 'array';
+
     protected $useSoftDeletes = false;
+
     protected $protectFields = true;
 
     protected $allowedFields = [
@@ -31,7 +36,9 @@ class JobQueueModel extends Model
     ];
 
     protected $useTimestamps = true;
+
     protected $createdField = 'created_at';
+
     protected $updatedField = '';
 
     protected $casts = [

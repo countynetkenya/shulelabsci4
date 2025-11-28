@@ -2,10 +2,10 @@
 
 namespace App\Modules\Security\Filters;
 
+use App\Modules\Security\Services\AuthorizationService;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use App\Modules\Security\Services\AuthorizationService;
 
 /**
  * Permission filter - checks if user has required permission.

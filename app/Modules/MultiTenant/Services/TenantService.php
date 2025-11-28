@@ -347,7 +347,7 @@ class TenantService
             ->get()
             ->getResultArray();
 
-        $completed = array_filter($steps, fn($s) => $s['status'] === 'completed');
+        $completed = array_filter($steps, fn ($s) => $s['status'] === 'completed');
 
         return [
             'steps' => $steps,

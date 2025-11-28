@@ -2,9 +2,9 @@
 
 namespace App\Modules\Scheduler\Commands;
 
+use App\Modules\Scheduler\Services\JobRunner;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use App\Modules\Scheduler\Services\JobRunner;
 
 /**
  * CLI command to process the job queue.
@@ -14,12 +14,17 @@ use App\Modules\Scheduler\Services\JobRunner;
 class ProcessJobQueue extends BaseCommand
 {
     protected $group = 'Scheduler';
+
     protected $name = 'queue:work';
+
     protected $description = 'Process jobs from the queue';
+
     protected $usage = 'queue:work [queue_name] [options]';
+
     protected $arguments = [
         'queue_name' => 'Name of the queue to process (default: default)',
     ];
+
     protected $options = [
         '--once' => 'Process one job and exit',
         '--sleep' => 'Seconds to sleep when no jobs available (default: 3)',
@@ -38,7 +43,7 @@ class ProcessJobQueue extends BaseCommand
         $timeout = (int) (CLI::getOption('timeout') ?? 60);
 
         CLI::write("Starting queue worker for '{$queue}'...", 'green');
-        CLI::write("  Worker ID: " . $runner->getWorkerId(), 'light_gray');
+        CLI::write('  Worker ID: ' . $runner->getWorkerId(), 'light_gray');
 
         $jobsProcessed = 0;
 

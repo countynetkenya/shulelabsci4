@@ -2,8 +2,8 @@
 
 namespace App\Modules\Security\Services;
 
-use App\Modules\Security\Models\RoleModel;
 use App\Modules\Security\Models\PermissionModel;
+use App\Modules\Security\Models\RoleModel;
 
 /**
  * AuthorizationService - Handles RBAC authorization checks.
@@ -11,7 +11,9 @@ use App\Modules\Security\Models\PermissionModel;
 class AuthorizationService
 {
     private RoleModel $roleModel;
+
     private PermissionModel $permissionModel;
+
     private array $userPermissions = [];
 
     public function __construct(?RoleModel $roleModel = null, ?PermissionModel $permissionModel = null)

@@ -3,8 +3,8 @@
 namespace Tests\Feature\Threads;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 
 /**
  * ThreadsModuleTest - Web and API tests for Threads/Communications module.
@@ -17,7 +17,9 @@ class ThreadsModuleTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $migrateOnce = true;
+
     protected $seedOnce = true;
+
     protected $seed = 'WaveModulesSeeder';
 
     // ============= ADMIN ROLE TESTS =============

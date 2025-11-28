@@ -3,8 +3,8 @@
 namespace Tests\Feature\Audit;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 
 /**
  * AuditModuleTest - Web and API tests for Audit module.
@@ -17,7 +17,9 @@ class AuditModuleTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $migrateOnce = true;
+
     protected $seedOnce = true;
+
     protected $seed = 'WaveModulesSeeder';
 
     /**

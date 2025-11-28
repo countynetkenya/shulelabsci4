@@ -2,10 +2,10 @@
 
 namespace App\Modules\Scheduler\Services;
 
+use App\Modules\Scheduler\Models\JobFailedModel;
+use App\Modules\Scheduler\Models\JobLogModel;
 use App\Modules\Scheduler\Models\JobQueueModel;
 use App\Modules\Scheduler\Models\JobRunModel;
-use App\Modules\Scheduler\Models\JobLogModel;
-use App\Modules\Scheduler\Models\JobFailedModel;
 use Throwable;
 
 /**
@@ -14,9 +14,13 @@ use Throwable;
 class JobRunner
 {
     private JobRunModel $runModel;
+
     private JobLogModel $logModel;
+
     private JobQueueModel $queueModel;
+
     private JobFailedModel $failedModel;
+
     private string $workerId;
 
     public function __construct(

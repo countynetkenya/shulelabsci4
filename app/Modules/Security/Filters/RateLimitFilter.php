@@ -2,10 +2,10 @@
 
 namespace App\Modules\Security\Filters;
 
+use App\Modules\Security\Services\RateLimiterService;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use App\Modules\Security\Services\RateLimiterService;
 
 /**
  * Rate limiting filter for API endpoints.
@@ -13,6 +13,7 @@ use App\Modules\Security\Services\RateLimiterService;
 class RateLimitFilter implements FilterInterface
 {
     private int $maxRequests = 100;
+
     private int $decaySeconds = 60;
 
     public function before(RequestInterface $request, $arguments = null)

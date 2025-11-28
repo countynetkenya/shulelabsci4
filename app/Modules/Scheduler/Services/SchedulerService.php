@@ -2,8 +2,8 @@
 
 namespace App\Modules\Scheduler\Services;
 
-use App\Modules\Scheduler\Models\ScheduledJobModel;
 use App\Modules\Scheduler\Models\JobRunModel;
+use App\Modules\Scheduler\Models\ScheduledJobModel;
 use CodeIgniter\I18n\Time;
 
 /**
@@ -12,8 +12,11 @@ use CodeIgniter\I18n\Time;
 class SchedulerService
 {
     private ScheduledJobModel $jobModel;
+
     private JobRunModel $runModel;
+
     private CronExpressionParser $cronParser;
+
     private JobRunner $jobRunner;
 
     public function __construct(

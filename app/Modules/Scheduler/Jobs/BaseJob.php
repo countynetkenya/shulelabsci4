@@ -8,6 +8,7 @@ namespace App\Modules\Scheduler\Jobs;
 abstract class BaseJob
 {
     protected ?int $schoolId = null;
+
     protected ?int $userId = null;
 
     /**
@@ -49,6 +50,6 @@ abstract class BaseJob
      */
     protected function log(string $message, string $level = 'info'): void
     {
-        log_message($level, "[Job] " . static::class . ": {$message}");
+        log_message($level, '[Job] ' . static::class . ": {$message}");
     }
 }

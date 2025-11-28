@@ -3,8 +3,8 @@
 namespace Tests\Feature\MultiTenant;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 
 /**
  * MultiTenantModuleTest - Tests for multi-tenant SaaS functionality.
@@ -15,6 +15,7 @@ class MultiTenantModuleTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $migrateOnce = true;
+
     protected $seedOnce = true;
 
     // ============= SUPER ADMIN TESTS =============

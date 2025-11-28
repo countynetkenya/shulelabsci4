@@ -3,8 +3,8 @@
 namespace Tests\Feature\Hr;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 
 /**
  * HrModuleTest - Web and API tests for HR module.
@@ -17,7 +17,9 @@ class HrModuleTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $migrateOnce = true;
+
     protected $seedOnce = true;
+
     protected $seed = 'WaveModulesSeeder';
 
     // ============= HR ADMIN ROLE TESTS =============

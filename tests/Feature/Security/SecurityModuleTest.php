@@ -3,8 +3,8 @@
 namespace Tests\Feature\Security;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 
 /**
  * SecurityModuleTest - Web and API tests for Security module.
@@ -17,7 +17,9 @@ class SecurityModuleTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $migrateOnce = true;
+
     protected $seedOnce = true;
+
     protected $seed = 'WaveModulesSeeder';
 
     /**

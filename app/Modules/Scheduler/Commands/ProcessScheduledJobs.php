@@ -2,9 +2,9 @@
 
 namespace App\Modules\Scheduler\Commands;
 
+use App\Modules\Scheduler\Services\SchedulerService;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
-use App\Modules\Scheduler\Services\SchedulerService;
 
 /**
  * CLI command to process scheduled jobs.
@@ -14,9 +14,13 @@ use App\Modules\Scheduler\Services\SchedulerService;
 class ProcessScheduledJobs extends BaseCommand
 {
     protected $group = 'Scheduler';
+
     protected $name = 'scheduler:run';
+
     protected $description = 'Process all due scheduled jobs';
+
     protected $usage = 'scheduler:run [options]';
+
     protected $options = [
         '--once' => 'Run once and exit (default behavior)',
         '--daemon' => 'Run continuously as a daemon',

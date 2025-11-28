@@ -3,8 +3,8 @@
 namespace Tests\Feature\Analytics;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 
 /**
  * AnalyticsModuleTest - Tests for Analytics & AI module.
@@ -15,7 +15,9 @@ class AnalyticsModuleTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $migrateOnce = true;
+
     protected $seedOnce = true;
+
     protected $seed = 'WaveModulesSeeder';
 
     // ============= ADMIN TESTS =============

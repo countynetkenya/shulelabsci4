@@ -10,10 +10,15 @@ use CodeIgniter\Model;
 class JobRunModel extends Model
 {
     protected $table = 'job_runs';
+
     protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
+
     protected $returnType = 'array';
+
     protected $useSoftDeletes = false;
+
     protected $protectFields = true;
 
     protected $allowedFields = [
@@ -37,7 +42,9 @@ class JobRunModel extends Model
     ];
 
     protected $useTimestamps = true;
+
     protected $createdField = 'created_at';
+
     protected $updatedField = '';
 
     protected $casts = [

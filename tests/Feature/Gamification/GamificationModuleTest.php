@@ -3,8 +3,8 @@
 namespace Tests\Feature\Gamification;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 
 /**
  * GamificationModuleTest - Tests for points, badges, leaderboards, and challenges.
@@ -15,7 +15,9 @@ class GamificationModuleTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $migrateOnce = true;
+
     protected $seedOnce = true;
+
     protected $seed = 'WaveModulesSeeder';
 
     // ============= STUDENT TESTS =============

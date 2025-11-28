@@ -13,8 +13,11 @@ use Firebase\JWT\Key;
 class MobileAuthService
 {
     private $db;
+
     private string $jwtKey;
+
     private int $accessTokenTTL = 3600; // 1 hour
+
     private int $refreshTokenTTL = 2592000; // 30 days
 
     public function __construct(?ConnectionInterface $connection = null)

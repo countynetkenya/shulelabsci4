@@ -26,7 +26,7 @@ class GenerateDailyBackupJob extends BaseJob
         // For MySQL, use mysqldump (simplified - in production use proper backup library)
         $tables = $db->listTables();
         $backup = "-- ShuleLabs Database Backup\n";
-        $backup .= "-- Generated: " . date('Y-m-d H:i:s') . "\n";
+        $backup .= '-- Generated: ' . date('Y-m-d H:i:s') . "\n";
         $backup .= "-- Database: {$dbName}\n\n";
 
         foreach ($tables as $table) {
@@ -56,7 +56,7 @@ class GenerateDailyBackupJob extends BaseJob
         foreach ($files as $file) {
             if (filemtime($file) < $cutoff) {
                 unlink($file);
-                $this->log("Removed old backup: " . basename($file));
+                $this->log('Removed old backup: ' . basename($file));
             }
         }
     }

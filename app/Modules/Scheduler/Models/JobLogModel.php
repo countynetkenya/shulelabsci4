@@ -10,10 +10,15 @@ use CodeIgniter\Model;
 class JobLogModel extends Model
 {
     protected $table = 'job_logs';
+
     protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
+
     protected $returnType = 'array';
+
     protected $useSoftDeletes = false;
+
     protected $protectFields = true;
 
     protected $allowedFields = [

@@ -2,9 +2,9 @@
 
 namespace App\Modules\Scheduler\Controllers\Api;
 
-use CodeIgniter\RESTful\ResourceController;
-use App\Modules\Scheduler\Services\SchedulerService;
 use App\Modules\Scheduler\Models\ScheduledJobModel;
+use App\Modules\Scheduler\Services\SchedulerService;
+use CodeIgniter\RESTful\ResourceController;
 
 /**
  * API controller for scheduled jobs management.
@@ -12,7 +12,9 @@ use App\Modules\Scheduler\Models\ScheduledJobModel;
 class ScheduledJobController extends ResourceController
 {
     protected $format = 'json';
+
     private SchedulerService $scheduler;
+
     private ScheduledJobModel $jobModel;
 
     public function __construct()
@@ -22,7 +24,7 @@ class ScheduledJobController extends ResourceController
     }
 
     /**
-     * GET /api/v1/scheduler/jobs
+     * GET /api/v1/scheduler/jobs.
      */
     public function index()
     {
@@ -36,7 +38,7 @@ class ScheduledJobController extends ResourceController
     }
 
     /**
-     * GET /api/v1/scheduler/jobs/{id}
+     * GET /api/v1/scheduler/jobs/{id}.
      */
     public function show($id = null)
     {
@@ -55,7 +57,7 @@ class ScheduledJobController extends ResourceController
     }
 
     /**
-     * POST /api/v1/scheduler/jobs
+     * POST /api/v1/scheduler/jobs.
      */
     public function create()
     {
@@ -91,7 +93,7 @@ class ScheduledJobController extends ResourceController
     }
 
     /**
-     * PUT /api/v1/scheduler/jobs/{id}
+     * PUT /api/v1/scheduler/jobs/{id}.
      */
     public function update($id = null)
     {
@@ -119,7 +121,7 @@ class ScheduledJobController extends ResourceController
     }
 
     /**
-     * DELETE /api/v1/scheduler/jobs/{id}
+     * DELETE /api/v1/scheduler/jobs/{id}.
      */
     public function delete($id = null)
     {
@@ -137,7 +139,7 @@ class ScheduledJobController extends ResourceController
     }
 
     /**
-     * POST /api/v1/scheduler/jobs/{id}/toggle
+     * POST /api/v1/scheduler/jobs/{id}/toggle.
      */
     public function toggle($id = null)
     {
@@ -157,7 +159,7 @@ class ScheduledJobController extends ResourceController
     }
 
     /**
-     * POST /api/v1/scheduler/jobs/{id}/run
+     * POST /api/v1/scheduler/jobs/{id}/run.
      */
     public function run($id = null)
     {
@@ -179,7 +181,7 @@ class ScheduledJobController extends ResourceController
     }
 
     /**
-     * GET /api/v1/scheduler/dashboard
+     * GET /api/v1/scheduler/dashboard.
      */
     public function dashboard()
     {

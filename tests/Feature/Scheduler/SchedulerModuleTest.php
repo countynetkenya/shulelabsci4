@@ -3,8 +3,8 @@
 namespace Tests\Feature\Scheduler;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 
 /**
  * SchedulerModuleTest - Web and API tests for Scheduler module.
@@ -17,7 +17,9 @@ class SchedulerModuleTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $migrateOnce = true;
+
     protected $seedOnce = true;
+
     protected $seed = 'WaveModulesSeeder';
 
     /**
