@@ -10,6 +10,7 @@ use Modules\Learning\Config\Routes as LearningRoutes;
 use Modules\Library\Config\Routes as LibraryRoutes;
 use Modules\Mobile\Config\Routes as MobileRoutes;
 use Modules\Threads\Config\Routes as ThreadsRoutes;
+use Modules\Wallets\Config\Routes as WalletsRoutes;
 
 /**
  * @var RouteCollection $routes
@@ -152,3 +153,4 @@ LibraryRoutes::map($routes);
 MobileRoutes::map($routes);
 ThreadsRoutes::map($routes);
 HostelRoutes::map($routes);
+WalletsRoutes::map($routes);

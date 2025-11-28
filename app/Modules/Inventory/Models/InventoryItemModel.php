@@ -38,7 +38,6 @@ class InventoryItemModel extends Model
         'name'        => 'required|max_length[150]',
         'sku'         => 'permit_empty|is_unique[inventory_items.sku,id,{id}]',
         'type'        => 'required|in_list[physical,service,bundle]',
-        'quantity'    => 'integer|greater_than_equal_to[0]',
         'unit_cost'   => 'decimal',
     ];
 }

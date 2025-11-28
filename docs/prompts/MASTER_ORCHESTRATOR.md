@@ -16,15 +16,18 @@ For every user request, you must follow this **5-Step Cycle**:
 - **Check:** Does a specification exist in `docs/specs/`?
 - **Action:** If yes, read it. If no, **create a brief markdown spec** in `docs/specs/` outlining the feature, data model, and API contract.
 - **Verify:** Ensure your plan aligns with `docs/architecture/ARCHITECTURE.md`.
+- **Split-Brain Check:** Check if a legacy implementation exists in `app/Services/` or `app/Models/`. If a new Module exists in `app/Modules/`, **IGNORE** the legacy path and focus ONLY on the Module. Plan to deprecate the legacy code.
 
 ### 2. 🏗️ Scaffold & Plan
 - **Check:** Do the necessary Database Migrations and Seeds exist?
 - **Action:** Create migrations first. Always use `ci4_` prefix removal logic (standardized tables).
+- **Validation:** Verify the *actual* database schema using `list_dir` on migrations or checking model definitions. Do not assume columns exist based on old specs.
 - **Tooling:** Use `spark make:model`, `spark make:controller` via `run_in_terminal`.
 
 ### 3. ⚡ Implementation (TDD First)
 - **Rule:** Write the test **before** or **alongside** the code.
-- **Action:** Create a Feature Test in `tests/Feature/`.
+- **Action:** Create a Feature Test in `tests/Feature/` or `tests/Module/`.
+- **Legacy Tests:** If refactoring a legacy module, **rewrite** the existing tests to point to the new Module classes. Do not leave broken legacy tests.
 - **Standard:** Ensure all new code is strictly typed (PHP 8.1+) and follows PSR-12.
 
 ### 4. ✅ Validation & Testing
@@ -36,6 +39,7 @@ For every user request, you must follow this **5-Step Cycle**:
 - **Action:** Update `docs/reports/LATEST_STATUS.md` with your changes.
 - **Action:** If you changed an API, update `docs/api/`.
 - **Action:** If you changed the DB, update `docs/architecture/DATABASE.md`.
+- **Archival:** If you replaced a legacy component, move the old documentation/specs to `docs/archive/` to prevent future confusion.
 
 ## Key Directives
 - **Mobile-First:** All Views and APIs must be mobile-optimized.

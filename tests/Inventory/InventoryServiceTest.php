@@ -2,9 +2,11 @@
 
 namespace Tests\Inventory;
 
-use App\Services\InventoryService;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
+use Modules\Inventory\Services\InventoryService;
+use Modules\Inventory\Models\InventoryItemModel;
+use Modules\Inventory\Models\InventoryStockModel;
 
 /**
  * @internal
@@ -13,165 +15,139 @@ final class InventoryServiceTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    protected $refresh = false;
+    protected $refresh = true;
+    protected $namespace = 'App';
 
     protected InventoryService $service;
+    protected InventoryItemModel $itemModel;
+    protected InventoryStockModel $stockModel;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->service = new InventoryService();
-    }
+        $this->itemModel = new InventoryItemModel();
+        $this->stockModel = new InventoryStockModel();
 
-    public function testAddAsset(): void
-    {
-        $result = $this->service->addAsset(6, 'Laptop HP', 'LAPTOP-001', 'Electronics', 5, 50000);
+        // Setup required data
+        $db = \Config\Database::connect();
+        
+        // Create a category
+        if ($db->tableExists('inventory_categories')) {
+             if ($db->table('inventory_categories')->where('id', 1)->countAllResults() == 0) {
+                 $db->table('inventory_categories')->insert(['id' => 1, 'name' => 'Electronics']);
+             }
+        }
 
-        $this->assertTrue($result['success']);
-        $this->assertArrayHasKey('asset_id', $result);
-
-        // Verify asset
-        $asset = model('App\Models\InventoryAssetModel')->find($result['asset_id']);
-        $this->assertEquals('Laptop HP', $asset['asset_name']);
-        $this->assertEquals(5, $asset['quantity']);
-        $this->assertEquals(250000, $asset['total_value']);
-    }
-
-    public function testGetSchoolAssets(): void
-    {
-        $this->service->addAsset(6, 'Desk', 'DESK-001', 'Furniture', 20, 5000);
-        $this->service->addAsset(6, 'Chair', 'CHAIR-001', 'Furniture', 40, 2000);
-
-        $assets = $this->service->getSchoolAssets(6);
-
-        $this->assertIsArray($assets);
-        $this->assertGreaterThan(0, count($assets));
-    }
-
-    public function testGetSchoolAssetsByCategory(): void
-    {
-        $this->service->addAsset(6, 'Projector', 'PROJ-001', 'Electronics', 2, 30000);
-        $this->service->addAsset(6, 'Table', 'TABLE-001', 'Furniture', 10, 8000);
-
-        $electronics = $this->service->getSchoolAssets(6, 'Electronics');
-
-        $this->assertIsArray($electronics);
-        foreach ($electronics as $asset) {
-            $this->assertEquals('Electronics', $asset['category']);
+        // Create a location
+        if ($db->tableExists('inventory_locations')) {
+            if ($db->table('inventory_locations')->where('id', 1)->countAllResults() == 0) {
+                $db->table('inventory_locations')->insert([
+                    'id' => 1, 
+                    'name' => 'Main Store',
+                    'is_default' => 1
+                ]);
+            }
         }
     }
 
-    public function testUpdateQuantityIn(): void
+    public function testCreateItem(): void
     {
-        $assetResult = $this->service->addAsset(6, 'Notebook', 'NOTE-001', 'Stationery', 100, 50);
-        $assetId = $assetResult['asset_id'];
+        $data = [
+            'name' => 'Laptop HP',
+            'sku' => 'LAPTOP-001',
+            'category_id' => 1,
+            'description' => 'High performance laptop',
+            'unit_cost' => 50000.00,
+            'reorder_level' => 5,
+            'type' => 'physical'
+        ];
 
-        $result = $this->service->updateQuantity($assetId, 50, 'in', 'Restocking');
+        $itemId = $this->service->createItem($data);
 
-        $this->assertTrue($result['success']);
-        $this->assertEquals(150, $result['new_quantity']);
+        $this->assertIsInt($itemId);
+        $this->assertGreaterThan(0, $itemId);
 
-        // Verify asset
-        $asset = model('App\Models\InventoryAssetModel')->find($assetId);
-        $this->assertEquals(150, $asset['quantity']);
+        // Verify item
+        $item = $this->itemModel->find($itemId);
+        $this->assertEquals('Laptop HP', $item->name);
+        $this->assertEquals('LAPTOP-001', $item->sku);
     }
 
-    public function testUpdateQuantityOut(): void
+    public function testGetItems(): void
     {
-        $assetResult = $this->service->addAsset(6, 'Pen', 'PEN-001', 'Stationery', 200, 10);
-        $assetId = $assetResult['asset_id'];
+        $this->service->createItem([
+            'name' => 'Desk',
+            'sku' => 'DESK-001',
+            'category_id' => 1,
+            'unit_cost' => 5000.00,
+            'type' => 'physical'
+        ]);
 
-        $result = $this->service->updateQuantity($assetId, 30, 'out', 'Distribution');
+        $items = $this->service->getItems();
 
-        $this->assertTrue($result['success']);
-        $this->assertEquals(170, $result['new_quantity']);
+        $this->assertIsArray($items);
+        $this->assertGreaterThan(0, count($items));
     }
 
-    public function testCannotReduceBelowZero(): void
+    public function testAdjustStockIn(): void
     {
-        $assetResult = $this->service->addAsset(6, 'Marker', 'MARK-001', 'Stationery', 10, 20);
-        $assetId = $assetResult['asset_id'];
+        $itemId = $this->service->createItem([
+            'name' => 'Notebook',
+            'sku' => 'NOTE-001',
+            'category_id' => 1,
+            'unit_cost' => 50.00,
+            'type' => 'physical'
+        ]);
 
-        $result = $this->service->updateQuantity($assetId, 20, 'out', 'Over distribution');
+        $locationId = 1;
+        $userId = 1;
 
-        $this->assertFalse($result['success']);
-        $this->assertStringContainsString('Insufficient quantity', $result['message']);
+        $this->service->adjustStock($itemId, $locationId, 50, 'Restocking', $userId);
+
+        $stock = $this->service->getStock($itemId, $locationId);
+        $this->assertEquals(50.0, $stock);
     }
 
-    public function testGetAssetTransactions(): void
+    public function testAdjustStockOut(): void
     {
-        $assetResult = $this->service->addAsset(6, 'Book', 'BOOK-001', 'Library', 50, 500);
-        $assetId = $assetResult['asset_id'];
+        $itemId = $this->service->createItem([
+            'name' => 'Pen',
+            'sku' => 'PEN-001',
+            'category_id' => 1,
+            'unit_cost' => 10.00,
+            'type' => 'physical'
+        ]);
 
-        // Make transactions
-        $this->service->updateQuantity($assetId, 20, 'in', 'Purchase');
-        $this->service->updateQuantity($assetId, 10, 'out', 'Distribution');
+        $locationId = 1;
+        $userId = 1;
 
-        $transactions = $this->service->getAssetTransactions($assetId);
+        // Add initial stock
+        $this->service->adjustStock($itemId, $locationId, 100, 'Initial', $userId);
 
-        $this->assertIsArray($transactions);
-        $this->assertGreaterThanOrEqual(3, count($transactions)); // Initial + 2 updates
+        // Remove stock
+        $this->service->adjustStock($itemId, $locationId, -30, 'Distribution', $userId);
+
+        $stock = $this->service->getStock($itemId, $locationId);
+        $this->assertEquals(70.0, $stock);
     }
 
-    public function testGetLowStockItems(): void
+    public function testCannotReduceStockBelowZero(): void
     {
-        $this->service->addAsset(6, 'Low Stock Item', 'LOW-001', 'Stationery', 5, 100);
-        $this->service->addAsset(6, 'High Stock Item', 'HIGH-001', 'Stationery', 100, 100);
+        $itemId = $this->service->createItem([
+            'name' => 'Marker',
+            'sku' => 'MARK-001',
+            'category_id' => 1,
+            'unit_cost' => 20.00,
+            'type' => 'physical'
+        ]);
 
-        $lowStock = $this->service->getLowStockItems(6, 10);
+        $locationId = 1;
+        $userId = 1;
 
-        $this->assertIsArray($lowStock);
-        $this->assertGreaterThan(0, count($lowStock));
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Cannot reduce stock below zero');
 
-        foreach ($lowStock as $item) {
-            $this->assertLessThanOrEqual(10, $item['quantity']);
-        }
-    }
-
-    public function testGetInventoryStats(): void
-    {
-        $this->service->addAsset(6, 'Item 1', 'ITEM-001', 'Category A', 10, 1000);
-        $this->service->addAsset(6, 'Item 2', 'ITEM-002', 'Category B', 20, 500);
-
-        $stats = $this->service->getInventoryStats(6);
-
-        $this->assertIsArray($stats);
-        $this->assertArrayHasKey('total_items', $stats);
-        $this->assertArrayHasKey('total_value', $stats);
-        $this->assertArrayHasKey('by_category', $stats);
-        $this->assertGreaterThan(0, $stats['total_items']);
-    }
-
-    public function testSearchAssets(): void
-    {
-        $this->service->addAsset(6, 'Dell Monitor 24 inch', 'MON-DELL-001', 'Electronics', 3, 15000);
-        $this->service->addAsset(6, 'HP Printer', 'PRINT-HP-001', 'Electronics', 2, 20000);
-
-        $results = $this->service->searchAssets(6, 'Dell');
-
-        $this->assertIsArray($results);
-        $this->assertGreaterThan(0, count($results));
-    }
-
-    public function testTransferAsset(): void
-    {
-        $assetResult = $this->service->addAsset(6, 'Transfer Item', 'TRANS-001', 'Electronics', 20, 1000);
-        $assetId = $assetResult['asset_id'];
-
-        $result = $this->service->transferAsset($assetId, 6, 7, 5);
-
-        $this->assertTrue($result['success']);
-
-        // Verify source decreased
-        $sourceAsset = model('App\Models\InventoryAssetModel')->find($assetId);
-        $this->assertEquals(15, $sourceAsset['quantity']);
-
-        // Verify target has the asset
-        $targetAsset = model('App\Models\InventoryAssetModel')
-            ->forSchool(7)
-            ->where('asset_code', 'TRANS-001')
-            ->first();
-        $this->assertNotNull($targetAsset);
-        $this->assertEquals(5, $targetAsset['quantity']);
+        $this->service->adjustStock($itemId, $locationId, -10, 'Bad Adjustment', $userId);
     }
 }

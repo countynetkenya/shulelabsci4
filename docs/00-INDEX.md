@@ -48,6 +48,35 @@ Detailed feature specifications for all modules.
 - [Wallets Module](specs/10-WALLETS_SPEC.md)
 
 #### Application Modules
+- [Admissions Module](specs/11-ADMISSIONS_SPEC.md)
+- [Scheduler Module](specs/12-SCHEDULER_SPEC.md)
+- [Parent Engagement](specs/13-PARENT_ENGAGEMENT_SPEC.md)
+- [Learning Module](specs/14-LEARNING_SPEC.md)
+- [HR Module](specs/15-HR_SPEC.md)
+- [Library Module](specs/16-LIBRARY_SPEC.md)
+- [Gamification](specs/17-GAMIFICATION_SPEC.md)
+- [Threads](specs/18-THREADS_SPEC.md)
+- [Integrations](specs/19-INTEGRATIONS_SPEC.md)
+- [Mobile](specs/20-MOBILE_SPEC.md)
+- [Portals](specs/21-PORTALS_SPEC.md)
+- [Foundation](specs/22-FOUNDATION_SPEC.md)
+- [Security](specs/23-SECURITY_SPEC.md)
+- [Audit](specs/24-AUDIT_SPEC.md)
+- [Approval Workflows](specs/25-APPROVAL_WORKFLOWS_SPEC.md)
+- [Monitoring](specs/26-MONITORING_SPEC.md)
+- [Analytics & AI](specs/27-ANALYTICS_AI_SPEC.md)
+- [Governance](specs/28-GOVERNANCE_SPEC.md)
+- [AI Extensions](specs/29-AI_EXTENSIONS_SPEC.md)
+- [Multi-Tenant](specs/30-MULTI_TENANT_SPEC.md)
+
+---
+
+## 🗑️ Archive (`docs/archive/`)
+Legacy documentation and code.
+- [Legacy Docs](archive/legacy-docs/)
+- [Legacy Migrations](archive/legacy-migrations/)
+- [Legacy Models](archive/legacy-models/)
+- [Legacy Services](archive/legacy-services/)
 - [Admissions Module](specs/11-ADMISSIONS_SPEC.md) 🆕
 - [Scheduler Module](specs/12-SCHEDULER_SPEC.md) 🆕
 - [Parent Engagement](specs/13-PARENT_ENGAGEMENT_SPEC.md) 🆕

@@ -4,6 +4,7 @@ namespace Modules\Inventory\Services;
 
 use Config\Services;
 use Exception;
+use Modules\Inventory\Models\InventoryItemModel;
 use Modules\Inventory\Models\InventoryStockModel;
 use Modules\Inventory\Models\InventoryTransferModel;
 use Modules\Threads\Services\EventBus;
@@ -12,16 +13,15 @@ use Modules\Threads\Services\ThreadService;
 
 class InventoryService
 {
+    protected $itemModel;
     protected $stockModel;
-
     protected $transferModel;
-
     protected $threadService;
-
     protected $db;
 
     public function __construct()
     {
+        $this->itemModel = new InventoryItemModel();
         $this->stockModel = new InventoryStockModel();
         $this->transferModel = new InventoryTransferModel();
         $this->db = \Config\Database::connect();
@@ -32,6 +32,85 @@ class InventoryService
             Services::audit(),
             new EventBus()
         );
+    }
+
+    /**
+     * Create a new inventory item.
+     */
+    public function createItem(array $data): int
+    {
+        $id = $this->itemModel->insert($data);
+        if (!$id) {
+            throw new Exception('Failed to create inventory item: ' . implode(', ', $this->itemModel->errors()));
+        }
+        return (int) $id;
+    }
+
+    /**
+     * Get items with optional filtering.
+     */
+    public function getItems(array $filters = []): array
+    {
+        $builder = $this->itemModel->select('inventory_items.*, inventory_categories.name as category_name')
+            ->join('inventory_categories', 'inventory_categories.id = inventory_items.category_id', 'left');
+
+        if (isset($filters['category_id'])) {
+            $builder->where('category_id', $filters['category_id']);
+        }
+        
+        if (isset($filters['search'])) {
+            $builder->groupStart()
+                ->like('inventory_items.name', $filters['search'])
+                ->orLike('sku', $filters['search'])
+                ->groupEnd();
+        }
+
+        return $builder->findAll();
+    }
+
+    /**
+     * Get stock level for an item at a location.
+     */
+    public function getStock(int $itemId, int $locationId): float
+    {
+        $stock = $this->stockModel->where('item_id', $itemId)
+            ->where('location_id', $locationId)
+            ->first();
+            
+        return $stock ? (float) $stock['quantity'] : 0.0;
+    }
+
+    /**
+     * Adjust stock quantity (In/Out).
+     */
+    public function adjustStock(int $itemId, int $locationId, float $quantity, string $reason, int $userId): void
+    {
+        $this->db->transStart();
+
+        $stock = $this->stockModel->where('item_id', $itemId)
+            ->where('location_id', $locationId)
+            ->first();
+
+        if ($stock) {
+            $newQty = $stock['quantity'] + $quantity;
+            if ($newQty < 0) {
+                throw new Exception('Insufficient stock for adjustment.');
+            }
+            $this->stockModel->update($stock['id'], ['quantity' => $newQty]);
+        } else {
+            if ($quantity < 0) {
+                throw new Exception('Cannot reduce stock below zero (no record found).');
+            }
+            $this->stockModel->insert([
+                'item_id' => $itemId,
+                'location_id' => $locationId,
+                'quantity' => $quantity,
+            ]);
+        }
+
+        // TODO: Record transaction log (InventoryTransactionModel)
+
+        $this->db->transComplete();
     }
 
     /**

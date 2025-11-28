@@ -48,7 +48,7 @@ class ScheduledJobModel extends Model
 
     protected $updatedField = 'updated_at';
 
-    protected $casts = [
+    protected array $casts = [
         'id' => 'int',
         'school_id' => '?int',
         'is_active' => 'bool',
