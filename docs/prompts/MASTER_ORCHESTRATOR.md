@@ -391,5 +391,232 @@ When integrating a new module, complete this checklist:
 
 ---
 
+## 🎯 Master Development Orchestration Plan
+
+Now that all specifications are complete, here is the comprehensive plan for parallel development with Copilot.
+
+### Development Waves (Recommended Sequence)
+
+Development should proceed in **5 waves**, with modules within each wave developed **in parallel**.
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    SHULE LABS DEVELOPMENT ORCHESTRATION                      │
+│                         (Parallel Execution Plan)                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+WAVE 1: FOUNDATION LAYER (Week 1-2) - Prerequisites for all modules
+├── 22-FOUNDATION ─────────┐
+├── 23-SECURITY ───────────┼── Run in PARALLEL (3 modules)
+└── 24-AUDIT ──────────────┘
+    │
+    ▼ GATE: Core services functional
+
+WAVE 2: CORE BUSINESS MODULES (Week 3-5) - Revenue & Operations
+├── 03-FINANCE ────────────┐
+├── 14-LEARNING ───────────┤
+├── 15-HR ─────────────────┼── Run in PARALLEL (6 modules)
+├── 09-TRANSPORT ──────────┤
+├── 10-WALLETS ────────────┤
+└── 05-HOSTEL ─────────────┘
+    │
+    ▼ GATE: Core business flows working
+
+WAVE 3: SUPPORTING MODULES (Week 6-8) - Enhance core functionality
+├── 06-INVENTORY ──────────┐
+├── 07-POS ────────────────┤
+├── 16-LIBRARY ────────────┼── Run in PARALLEL (7 modules)
+├── 11-ADMISSIONS ─────────┤
+├── 12-SCHEDULER ──────────┤
+├── 18-THREADS ────────────┤
+└── 19-INTEGRATIONS ───────┘
+    │
+    ▼ GATE: Integration points connected
+
+WAVE 4: USER-FACING MODULES (Week 9-10) - Portals & Engagement
+├── 20-MOBILE ─────────────┐
+├── 21-PORTALS ────────────┼── Run in PARALLEL (5 modules)
+├── 13-PARENT_ENGAGEMENT ──┤
+├── 08-REPORTS ────────────┤
+└── 25-APPROVAL_WORKFLOWS ─┘
+    │
+    ▼ GATE: User portals functional
+
+WAVE 5: ENHANCEMENT MODULES (Week 11-12) - Polish & Future
+├── 17-GAMIFICATION ───────┐
+├── 26-MONITORING ─────────┼── Run in PARALLEL (6 modules)
+├── 27-ANALYTICS_AI ───────┤
+├── 28-GOVERNANCE ─────────┤
+├── 29-AI_EXTENSIONS ──────┤
+└── 30-MULTI_TENANT ───────┘
+
+```
+
+### Copilot Parallel Orchestration Commands
+
+Use these commands to trigger parallel development:
+
+#### Wave 1: Foundation (3 Parallel Tasks)
+```
+@Copilot WAVE 1 - FOUNDATION LAYER ORCHESTRATION
+
+Execute these 3 modules IN PARALLEL:
+1. Implement 22-FOUNDATION_SPEC.md (Tenant context, Audit service, Ledger, QR codes)
+2. Implement 23-SECURITY_SPEC.md (Auth, RBAC, 2FA, Rate limiting)
+3. Implement 24-AUDIT_SPEC.md (Event logging, Seals, Compliance)
+
+Spec files: docs/specs/22-*, docs/specs/23-*, docs/specs/24-*
+Follow TDD. Create migrations first. Run tests before marking complete.
+```
+
+#### Wave 2: Core Business (6 Parallel Tasks)
+```
+@Copilot WAVE 2 - CORE BUSINESS MODULES ORCHESTRATION
+
+Execute these 6 modules IN PARALLEL:
+1. Implement 03-FINANCE_SPEC.md (Invoices, Payments, Fee structures)
+2. Implement 14-LEARNING_SPEC.md (Classes, Timetable, Gradebook)
+3. Implement 15-HR_SPEC.md (Employees, Payroll, Leave)
+4. Implement 09-TRANSPORT_SPEC.md (Vehicles, Routes, Tracking)
+5. Implement 10-WALLETS_SPEC.md (Digital wallets, Top-ups, Limits)
+6. Implement 05-HOSTEL_SPEC.md (Rooms, Allocations, Billing)
+
+Spec files: docs/specs/03-*, docs/specs/14-*, etc.
+Prerequisite: Wave 1 must be complete. Integrate with Foundation services.
+```
+
+#### Wave 3: Supporting Modules (7 Parallel Tasks)
+```
+@Copilot WAVE 3 - SUPPORTING MODULES ORCHESTRATION
+
+Execute these 7 modules IN PARALLEL:
+1. Implement 06-INVENTORY_SPEC.md (Stock, Transactions, Suppliers)
+2. Implement 07-POS_SPEC.md (Sales, Payments, Receipts)
+3. Implement 16-LIBRARY_SPEC.md (Books, Borrowing, Fines)
+4. Implement 11-ADMISSIONS_SPEC.md (Applications, Interviews, Waitlist)
+5. Implement 12-SCHEDULER_SPEC.md (Jobs, Cron, Retries)
+6. Implement 18-THREADS_SPEC.md (Messaging, Announcements)
+7. Implement 19-INTEGRATIONS_SPEC.md (M-Pesa, SMS, Email adapters)
+
+Prerequisite: Wave 2 complete. Connect to Finance for billing.
+```
+
+#### Wave 4: User-Facing Modules (5 Parallel Tasks)
+```
+@Copilot WAVE 4 - USER-FACING MODULES ORCHESTRATION
+
+Execute these 5 modules IN PARALLEL:
+1. Implement 20-MOBILE_SPEC.md (JWT auth, Offline sync, Push tokens)
+2. Implement 21-PORTALS_SPEC.md (Student portal, Parent portal)
+3. Implement 13-PARENT_ENGAGEMENT_SPEC.md (Surveys, Events, Conferences)
+4. Implement 08-REPORTS_SPEC.md (Standalone, Embedded, Export)
+5. Implement 25-APPROVAL_WORKFLOWS_SPEC.md (Maker-checker, Routing)
+
+Prerequisite: Waves 1-3 complete. All data sources available.
+```
+
+#### Wave 5: Enhancement Modules (6 Parallel Tasks)
+```
+@Copilot WAVE 5 - ENHANCEMENT MODULES ORCHESTRATION
+
+Execute these 6 modules IN PARALLEL:
+1. Implement 17-GAMIFICATION_SPEC.md (Points, Badges, Leaderboards)
+2. Implement 26-MONITORING_SPEC.md (Health checks, Metrics, Tracing)
+3. Implement 27-ANALYTICS_AI_SPEC.md (Predictive analytics, Dashboards)
+4. Implement 28-GOVERNANCE_SPEC.md (Board meetings, Resolutions)
+5. Implement 29-AI_EXTENSIONS_SPEC.md (Chatbots, NL queries)
+6. Implement 30-MULTI_TENANT_SPEC.md (Tenant provisioning, Branding)
+
+Prerequisite: Waves 1-4 complete. System fully functional.
+```
+
+### Single Module Development Command
+
+For developing a single module:
+
+```
+@Copilot IMPLEMENT MODULE: [XX-MODULE_NAME]
+
+Read specification: docs/specs/XX-MODULE_NAME_SPEC.md
+
+Execute in order:
+1. Create database migrations from spec Part 2.1
+2. Run migrations: php spark migrate
+3. Create models with relationships
+4. Create services with business logic
+5. Create API controllers per spec Part 2.2
+6. Create web controllers and views
+7. Write feature tests
+8. Create seeders for test data
+9. Run tests: vendor/bin/phpunit --filter ModuleName
+10. Update development checklist in spec
+
+Mark complete only when all tests pass.
+```
+
+### Module Dependency Matrix
+
+| Module | Depends On | Blocks |
+|:-------|:-----------|:-------|
+| **Foundation** | None | Everything |
+| **Security** | Foundation | All user-facing |
+| **Audit** | Foundation | Compliance modules |
+| **Finance** | Foundation, Security | Wallets, POS, Reports |
+| **Learning** | Foundation, Security | Reports, Portals |
+| **HR** | Foundation, Security | Payroll, Reports |
+| **Transport** | Foundation, Finance | Mobile, Reports |
+| **Wallets** | Foundation, Finance | POS, Mobile |
+| **Hostel** | Foundation, Finance | Reports |
+| **Inventory** | Foundation | POS |
+| **POS** | Inventory, Wallets | Reports |
+| **Library** | Foundation | Gamification |
+| **Admissions** | Foundation, Finance | Reports |
+| **Scheduler** | Foundation | All async tasks |
+| **Threads** | Foundation | All notifications |
+| **Integrations** | Foundation | Mobile, Portals |
+| **Mobile** | All core modules | None |
+| **Portals** | All core modules | None |
+| **Reports** | All data modules | None |
+| **Gamification** | Learning, Library | None |
+| **Monitoring** | Foundation | None |
+| **Analytics/AI** | All modules | None |
+
+### Estimated Timeline
+
+| Wave | Modules | Duration | Parallel Capacity |
+|:-----|:--------|:---------|:-----------------|
+| Wave 1 | 3 Foundation | 2 weeks | 3 concurrent |
+| Wave 2 | 6 Core Business | 3 weeks | 6 concurrent |
+| Wave 3 | 7 Supporting | 3 weeks | 7 concurrent |
+| Wave 4 | 5 User-Facing | 2 weeks | 5 concurrent |
+| Wave 5 | 6 Enhancement | 2 weeks | 6 concurrent |
+| **Total** | **27 modules** | **12 weeks** | Up to 7 concurrent |
+
+### Full System Orchestration Command
+
+To trigger complete system development:
+
+```
+@Copilot FULL SYSTEM ORCHESTRATION - EXECUTE ALL WAVES
+
+Begin ShuleLabs CI4 complete development:
+
+Phase 1: Execute Wave 1 (Foundation)
+Phase 2: On Wave 1 completion → Execute Wave 2 (Core Business)
+Phase 3: On Wave 2 completion → Execute Wave 3 (Supporting)
+Phase 4: On Wave 3 completion → Execute Wave 4 (User-Facing)
+Phase 5: On Wave 4 completion → Execute Wave 5 (Enhancement)
+
+For each module:
+- Read spec from docs/specs/
+- Execute TDD workflow
+- Report progress after each module
+- Run integration tests between waves
+
+Final: Generate full system test report
+```
+
+---
+
 ## Emergency Override
 If the user says "QUICK FIX", you may bypass the Spec phase, but you MUST still run tests.
