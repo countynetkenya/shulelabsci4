@@ -70,8 +70,10 @@ class ScheduledJobModel extends Model
     {
         return $this->where('is_active', 1)
             ->where('next_run_at <=', date('Y-m-d H:i:s'))
-            ->where('last_run_status !=', 'running')
-            ->orWhere('last_run_status IS NULL')
+            ->groupStart()
+                ->where('last_run_status !=', 'running')
+                ->orWhere('last_run_status IS NULL')
+            ->groupEnd()
             ->findAll();
     }
 
