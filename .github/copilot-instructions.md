@@ -65,6 +65,13 @@ This document outlines the Lead Architect prompt for all existing modules in the
 - Provide clear instructions on integrating third-party services across modules, including authentication, data retrieval, and handling responses.
 - Maintain thorough documentation on the endpoints, data formats, and associated code samples for seamless integrations.
 
+## Refactoring Protocol
+When refactoring existing modules or services:
+1.  **Baseline Testing**: Run existing tests *before* touching any code to establish a baseline.
+2.  **Schema Sync**: If the refactor involves database changes, IMMEDIATELY update the test database schema definition (e.g., `FoundationDatabaseTestCase::createSchema`) to match the new migration. Do not rely on migrations running in memory unless explicitly configured.
+3.  **Strict Typing**: Use the refactor as an opportunity to enforce strict typing (e.g., `int $schoolId` instead of `$tenantId`).
+4.  **Scoping Checks**: If modifying tenant logic, verify that `TenantModel` auto-scoping doesn't break tests that require global visibility. Use `withoutTenant()` in tests where necessary.
+
 ---
 
 ## Master Orchestration Command

@@ -42,9 +42,9 @@ Development is organized into 5 waves. Modules within a wave can be developed in
 
 | Module | Spec | Status |
 |:-------|:-----|:-------|
-| **Foundation** | `docs/specs/22-FOUNDATION_SPEC.md` | 🟡 In Progress |
-| **Security** | `docs/specs/23-SECURITY_SPEC.md` | 🟡 In Progress |
-| **Audit** | `docs/specs/24-AUDIT_SPEC.md` | 🟡 In Progress |
+| **Foundation** | `docs/specs/22-FOUNDATION_SPEC.md` | ✅ Complete |
+| **Security** | `docs/specs/23-SECURITY_SPEC.md` | ✅ Complete |
+| **Audit** | `docs/specs/24-AUDIT_SPEC.md` | ✅ Complete |
 
 ### 🔵 Wave 2: Core Business Modules
 **Goal**: Enable revenue generation and core school operations.
