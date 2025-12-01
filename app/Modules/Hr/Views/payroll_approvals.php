@@ -1,7 +1,7 @@
 <?php
 /** @var array<string, mixed> $summary */
 /** @var list<array<string, mixed>> $approvals */
-/** @var string|null $tenantId */
+/** @var int|null $schoolId */
 /** @var string $baseUrl */
 ?>
 <!DOCTYPE html>
@@ -139,7 +139,7 @@
         }
     </style>
 </head>
-<body data-base-url="<?= esc($baseUrl) ?>" data-tenant-id="<?= esc($tenantId ?? '') ?>">
+<body data-base-url="<?= esc($baseUrl) ?>" data-school-id="<?= esc($schoolId ?? '') ?>">
     <h1>Payroll Approvals</h1>
     <p>Review pending payroll approvals and track maker-checker activity.</p>
 
@@ -215,7 +215,7 @@
         (function () {
             const root = document.body;
             const baseUrl = root.dataset.baseUrl || '';
-            const tenantId = root.dataset.tenantId || '';
+            const schoolId = root.dataset.schoolId || '';
             const toast = document.querySelector('.toast');
             const table = document.querySelector('[data-approvals-table]');
             const tableBody = document.querySelector('[data-approvals-body]');
@@ -252,8 +252,8 @@
 
             function buildRefreshUrl() {
                 const url = new URL(`${baseUrl}/hr/payroll/approvals/pending`);
-                if (tenantId) {
-                    url.searchParams.set('tenant_id', tenantId);
+                if (schoolId) {
+                    url.searchParams.set('school_id', schoolId);
                 }
 
                 return url.toString();

@@ -31,14 +31,14 @@ class PayrollApprovalServiceTest extends FoundationDatabaseTestCase
             new KenyaPayrollTemplate(),
         ], $this->makerChecker, $this->auditService);
 
-        $payroll->generatePayslip($this->samplePayload('EMP-1', 'Alice A.'), $this->sampleContext('tenant-1', 'maker-1'));
+        $payroll->generatePayslip($this->samplePayload('EMP-1', 'Alice A.'), $this->sampleContext(1, 'maker-1'));
 
         $service = new PayrollApprovalService($this->db, $this->makerChecker, $this->auditService);
-        $pending = $service->listPending('tenant-1');
+        $pending = $service->listPending(1);
         $this->assertCount(1, $pending);
 
         $approvalId = $pending[0]['id'];
-        $approved = $service->approve($approvalId, ['actor_id' => 'checker-7', 'tenant_id' => 'tenant-1']);
+        $approved = $service->approve($approvalId, ['actor_id' => 'checker-7', 'school_id' => 1]);
 
         $this->assertSame('approved', $approved['status']);
         $this->assertSame('checker-7', $approved['checker_id']);
@@ -59,17 +59,17 @@ class PayrollApprovalServiceTest extends FoundationDatabaseTestCase
             new KenyaPayrollTemplate(),
         ], $this->makerChecker, $this->auditService);
 
-        $payroll->generatePayslip($this->samplePayload('EMP-1', 'Alice A.'), $this->sampleContext('tenant-2', 'maker-1'));
-        $payroll->generatePayslip($this->samplePayload('EMP-2', 'Ben B.'), $this->sampleContext('tenant-2', 'maker-2'));
+        $payroll->generatePayslip($this->samplePayload('EMP-1', 'Alice A.'), $this->sampleContext(2, 'maker-1'));
+        $payroll->generatePayslip($this->samplePayload('EMP-2', 'Ben B.'), $this->sampleContext(2, 'maker-2'));
 
         $service = new PayrollApprovalService($this->db, $this->makerChecker, $this->auditService);
-        $pending = $service->listPending('tenant-2');
+        $pending = $service->listPending(2);
         $this->assertCount(2, $pending);
 
-        $service->approve($pending[0]['id'], ['actor_id' => 'checker-1', 'tenant_id' => 'tenant-2']);
-        $service->reject($pending[1]['id'], 'Missing supporting documents', ['actor_id' => 'checker-2', 'tenant_id' => 'tenant-2']);
+        $service->approve($pending[0]['id'], ['actor_id' => 'checker-1', 'school_id' => 2]);
+        $service->reject($pending[1]['id'], 'Missing supporting documents', ['actor_id' => 'checker-2', 'school_id' => 2]);
 
-        $summary = $service->summarise('tenant-2');
+        $summary = $service->summarise(2);
         $this->assertSame(0, $summary['counts']['pending']);
         $this->assertSame(1, $summary['counts']['approved']);
         $this->assertSame(1, $summary['counts']['rejected']);
@@ -99,10 +99,10 @@ class PayrollApprovalServiceTest extends FoundationDatabaseTestCase
     /**
      * @return array<string, mixed>
      */
-    private function sampleContext(string $tenantId, string $actorId): array
+    private function sampleContext(int $schoolId, string $actorId): array
     {
         return [
-            'tenant_id'      => $tenantId,
+            'school_id'      => $schoolId,
             'actor_id'       => $actorId,
             'request_origin' => 'cli',
         ];

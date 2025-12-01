@@ -37,8 +37,14 @@ class PayrollController extends ResourceController
      */
     private function buildContext(): array
     {
+        $schoolId = $this->request->getHeaderLine('X-School-ID');
+        if (!$schoolId) {
+            // Fallback for legacy clients
+            $schoolId = $this->request->getHeaderLine('X-Tenant-ID');
+        }
+
         return [
-            'tenant_id'      => $this->request->getHeaderLine('X-Tenant-ID') ?: null,
+            'school_id'      => $schoolId ? (int) $schoolId : null,
             'actor_id'       => $this->request->getHeaderLine('X-Actor-ID') ?: null,
             'request_origin' => $this->request->getIPAddress(),
         ];

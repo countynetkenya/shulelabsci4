@@ -21,27 +21,27 @@ class PayrollApprovalController extends BaseController
 
     public function index(): string
     {
-        $tenantId = $this->request->getGet('tenant_id');
-        $tenantId = $tenantId !== null && $tenantId !== '' ? (string) $tenantId : null;
+        $schoolId = $this->request->getGet('school_id');
+        $schoolId = $schoolId !== null && $schoolId !== '' ? (int) $schoolId : null;
 
-        $summary = $this->approvalService->summarise($tenantId);
-        $approvals = $this->approvalService->listPending($tenantId);
+        $summary = $this->approvalService->summarise($schoolId);
+        $approvals = $this->approvalService->listPending($schoolId);
 
         return view('Modules\\Hr\\Views\\payroll_approvals', [
             'summary'   => $summary,
             'approvals' => $approvals,
-            'tenantId'  => $tenantId,
+            'schoolId'  => $schoolId,
             'baseUrl'   => rtrim((string) site_url(), '/'),
         ]);
     }
 
     public function pending(): ResponseInterface
     {
-        $tenantId = $this->request->getGet('tenant_id');
-        $tenantId = $tenantId !== null && $tenantId !== '' ? (string) $tenantId : null;
+        $schoolId = $this->request->getGet('school_id');
+        $schoolId = $schoolId !== null && $schoolId !== '' ? (int) $schoolId : null;
 
-        $summary = $this->approvalService->summarise($tenantId);
-        $approvals = $this->approvalService->listPending($tenantId);
+        $summary = $this->approvalService->summarise($schoolId);
+        $approvals = $this->approvalService->listPending($schoolId);
 
         return $this->response->setJSON([
             'summary'   => $summary,
@@ -87,8 +87,13 @@ class PayrollApprovalController extends BaseController
      */
     private function buildContext(): array
     {
+        $schoolId = $this->request->getHeaderLine('X-School-ID');
+        if (!$schoolId) {
+            $schoolId = $this->request->getHeaderLine('X-Tenant-ID');
+        }
+
         return [
-            'tenant_id'      => $this->request->getHeaderLine('X-Tenant-ID') ?: null,
+            'school_id'      => $schoolId ? (int) $schoolId : null,
             'actor_id'       => $this->request->getHeaderLine('X-Actor-ID') ?: null,
             'request_origin' => $this->request->getIPAddress(),
         ];

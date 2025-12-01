@@ -38,14 +38,14 @@ class PayrollApprovalService
     /**
      * @return list<array<string, mixed>>
      */
-    public function listPending(?string $tenantId = null): array
+    public function listPending(?int $schoolId = null): array
     {
         $builder = $this->db->table('maker_checker_requests');
         $builder->where('action_key', 'payroll.payslip');
         $builder->where('status', 'pending');
 
-        if ($tenantId !== null && $tenantId !== '') {
-            $builder->where('tenant_id', $tenantId);
+        if ($schoolId !== null) {
+            $builder->where('school_id', $schoolId);
         }
 
         $builder->orderBy('submitted_at', 'DESC');
@@ -58,14 +58,14 @@ class PayrollApprovalService
     /**
      * @return array<string, mixed>
      */
-    public function summarise(?string $tenantId = null): array
+    public function summarise(?int $schoolId = null): array
     {
         $builder = $this->db->table('maker_checker_requests');
         $builder->select('status, COUNT(*) AS total');
         $builder->where('action_key', 'payroll.payslip');
 
-        if ($tenantId !== null && $tenantId !== '') {
-            $builder->where('tenant_id', $tenantId);
+        if ($schoolId !== null) {
+            $builder->where('school_id', $schoolId);
         }
 
         $builder->groupBy('status');
@@ -156,7 +156,7 @@ class PayrollApprovalService
 
         return [
             'id'               => (int) $row['id'],
-            'tenant_id'        => $row['tenant_id'],
+            'school_id'        => isset($row['school_id']) ? (int) $row['school_id'] : null,
             'status'           => $row['status'],
             'maker_id'         => $row['maker_id'],
             'checker_id'       => $row['checker_id'],
