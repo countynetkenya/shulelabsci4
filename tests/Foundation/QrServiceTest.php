@@ -17,7 +17,7 @@ class QrServiceTest extends FoundationDatabaseTestCase
         $result = $service->issueToken(
             resourceType: 'report_card',
             resourceId: 'RC-100',
-            context: ['tenant_id' => 'tenant-40', 'base_url' => 'https://verify.shulelabs.test'],
+            context: ['school_id' => 40, 'base_url' => 'https://verify.shulelabs.test'],
             ttlSeconds: 120
         );
 
@@ -35,7 +35,7 @@ class QrServiceTest extends FoundationDatabaseTestCase
     public function testVerifyRecordsScan(): void
     {
         $service = new QrService($this->db);
-        $tokenData = $service->issueToken('inventory_transfer', 'TR-55', ['tenant_id' => 'tenant-41']);
+        $tokenData = $service->issueToken('inventory_transfer', 'TR-55', ['school_id' => 41]);
 
         $record = $service->verify($tokenData['token'], [
             'ip'        => '10.10.10.10',
@@ -53,7 +53,7 @@ class QrServiceTest extends FoundationDatabaseTestCase
     public function testVerifyThrowsForExpiredToken(): void
     {
         $service = new QrService($this->db);
-        $tokenData = $service->issueToken('document', 'DOC-1', ['tenant_id' => 'tenant-42']);
+        $tokenData = $service->issueToken('document', 'DOC-1', ['school_id' => 42]);
 
         $row = $this->db->table('qr_tokens')->where('token', $tokenData['token'])->get()->getFirstRow('array');
         $this->db->table('qr_tokens')->where('id', $row['id'])->update([

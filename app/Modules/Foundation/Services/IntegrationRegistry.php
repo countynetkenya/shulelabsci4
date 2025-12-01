@@ -51,8 +51,8 @@ class IntegrationRegistry
 
         $record = [
             'channel'         => $channel,
+            'school_id'       => $context['school_id'] ?? null,
             'idempotency_key' => $idempotencyKey,
-            'tenant_id'       => $context['tenant_id'] ?? null,
             'payload_json'    => json_encode($payload, JSON_THROW_ON_ERROR),
             'status'          => 'queued',
             'queued_at'       => Time::now('UTC')->toDateTimeString(),

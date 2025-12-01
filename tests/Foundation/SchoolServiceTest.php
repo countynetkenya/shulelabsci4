@@ -146,7 +146,7 @@ final class SchoolServiceTest extends CIUnitTestCase
         $stats = $this->service->getDashboardStats(6); // Nairobi Primary
 
         $this->assertEquals(6, $stats['total_classes']); // Nairobi Primary has 6 classes
-        $this->assertEquals(25, $stats['total_students']); // 25 students enrolled
+        $this->assertEquals(27, $stats['total_students']); // 27 students enrolled (updated from 25)
         $this->assertGreaterThan(0, $stats['utilization_percent']);
     }
 

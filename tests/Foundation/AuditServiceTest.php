@@ -16,7 +16,7 @@ class AuditServiceTest extends FoundationDatabaseTestCase
         $firstId = $service->recordEvent(
             eventKey: 'finance.invoice.1001',
             eventType: 'created',
-            context: ['tenant_id' => 'tenant-1', 'actor_id' => 'user-1'],
+            context: ['school_id' => 1, 'actor_id' => 'user-1'],
             before: null,
             after: ['invoice' => '1001'],
             metadata: ['ip' => '10.0.0.1']
@@ -25,7 +25,7 @@ class AuditServiceTest extends FoundationDatabaseTestCase
         $secondId = $service->recordEvent(
             eventKey: 'finance.invoice.1001',
             eventType: 'updated',
-            context: ['tenant_id' => 'tenant-1', 'actor_id' => 'user-2'],
+            context: ['school_id' => 1, 'actor_id' => 'user-2'],
             before: ['status' => 'draft'],
             after: ['status' => 'approved'],
             metadata: ['ip' => '10.0.0.2']
@@ -47,7 +47,7 @@ class AuditServiceTest extends FoundationDatabaseTestCase
         $eventId = $service->recordEvent(
             eventKey: 'inventory.transfer.1',
             eventType: 'initiated',
-            context: ['tenant_id' => 'tenant-7'],
+            context: ['school_id' => 7],
             before: null,
             after: ['transfer_id' => '1']
         );

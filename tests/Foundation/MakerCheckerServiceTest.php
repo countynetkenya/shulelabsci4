@@ -15,7 +15,7 @@ class MakerCheckerServiceTest extends FoundationDatabaseTestCase
         $service = new MakerCheckerService($this->db, new AuditService($this->db));
 
         $requestId = $service->submit('finance.payment.release', ['payment_id' => 'PAY-1'], [
-            'tenant_id' => 'tenant-21',
+            'school_id' => 21,
             'actor_id'  => 'maker-1',
         ]);
 
@@ -37,7 +37,7 @@ class MakerCheckerServiceTest extends FoundationDatabaseTestCase
     public function testApproveUpdatesStatusAndAudit(): void
     {
         $service = new MakerCheckerService($this->db, new AuditService($this->db));
-        $requestId = $service->submit('inventory.transfer.approve', ['transfer_id' => 'TR-1'], ['tenant_id' => 'tenant-30']);
+        $requestId = $service->submit('inventory.transfer.approve', ['transfer_id' => 'TR-1'], ['school_id' => 30]);
 
         $service->approve($requestId, ['actor_id' => 'checker-1']);
 
@@ -57,7 +57,7 @@ class MakerCheckerServiceTest extends FoundationDatabaseTestCase
     public function testRejectUpdatesStatusAndAudit(): void
     {
         $service = new MakerCheckerService($this->db, new AuditService($this->db));
-        $requestId = $service->submit('finance.refund.release', ['refund_id' => 'RF-1'], ['tenant_id' => 'tenant-31']);
+        $requestId = $service->submit('finance.refund.release', ['refund_id' => 'RF-1'], ['school_id' => 31]);
 
         $service->reject($requestId, ['actor_id' => 'checker-2'], 'Amount mismatch');
 

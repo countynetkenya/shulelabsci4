@@ -42,7 +42,7 @@ class MakerCheckerService
             'status'        => 'pending',
             'payload_json'  => json_encode($payload, JSON_THROW_ON_ERROR),
             'maker_id'      => $context['actor_id'] ?? null,
-            'tenant_id'     => $context['tenant_id'] ?? null,
+            'school_id'     => $context['school_id'] ?? null,
             'submitted_at'  => Time::now('UTC')->toDateTimeString(),
         ];
 

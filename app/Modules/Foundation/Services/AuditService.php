@@ -46,7 +46,7 @@ class AuditService
         $payload = [
             'event_key'     => $eventKey,
             'event_type'    => $eventType,
-            'tenant_id'     => $context['tenant_id'] ?? null,
+            'school_id'     => $context['school_id'] ?? null,
             'actor_id'      => $context['actor_id'] ?? null,
             'ip_address'    => $metadata['ip'] ?? null,
             'user_agent'    => $metadata['user_agent'] ?? null,

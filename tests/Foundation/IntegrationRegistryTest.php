@@ -18,7 +18,7 @@ class IntegrationRegistryTest extends FoundationDatabaseTestCase
             channel: 'quickbooks',
             idempotencyKey: 'sync-1',
             payload: ['invoice' => 'INV-1'],
-            context: ['tenant_id' => 'tenant-10']
+            context: ['school_id' => 10]
         );
 
         $this->assertSame('queued', $first['status']);
@@ -27,7 +27,7 @@ class IntegrationRegistryTest extends FoundationDatabaseTestCase
             channel: 'quickbooks',
             idempotencyKey: 'sync-1',
             payload: ['invoice' => 'INV-1'],
-            context: ['tenant_id' => 'tenant-10']
+            context: ['school_id' => 10]
         );
 
         $this->assertSame($first['id'], $second['id']);
@@ -38,9 +38,9 @@ class IntegrationRegistryTest extends FoundationDatabaseTestCase
     {
         $service = new IntegrationRegistry($this->db, new AuditService($this->db));
 
-        $dispatch = $service->registerDispatch('mpesa', 'push-1', ['amount' => '100.00'], ['tenant_id' => 'tenant-11']);
+        $dispatch = $service->registerDispatch('mpesa', 'push-1', ['amount' => '100.00'], ['school_id' => 11]);
 
-        $service->markCompleted($dispatch['id'], ['tenant_id' => 'tenant-11'], ['status' => 'success']);
+        $service->markCompleted($dispatch['id'], ['school_id' => 11], ['status' => 'success']);
 
         $row = $this->db->table('integration_dispatches')->where('id', $dispatch['id'])->get()->getFirstRow('array');
         $this->assertSame('completed', $row['status']);
@@ -58,9 +58,9 @@ class IntegrationRegistryTest extends FoundationDatabaseTestCase
     public function testMarkFailedUpdatesStatusAndAudit(): void
     {
         $service = new IntegrationRegistry($this->db, new AuditService($this->db));
-        $dispatch = $service->registerDispatch('mpesa', 'push-2', ['amount' => '200.00'], ['tenant_id' => 'tenant-12']);
+        $dispatch = $service->registerDispatch('mpesa', 'push-2', ['amount' => '200.00'], ['school_id' => 12]);
 
-        $service->markFailed($dispatch['id'], ['tenant_id' => 'tenant-12'], 'Timeout talking to MPESA', 60);
+        $service->markFailed($dispatch['id'], ['school_id' => 12], 'Timeout talking to MPESA', 60);
 
         $row = $this->db->table('integration_dispatches')->where('id', $dispatch['id'])->get()->getFirstRow('array');
         $this->assertSame('failed', $row['status']);
@@ -83,17 +83,17 @@ class IntegrationRegistryTest extends FoundationDatabaseTestCase
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Integration dispatch not found.');
 
-        $service->markCompleted(404, ['tenant_id' => 'tenant-404'], ['status' => 'missing']);
+        $service->markCompleted(404, ['school_id' => 404], ['status' => 'missing']);
     }
 
     public function testClaimPendingDispatchesReturnsProcessingRows(): void
     {
         $service = new IntegrationRegistry($this->db, new AuditService($this->db));
 
-        $queued = $service->registerDispatch('moodle.push_grades', 'grades-claim', ['payload' => 1], ['tenant_id' => 'tenant-50']);
-        $service->registerDispatch('moodle.push_grades', 'grades-wait', ['payload' => 2], ['tenant_id' => 'tenant-50']);
-        $failed = $service->registerDispatch('moodle.push_grades', 'grades-failed', ['payload' => 3], ['tenant_id' => 'tenant-50']);
-        $service->markFailed($failed['id'], ['tenant_id' => 'tenant-50'], 'temporary', 3600);
+        $queued = $service->registerDispatch('moodle.push_grades', 'grades-claim', ['payload' => 1], ['school_id' => 50]);
+        $service->registerDispatch('moodle.push_grades', 'grades-wait', ['payload' => 2], ['school_id' => 50]);
+        $failed = $service->registerDispatch('moodle.push_grades', 'grades-failed', ['payload' => 3], ['school_id' => 50]);
+        $service->markFailed($failed['id'], ['school_id' => 50], 'temporary', 3600);
 
         $claimed = $service->claimPendingDispatches('moodle.push_grades', 1);
 

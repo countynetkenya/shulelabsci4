@@ -21,7 +21,7 @@ class LedgerServiceTest extends FoundationDatabaseTestCase
                 ['account_code' => '1000', 'direction' => 'debit', 'amount' => '150.00', 'memo' => 'Tuition invoice'],
                 ['account_code' => '2000', 'direction' => 'credit', 'amount' => '150.00', 'memo' => 'Accounts receivable'],
             ],
-            context: ['tenant_id' => 'tenant-2', 'currency' => 'KES', 'transacted_at' => '2024-01-01 09:30:00'],
+            context: ['school_id' => 2, 'currency' => 'KES', 'transacted_at' => '2024-01-01 09:30:00'],
             metadata: ['source' => 'finance-module']
         );
 
@@ -58,7 +58,7 @@ class LedgerServiceTest extends FoundationDatabaseTestCase
                 ['account_code' => '1000', 'direction' => 'debit', 'amount' => '10.00'],
                 ['account_code' => '2000', 'direction' => 'credit', 'amount' => '5.00'],
             ],
-            context: ['tenant_id' => 'tenant-9'],
+            context: ['school_id' => 9],
             metadata: []
         );
     }
@@ -66,7 +66,7 @@ class LedgerServiceTest extends FoundationDatabaseTestCase
     public function testCommitTransactionThrowsWhenPeriodLocked(): void
     {
         $this->db->table('ledger_period_locks')->insert([
-            'tenant_id'    => 'tenant-3',
+            'school_id'    => 3,
             'period_start' => '2024-03-01',
             'period_end'   => '2024-03-31',
             'locked_at'    => '2024-04-01 00:00:00',
@@ -84,7 +84,7 @@ class LedgerServiceTest extends FoundationDatabaseTestCase
                 ['account_code' => '1000', 'direction' => 'debit', 'amount' => '25.00'],
                 ['account_code' => '2000', 'direction' => 'credit', 'amount' => '25.00'],
             ],
-            context: ['tenant_id' => 'tenant-3', 'transacted_at' => '2024-03-15 12:00:00'],
+            context: ['school_id' => 3, 'transacted_at' => '2024-03-15 12:00:00'],
             metadata: []
         );
     }
@@ -100,11 +100,11 @@ class LedgerServiceTest extends FoundationDatabaseTestCase
                 ['account_code' => '1100', 'direction' => 'debit', 'amount' => '75.00'],
                 ['account_code' => '3100', 'direction' => 'credit', 'amount' => '75.00'],
             ],
-            context: ['tenant_id' => 'tenant-8'],
+            context: ['school_id' => 8],
             metadata: []
         );
 
-        $reversalId = $ledger->scheduleReversal($originalId, ['tenant_id' => 'tenant-8'], 'Customer refund');
+        $reversalId = $ledger->scheduleReversal($originalId, ['school_id' => 8], 'Customer refund');
 
         $this->assertNotSame($originalId, $reversalId);
 

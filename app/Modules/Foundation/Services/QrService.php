@@ -42,7 +42,7 @@ class QrService
         $record = [
             'resource_type' => $resourceType,
             'resource_id'   => $resourceId,
-            'tenant_id'     => $context['tenant_id'] ?? null,
+            'school_id'     => $context['school_id'] ?? null,
             'token'         => $token,
             'issued_at'     => Time::now('UTC')->toDateTimeString(),
             'expires_at'    => $expiresAt?->toDateTimeString(),

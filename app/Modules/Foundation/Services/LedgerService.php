@@ -66,9 +66,9 @@ class LedgerService
         }
 
         $transactedAt = $this->resolveTransactionTime($context);
-        $tenantId = $context['tenant_id'] ?? null;
+        $schoolId = $context['school_id'] ?? null;
 
-        $this->assertPeriodUnlocked($tenantId, $transactedAt);
+        $this->assertPeriodUnlocked($schoolId, $transactedAt);
         $this->assertBalanced($entries);
 
         $this->db->transStart();
@@ -182,13 +182,13 @@ class LedgerService
         }
     }
 
-    private function assertPeriodUnlocked(null|int|string $tenantId, Time $transactedAt): void
+    private function assertPeriodUnlocked(null|int|string $schoolId, Time $transactedAt): void
     {
         $builder = $this->db->table('ledger_period_locks');
-        if ($tenantId !== null) {
+        if ($schoolId !== null) {
             $builder->groupStart()
-                ->where('tenant_id', $tenantId)
-                ->orWhere('tenant_id', null)
+                ->where('school_id', $schoolId)
+                ->orWhere('school_id', null)
                 ->groupEnd();
         }
 
@@ -208,7 +208,7 @@ class LedgerService
     {
         $payload = [
             'transaction_key' => $transactionKey,
-            'tenant_id'       => $context['tenant_id'] ?? null,
+            'school_id'       => $context['school_id'] ?? null,
             'currency_code'   => $context['currency'] ?? 'KES',
             'transacted_at'   => $transactedAt->toDateTimeString(),
             'created_at'      => Time::now('UTC')->toDateTimeString(),

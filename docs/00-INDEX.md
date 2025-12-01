@@ -15,6 +15,7 @@ System design, database schemas, and security protocols.
 Automated build systems, agents, and workflows.
 - [Orchestration README](orchestration/README.md)
 - [Quickstart Guide](orchestration/QUICKSTART.md)
+- [**Dependency & Development Plan**](development/DEPENDENCY_PLAN.md) 👈 **(Project Roadmap)**
 - [Agents](orchestration/agents/)
 
 ### 3. 📘 Developer Guides (`docs/guides/`)
@@ -30,7 +31,6 @@ How-to guides for developers.
 ### 4. ⚡ Prompts & AI Instructions (`docs/prompts/`)
 Context files for AI agents.
 - [Master Orchestrator](prompts/MASTER_ORCHESTRATOR.md)
-- [Super Developer Prompt](prompts/SUPER_DEVELOPER.md)
 
 ### 5. 📊 Reports (`docs/reports/`)
 System status and historical logs.
@@ -77,6 +77,7 @@ Legacy documentation and code.
 - [Legacy Migrations](archive/legacy-migrations/)
 - [Legacy Models](archive/legacy-models/)
 - [Legacy Services](archive/legacy-services/)
+- [Legacy Prompts](archive/legacy-prompts/)
 - [Admissions Module](specs/11-ADMISSIONS_SPEC.md) 🆕
 - [Scheduler Module](specs/12-SCHEDULER_SPEC.md) 🆕
 - [Parent Engagement](specs/13-PARENT_ENGAGEMENT_SPEC.md) 🆕

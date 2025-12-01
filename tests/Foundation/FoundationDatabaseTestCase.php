@@ -150,7 +150,7 @@ CREATE TABLE {$prefix}audit_events (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     event_key VARCHAR(191) NOT NULL,
     event_type VARCHAR(100) NOT NULL,
-    tenant_id VARCHAR(64),
+    school_id INTEGER,
     actor_id VARCHAR(64),
     ip_address VARCHAR(45),
     user_agent TEXT,
@@ -180,7 +180,7 @@ SQL);
 CREATE TABLE {$prefix}ledger_transactions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     transaction_key VARCHAR(191) NOT NULL,
-    tenant_id VARCHAR(64),
+    school_id INTEGER,
     currency_code CHAR(3) NOT NULL,
     transacted_at DATETIME NOT NULL,
     metadata_json TEXT,
@@ -206,20 +206,20 @@ SQL);
         $this->db->simpleQuery(<<<SQL
 CREATE TABLE {$prefix}ledger_period_locks (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    tenant_id VARCHAR(64),
+    school_id INTEGER,
     period_start DATE NOT NULL,
     period_end DATE NOT NULL,
     locked_at DATETIME NOT NULL,
     locked_by VARCHAR(64)
 )
 SQL);
-        $this->db->simpleQuery("CREATE UNIQUE INDEX IF NOT EXISTS {$prefix}ledger_period_locks_unique ON {$prefix}ledger_period_locks(tenant_id, period_start, period_end)");
+        $this->db->simpleQuery("CREATE UNIQUE INDEX IF NOT EXISTS {$prefix}ledger_period_locks_unique ON {$prefix}ledger_period_locks(school_id, period_start, period_end)");
 
         $this->db->simpleQuery(<<<SQL
 CREATE TABLE {$prefix}integration_dispatches (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     channel VARCHAR(100) NOT NULL,
-    tenant_id VARCHAR(64),
+    school_id INTEGER,
     idempotency_key VARCHAR(191) NOT NULL,
     payload_json TEXT,
     response_json TEXT,
@@ -239,7 +239,7 @@ CREATE TABLE {$prefix}qr_tokens (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     resource_type VARCHAR(100) NOT NULL,
     resource_id VARCHAR(100) NOT NULL,
-    tenant_id VARCHAR(64),
+    school_id INTEGER,
     token VARCHAR(191) NOT NULL,
     issued_at DATETIME NOT NULL,
     expires_at DATETIME
@@ -263,7 +263,7 @@ SQL);
         $this->db->simpleQuery(<<<SQL
 CREATE TABLE {$prefix}maker_checker_requests (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    tenant_id VARCHAR(64),
+    school_id INTEGER,
     action_key VARCHAR(150) NOT NULL,
     status VARCHAR(32) NOT NULL,
     payload_json TEXT NOT NULL,
