@@ -37,6 +37,7 @@ class Filters extends BaseFilters
         'auth'          => \App\Filters\AuthFilter::class,
         'guest'         => \App\Filters\GuestFilter::class,
         'admin'         => \App\Filters\AdminFilter::class,
+        'tenant'        => \App\Filters\TenantFilter::class,
     ];
 
     /**
@@ -77,6 +78,7 @@ class Filters extends BaseFilters
         'before' => [
             // 'honeypot',
             'csrf' => ['except' => ['auth/signin', 'auth/signout', 'api/*']],
+            'tenant',
             // 'invalidchars',
         ],
         'after' => [

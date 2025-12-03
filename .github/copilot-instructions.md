@@ -57,6 +57,14 @@ This document outlines the Lead Architect prompt for all existing modules in the
     - If you find conflicting instructions in older files, `docs/development/MODULES.md` is the **Source of Truth**.
     - Ignore legacy patterns in `docs/archive/`.
 
+## 🧪 Testing Standards & Helpers
+- **Check Traits First**: Before writing custom setup logic in tests, check `tests/_support/Traits` for available helpers.
+- **Tenant Context**: ALWAYS use `Tests\Support\Traits\TenantTestTrait` for Feature tests requiring authentication.
+  - Use `$this->setupTenantContext()` in `setUp()`.
+  - Use `$this->withSession($this->getAdminSession())` for authenticated requests.
+  - **DO NOT** manually seed `schools` or `users` tables in individual test files.
+- **Schema Verification**: Before writing any test seed data, explicitly READ the migration file to verify column names.
+
 ## Mobile-First API Design
 - Ensure all API endpoints are designed following mobile-first principles, prioritizing performance and minimal latency on mobile connections.
 - Use JSON structures that efficiently convey information for mobile consumers.

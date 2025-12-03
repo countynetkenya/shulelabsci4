@@ -25,7 +25,7 @@ class CreateHrTables extends Migration
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addUniqueKey(['school_id', 'code'], 'uk_school_code');
+        $this->forge->addUniqueKey(['school_id', 'code'], 'uk_departments_school_code');
         $this->forge->createTable('departments', true);
 
         // designations - Job titles/positions
@@ -41,7 +41,7 @@ class CreateHrTables extends Migration
             'created_at' => ['type' => 'DATETIME', 'null' => true],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addUniqueKey(['school_id', 'code'], 'uk_school_code');
+        $this->forge->addUniqueKey(['school_id', 'code'], 'uk_designations_school_code');
         $this->forge->createTable('designations', true);
 
         // employees - Employee profiles
@@ -67,7 +67,7 @@ class CreateHrTables extends Migration
             'updated_at' => ['type' => 'DATETIME', 'null' => true],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addUniqueKey(['school_id', 'employee_number'], 'uk_school_emp_number');
+        $this->forge->addUniqueKey(['school_id', 'employee_number'], 'uk_employees_school_emp_number');
         $this->forge->addKey('user_id', false, false, 'idx_user');
         $this->forge->addKey('department_id', false, false, 'idx_department');
         $this->forge->createTable('employees', true);
@@ -87,7 +87,7 @@ class CreateHrTables extends Migration
             'created_at' => ['type' => 'DATETIME', 'null' => true],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addUniqueKey(['school_id', 'code'], 'uk_school_code');
+        $this->forge->addUniqueKey(['school_id', 'code'], 'uk_leave_types_school_code');
         $this->forge->createTable('leave_types', true);
 
         // leave_balances - Employee leave balances
@@ -126,7 +126,7 @@ class CreateHrTables extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addKey(['employee_id', 'status'], false, false, 'idx_emp_status');
-        $this->forge->addKey(['school_id', 'status'], false, false, 'idx_school_status');
+        $this->forge->addKey(['school_id', 'status'], false, false, 'idx_leave_requests_school_status');
         $this->forge->createTable('leave_requests', true);
 
         // staff_attendance - Employee attendance
@@ -145,7 +145,7 @@ class CreateHrTables extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addUniqueKey(['employee_id', 'attendance_date'], 'uk_emp_date');
-        $this->forge->addKey(['school_id', 'attendance_date'], false, false, 'idx_school_date');
+        $this->forge->addKey(['school_id', 'attendance_date'], false, false, 'idx_staff_attendance_school_date');
         $this->forge->createTable('staff_attendance', true);
 
         // payroll_periods - Payroll processing periods
@@ -168,7 +168,7 @@ class CreateHrTables extends Migration
             'created_at' => ['type' => 'DATETIME', 'null' => true],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addKey(['school_id', 'status'], false, false, 'idx_school_status');
+        $this->forge->addKey(['school_id', 'status'], false, false, 'idx_payroll_periods_school_status');
         $this->forge->createTable('payroll_periods', true);
 
         // payslips - Individual employee payslips

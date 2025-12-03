@@ -17,10 +17,20 @@ This document tracks the evolution of our development process. It is a "Living H
 10. **Strict Schema Validation**: When writing tests, verify that Enum values in factories/seeders match the database schema exactly (e.g., `physical` vs `consumable`).
 11. **Test Schema Synchronization**: When creating migrations, IMMEDIATELY update the `createSchema` method in `FoundationDatabaseTestCase` (or equivalent) to match.
 12. **Tenant Scoping Awareness**: In tests, remember that `TenantModel` auto-scopes. Use `withoutTenant()` explicitly when you need to see data across schools or verify isolation.
+13. **Schema Verification First**: Before writing any test seed data, explicitly READ the migration file to verify column names (e.g., `school_name` vs `name`, `is_active` vs `status`). Do not guess.
+14. **Standardized Tenant Context**: Use the `TenantTestTrait` for all Feature tests requiring authentication. Do not manually seed `users` and `schools` or manipulate `$_SESSION` directly in test methods.
 
 ---
 
 ## 📜 History of Learnings
+
+### Cycle 11: HR Module & Tenant Context (Dec 2025)
+- **Issue**: `EmployeeWebTest` failed due to incorrect column names (`name` vs `school_name`) in manual seeding.
+- **Fix**: Enforced a "Read Migration First" rule before writing test seeders.
+- **Issue**: Tests failed due to `TenantFilter` redirecting because session context didn't match database records (hardcoded IDs vs auto-increment).
+- **Fix**: Created `TenantTestTrait` to standardize the creation of School, User, Role, and Session state, ensuring IDs match exactly.
+- **Issue**: CSRF protection blocking test POST requests.
+- **Fix**: Standardized disabling of CSRF in `setUp()` for Feature tests.
 
 ### Cycle 10: Foundation Refactor (Dec 2025)
 - **Issue**: Tests failed because in-memory SQLite schema didn't match the new migration (string `tenant_id` vs int `school_id`).
