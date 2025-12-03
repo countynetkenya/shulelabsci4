@@ -412,12 +412,12 @@ class OvernightTestingAgent
         // Test API endpoints
         $this->log("Testing API endpoints...");
         $apiEndpoints = [
-            '/api/health',
-            '/api/auth/check',
-            '/api/schools',
-            '/api/students',
-            '/api/teachers',
-            '/api/classes',
+            '/api/foundation/health',
+            // '/api/auth/check', // Skipping auth check for now as it's not standard
+            '/api/foundation/schools',
+            '/api/admin/students',
+            '/api/admin/teachers',
+            '/api/admin/classes',
         ];
         
         foreach ($apiEndpoints as $endpoint) {

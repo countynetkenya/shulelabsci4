@@ -21,5 +21,11 @@ class Routes
             $routes->get('dashboard', 'Modules\\Foundation\\Controllers\\OperationsDashboardController::index');
             $routes->get('mobile-snapshots', 'Modules\\Foundation\\Controllers\\OperationsDashboardController::mobileSnapshots');
         });
+
+        // API Routes
+        $routes->group('api/foundation', ['namespace' => 'Modules\Foundation\Controllers\Api', 'filter' => 'auth'], static function (RouteCollection $routes): void {
+            $routes->get('schools', 'SchoolsApiController::index');
+            $routes->get('health', 'HealthApiController::index');
+        });
     }
 }
