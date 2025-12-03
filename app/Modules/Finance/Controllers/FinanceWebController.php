@@ -14,6 +14,62 @@ class FinanceWebController extends BaseController
         ]);
     }
 
+    public function newInvoice()
+    {
+        $schoolId = session()->get('current_school_id');
+        $db = \Config\Database::connect();
+        
+        // Fetch students for dropdown
+        // Ideally use a StudentService, but direct DB query is fine for now
+        $students = $db->table('users')
+                       ->join('school_users', 'school_users.user_id = users.id')
+                       ->where('school_users.school_id', $schoolId)
+                       ->where('school_users.role_id', 4) // Assuming 4 is student role, or check role slug
+                       ->select('users.id, users.full_name, users.username')
+                       ->get()
+                       ->getResultArray();
+
+        // If no students found by role ID, just get all users linked to school for dev purposes
+        if (empty($students)) {
+             $students = $db->table('users')
+                       ->join('school_users', 'school_users.user_id = users.id')
+                       ->where('school_users.school_id', $schoolId)
+                       ->select('users.id, users.full_name, users.username')
+                       ->get()
+                       ->getResultArray();
+        }
+
+        // Fetch Fee Structures
+        $feeStructures = $db->table('finance_fee_structures')
+                            ->where('school_id', $schoolId)
+                            ->get()
+                            ->getResultArray();
+
+        return view('Modules\Finance\Views\finance\invoices\create', [
+            'students' => $students,
+            'feeStructures' => $feeStructures,
+        ]);
+    }
+
+    public function newPayment()
+    {
+        $schoolId = session()->get('current_school_id');
+        $db = \Config\Database::connect();
+
+        // Fetch Unpaid Invoices
+        $invoices = $db->table('finance_invoices')
+                       ->select('finance_invoices.*, users.full_name as student_name')
+                       ->join('users', 'users.id = finance_invoices.student_id')
+                       ->where('finance_invoices.school_id', $schoolId)
+                       ->whereIn('finance_invoices.status', ['unpaid', 'partial'])
+                       ->get()
+                       ->getResultArray();
+
+        return view('Modules\Finance\Views\finance\payments\create', [
+            'invoices' => $invoices,
+        ]);
+    }
+
     public function createFeeStructure()
     {
         $rules = [

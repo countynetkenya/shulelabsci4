@@ -10,9 +10,17 @@ class Routes
     {
         $routes->group('finance', ['filter' => 'auth'], static function (RouteCollection $routes): void {
             $routes->get('/', '\Modules\Finance\Controllers\FinanceWebController::index');
-            $routes->post('fee-structures', '\Modules\Finance\Controllers\FinanceWebController::createFeeStructure');
+            
+            // Invoices
+            $routes->get('invoices/new', '\Modules\Finance\Controllers\FinanceWebController::newInvoice');
             $routes->post('invoices', '\Modules\Finance\Controllers\FinanceWebController::createInvoice');
+            
+            // Payments
+            $routes->get('payments/new', '\Modules\Finance\Controllers\FinanceWebController::newPayment');
             $routes->post('payments', '\Modules\Finance\Controllers\FinanceWebController::recordPayment');
+            
+            // Fee Structures
+            $routes->post('fee-structures', '\Modules\Finance\Controllers\FinanceWebController::createFeeStructure');
         });
 
         $routes->group('api/finance', ['filter' => 'auth'], static function (RouteCollection $routes): void {
