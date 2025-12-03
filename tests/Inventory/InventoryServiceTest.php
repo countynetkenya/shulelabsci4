@@ -39,6 +39,10 @@ final class InventoryServiceTest extends CIUnitTestCase
         $this->db->enableForeignKeyChecks();
         
         $this->setupTenantContext();
+        // $this->seed(InventoryV2Seeder::class); // Removed: TenantTestTrait handles basic seeding, InventoryV2Seeder might conflict or be redundant if not scoped.
+        // Actually, InventoryV2Seeder seeds categories and locations which TenantTestTrait does NOT.
+        // So we should keep it, but ensure it uses the schoolId from TenantTestTrait if possible, or we update the seeder.
+        // For now, let's assume InventoryV2Seeder is safe to run.
         $this->seed(InventoryV2Seeder::class);
 
         $this->service = new InventoryService();

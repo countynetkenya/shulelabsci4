@@ -40,7 +40,12 @@ class ItemsApiController extends ResourceController
 
             $result = $this->service->paginate($page, $perPage);
 
-            return $this->respond($result);
+            // Wrap in standard response format
+            return $this->respond([
+                'data' => $result,
+                'status' => 200,
+                'message' => 'Items retrieved successfully'
+            ]);
         } catch (\Throwable $e) {
             return $this->failServerError($e->getMessage());
         }

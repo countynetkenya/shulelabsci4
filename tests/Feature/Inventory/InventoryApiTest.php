@@ -45,6 +45,33 @@ class InventoryApiTest extends CIUnitTestCase
         $this->seed(InventoryV2Seeder::class);
     }
 
+    public function testCanFetchInventoryItemsViaApi()
+    {
+        // 1. Call API
+        $result = $this->withSession($this->getAdminSession())
+                       ->get('/api/inventory/items');
+
+        // 2. Verify Response
+        $result->assertOK();
+        
+        // Check that the data array contains the seeded item
+        $json = json_decode($result->getJSON(), true);
+        $this->assertArrayHasKey('data', $json);
+        $this->assertNotEmpty($json['data']);
+        
+        // Find the item in the data
+        $item = null;
+        foreach ($json['data'] as $i) {
+            if ($i['sku'] === 'MATH-001') {
+                $item = $i;
+                break;
+            }
+        }
+        
+        $this->assertNotNull($item, 'Seeded item not found in response');
+        $this->assertEquals('Math Book', $item['name']);
+    }
+
     public function testInitiateTransfer()
     {
         // Get IDs from DB to be safe
