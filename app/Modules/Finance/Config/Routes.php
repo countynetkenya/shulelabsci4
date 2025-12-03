@@ -15,8 +15,9 @@ class Routes
             $routes->post('payments', '\Modules\Finance\Controllers\FinanceWebController::recordPayment');
         });
 
-        $routes->group('api/finance', ['filter' => 'api'], static function (RouteCollection $routes): void {
+        $routes->group('api/finance', ['filter' => 'auth'], static function (RouteCollection $routes): void {
             $routes->get('invoices', '\Modules\Finance\Controllers\FinanceApiController::index');
+            $routes->get('invoices/(:num)', '\Modules\Finance\Controllers\FinanceApiController::show/$1');
         });
     }
 }
