@@ -5,54 +5,60 @@ namespace Tests\Feature\Inventory;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\FeatureTestTrait;
+use Tests\Support\Traits\TenantTestTrait;
+use App\Database\Seeds\InventoryV2Seeder;
 
 class InventoryTest extends CIUnitTestCase
 {
     use FeatureTestTrait;
     use DatabaseTestTrait;
+    use TenantTestTrait;
 
-    protected $migrate = true;
-
+    protected $migrate = false;
     protected $migrateOnce = false;
-
     protected $refresh = true;
-
     protected $namespace = 'App';
 
     protected function setUp(): void
     {
         parent::setUp();
+        
+        // Manual Cleanup
+        $this->db->disableForeignKeyChecks();
+        if ($this->db->tableExists('inventory_transfers')) $this->db->table('inventory_transfers')->truncate();
+        if ($this->db->tableExists('inventory_stock')) $this->db->table('inventory_stock')->truncate();
+        if ($this->db->tableExists('inventory_items')) $this->db->table('inventory_items')->truncate();
+        if ($this->db->tableExists('inventory_categories')) $this->db->table('inventory_categories')->truncate();
+        if ($this->db->tableExists('inventory_locations')) $this->db->table('inventory_locations')->truncate();
+        $this->db->enableForeignKeyChecks();
 
-        // Disable CSRF for testing API
-        $filters = config('Filters');
-        if (isset($filters->globals['before']['csrf'])) {
-            unset($filters->globals['before']['csrf']);
-        }
+        $this->setupTenantContext();
+        $this->seed(InventoryV2Seeder::class);
     }
 
     public function testCanListInventoryItems()
     {
-        // This endpoint doesn't exist yet, so it should fail or return 404
         $result = $this->get('/api/inventory/items');
 
-        // We expect a 200 OK response with a JSON structure
         $result->assertStatus(200);
-        // ResourceController returns the array directly by default
-        $result->assertJSONExact([]);
+        
+        // Since we seeded, we expect items
+        $json = json_decode($result->getJSON(), true);
+        $this->assertIsArray($json);
+        $this->assertNotEmpty($json);
     }
 
     public function testCanCreateInventoryItem()
     {
-        // Create a category first
-        $categoryModel = new \Modules\Inventory\Models\InventoryCategoryModel();
-        $categoryId = $categoryModel->insert(['name' => 'Test Category']);
+        // Get seeded category
+        $category = $this->db->table('inventory_categories')->get()->getRow();
+        $categoryId = $category->id;
 
         $data = [
             'category_id' => $categoryId,
             'name'        => 'Test Item',
             'sku'         => 'TEST-001',
             'type'        => 'physical',
-            'quantity'    => 10,
             'unit_cost'   => 50.00,
         ];
 

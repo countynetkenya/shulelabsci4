@@ -7,6 +7,8 @@ use CodeIgniter\Test\DatabaseTestTrait;
 use Modules\Inventory\Services\InventoryService;
 use Modules\Inventory\Models\InventoryItemModel;
 use Modules\Inventory\Models\InventoryStockModel;
+use Tests\Support\Traits\TenantTestTrait;
+use App\Database\Seeds\InventoryV2Seeder;
 
 /**
  * @internal
@@ -14,6 +16,7 @@ use Modules\Inventory\Models\InventoryStockModel;
 final class InventoryServiceTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
+    use TenantTestTrait;
 
     protected $refresh = true;
     protected $namespace = 'App';
@@ -25,38 +28,33 @@ final class InventoryServiceTest extends CIUnitTestCase
     protected function setUp(): void
     {
         parent::setUp();
+        
+        // Manual Cleanup
+        $this->db->disableForeignKeyChecks();
+        if ($this->db->tableExists('inventory_transfers')) $this->db->table('inventory_transfers')->truncate();
+        if ($this->db->tableExists('inventory_stock')) $this->db->table('inventory_stock')->truncate();
+        if ($this->db->tableExists('inventory_items')) $this->db->table('inventory_items')->truncate();
+        if ($this->db->tableExists('inventory_categories')) $this->db->table('inventory_categories')->truncate();
+        if ($this->db->tableExists('inventory_locations')) $this->db->table('inventory_locations')->truncate();
+        $this->db->enableForeignKeyChecks();
+        
+        $this->setupTenantContext();
+        $this->seed(InventoryV2Seeder::class);
+
         $this->service = new InventoryService();
         $this->itemModel = new InventoryItemModel();
         $this->stockModel = new InventoryStockModel();
-
-        // Setup required data
-        $db = \Config\Database::connect();
-        
-        // Create a category
-        if ($db->tableExists('inventory_categories')) {
-             if ($db->table('inventory_categories')->where('id', 1)->countAllResults() == 0) {
-                 $db->table('inventory_categories')->insert(['id' => 1, 'name' => 'Electronics']);
-             }
-        }
-
-        // Create a location
-        if ($db->tableExists('inventory_locations')) {
-            if ($db->table('inventory_locations')->where('id', 1)->countAllResults() == 0) {
-                $db->table('inventory_locations')->insert([
-                    'id' => 1, 
-                    'name' => 'Main Store',
-                    'is_default' => 1
-                ]);
-            }
-        }
     }
 
     public function testCreateItem(): void
     {
+        $category = $this->db->table('inventory_categories')->get()->getRow();
+        $categoryId = $category->id;
+
         $data = [
             'name' => 'Laptop HP',
             'sku' => 'LAPTOP-001',
-            'category_id' => 1,
+            'category_id' => $categoryId,
             'description' => 'High performance laptop',
             'unit_cost' => 50000.00,
             'reorder_level' => 5,
@@ -76,10 +74,13 @@ final class InventoryServiceTest extends CIUnitTestCase
 
     public function testGetItems(): void
     {
+        $category = $this->db->table('inventory_categories')->get()->getRow();
+        $categoryId = $category->id;
+
         $this->service->createItem([
             'name' => 'Desk',
             'sku' => 'DESK-001',
-            'category_id' => 1,
+            'category_id' => $categoryId,
             'unit_cost' => 5000.00,
             'type' => 'physical'
         ]);
@@ -92,16 +93,22 @@ final class InventoryServiceTest extends CIUnitTestCase
 
     public function testAdjustStockIn(): void
     {
+        $category = $this->db->table('inventory_categories')->get()->getRow();
+        $categoryId = $category->id;
+        
+        $location = $this->db->table('inventory_locations')->where('is_default', 1)->get()->getRow();
+        $locationId = $location->id;
+        
+        $user = $this->db->table('users')->get()->getRow();
+        $userId = $user->id;
+
         $itemId = $this->service->createItem([
             'name' => 'Notebook',
             'sku' => 'NOTE-001',
-            'category_id' => 1,
+            'category_id' => $categoryId,
             'unit_cost' => 50.00,
             'type' => 'physical'
         ]);
-
-        $locationId = 1;
-        $userId = 1;
 
         $this->service->adjustStock($itemId, $locationId, 50, 'Restocking', $userId);
 
@@ -111,16 +118,22 @@ final class InventoryServiceTest extends CIUnitTestCase
 
     public function testAdjustStockOut(): void
     {
+        $category = $this->db->table('inventory_categories')->get()->getRow();
+        $categoryId = $category->id;
+        
+        $location = $this->db->table('inventory_locations')->where('is_default', 1)->get()->getRow();
+        $locationId = $location->id;
+        
+        $user = $this->db->table('users')->get()->getRow();
+        $userId = $user->id;
+
         $itemId = $this->service->createItem([
             'name' => 'Pen',
             'sku' => 'PEN-001',
-            'category_id' => 1,
+            'category_id' => $categoryId,
             'unit_cost' => 10.00,
             'type' => 'physical'
         ]);
-
-        $locationId = 1;
-        $userId = 1;
 
         // Add initial stock
         $this->service->adjustStock($itemId, $locationId, 100, 'Initial', $userId);
@@ -134,16 +147,22 @@ final class InventoryServiceTest extends CIUnitTestCase
 
     public function testCannotReduceStockBelowZero(): void
     {
+        $category = $this->db->table('inventory_categories')->get()->getRow();
+        $categoryId = $category->id;
+        
+        $location = $this->db->table('inventory_locations')->where('is_default', 1)->get()->getRow();
+        $locationId = $location->id;
+        
+        $user = $this->db->table('users')->get()->getRow();
+        $userId = $user->id;
+
         $itemId = $this->service->createItem([
             'name' => 'Marker',
             'sku' => 'MARK-001',
-            'category_id' => 1,
+            'category_id' => $categoryId,
             'unit_cost' => 20.00,
             'type' => 'physical'
         ]);
-
-        $locationId = 1;
-        $userId = 1;
 
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Cannot reduce stock below zero');

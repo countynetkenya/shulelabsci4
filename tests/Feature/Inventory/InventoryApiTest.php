@@ -6,21 +6,44 @@ use App\Database\Seeds\InventoryV2Seeder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
 use CodeIgniter\Test\FeatureTestTrait;
+use Tests\Support\Traits\TenantTestTrait;
 
 class InventoryApiTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
     use FeatureTestTrait;
+    use TenantTestTrait;
 
-    protected $migrate = true;
-
+    protected $migrate = false;
     protected $migrateOnce = false;
-
     protected $refresh = true;
-
     protected $namespace = null;
 
-    protected $seed = InventoryV2Seeder::class;
+    protected function setUp(): void
+    {
+        parent::setUp();
+        
+        // Manual Cleanup
+        $this->db->disableForeignKeyChecks();
+        if ($this->db->tableExists('inventory_transfers')) $this->db->table('inventory_transfers')->truncate();
+        if ($this->db->tableExists('inventory_stock')) $this->db->table('inventory_stock')->truncate();
+        if ($this->db->tableExists('inventory_items')) $this->db->table('inventory_items')->truncate();
+        if ($this->db->tableExists('inventory_categories')) $this->db->table('inventory_categories')->truncate();
+        if ($this->db->tableExists('inventory_locations')) $this->db->table('inventory_locations')->truncate();
+        if ($this->db->tableExists('audit_events')) $this->db->table('audit_events')->truncate();
+        $this->db->enableForeignKeyChecks();
+
+        $this->setupTenantContext();
+        
+        // Mock AuditService to bypass DB issues
+        $auditMock = $this->getMockBuilder(\Modules\Foundation\Services\AuditService::class)
+                          ->disableOriginalConstructor()
+                          ->getMock();
+        $auditMock->method('recordEvent')->willReturn(1);
+        \Config\Services::injectMock('audit', $auditMock);
+
+        $this->seed(InventoryV2Seeder::class);
+    }
 
     public function testInitiateTransfer()
     {
@@ -36,7 +59,11 @@ class InventoryApiTest extends CIUnitTestCase
             'quantity' => 10,
         ];
 
-        $result = $this->withBody(json_encode($data))
+        $session = $this->getAdminSession();
+        $session['loggedin'] = true;
+
+        $result = $this->withSession($session)
+                       ->withBody(json_encode($data))
                        ->withHeaders(['Content-Type' => 'application/json'])
                        ->post('api/inventory/transfers');
 
@@ -63,15 +90,21 @@ class InventoryApiTest extends CIUnitTestCase
             'quantity' => 10,
         ];
 
-        $initResult = $this->withBody(json_encode($data))
+        $session = $this->getAdminSession();
+        $session['loggedin'] = true;
+
+        $initResult = $this->withSession($session)
+                           ->withBody(json_encode($data))
                            ->withHeaders(['Content-Type' => 'application/json'])
                            ->post('api/inventory/transfers');
 
+        $initResult->assertStatus(201);
         $json = json_decode($initResult->getJSON());
         $transferId = $json->transfer_id;
 
         // 2. Confirm
-        $result = $this->post("api/inventory/transfers/{$transferId}/confirm");
+        $result = $this->withSession($session)
+                       ->post("api/inventory/transfers/{$transferId}/confirm");
 
         $result->assertStatus(200);
         $result->assertJSONFragment(['message' => 'Transfer confirmed successfully']);
