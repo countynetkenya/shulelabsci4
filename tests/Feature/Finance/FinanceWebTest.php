@@ -47,4 +47,37 @@ class FinanceWebTest extends CIUnitTestCase
             'school_id' => $this->schoolId,
         ]);
     }
+
+    public function testCanCreateInvoice()
+    {
+        // Create a student
+        $this->db->table('users')->insert([
+            'username' => 'student1',
+            'email' => 'student1@test.com',
+            'password_hash' => password_hash('password', PASSWORD_DEFAULT),
+            'full_name' => 'Student One',
+            'is_active' => 1,
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+        $studentId = $this->db->insertID();
+
+        $data = [
+            'student_id' => $studentId,
+            'amount' => 5000.00,
+            'due_date' => date('Y-m-d', strtotime('+30 days')),
+        ];
+
+        $result = $this->withSession($this->getAdminSession())
+                       ->post('/finance/invoices', $data);
+
+        $result->assertRedirect();
+        
+        $this->seeInDatabase('finance_invoices', [
+            'student_id' => $studentId,
+            'amount' => 5000.00,
+            'balance' => 5000.00,
+            'status' => 'unpaid',
+            'school_id' => $this->schoolId,
+        ]);
+    }
 }

@@ -48,6 +48,40 @@ class FinanceWebController extends BaseController
 
     public function createInvoice()
     {
-        // Implementation for invoice creation
+        $rules = [
+            'student_id' => 'required|integer',
+            'amount' => 'required|decimal',
+            'due_date' => 'required|valid_date',
+            'fee_structure_id' => 'permit_empty|integer',
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        $data = $this->request->getPost();
+        $schoolId = session()->get('current_school_id');
+
+        // Generate Reference Number
+        $reference = 'INV-' . date('Ymd') . '-' . rand(1000, 9999);
+
+        $invoiceModel = new \Modules\Finance\Models\InvoiceModel();
+        
+        $insertData = [
+            'school_id' => $schoolId,
+            'student_id' => $data['student_id'],
+            'fee_structure_id' => $data['fee_structure_id'] ?? null,
+            'reference_number' => $reference,
+            'amount' => $data['amount'],
+            'balance' => $data['amount'], // Initial balance is total amount
+            'status' => 'unpaid',
+            'due_date' => $data['due_date'],
+        ];
+
+        if (!$invoiceModel->insert($insertData)) {
+             return redirect()->back()->withInput()->with('errors', $invoiceModel->errors());
+        }
+
+        return redirect()->to('/finance')->with('message', 'Invoice created successfully');
     }
 }
