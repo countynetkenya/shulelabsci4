@@ -84,4 +84,71 @@ class FinanceWebController extends BaseController
 
         return redirect()->to('/finance')->with('message', 'Invoice created successfully');
     }
+
+    public function recordPayment()
+    {
+        $rules = [
+            'invoice_id' => 'required|integer',
+            'amount' => 'required|decimal|greater_than[0]',
+            'method' => 'required|in_list[cash,bank_transfer,mobile_money,cheque]',
+            'paid_at' => 'required|valid_date',
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        $data = $this->request->getPost();
+        $schoolId = session()->get('current_school_id');
+        $userId = session()->get('user_id');
+
+        $db = \Config\Database::connect();
+        $invoiceModel = new \Modules\Finance\Models\InvoiceModel();
+        $paymentModel = new \Modules\Finance\Models\PaymentModel();
+
+        $db->transStart();
+
+        // 1. Get Invoice & Lock (For update not strictly supported in CI4 Model find, using query builder if needed, but simple check is ok for now)
+        $invoice = $invoiceModel->where('school_id', $schoolId)->find($data['invoice_id']);
+
+        if (!$invoice) {
+            $db->transRollback();
+            return redirect()->back()->with('error', 'Invoice not found.');
+        }
+
+        // 2. Validate Balance
+        if ($data['amount'] > $invoice['balance']) {
+            $db->transRollback();
+            return redirect()->back()->with('error', 'Payment amount exceeds invoice balance.');
+        }
+
+        // 3. Record Payment
+        $paymentData = [
+            'school_id' => $schoolId,
+            'invoice_id' => $data['invoice_id'],
+            'amount' => $data['amount'],
+            'method' => $data['method'],
+            'reference_code' => $data['reference_code'] ?? null,
+            'paid_at' => $data['paid_at'],
+            'recorded_by' => $userId,
+        ];
+        $paymentModel->insert($paymentData);
+
+        // 4. Update Invoice
+        $newBalance = $invoice['balance'] - $data['amount'];
+        $newStatus = ($newBalance <= 0) ? 'paid' : 'partial';
+
+        $invoiceModel->update($data['invoice_id'], [
+            'balance' => $newBalance,
+            'status' => $newStatus,
+        ]);
+
+        $db->transComplete();
+
+        if ($db->transStatus() === false) {
+            return redirect()->back()->with('error', 'Failed to record payment.');
+        }
+
+        return redirect()->to('/finance')->with('message', 'Payment recorded successfully.');
+    }
 }
