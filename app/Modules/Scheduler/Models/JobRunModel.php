@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Scheduler\Models;
+namespace Modules\Scheduler\Models;
 
 use CodeIgniter\Model;
 
@@ -47,7 +47,7 @@ class JobRunModel extends Model
 
     protected $updatedField = '';
 
-    protected $casts = [
+    protected array $casts = [
         'id' => 'int',
         'scheduled_job_id' => '?int',
         'school_id' => '?int',

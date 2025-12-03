@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Scheduler\Commands;
+namespace Modules\Scheduler\Commands;
 
-use App\Modules\Scheduler\Services\JobRunner;
+use Modules\Scheduler\Services\JobRunner;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 

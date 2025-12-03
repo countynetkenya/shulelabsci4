@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Scheduler\Models;
+namespace Modules\Scheduler\Models;
 
 use CodeIgniter\Model;
 

@@ -294,7 +294,7 @@ app/Modules/Mobile/
 
 - **All Modules**: Mobile API endpoints for each feature.
 - **Integrations Module**: Push notifications via FCM/APNs.
-- **Learning Module**: Attendance offline sync.
+- **Academics Module**: Attendance offline sync.
 - **Finance Module**: Fee viewing and payment.
 - **Threads Module**: Message delivery via push.
 

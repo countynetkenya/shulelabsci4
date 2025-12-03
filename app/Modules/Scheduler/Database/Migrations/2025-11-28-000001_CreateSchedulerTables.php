@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Scheduler\Database\Migrations;
+namespace Modules\Scheduler\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 

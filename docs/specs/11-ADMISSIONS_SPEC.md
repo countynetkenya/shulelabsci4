@@ -62,7 +62,7 @@ The Admissions module is the "Front Door" of the school. It manages the complete
 
 7. **Onboarding**:
    - Parent accepts offer and pays admission fee.
-   - System creates student record in Learning module.
+   - System creates student record in Academics module.
    - System creates parent account linked to student.
    - Onboarding checklist provided to parent.
 
@@ -403,7 +403,7 @@ app/Modules/Admissions/
 
 ### 2.4 Integration Points
 
-- **Learning Module**: Creates student record on enrollment, retrieves class/grade information.
+- **Academics Module**: Creates student record on enrollment, retrieves class/grade information.
 - **HR Module**: Retrieves staff list for interview panels and reviewers.
 - **Finance Module**: Generates admission fee invoice, links to payment confirmation.
 - **Threads Module**: Sends notifications at each stage (submission, test scheduled, decision made).
@@ -514,5 +514,5 @@ Use `Modules\Admissions\Database\Seeds\AdmissionsSeeder` to populate:
 - [ ] **Documents**: Implement secure upload/download.
 - [ ] **Workflow**: Implement stage transitions with notifications.
 - [ ] **Waitlist**: Implement auto-promotion logic.
-- [ ] **Enrollment**: Connect to Learning module for student creation.
+- [ ] **Enrollment**: Connect to Academics module for student creation.
 - [ ] **Review**: Code review and merge to main branch.

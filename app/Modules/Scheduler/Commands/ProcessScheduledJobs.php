@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Scheduler\Commands;
+namespace Modules\Scheduler\Commands;
 
-use App\Modules\Scheduler\Services\SchedulerService;
+use Modules\Scheduler\Services\SchedulerService;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 

@@ -1,15 +1,25 @@
 <?php
 
 use CodeIgniter\Router\RouteCollection;
+use Modules\Admissions\Config\Routes as AdmissionsRoutes;
+use Modules\Analytics\Config\Routes as AnalyticsRoutes;
 use Modules\Finance\Config\Routes as FinanceRoutes;
 use Modules\Foundation\Config\Routes as FoundationRoutes;
+use Modules\Gamification\Config\Routes as GamificationRoutes;
+use Modules\Governance\Config\Routes as GovernanceRoutes;
 use Modules\Hostel\Config\Routes as HostelRoutes;
 use Modules\Hr\Config\Routes as HrRoutes;
 use Modules\Inventory\Config\Routes as InventoryRoutes;
-use Modules\Learning\Config\Routes as LearningRoutes;
+use Modules\LMS\Config\Routes as LMSRoutes;
 use Modules\Library\Config\Routes as LibraryRoutes;
 use Modules\Mobile\Config\Routes as MobileRoutes;
+use Modules\ParentEngagement\Config\Routes as ParentEngagementRoutes;
+use Modules\POS\Config\Routes as PosRoutes;
+use Modules\Reports\Config\Routes as ReportsRoutes;
+use Modules\Scheduler\Config\Routes as SchedulerRoutes;
+use Modules\Security\Config\Routes as SecurityRoutes;
 use Modules\Threads\Config\Routes as ThreadsRoutes;
+use Modules\Transport\Config\Routes as TransportRoutes;
 use Modules\Wallets\Config\Routes as WalletsRoutes;
 
 /**
@@ -144,13 +154,23 @@ $routes->get('/', static function () {
 });
 
 // Module routes
+AdmissionsRoutes::map($routes);
+AnalyticsRoutes::map($routes);
+GamificationRoutes::map($routes);
+GovernanceRoutes::map($routes);
+ParentEngagementRoutes::map($routes);
+SchedulerRoutes::map($routes);
+SecurityRoutes::map($routes);
 FoundationRoutes::map($routes);
 FinanceRoutes::map($routes);
 HrRoutes::map($routes);
-LearningRoutes::map($routes);
+LMSRoutes::map($routes);
 InventoryRoutes::map($routes);
 LibraryRoutes::map($routes);
 MobileRoutes::map($routes);
 ThreadsRoutes::map($routes);
+TransportRoutes::map($routes);
 HostelRoutes::map($routes);
 WalletsRoutes::map($routes);
+PosRoutes::map($routes);
+ReportsRoutes::map($routes);

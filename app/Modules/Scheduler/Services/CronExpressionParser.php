@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Scheduler\Services;
+namespace Modules\Scheduler\Services;
 
 use RuntimeException;
 

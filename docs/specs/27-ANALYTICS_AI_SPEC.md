@@ -300,7 +300,7 @@ app/Modules/Analytics/
 
 ### 2.5 Integration Points
 
-- **Learning Module**: Academic performance data.
+- **Academics Module**: Academic performance data.
 - **Finance Module**: Financial transaction data.
 - **HR Module**: Staff and payroll data.
 - **Reports Module**: Analytics as report source.

@@ -550,7 +550,7 @@ app/Modules/HR/
 
 ### 2.4 Integration Points
 
-- **Learning Module**: Teacher information for class allocations.
+- **Academics Module**: Teacher information for class allocations.
 - **Finance Module**: Payroll journal entries to general ledger.
 - **Threads Module**: Leave approval notifications, payslip alerts.
 - **Reports Module**: HR analytics in staff view tabs.

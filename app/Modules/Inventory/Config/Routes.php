@@ -10,9 +10,11 @@ class Routes
     {
         // Web Routes (Browser)
         $routes->group('inventory', ['namespace' => 'Modules\Inventory\Controllers', 'filter' => 'auth'], function ($routes) {
-            $routes->get('items', 'InventoryWebController::index');
-            $routes->get('items/create', 'InventoryWebController::create');
-            $routes->post('items/store', 'InventoryWebController::store');
+            $routes->get('', 'InventoryWebController::index');
+            
+            $routes->get('items', 'ItemsWebController::index');
+            $routes->get('items/create', 'ItemsWebController::create');
+            $routes->post('items/store', 'ItemsWebController::store');
 
             // Stock & Transfers
             $routes->get('stock', 'InventoryStockWebController::index');
@@ -30,7 +32,7 @@ class Routes
             $routes->delete('items/(:num)', 'ItemsApiController::delete/$1');
 
             // Stock
-            $routes->get('stock', 'InventoryStockController::index');
+            $routes->get('stock', 'StockApiController::index');
 
             // Transfers
             $routes->post('transfers', 'TransfersApiController::create');

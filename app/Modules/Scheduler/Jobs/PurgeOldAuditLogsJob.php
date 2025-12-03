@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Scheduler\Jobs;
+namespace Modules\Scheduler\Jobs;
 
 /**
  * Purges old audit logs based on retention policy.

@@ -48,7 +48,19 @@ This document tracks the evolution of our development process. It is a "Living H
 - **Issue**: SQLite `CHECK` constraint failures in tests.
 - **Fix**: Ensured test data (Seeders/Factories) strictly matches the Enum values defined in Migrations (`physical` vs `consumable`).
 - **Issue**: Controller naming conflicts (`StockApiController` vs `InventoryStockController`).
+
+### Cycle 12: Module Standardization (Dec 2025)
+- **Issue**: Inconsistent controller structure across modules (some in `Web/`, some in root, mixed API/Web).
+- **Fix**: Enforced "Hostel Method" structure: `Controllers/Api` for API, `Controllers/[Module]WebController` for Web Dashboard.
+- **Issue**: Route registration was inconsistent.
+- **Fix**: Enforced `Routes::map()` static method in all modules for cleaner registration in `app/Config/Routes.php`.
+- **Issue**: Legacy controllers causing confusion and 501 errors in tests.
+- **Fix**: Aggressively removed legacy/redundant controllers and consolidated logic into the standardized structure.
+- **Issue**: Missing basic reachability tests for some modules.
+- **Fix**: Created `[Module]WebTest` for every standardized module to verify Dashboard and API health.
 - **Fix**: Adopted explicit naming convention `[Module][Entity]Controller` to avoid collisions.
+- **Issue**: Migration discovery in tests can be fragile with custom namespaces.
+- **Fix**: Ensure migration file namespaces strictly match the PSR-4 mapping defined in `Autoload.php`. For modules in `app/Modules`, the namespace should be `Modules\[Module]\Database\Migrations`.
 
 ### Cycle 08: POS & Inventory V2 (Nov 2025)
 - **Issue**: Siloed interfaces for Sales, Loans, and Issues.

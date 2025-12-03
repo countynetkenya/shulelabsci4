@@ -444,7 +444,7 @@ app/Modules/Gamification/
 
 ### 2.4 Integration Points
 
-- **Learning Module**: Points for attendance, assignment completion, grades.
+- **Academics Module**: Points for attendance, assignment completion, grades.
 - **Library Module**: Points for books borrowed and returned.
 - **Threads Module**: Notification of badges earned, challenge updates.
 - **Reports Module**: Gamification tab in student profile.

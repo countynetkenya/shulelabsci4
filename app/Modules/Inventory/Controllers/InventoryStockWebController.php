@@ -37,7 +37,7 @@ class InventoryStockWebController extends BaseController
             'pager' => $this->stockService->getPager(),
         ];
 
-        return view('modules/inventory/stock_list', $data);
+        return view('Modules\Inventory\Views\stock\index', $data);
     }
 
     public function transfer()
@@ -48,7 +48,7 @@ class InventoryStockWebController extends BaseController
             'items' => $this->itemModel->findAll(),
         ];
 
-        return view('modules/inventory/transfer_form', $data);
+        return view('Modules\Inventory\Views\stock\transfer', $data);
     }
 
     public function processTransfer()

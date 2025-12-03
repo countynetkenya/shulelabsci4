@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Scheduler\Services;
+namespace Modules\Scheduler\Services;
 
-use App\Modules\Scheduler\Models\JobQueueModel;
+use Modules\Scheduler\Models\JobQueueModel;
 
 /**
  * Dispatches jobs to the queue for asynchronous processing.

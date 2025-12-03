@@ -30,6 +30,11 @@ abstract class FoundationDatabaseTestCase extends TestCase
         'users',
         'roles',
         'user_roles',
+        'schools',
+        'learning_courses',
+        'learning_lessons',
+        'learning_enrollments',
+        'learning_progress',
     ];
 
     protected function setUp(): void
@@ -332,6 +337,77 @@ CREATE TABLE {$prefix}user_roles (
     created_at DATETIME NOT NULL,
     FOREIGN KEY (user_id) REFERENCES {$prefix}users(id) ON DELETE CASCADE,
     FOREIGN KEY (role_id) REFERENCES {$prefix}roles(id) ON DELETE CASCADE
+)
+SQL);
+
+        $this->db->simpleQuery(<<<SQL
+CREATE TABLE {$prefix}schools (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    school_name VARCHAR(255) NOT NULL,
+    school_code VARCHAR(50) UNIQUE NOT NULL,
+    is_active TINYINT DEFAULT 1,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+SQL);
+
+        $this->db->simpleQuery(<<<SQL
+CREATE TABLE {$prefix}learning_courses (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    school_id INTEGER NOT NULL,
+    teacher_id INTEGER NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    status VARCHAR(20) DEFAULT 'draft',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    deleted_at DATETIME,
+    FOREIGN KEY (school_id) REFERENCES {$prefix}schools(id) ON DELETE CASCADE,
+    FOREIGN KEY (teacher_id) REFERENCES {$prefix}users(id) ON DELETE CASCADE
+)
+SQL);
+
+        $this->db->simpleQuery(<<<SQL
+CREATE TABLE {$prefix}learning_lessons (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    course_id INTEGER NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    content TEXT,
+    video_url VARCHAR(255),
+    sequence_order INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    deleted_at DATETIME,
+    FOREIGN KEY (course_id) REFERENCES {$prefix}learning_courses(id) ON DELETE CASCADE
+)
+SQL);
+
+        $this->db->simpleQuery(<<<SQL
+CREATE TABLE {$prefix}learning_enrollments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    school_id INTEGER NOT NULL,
+    student_id INTEGER NOT NULL,
+    course_id INTEGER NOT NULL,
+    status VARCHAR(20) DEFAULT 'active',
+    enrolled_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    completed_at DATETIME,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (school_id) REFERENCES {$prefix}schools(id) ON DELETE CASCADE,
+    FOREIGN KEY (student_id) REFERENCES {$prefix}users(id) ON DELETE CASCADE,
+    FOREIGN KEY (course_id) REFERENCES {$prefix}learning_courses(id) ON DELETE CASCADE
+)
+SQL);
+
+        $this->db->simpleQuery(<<<SQL
+CREATE TABLE {$prefix}learning_progress (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    enrollment_id INTEGER NOT NULL,
+    lesson_id INTEGER NOT NULL,
+    completed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (enrollment_id) REFERENCES {$prefix}learning_enrollments(id) ON DELETE CASCADE,
+    FOREIGN KEY (lesson_id) REFERENCES {$prefix}learning_lessons(id) ON DELETE CASCADE,
+    UNIQUE (enrollment_id, lesson_id)
 )
 SQL);
     }

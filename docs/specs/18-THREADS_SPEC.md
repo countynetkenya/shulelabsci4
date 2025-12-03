@@ -332,7 +332,7 @@ app/Modules/Threads/
 - **Finance Module**: Invoice notifications.
 - **Inventory Module**: Transfer confirmations.
 - **Transport Module**: Pickup/dropoff alerts.
-- **Learning Module**: Attendance notifications.
+- **Academics Module**: Attendance notifications.
 - **Scheduler Module**: Notification job processing.
 
 ---

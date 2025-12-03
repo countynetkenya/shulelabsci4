@@ -385,7 +385,7 @@ app/Modules/Library/
 - **Wallets Module**: Students pay fines from wallet balance.
 - **Threads Module**: Due date reminders, reservation notifications.
 - **Reports Module**: Library tab in student view.
-- **Learning Module**: Student class info for borrowing limits.
+- **Academics Module**: Student class info for borrowing limits.
 - **Inventory Module**: Library books as inventory items (optional).
 
 ---

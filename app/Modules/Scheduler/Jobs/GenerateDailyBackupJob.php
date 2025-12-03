@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Scheduler\Jobs;
+namespace Modules\Scheduler\Jobs;
 
 /**
  * Generates daily database backups.

@@ -8,41 +8,47 @@ class Routes
 {
     public static function map(RouteCollection $routes): void
     {
-        $routes->group('api/hostel', ['namespace' => 'Modules\Hostel\Controllers'], function ($routes) {
+        // Web Routes
+        $routes->group('hostel', ['namespace' => 'Modules\Hostel\Controllers'], function ($routes) {
+            $routes->get('hostels', 'HostelWebController::index');
+        });
+
+        // API Routes
+        $routes->group('api/hostel', ['namespace' => 'Modules\Hostel\Controllers\Api'], function ($routes) {
             // Hostels
-            $routes->get('hostels', 'HostelController::index');
-            $routes->get('hostels/(:num)', 'HostelController::show/$1');
-            $routes->post('hostels', 'HostelController::create');
-            $routes->put('hostels/(:num)', 'HostelController::update/$1');
-            $routes->delete('hostels/(:num)', 'HostelController::delete/$1');
+            $routes->get('hostels', 'HostelApiController::index');
+            $routes->get('hostels/(:num)', 'HostelApiController::show/$1');
+            $routes->post('hostels', 'HostelApiController::create');
+            $routes->put('hostels/(:num)', 'HostelApiController::update/$1');
+            $routes->delete('hostels/(:num)', 'HostelApiController::delete/$1');
 
             // Rooms
-            $routes->get('rooms', 'HostelRoomController::index');
-            $routes->get('rooms/(:num)', 'HostelRoomController::show/$1');
-            $routes->post('rooms', 'HostelRoomController::create');
-            $routes->put('rooms/(:num)', 'HostelRoomController::update/$1');
-            $routes->delete('rooms/(:num)', 'HostelRoomController::delete/$1');
+            $routes->get('rooms', 'HostelRoomApiController::index');
+            $routes->get('rooms/(:num)', 'HostelRoomApiController::show/$1');
+            $routes->post('rooms', 'HostelRoomApiController::create');
+            $routes->put('rooms/(:num)', 'HostelRoomApiController::update/$1');
+            $routes->delete('rooms/(:num)', 'HostelRoomApiController::delete/$1');
 
             // Beds
-            $routes->get('beds', 'HostelBedController::index');
-            $routes->get('beds/(:num)', 'HostelBedController::show/$1');
-            $routes->post('beds', 'HostelBedController::create');
-            $routes->put('beds/(:num)', 'HostelBedController::update/$1');
-            $routes->delete('beds/(:num)', 'HostelBedController::delete/$1');
+            $routes->get('beds', 'HostelBedApiController::index');
+            $routes->get('beds/(:num)', 'HostelBedApiController::show/$1');
+            $routes->post('beds', 'HostelBedApiController::create');
+            $routes->put('beds/(:num)', 'HostelBedApiController::update/$1');
+            $routes->delete('beds/(:num)', 'HostelBedApiController::delete/$1');
 
             // Allocations
-            $routes->get('allocations', 'HostelAllocationController::index');
-            $routes->get('allocations/(:num)', 'HostelAllocationController::show/$1');
-            $routes->post('allocations', 'HostelAllocationController::create');
-            $routes->put('allocations/(:num)', 'HostelAllocationController::update/$1');
-            $routes->delete('allocations/(:num)', 'HostelAllocationController::delete/$1');
+            $routes->get('allocations', 'HostelAllocationApiController::index');
+            $routes->get('allocations/(:num)', 'HostelAllocationApiController::show/$1');
+            $routes->post('allocations', 'HostelAllocationApiController::create');
+            $routes->put('allocations/(:num)', 'HostelAllocationApiController::update/$1');
+            $routes->delete('allocations/(:num)', 'HostelAllocationApiController::delete/$1');
 
             // Requests
-            $routes->get('requests', 'HostelRequestController::index');
-            $routes->get('requests/(:num)', 'HostelRequestController::show/$1');
-            $routes->post('requests', 'HostelRequestController::create');
-            $routes->put('requests/(:num)', 'HostelRequestController::update/$1');
-            $routes->delete('requests/(:num)', 'HostelRequestController::delete/$1');
+            $routes->get('requests', 'HostelRequestApiController::index');
+            $routes->get('requests/(:num)', 'HostelRequestApiController::show/$1');
+            $routes->post('requests', 'HostelRequestApiController::create');
+            $routes->put('requests/(:num)', 'HostelRequestApiController::update/$1');
+            $routes->delete('requests/(:num)', 'HostelRequestApiController::delete/$1');
         });
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modules\Scheduler\Services;
+namespace Modules\Scheduler\Services;
 
-use App\Modules\Scheduler\Models\JobRunModel;
-use App\Modules\Scheduler\Models\ScheduledJobModel;
+use Modules\Scheduler\Models\JobRunModel;
+use Modules\Scheduler\Models\ScheduledJobModel;
 use CodeIgniter\I18n\Time;
 
 /**

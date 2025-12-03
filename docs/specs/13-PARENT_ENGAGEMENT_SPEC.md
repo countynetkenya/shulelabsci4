@@ -532,7 +532,7 @@ app/Modules/ParentEngagement/
 - **Wallets Module**: Accepts donations via wallet balance.
 - **Reports Module**: Engagement analytics embedded in parent view.
 - **HR Module**: Retrieves teacher list for conference slots.
-- **Learning Module**: Gets student-parent relationships for targeted surveys.
+- **Academics Module**: Gets student-parent relationships for targeted surveys.
 
 ---
 

@@ -51,7 +51,8 @@ Detailed feature specifications for all modules.
 - [Admissions Module](specs/11-ADMISSIONS_SPEC.md)
 - [Scheduler Module](specs/12-SCHEDULER_SPEC.md)
 - [Parent Engagement](specs/13-PARENT_ENGAGEMENT_SPEC.md)
-- [Learning Module](specs/14-LEARNING_SPEC.md)
+- [Academics Module](specs/14-ACADEMICS_SPEC.md)
+- [LMS Module](specs/04-LMS_SPEC.md)
 - [HR Module](specs/15-HR_SPEC.md)
 - [Library Module](specs/16-LIBRARY_SPEC.md)
 - [Gamification](specs/17-GAMIFICATION_SPEC.md)
@@ -81,7 +82,8 @@ Legacy documentation and code.
 - [Admissions Module](specs/11-ADMISSIONS_SPEC.md) 🆕
 - [Scheduler Module](specs/12-SCHEDULER_SPEC.md) 🆕
 - [Parent Engagement](specs/13-PARENT_ENGAGEMENT_SPEC.md) 🆕
-- [Learning Module](specs/14-LEARNING_SPEC.md) 🆕
+- [Academics Module](specs/14-ACADEMICS_SPEC.md) 🆕
+- [LMS Module](specs/04-LMS_SPEC.md) 🆕
 - [HR Module](specs/15-HR_SPEC.md) 🆕
 - [Library Module](specs/16-LIBRARY_SPEC.md) 🆕
 - [Gamification Module](specs/17-GAMIFICATION_SPEC.md) 🆕

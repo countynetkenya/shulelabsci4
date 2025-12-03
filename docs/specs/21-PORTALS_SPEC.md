@@ -268,7 +268,7 @@ app/
 ### 2.6 Integration Points
 
 - **Finance Module**: Fee data, payment processing.
-- **Learning Module**: Timetable, grades, attendance.
+- **Academics Module**: Timetable, grades, attendance.
 - **Library Module**: Borrowings, reservations.
 - **Threads Module**: Messages between parents and teachers.
 - **Integrations Module**: M-Pesa payments, notifications.

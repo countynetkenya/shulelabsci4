@@ -8,10 +8,16 @@ class Routes
 {
     public static function map(RouteCollection $routes): void
     {
-        $routes->group('threads', static function (RouteCollection $routes): void {
-            $routes->get('', 'Modules\\Threads\\Controllers\\ThreadController::index');
-            $routes->post('', 'Modules\\Threads\\Controllers\\ThreadController::create');
-            $routes->post('(:segment)/messages', 'Modules\\Threads\\Controllers\\ThreadController::postMessage/$1');
+        // Web Routes
+        $routes->group('threads', ['namespace' => 'Modules\Threads\Controllers'], static function (RouteCollection $routes): void {
+            $routes->get('', 'ThreadsWebController::index');
+        });
+
+        // API Routes
+        $routes->group('api/threads', ['namespace' => 'Modules\Threads\Controllers\Api'], static function (RouteCollection $routes): void {
+            $routes->get('', 'ThreadsApiController::index');
+            $routes->post('', 'ThreadsApiController::create');
+            $routes->post('(:segment)/messages', 'ThreadsApiController::postMessage/$1');
         });
     }
 }

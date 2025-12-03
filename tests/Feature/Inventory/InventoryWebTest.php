@@ -36,6 +36,15 @@ class InventoryWebTest extends CIUnitTestCase
         $this->seed(InventoryV2Seeder::class);
     }
 
+    public function testAdminCanViewDashboard()
+    {
+        $result = $this->withSession($this->getAdminSession())
+            ->get('/inventory');
+
+        $result->assertOK();
+        $result->assertSee('Inventory Module');
+    }
+
     public function testStockList()
     {
         $session = $this->getAdminSession();

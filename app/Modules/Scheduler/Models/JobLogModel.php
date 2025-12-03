@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Scheduler\Models;
+namespace Modules\Scheduler\Models;
 
 use CodeIgniter\Model;
 
@@ -31,7 +31,7 @@ class JobLogModel extends Model
 
     protected $useTimestamps = false;
 
-    protected $casts = [
+    protected array $casts = [
         'id' => 'int',
         'job_run_id' => 'int',
         'context' => 'json-array',

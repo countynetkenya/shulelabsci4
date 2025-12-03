@@ -257,7 +257,7 @@ app/Modules/AIExtensions/
 
 - **All Modules**: Data source for queries.
 - **Threads Module**: Chatbot channel.
-- **Learning Module**: Comment generation.
+- **Academics Module**: Comment generation.
 - **Analytics Module**: Anomaly source data.
 - **Integrations Module**: LLM API calls.
 

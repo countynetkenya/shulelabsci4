@@ -20,7 +20,7 @@
             <directory suffix=".php">app/Modules/Threads</directory>
             <directory suffix=".php">app/Modules/Gamification</directory>
             <directory suffix=".php">app/Modules/Hr</directory>
-            <directory suffix=".php">app/Modules/Learning</directory>
+            <directory suffix=".php">app/Modules/LMS</directory>
             <directory suffix=".php">app/Modules/Mobile</directory>
         </include>
     </coverage>

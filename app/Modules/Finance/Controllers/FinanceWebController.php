@@ -4,14 +4,24 @@ namespace Modules\Finance\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
+use Modules\Finance\Models\InvoiceModel;
+use Modules\Finance\Models\FinancePaymentModel;
 
 class FinanceWebController extends BaseController
 {
     public function index()
     {
-        return view('Modules\Finance\Views\finance\index', [
+        $invoiceModel = new InvoiceModel();
+        $paymentModel = new FinancePaymentModel();
+
+        $data = [
             'title' => 'Finance Dashboard',
-        ]);
+            'total_invoiced' => $invoiceModel->selectSum('amount')->first()['amount'] ?? 0,
+            'total_collected' => $paymentModel->selectSum('amount')->first()['amount'] ?? 0,
+            'pending_invoices' => $invoiceModel->where('status', 'unpaid')->countAllResults(),
+        ];
+
+        return view('Modules\Finance\Views\finance\index', $data);
     }
 
     public function newInvoice()

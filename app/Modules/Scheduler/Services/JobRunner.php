@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\Scheduler\Services;
+namespace Modules\Scheduler\Services;
 
-use App\Modules\Scheduler\Models\JobFailedModel;
-use App\Modules\Scheduler\Models\JobLogModel;
-use App\Modules\Scheduler\Models\JobQueueModel;
-use App\Modules\Scheduler\Models\JobRunModel;
+use Modules\Scheduler\Models\JobFailedModel;
+use Modules\Scheduler\Models\JobLogModel;
+use Modules\Scheduler\Models\JobQueueModel;
+use Modules\Scheduler\Models\JobRunModel;
 use Throwable;
 
 /**

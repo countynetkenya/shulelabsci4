@@ -316,7 +316,7 @@ CREATE TABLE transport_gps_logs (
 
 - **Finance Module**: Transport fees added to student invoices via `TransportFeeService`. When an assignment is created/updated, the service calculates the fee and creates an invoice item.
 - **Threads Module**: Parent notifications for pickup/dropoff events dispatched via event system (`Events::trigger('transport.student.picked', $data)`).
-- **Learning Module**: Student data retrieved from Learning module models for assignment lookups.
+- **Academics Module**: Student data retrieved from Academics module models for assignment lookups.
 - **Reports Module**: Transport embedded report for Student entity view showing assignment details.
 
 ---

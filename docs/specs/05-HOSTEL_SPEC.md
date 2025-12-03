@@ -2,12 +2,49 @@
 
 **Version**: 1.0.0
 **Status**: Approved
-**Last Updated**: 2025-11-27
+**Last Updated**: 2025-12-03
 
-## 1. Overview
+---
+
+## Part 1: Feature Definition (The "What" & "Why")
+
+### 1.1 Overview
 The Hostel Management module handles residential facilities, room inventory, student allocations, and fee integration. It is designed to be mobile-first, allowing wardens to manage allocations via tablet and students to view status via app.
 
-## 2. Database Schema
+### 1.2 User Stories
+- **As a Warden**, I want to view real-time occupancy stats, so that I can manage room availability efficiently.
+- **As a Warden**, I want to allocate students to beds via a mobile interface, so that I can handle check-ins on the spot.
+- **As a Student**, I want to view my room assignment and roommates, so that I know where to stay.
+- **As a Student**, I want to submit maintenance requests, so that issues in my room are resolved.
+- **As an Admin**, I want to configure hostel buildings and room capacities, so that the system reflects physical inventory.
+- **As an Admin**, I want to enforce gender segregation rules, so that compliance is automatic.
+
+### 1.3 User Workflows
+1.  **Student Check-In**:
+    *   Warden selects Hostel -> Room -> Bed.
+    *   Searches for Student.
+    *   Clicks "Allocate".
+    *   System validates gender and capacity.
+    *   Allocation is created.
+2.  **Maintenance Request**:
+    *   Student logs in to App.
+    *   Navigates to "My Room".
+    *   Clicks "Report Issue".
+    *   Enters details and submits.
+    *   Warden receives notification.
+
+### 1.4 Acceptance Criteria
+- [ ] Admin can create Hostels and Rooms with capacities.
+- [ ] System prevents allocating a Male student to a Female hostel.
+- [ ] System prevents allocating a student to a full room.
+- [ ] Student can see their assigned room in the API response.
+- [ ] Warden can see a list of all students in a specific hostel.
+
+---
+
+## Part 2: Technical Specs
+
+### 2.1 Database Schema
 
 ### 2.1 Tables
 
