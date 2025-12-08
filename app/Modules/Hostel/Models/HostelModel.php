@@ -12,14 +12,14 @@ class HostelModel extends Model
 
     protected $useAutoIncrement = true;
 
-    protected $returnType = 'object';
+    protected $returnType = 'array';
 
-    protected $useSoftDeletes = true;
+    protected $useSoftDeletes = false;
 
     protected $protectFields = true;
 
     protected $allowedFields = [
-        'school_id', 'name', 'type', 'warden_id', 'capacity', 'location', 'description',
+        'school_id', 'name', 'type', 'warden_id', 'capacity', 'location', 'description'
     ];
 
     // Dates

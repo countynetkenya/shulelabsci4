@@ -9,8 +9,8 @@ class Routes
     public static function map(RouteCollection $routes): void
     {
         // Web Routes
-        $routes->group('wallets', ['namespace' => 'Modules\Wallets\Controllers', 'filter' => 'auth'], function ($routes) {
-            $routes->get('/', 'WalletWebController::index');
+        $routes->group('wallets', ['namespace' => 'Modules\Wallets\Controllers\Web', 'filter' => 'auth'], function ($routes) {
+            $routes->get('/', 'WalletsController::index');
         });
 
         // API Routes

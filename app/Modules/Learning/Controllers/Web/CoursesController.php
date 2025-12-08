@@ -11,6 +11,7 @@ class CoursesController extends BaseController
 
     public function __construct()
     {
+        helper('text');
         $this->learningService = new LearningService();
     }
 
@@ -38,5 +39,20 @@ class CoursesController extends BaseController
         }
         
         return redirect()->back()->withInput()->with('error', 'Failed to create course.');
+    }
+
+    public function show($id)
+    {
+        $course = $this->learningService->getCourse($id);
+        if (!$course) {
+            return redirect()->to('/learning/courses')->with('error', 'Course not found.');
+        }
+
+        $lessons = $this->learningService->getCourseLessons($id);
+
+        return view('Modules\Learning\Views\learning\courses\show', [
+            'course' => $course,
+            'lessons' => $lessons
+        ]);
     }
 }

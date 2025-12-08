@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Wallets\Database\Migrations;
+namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 

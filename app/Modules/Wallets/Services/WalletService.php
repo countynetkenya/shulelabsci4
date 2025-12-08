@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Wallets\Services;
+namespace Modules\Wallets\Services;
 
 use CodeIgniter\Database\ConnectionInterface;
 use Config\Database;
@@ -16,6 +16,20 @@ class WalletService
     public function __construct(?ConnectionInterface $connection = null)
     {
         $this->db = $connection ?? Database::connect();
+    }
+
+    /**
+     * Get all wallets for a school.
+     *
+     * @param int $schoolId
+     * @return array
+     */
+    public function getWallets(int $schoolId): array
+    {
+        return $this->db->table('wallets')
+            ->where('school_id', $schoolId)
+            ->get()
+            ->getResultArray();
     }
 
     /**

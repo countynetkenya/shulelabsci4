@@ -11,20 +11,20 @@ class Routes
     public static function map(RouteCollection $routes): void
     {
         // Web Routes
-        $routes->group('hr', ['namespace' => 'Modules\Hr\Controllers'], static function (RouteCollection $routes): void {
-            $routes->get('', 'HrWebController::index');
+        $routes->group('hr', ['namespace' => 'Modules\Hr\Controllers\Web'], static function (RouteCollection $routes): void {
+            // $routes->get('', 'HrWebController::index'); // TODO: Move to Web/DashboardController
             
             // Payroll Approvals Web
-            $routes->get('payroll/approvals', 'PayrollApprovalWebController::index');
+            // $routes->get('payroll/approvals', 'PayrollApprovalWebController::index'); // TODO: Move
 
             // Employees Web
             $routes->group('employees', static function (RouteCollection $routes): void {
-                $routes->get('', 'EmployeesWebController::index');
-                $routes->get('create', 'EmployeesWebController::create');
-                $routes->post('create', 'EmployeesWebController::store');
-                $routes->get('edit/(:num)', 'EmployeesWebController::edit/$1');
-                $routes->post('edit/(:num)', 'EmployeesWebController::update/$1');
-                $routes->get('delete/(:num)', 'EmployeesWebController::delete/$1');
+                $routes->get('', 'EmployeesController::index');
+                $routes->get('create', 'EmployeesController::create');
+                $routes->post('create', 'EmployeesController::store');
+                $routes->get('edit/(:num)', 'EmployeesController::edit/$1');
+                $routes->post('edit/(:num)', 'EmployeesController::update/$1');
+                $routes->get('delete/(:num)', 'EmployeesController::delete/$1');
             });
         });
 

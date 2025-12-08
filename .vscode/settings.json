@@ -266,5 +266,8 @@
       "matchCommandLine": true
     }
   },
-  "chat.agent.maxRequests": 1000
+  "chat.agent.maxRequests": 1000,
+  "[markdown]": {
+    "diffEditor.ignoreTrimWhitespace": true
+  }
 }

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Modules\Hr\Controllers;
+namespace Modules\Hr\Controllers\Web;
 
 use App\Controllers\BaseController;
 use Modules\Hr\Services\EmployeesService;
 
-class EmployeesWebController extends BaseController
+class EmployeesController extends BaseController
 {
     protected EmployeesService $service;
 

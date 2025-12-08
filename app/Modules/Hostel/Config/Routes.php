@@ -9,8 +9,8 @@ class Routes
     public static function map(RouteCollection $routes): void
     {
         // Web Routes
-        $routes->group('hostel', ['namespace' => 'Modules\Hostel\Controllers'], function ($routes) {
-            $routes->get('hostels', 'HostelWebController::index');
+        $routes->group('hostel', ['namespace' => 'Modules\Hostel\Controllers\Web'], function ($routes) {
+            $routes->get('hostels', 'HostelController::index');
         });
 
         // API Routes
