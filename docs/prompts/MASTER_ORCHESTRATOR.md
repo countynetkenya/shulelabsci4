@@ -21,7 +21,7 @@ For every user request, you must follow this **5-Step Cycle**:
 ### 2. 🏗️ Scaffold & Plan
 - **Check:** Do the necessary Database Migrations and Seeds exist?
 - **Action:** Create migrations first. Always use `ci4_` prefix removal logic (standardized tables).
-- **Validation:** Verify the *actual* database schema using `list_dir` on migrations or checking model definitions. Do not assume columns exist based on old specs.
+- **Validation:** Verify the *actual* database schema using `list_dir` on migrations or checking model definitions. Do not assume columns exist based on old specs. **CRITICAL: Read the migration file content before writing any Model or Service code.**
 - **Tooling:** Use `spark make:model`, `spark make:controller` via `run_in_terminal`.
 
 ### 3. ⚡ Implementation (TDD First)

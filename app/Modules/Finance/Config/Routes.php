@@ -13,12 +13,15 @@ class Routes
             $routes->get('', 'FinanceWebController::index');
             
             // Invoices
-            $routes->get('invoices/new', 'FinanceWebController::newInvoice');
-            $routes->post('invoices', 'FinanceWebController::createInvoice');
+            $routes->get('invoices', 'InvoicesController::index');
+            $routes->get('invoices/create', 'InvoicesController::create');
+            $routes->post('invoices', 'InvoicesController::store');
+            $routes->get('invoices/show/(:num)', 'InvoicesController::show/$1');
             
             // Payments
-            $routes->get('payments/new', 'FinanceWebController::newPayment');
-            $routes->post('payments', 'FinanceWebController::recordPayment');
+            $routes->get('payments', 'PaymentsController::index');
+            $routes->get('payments/create', 'PaymentsController::create');
+            $routes->post('payments', 'PaymentsController::store');
             
             // Fee Structures
             $routes->post('fee-structures', 'FinanceWebController::createFeeStructure');

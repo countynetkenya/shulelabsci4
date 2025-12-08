@@ -87,3 +87,13 @@ This document tracks the evolution of our development process. It is a "Living H
 - **Fix**: Banned "V2" terminology; strict CI4 standards only.
 - **Issue**: Spec fragmentation.
 - **Fix**: Created Unified Design Template.
+
+### Cycle 13: Finance Module Migration (Dec 2025)
+- **Issue**: Massive schema mismatch between legacy code assumptions and actual migrations (e.g., `finance_payments` table missing `student_id`, using `method` instead of `payment_method`).
+- **Fix**: Enforced "Schema-First" development. Always read the migration file (`Database/Migrations/...`) *before* writing Models or Services. Do not guess column names.
+- **Issue**: Redundant models (`FinancePaymentModel` vs `PaymentModel`) causing confusion.
+- **Fix**: Check for existing models in the module before creating new ones. Consolidate duplicates immediately.
+- **Issue**: Legacy tests (`FinanceServiceTest`) referencing non-existent tables caused noise.
+- **Fix**: Disable or refactor legacy tests immediately when migrating a module.
+- **Issue**: Missing `school_id` in `finance_payments` caused silent failures.
+- **Fix**: Implemented logic in Service layer to automatically fetch `school_id` from the linked invoice, ensuring data integrity.

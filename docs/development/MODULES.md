@@ -26,6 +26,7 @@ To streamline development, we now combine **Feature Definitions** (User needs) a
 ### Phase 1: Design & Plan
 - [ ] **Write the Design Doc**: Use the template above.
 - [ ] **Review**: Get sign-off on the schema and API endpoints.
+- [ ] **Verify Schema**: Explicitly READ the migration file to verify column names (e.g., `school_name` vs `name`, `is_active` vs `status`). Do not guess.
 
 ### Phase 2: Test-Driven Setup (TDD)
 *Improvement: Write tests BEFORE code.*
