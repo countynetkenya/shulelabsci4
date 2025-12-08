@@ -41,6 +41,11 @@ For every user request, you must follow this **5-Step Cycle**:
 - **Action:** If you changed the DB, update `docs/architecture/DATABASE.md`.
 - **Archival:** If you replaced a legacy component, move the old documentation/specs to `docs/archive/` to prevent future confusion.
 
+### 6. 🧠 Continuous Learning (Mandatory)
+- **Reflection:** At the end of every cycle, ask: "What went wrong? What did I learn?"
+- **Action:** Update `docs/development/LEARNINGS_LOG.md` with any new constraints, schema discoveries, or process improvements.
+- **Constraint:** Do not skip this step. It is the only way the system gets smarter.
+
 ## Key Directives
 - **Mobile-First:** All Views and APIs must be mobile-optimized.
 - **Zero-Trust:** Validate all inputs. Sanitize all outputs.
