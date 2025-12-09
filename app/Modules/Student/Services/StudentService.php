@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Modules\POS\Services;
+namespace App\Modules\Student\Services;
 
-use App\Modules\POS\Models\PosProductModel;
+use App\Modules\Student\Models\StudentModel;
 use Modules\Foundation\Services\AuditService;
 
 /**
- * PosService - Business logic for POS product management
+ * StudentService - Business logic for student management
  * 
  * All queries are tenant-scoped by school_id.
  * Integrates with AuditService for logging critical actions.
  */
-class PosService
+class StudentService
 {
-    protected PosProductModel $model;
+    protected StudentModel $model;
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
-        $this->model = new PosProductModel();
+        $this->model = new StudentModel();
         
         // Try to inject AuditService
         try {
@@ -30,56 +30,37 @@ class PosService
     }
 
     /**
-     * Get all products for a school
+     * Get all students for a school
      */
     public function getAll(int $schoolId, array $filters = []): array
     {
-        $builder = $this->model->where('school_id', $schoolId);
-
-        // Apply filters
-        if (!empty($filters['search'])) {
-            $builder->groupStart()
-                ->like('name', $filters['search'])
-                ->orLike('description', $filters['search'])
-                ->orLike('sku', $filters['search'])
-                ->groupEnd();
-        }
-
-        if (!empty($filters['category'])) {
-            $builder->where('category', $filters['category']);
-        }
-
-        if (isset($filters['is_active'])) {
-            $builder->where('is_active', $filters['is_active']);
-        }
-
-        return $builder->findAll();
+        return $this->model->getStudentsBySchool($schoolId, $filters);
     }
 
     /**
-     * Get a single product by ID (scoped to school)
+     * Get a single student by ID (scoped to school)
      */
     public function getById(int $id, int $schoolId): ?array
     {
-        $product = $this->model
-            ->where('school_id', $schoolId)
-            ->where('id', $id)
-            ->first();
-        
-        return $product ?: null;
+        return $this->model->getStudentById($id, $schoolId);
     }
 
     /**
-     * Create a new product
+     * Create a new student
      */
     public function create(array $data): int|false
     {
+        // Set default status if not provided
+        if (!isset($data['status'])) {
+            $data['status'] = 'active';
+        }
+
         $result = $this->model->insert($data);
 
         if ($result && $this->auditService) {
             try {
                 $this->auditService->recordEvent(
-                    'pos.product.created',
+                    'student.created',
                     'create',
                     [
                         'school_id' => $data['school_id'] ?? null,
@@ -98,7 +79,7 @@ class PosService
     }
 
     /**
-     * Update an existing product
+     * Update an existing student
      */
     public function update(int $id, array $data, int $schoolId): bool
     {
@@ -116,7 +97,7 @@ class PosService
         if ($result && $this->auditService) {
             try {
                 $this->auditService->recordEvent(
-                    'pos.product.updated',
+                    'student.updated',
                     'update',
                     [
                         'school_id' => $schoolId,
@@ -135,7 +116,7 @@ class PosService
     }
 
     /**
-     * Delete a product
+     * Delete a student
      */
     public function delete(int $id, int $schoolId): bool
     {
@@ -153,7 +134,7 @@ class PosService
         if ($result && $this->auditService) {
             try {
                 $this->auditService->recordEvent(
-                    'pos.product.deleted',
+                    'student.deleted',
                     'delete',
                     [
                         'school_id' => $schoolId,
@@ -172,33 +153,19 @@ class PosService
     }
 
     /**
-     * Get all categories for a school
+     * Get active students count
      */
-    public function getCategories(int $schoolId): array
+    public function getActiveCount(int $schoolId): int
     {
-        return $this->model
-            ->select('DISTINCT category as category', false)
-            ->where('school_id', $schoolId)
-            ->whereNotNull('category')
-            ->where('category !=', '')
-            ->orderBy('category', 'ASC')
-            ->findAll();
+        return $this->model->getActiveCount($schoolId);
     }
 
     /**
-     * Update stock quantity
+     * Search students by name or admission number
      */
-    public function updateStock(int $id, int $quantity, int $schoolId): bool
+    public function search(int $schoolId, string $query): array
     {
-        $product = $this->getById($id, $schoolId);
-        
-        if (!$product) {
-            return false;
-        }
-
-        return $this->model
-            ->where('school_id', $schoolId)
-            ->update($id, ['stock' => $quantity]);
+        return $this->model->getStudentsBySchool($schoolId, ['search' => $query]);
     }
 
     /**

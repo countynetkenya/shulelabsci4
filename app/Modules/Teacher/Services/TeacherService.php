@@ -1,85 +1,51 @@
 <?php
 
-namespace App\Modules\POS\Services;
+namespace App\Modules\Teacher\Services;
 
-use App\Modules\POS\Models\PosProductModel;
+use App\Modules\Teacher\Models\TeacherModel;
 use Modules\Foundation\Services\AuditService;
 
 /**
- * PosService - Business logic for POS product management
- * 
- * All queries are tenant-scoped by school_id.
- * Integrates with AuditService for logging critical actions.
+ * TeacherService - Business logic for teacher management
  */
-class PosService
+class TeacherService
 {
-    protected PosProductModel $model;
+    protected TeacherModel $model;
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
-        $this->model = new PosProductModel();
+        $this->model = new TeacherModel();
         
-        // Try to inject AuditService
         try {
             $this->auditService = $auditService ?? new AuditService();
         } catch (\Throwable $e) {
-            // AuditService not available, continue without it
             log_message('debug', 'AuditService not available: ' . $e->getMessage());
         }
     }
 
-    /**
-     * Get all products for a school
-     */
     public function getAll(int $schoolId, array $filters = []): array
     {
-        $builder = $this->model->where('school_id', $schoolId);
-
-        // Apply filters
-        if (!empty($filters['search'])) {
-            $builder->groupStart()
-                ->like('name', $filters['search'])
-                ->orLike('description', $filters['search'])
-                ->orLike('sku', $filters['search'])
-                ->groupEnd();
-        }
-
-        if (!empty($filters['category'])) {
-            $builder->where('category', $filters['category']);
-        }
-
-        if (isset($filters['is_active'])) {
-            $builder->where('is_active', $filters['is_active']);
-        }
-
-        return $builder->findAll();
+        return $this->model->getTeachersBySchool($schoolId, $filters);
     }
 
-    /**
-     * Get a single product by ID (scoped to school)
-     */
     public function getById(int $id, int $schoolId): ?array
     {
-        $product = $this->model
-            ->where('school_id', $schoolId)
-            ->where('id', $id)
-            ->first();
-        
-        return $product ?: null;
+        return $this->model->getTeacherById($id, $schoolId);
     }
 
-    /**
-     * Create a new product
-     */
     public function create(array $data): int|false
     {
+        if (!isset($data['status'])) {
+            $data['status'] = 'active';
+        }
+
         $result = $this->model->insert($data);
 
         if ($result && $this->auditService) {
             try {
                 $this->auditService->recordEvent(
-                    'pos.product.created',
+                    'teacher.created',
                     'create',
                     [
                         'school_id' => $data['school_id'] ?? null,
@@ -97,12 +63,8 @@ class PosService
         return $result;
     }
 
-    /**
-     * Update an existing product
-     */
     public function update(int $id, array $data, int $schoolId): bool
     {
-        // Get before state for audit
         $before = $this->getById($id, $schoolId);
         
         if (!$before) {
@@ -116,7 +78,7 @@ class PosService
         if ($result && $this->auditService) {
             try {
                 $this->auditService->recordEvent(
-                    'pos.product.updated',
+                    'teacher.updated',
                     'update',
                     [
                         'school_id' => $schoolId,
@@ -134,12 +96,8 @@ class PosService
         return $result;
     }
 
-    /**
-     * Delete a product
-     */
     public function delete(int $id, int $schoolId): bool
     {
-        // Get before state for audit
         $before = $this->getById($id, $schoolId);
         
         if (!$before) {
@@ -153,7 +111,7 @@ class PosService
         if ($result && $this->auditService) {
             try {
                 $this->auditService->recordEvent(
-                    'pos.product.deleted',
+                    'teacher.deleted',
                     'delete',
                     [
                         'school_id' => $schoolId,
@@ -171,39 +129,21 @@ class PosService
         return $result;
     }
 
-    /**
-     * Get all categories for a school
-     */
-    public function getCategories(int $schoolId): array
+    public function getActiveCount(int $schoolId): int
     {
-        return $this->model
-            ->select('DISTINCT category as category', false)
-            ->where('school_id', $schoolId)
-            ->whereNotNull('category')
-            ->where('category !=', '')
-            ->orderBy('category', 'ASC')
-            ->findAll();
+        return $this->model->getActiveCount($schoolId);
     }
 
-    /**
-     * Update stock quantity
-     */
-    public function updateStock(int $id, int $quantity, int $schoolId): bool
+    public function search(int $schoolId, string $query): array
     {
-        $product = $this->getById($id, $schoolId);
-        
-        if (!$product) {
-            return false;
-        }
-
-        return $this->model
-            ->where('school_id', $schoolId)
-            ->update($id, ['stock' => $quantity]);
+        return $this->model->getTeachersBySchool($schoolId, ['search' => $query]);
     }
 
-    /**
-     * Get request metadata for audit logging
-     */
+    public function getDepartments(int $schoolId): array
+    {
+        return $this->model->getDepartments($schoolId);
+    }
+
     protected function getRequestMetadata(): array
     {
         $request = service('request');

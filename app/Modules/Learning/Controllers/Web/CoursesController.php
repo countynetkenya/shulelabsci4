@@ -55,4 +55,50 @@ class CoursesController extends BaseController
             'lessons' => $lessons
         ]);
     }
+
+    public function edit($id)
+    {
+        $schoolId = session()->get('current_school_id') ?? session()->get('school_id') ?? 1;
+        $course = $this->learningService->getCourse($id);
+        
+        if (!$course || $course['school_id'] != $schoolId) {
+            return redirect()->to('/learning/courses')->with('error', 'Course not found.');
+        }
+
+        return view('Modules\Learning\Views\learning\courses\edit', ['course' => $course]);
+    }
+
+    public function update($id)
+    {
+        $schoolId = session()->get('current_school_id') ?? session()->get('school_id') ?? 1;
+        $course = $this->learningService->getCourse($id);
+        
+        if (!$course || $course['school_id'] != $schoolId) {
+            return redirect()->to('/learning/courses')->with('error', 'Course not found.');
+        }
+
+        $data = $this->request->getPost();
+        
+        if ($this->learningService->updateCourse($id, $data)) {
+            return redirect()->to('/learning/courses')->with('success', 'Course updated successfully.');
+        }
+        
+        return redirect()->back()->withInput()->with('error', 'Failed to update course.');
+    }
+
+    public function delete($id)
+    {
+        $schoolId = session()->get('current_school_id') ?? session()->get('school_id') ?? 1;
+        $course = $this->learningService->getCourse($id);
+        
+        if (!$course || $course['school_id'] != $schoolId) {
+            return redirect()->to('/learning/courses')->with('error', 'Course not found.');
+        }
+
+        if ($this->learningService->deleteCourse($id)) {
+            return redirect()->to('/learning/courses')->with('success', 'Course deleted successfully.');
+        }
+        
+        return redirect()->to('/learning/courses')->with('error', 'Failed to delete course.');
+    }
 }
