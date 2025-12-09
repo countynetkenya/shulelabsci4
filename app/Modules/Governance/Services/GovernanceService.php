@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Modules\Admissions\Services;
+namespace App\Modules\Governance\Services;
 
-use App\Modules\Admissions\Models\AdmissionsApplicationModel;
+use App\Modules\Governance\Models\GovernancePolicyModel;
 use Modules\Foundation\Services\AuditService;
 
 /**
- * AdmissionsCrudService - Business logic for admissions management
+ * GovernanceService - Business logic for governance policy management
  * 
  * All queries are tenant-scoped by school_id.
  * Integrates with AuditService for logging critical actions.
  */
-class AdmissionsCrudService
+class GovernanceService
 {
-    protected AdmissionsApplicationModel $model;
+    protected GovernancePolicyModel $model;
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
-        $this->model = new AdmissionsApplicationModel();
+        $this->model = new GovernancePolicyModel();
         
         // Try to inject AuditService
         try {
@@ -30,42 +30,45 @@ class AdmissionsCrudService
     }
 
     /**
-     * Get all applications for a school
+     * Get all policies for a school
      */
     public function getAll(int $schoolId, array $filters = []): array
     {
-        return $this->model->getApplicationsBySchool($schoolId, $filters);
+        return $this->model->getPoliciesBySchool($schoolId, $filters);
     }
 
     /**
-     * Get a single application by ID (scoped to school)
+     * Get a single policy by ID (scoped to school)
      */
     public function getById(int $id, int $schoolId): ?array
     {
-        $application = $this->model
+        $policy = $this->model
             ->where('school_id', $schoolId)
             ->where('id', $id)
             ->first();
         
-        return $application ?: null;
+        return $policy ?: null;
     }
 
     /**
-     * Create a new application
+     * Create a new policy
      */
     public function create(array $data): int|false
     {
-        // Auto-generate application number if not provided
-        if (empty($data['application_number']) && !empty($data['school_id']) && !empty($data['academic_year'])) {
-            $data['application_number'] = $this->model->generateApplicationNumber(
+        // Auto-generate policy number if not provided
+        if (empty($data['policy_number']) && !empty($data['school_id']) && !empty($data['category'])) {
+            $data['policy_number'] = $this->model->generatePolicyNumber(
                 $data['school_id'],
-                $data['academic_year']
+                $data['category']
             );
         }
 
-        // Set default status if not provided
+        // Set defaults
         if (!isset($data['status'])) {
-            $data['status'] = 'submitted';
+            $data['status'] = 'draft';
+        }
+        if (!isset($data['version'])) {
+            $data['version'] = '1.0';
         }
 
         $id = $this->model->insert($data);
@@ -73,11 +76,11 @@ class AdmissionsCrudService
         if ($id && $this->auditService) {
             try {
                 $this->auditService->log(
-                    'admissions',
+                    'governance',
                     'create',
                     $id,
                     $data,
-                    'Application created: ' . ($data['application_number'] ?? $id)
+                    'Policy created: ' . ($data['title'] ?? $id)
                 );
             } catch (\Throwable $e) {
                 log_message('error', 'Audit log failed: ' . $e->getMessage());
@@ -88,11 +91,11 @@ class AdmissionsCrudService
     }
 
     /**
-     * Update an existing application
+     * Update an existing policy
      */
     public function update(int $id, array $data, int $schoolId): bool
     {
-        // Ensure application belongs to school
+        // Ensure policy belongs to school
         $existing = $this->getById($id, $schoolId);
         if (!$existing) {
             return false;
@@ -103,11 +106,11 @@ class AdmissionsCrudService
         if ($success && $this->auditService) {
             try {
                 $this->auditService->log(
-                    'admissions',
+                    'governance',
                     'update',
                     $id,
                     $data,
-                    'Application updated: ' . ($existing['application_number'] ?? $id)
+                    'Policy updated: ' . ($existing['title'] ?? $id)
                 );
             } catch (\Throwable $e) {
                 log_message('error', 'Audit log failed: ' . $e->getMessage());
@@ -118,11 +121,11 @@ class AdmissionsCrudService
     }
 
     /**
-     * Delete an application
+     * Delete a policy
      */
     public function delete(int $id, int $schoolId): bool
     {
-        // Ensure application belongs to school
+        // Ensure policy belongs to school
         $existing = $this->getById($id, $schoolId);
         if (!$existing) {
             return false;
@@ -133,11 +136,11 @@ class AdmissionsCrudService
         if ($success && $this->auditService) {
             try {
                 $this->auditService->log(
-                    'admissions',
+                    'governance',
                     'delete',
                     $id,
                     $existing,
-                    'Application deleted: ' . ($existing['application_number'] ?? $id)
+                    'Policy deleted: ' . ($existing['title'] ?? $id)
                 );
             } catch (\Throwable $e) {
                 log_message('error', 'Audit log failed: ' . $e->getMessage());
@@ -148,10 +151,18 @@ class AdmissionsCrudService
     }
 
     /**
-     * Get application statistics
+     * Get policy categories
      */
-    public function getStatistics(int $schoolId, ?string $academicYear = null): array
+    public function getCategories(int $schoolId): array
     {
-        return $this->model->getStatistics($schoolId, $academicYear);
+        return $this->model->getCategories($schoolId);
+    }
+
+    /**
+     * Get policy statistics
+     */
+    public function getStatistics(int $schoolId): array
+    {
+        return $this->model->getStatistics($schoolId);
     }
 }
