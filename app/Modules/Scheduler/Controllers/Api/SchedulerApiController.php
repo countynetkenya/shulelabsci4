@@ -2,9 +2,9 @@
 
 namespace Modules\Scheduler\Controllers\Api;
 
+use CodeIgniter\RESTful\ResourceController;
 use Modules\Scheduler\Models\ScheduledJobModel;
 use Modules\Scheduler\Services\SchedulerService;
-use CodeIgniter\RESTful\ResourceController;
 
 /**
  * API controller for scheduled jobs management.

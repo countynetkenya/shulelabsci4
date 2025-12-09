@@ -33,7 +33,7 @@ class CoursesApiController extends ResourceController
                 'status' => 200,
                 'error' => null,
                 'messages' => ['success' => 'No courses found'],
-                'data' => []
+                'data' => [],
             ]);
         }
 
@@ -46,7 +46,7 @@ class CoursesApiController extends ResourceController
             'status' => 200,
             'error' => null,
             'messages' => ['success' => 'Courses retrieved successfully'],
-            'data' => $courses
+            'data' => $courses,
         ]);
     }
 
@@ -76,21 +76,21 @@ class CoursesApiController extends ResourceController
 
         $course = $courseModel->find($id);
         if (!$course || $course['status'] !== 'published') {
-             return $this->failNotFound('Course not found.');
+            return $this->failNotFound('Course not found.');
         }
 
         // Get lessons
         $lessons = $lessonModel->where('course_id', $id)
                                ->orderBy('sequence_order', 'ASC')
                                ->findAll();
-        
+
         $course['lessons'] = $lessons;
 
         return $this->respond([
             'status' => 200,
             'error' => null,
             'messages' => ['success' => 'Course details retrieved successfully'],
-            'data' => $course
+            'data' => $course,
         ]);
     }
 }

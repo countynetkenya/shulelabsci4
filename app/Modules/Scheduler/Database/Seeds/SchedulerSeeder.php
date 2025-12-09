@@ -5,13 +5,13 @@ namespace Modules\Scheduler\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * SchedulerSeeder - Seeds sample scheduled jobs for testing
+ * SchedulerSeeder - Seeds sample scheduled jobs for testing.
  */
 class SchedulerSeeder extends Seeder
 {
     /**
-     * Run the seeder to insert sample scheduled jobs
-     * 
+     * Run the seeder to insert sample scheduled jobs.
+     *
      * @return void
      */
     public function run(): void
@@ -114,6 +114,6 @@ class SchedulerSeeder extends Seeder
 
         $this->db->table('scheduled_jobs')->insertBatch($data);
 
-        echo "Inserted " . count($data) . " scheduled jobs.\n";
+        echo 'Inserted ' . count($data) . " scheduled jobs.\n";
     }
 }

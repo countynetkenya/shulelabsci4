@@ -9,6 +9,7 @@ use Modules\LMS\Models\LessonModel;
 class LessonsWebController extends BaseController
 {
     protected $courseModel;
+
     protected $lessonModel;
 
     public function __construct()
@@ -75,7 +76,7 @@ class LessonsWebController extends BaseController
 
         $course = $this->courseModel->scopeToTenant()->find($lesson['course_id']);
         if (!$course) {
-             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
         $data = [
@@ -97,7 +98,7 @@ class LessonsWebController extends BaseController
 
         $course = $this->courseModel->scopeToTenant()->find($lesson['course_id']);
         if (!$course) {
-             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
         $rules = [

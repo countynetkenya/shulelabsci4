@@ -3,11 +3,11 @@
 namespace Tests\Learning;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
-use Tests\Support\Traits\TenantTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 use Modules\Learning\Models\CourseModel;
 use Modules\Learning\Models\EnrollmentModel;
+use Tests\Support\Traits\TenantTestTrait;
 
 class EnrollmentsApiTest extends CIUnitTestCase
 {
@@ -16,22 +16,25 @@ class EnrollmentsApiTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->setupTenantContext();
-        
+
         // Robust CSRF Disable
         $config = config('Filters');
         $newBefore = [];
         foreach ($config->globals['before'] as $key => $value) {
             if ($value !== 'csrf' && $key !== 'csrf') {
                 if (is_array($value)) {
-                     $newBefore[$key] = $value;
+                    $newBefore[$key] = $value;
                 } else {
                     $newBefore[] = $value;
                 }
@@ -50,7 +53,7 @@ class EnrollmentsApiTest extends CIUnitTestCase
             'teacher_id' => 1,
             'title' => 'Test Course',
             'description' => 'Description',
-            'status' => 'published'
+            'status' => 'published',
         ]);
 
         // Enroll student (ID 1 is assumed in controller for now)
@@ -60,12 +63,12 @@ class EnrollmentsApiTest extends CIUnitTestCase
             'student_id' => 1,
             'course_id' => $courseId,
             'status' => 'active',
-            'enrolled_at' => date('Y-m-d H:i:s')
+            'enrolled_at' => date('Y-m-d H:i:s'),
         ]);
 
         $result = $this->withSession(['student_id' => 1])
                        ->call('get', '/api/learning/enrollments');
-        
+
         $result->assertOK();
         // $result->assertJSONFragment(['course_title' => 'Test Course']);
         $result->assertSee('Test Course');
@@ -80,14 +83,14 @@ class EnrollmentsApiTest extends CIUnitTestCase
             'teacher_id' => 1,
             'title' => 'Test Course',
             'description' => 'Description',
-            'status' => 'published'
+            'status' => 'published',
         ]);
 
         $result = $this->withSession(['student_id' => 1, 'current_school_id' => 1])
                        ->call('post', '/api/learning/enrollments', [
-                           'course_id' => $courseId
+                           'course_id' => $courseId,
                        ]);
-        
+
         $result->assertStatus(201);
         $result->assertJSONFragment(['message' => 'Enrolled successfully']);
 

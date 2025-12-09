@@ -5,8 +5,8 @@ namespace Modules\Library\Config;
 use CodeIgniter\Router\RouteCollection;
 
 /**
- * Library Module Routes Configuration
- * 
+ * Library Module Routes Configuration.
+ *
  * Web Routes: /library/*
  * API Routes: /api/library/*
  */
@@ -32,7 +32,7 @@ class Routes
             $routes->post('books', 'LibraryApiController::createBook');
             $routes->put('books/(:num)', 'LibraryApiController::updateBook/$1');
             $routes->delete('books/(:num)', 'LibraryApiController::deleteBook/$1');
-            
+
             // Documents API (existing)
             $routes->post('documents', 'DocumentApiController::create');
         });

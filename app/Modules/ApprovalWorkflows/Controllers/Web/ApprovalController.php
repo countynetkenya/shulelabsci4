@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use App\Modules\ApprovalWorkflows\Services\ApprovalService;
 
 /**
- * ApprovalController - Handles CRUD operations for approval workflows
- * 
+ * ApprovalController - Handles CRUD operations for approval workflows.
+ *
  * All data is tenant-scoped by school_id from session.
  */
 class ApprovalController extends BaseController
@@ -20,13 +20,13 @@ class ApprovalController extends BaseController
     }
 
     /**
-     * Check if user has permission to access approval workflows module
+     * Check if user has permission to access approval workflows module.
      */
     protected function checkAccess(): bool
     {
         $usertypeID = session()->get('usertypeID');
         $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
-        
+
         if ($isAdmin) {
             return true;
         }
@@ -44,7 +44,7 @@ class ApprovalController extends BaseController
     }
 
     /**
-     * Get current school ID from session
+     * Get current school ID from session.
      */
     protected function getSchoolId(): int
     {
@@ -52,7 +52,7 @@ class ApprovalController extends BaseController
     }
 
     /**
-     * List all approval requests
+     * List all approval requests.
      */
     public function index()
     {
@@ -61,7 +61,7 @@ class ApprovalController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         $filters = [
             'search'   => $this->request->getGet('search'),
             'status'   => $this->request->getGet('status'),
@@ -79,7 +79,7 @@ class ApprovalController extends BaseController
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
@@ -91,7 +91,7 @@ class ApprovalController extends BaseController
     }
 
     /**
-     * Store a new approval request
+     * Store a new approval request.
      */
     public function store()
     {
@@ -100,7 +100,7 @@ class ApprovalController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         $rules = [
             'workflow_id' => 'required|integer',
             'entity_type' => 'required|max_length[100]',
@@ -133,7 +133,7 @@ class ApprovalController extends BaseController
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit(int $id)
     {
@@ -143,7 +143,7 @@ class ApprovalController extends BaseController
 
         $schoolId = $this->getSchoolId();
         $request = $this->service->getById($id, $schoolId);
-        
+
         if (!$request) {
             return redirect()->to('/approvals')->with('error', 'Approval request not found.');
         }
@@ -156,7 +156,7 @@ class ApprovalController extends BaseController
     }
 
     /**
-     * Update an existing approval request
+     * Update an existing approval request.
      */
     public function update(int $id)
     {
@@ -206,7 +206,7 @@ class ApprovalController extends BaseController
     }
 
     /**
-     * Delete an approval request
+     * Delete an approval request.
      */
     public function delete(int $id)
     {
@@ -215,7 +215,7 @@ class ApprovalController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         $request = $this->service->getById($id, $schoolId);
         if (!$request) {
             return redirect()->to('/approvals')->with('error', 'Approval request not found.');

@@ -8,8 +8,8 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * StudentCrudTest - Feature tests for Student CRUD operations
- * 
+ * StudentCrudTest - Feature tests for Student CRUD operations.
+ *
  * Tests all CRUD endpoints for the Student module
  */
 class StudentCrudTest extends CIUnitTestCase
@@ -19,8 +19,11 @@ class StudentCrudTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
@@ -30,7 +33,7 @@ class StudentCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Index page displays students
+     * Test: Index page displays students.
      */
     public function testIndexDisplaysStudents()
     {
@@ -56,7 +59,7 @@ class StudentCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Index page shows empty state when no students
+     * Test: Index page shows empty state when no students.
      */
     public function testIndexShowsEmptyState()
     {
@@ -68,7 +71,7 @@ class StudentCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Create page displays form
+     * Test: Create page displays form.
      */
     public function testCreatePageDisplaysForm()
     {
@@ -82,7 +85,7 @@ class StudentCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Store creates a new student
+     * Test: Store creates a new student.
      */
     public function testStoreCreatesStudent()
     {
@@ -97,7 +100,7 @@ class StudentCrudTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirectTo('/students');
-        
+
         $this->seeInDatabase('students', [
             'first_name' => 'New',
             'last_name'  => 'Student',
@@ -106,7 +109,7 @@ class StudentCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Store validation fails with missing required fields
+     * Test: Store validation fails with missing required fields.
      */
     public function testStoreValidationFailsWithMissingFields()
     {
@@ -122,7 +125,7 @@ class StudentCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Edit page displays student data
+     * Test: Edit page displays student data.
      */
     public function testEditPageDisplaysStudentData()
     {
@@ -150,7 +153,7 @@ class StudentCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Update modifies existing student
+     * Test: Update modifies existing student.
      */
     public function testUpdateModifiesStudent()
     {
@@ -179,7 +182,7 @@ class StudentCrudTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirectTo('/students');
-        
+
         $this->seeInDatabase('students', [
             'id'         => $studentId,
             'first_name' => 'Updated',
@@ -188,7 +191,7 @@ class StudentCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Delete removes a student
+     * Test: Delete removes a student.
      */
     public function testDeleteRemovesStudent()
     {
@@ -213,13 +216,13 @@ class StudentCrudTest extends CIUnitTestCase
                        ->get("students/delete/{$studentId}");
 
         $result->assertRedirectTo('/students');
-        
+
         // Verify student is deleted
         $this->dontSeeInDatabase('students', ['id' => $studentId]);
     }
 
     /**
-     * Test: Tenant scoping - cannot access other school's students
+     * Test: Tenant scoping - cannot access other school's students.
      */
     public function testCannotAccessOtherSchoolStudents()
     {

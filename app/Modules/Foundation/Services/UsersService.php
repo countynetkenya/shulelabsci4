@@ -2,13 +2,15 @@
 
 namespace Modules\Foundation\Services;
 
-use App\Models\UserModel;
 use App\Models\RoleModel;
+use App\Models\UserModel;
 
 class UsersService
 {
     protected $userModel;
+
     protected $roleModel;
+
     protected $db;
 
     public function __construct()
@@ -21,7 +23,7 @@ class UsersService
     public function getAllUsers()
     {
         $users = $this->userModel->findAll();
-        
+
         $results = [];
         foreach ($users as $user) {
             // Get Role
@@ -30,31 +32,33 @@ class UsersService
                         ->where('user_id', $user->id)
                         ->get()
                         ->getRowArray();
-            
+
             $userArray = (array) $user;
             $userArray['role'] = $role ? $role['role_name'] : 'N/A';
             $userArray['role_id'] = $role ? $role['id'] : null;
             $userArray['status'] = $user->is_active ? 'Active' : 'Inactive';
-            
+
             $results[] = $userArray;
         }
-        
+
         return $results;
     }
 
     public function getUserById($id)
     {
         $user = $this->userModel->find($id);
-        if (!$user) return null;
+        if (!$user) {
+            return null;
+        }
 
         $role = $this->db->table('user_roles')
                     ->where('user_id', $user->id)
                     ->get()
                     ->getRowArray();
-        
+
         $userArray = (array) $user;
         $userArray['role_id'] = $role ? $role['role_id'] : null;
-        
+
         return $userArray;
     }
 
@@ -78,7 +82,7 @@ class UsersService
             // Assign Role
             $this->db->table('user_roles')->insert([
                 'user_id' => $userId,
-                'role_id' => $data['role_id']
+                'role_id' => $data['role_id'],
             ]);
         }
 
@@ -111,7 +115,7 @@ class UsersService
         } else {
             $this->db->table('user_roles')->insert([
                 'user_id' => $id,
-                'role_id' => $data['role_id']
+                'role_id' => $data['role_id'],
             ]);
         }
 
@@ -128,7 +132,7 @@ class UsersService
         $this->db->transComplete();
         return $this->db->transStatus();
     }
-    
+
     public function getAllRoles()
     {
         return $this->roleModel->findAll();

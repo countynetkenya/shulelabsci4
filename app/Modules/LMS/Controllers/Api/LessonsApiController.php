@@ -3,7 +3,6 @@
 namespace Modules\LMS\Controllers\Api;
 
 use CodeIgniter\RESTful\ResourceController;
-use Modules\LMS\Models\CourseModel;
 use Modules\LMS\Models\EnrollmentModel;
 use Modules\LMS\Models\LessonModel;
 use Modules\LMS\Models\ProgressModel;
@@ -44,7 +43,7 @@ class LessonsApiController extends ResourceController
             'status' => 200,
             'error' => null,
             'messages' => ['success' => 'Lesson retrieved successfully'],
-            'data' => $lesson
+            'data' => $lesson,
         ]);
     }
 
@@ -87,7 +86,7 @@ class LessonsApiController extends ResourceController
                 'status' => 200,
                 'error' => null,
                 'messages' => ['success' => 'Lesson already completed'],
-                'data' => []
+                'data' => [],
             ]);
         }
 
@@ -102,7 +101,7 @@ class LessonsApiController extends ResourceController
             'status' => 200,
             'error' => null,
             'messages' => ['success' => 'Lesson marked as complete'],
-            'data' => []
+            'data' => [],
         ]);
     }
 }

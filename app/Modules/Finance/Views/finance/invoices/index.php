@@ -57,7 +57,7 @@
                                         'overdue' => 'bg-gray-200 text-gray-600',
                                         default => 'bg-gray-200 text-gray-600'
                                     };
-                                ?>
+                        ?>
                                 <span class="<?= $statusClass ?> py-1 px-3 rounded-full text-xs uppercase"><?= esc($invoice['status']) ?></span>
                             </td>
                             <td class="py-3 px-6 text-center">

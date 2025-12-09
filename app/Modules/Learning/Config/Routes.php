@@ -26,7 +26,7 @@ class Routes extends BaseConfig
         $routes->group('api/learning', ['namespace' => 'Modules\Learning\Controllers\Api'], function ($routes) {
             $routes->get('courses', 'CoursesController::index');
             $routes->get('courses/(:num)', 'CoursesController::show/$1');
-            
+
             $routes->get('enrollments', 'EnrollmentsController::index');
             $routes->post('enrollments', 'EnrollmentsController::create');
 

@@ -3,8 +3,8 @@
 namespace Tests\Learning;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 class CoursesTest extends CIUnitTestCase
@@ -14,22 +14,25 @@ class CoursesTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->setupTenantContext();
-        
+
         // Robust CSRF Disable
         $config = config('Filters');
         $newBefore = [];
         foreach ($config->globals['before'] as $key => $value) {
             if ($value !== 'csrf' && $key !== 'csrf') {
                 if (is_array($value)) {
-                     $newBefore[$key] = $value;
+                    $newBefore[$key] = $value;
                 } else {
                     $newBefore[] = $value;
                 }
@@ -61,7 +64,7 @@ class CoursesTest extends CIUnitTestCase
                        ->call('post', '/learning/courses', [
             'title' => 'Mathematics 101',
             'description' => 'Basic Math',
-            'status' => 'draft'
+            'status' => 'draft',
         ]);
 
         $result->assertRedirectTo('/learning/courses');
@@ -76,13 +79,13 @@ class CoursesTest extends CIUnitTestCase
             'teacher_id' => $this->userId,
             'title' => 'Science 101',
             'status' => 'published',
-            'created_at' => date('Y-m-d H:i:s')
+            'created_at' => date('Y-m-d H:i:s'),
         ]);
 
         $result = $this->call('get', '/api/learning/courses', ['school_id' => $this->schoolId]);
-        
+
         $result->assertOK();
-        
+
         $json = json_decode($result->getJSON(), true);
         $this->assertCount(1, $json);
         $this->assertEquals('Science 101', $json[0]['title']);

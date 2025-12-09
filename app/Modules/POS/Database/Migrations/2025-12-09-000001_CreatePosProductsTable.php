@@ -5,7 +5,7 @@ namespace Modules\POS\Database\Migrations;
 use CodeIgniter\Database\Migration;
 
 /**
- * Creates the POS products table for Point of Sale system
+ * Creates the POS products table for Point of Sale system.
  */
 class CreatePosProductsTable extends Migration
 {
@@ -77,7 +77,7 @@ class CreatePosProductsTable extends Migration
         $this->forge->addKey('id', true);
         $this->forge->addKey('school_id');
         $this->forge->addKey(['school_id', 'is_active']);
-        
+
         $this->forge->createTable('pos_products', true);
     }
 

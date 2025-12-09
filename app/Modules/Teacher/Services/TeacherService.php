@@ -6,17 +6,18 @@ use App\Modules\Teacher\Models\TeacherModel;
 use Modules\Foundation\Services\AuditService;
 
 /**
- * TeacherService - Business logic for teacher management
+ * TeacherService - Business logic for teacher management.
  */
 class TeacherService
 {
     protected TeacherModel $model;
+
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
         $this->model = new TeacherModel();
-        
+
         try {
             $this->auditService = $auditService ?? new AuditService();
         } catch (\Throwable $e) {
@@ -66,7 +67,7 @@ class TeacherService
     public function update(int $id, array $data, int $schoolId): bool
     {
         $before = $this->getById($id, $schoolId);
-        
+
         if (!$before) {
             return false;
         }
@@ -99,7 +100,7 @@ class TeacherService
     public function delete(int $id, int $schoolId): bool
     {
         $before = $this->getById($id, $schoolId);
-        
+
         if (!$before) {
             return false;
         }
@@ -147,7 +148,7 @@ class TeacherService
     protected function getRequestMetadata(): array
     {
         $request = service('request');
-        
+
         return [
             'ip'          => $request->getIPAddress(),
             'user_agent'  => $request->getUserAgent()->getAgentString(),

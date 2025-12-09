@@ -9,7 +9,7 @@ class SchedulerWebController extends BaseController
     public function index()
     {
         return view('Modules\Scheduler\Views\index', [
-            'title' => 'Scheduler Dashboard'
+            'title' => 'Scheduler Dashboard',
         ]);
     }
 }

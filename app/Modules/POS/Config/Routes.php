@@ -5,8 +5,8 @@ namespace Modules\POS\Config;
 use CodeIgniter\Router\RouteCollection;
 
 /**
- * POS Module Routes Configuration
- * 
+ * POS Module Routes Configuration.
+ *
  * Web Routes: /pos/*
  * API Routes: /api/pos/*
  */
@@ -36,4 +36,3 @@ class Routes
         });
     }
 }
-

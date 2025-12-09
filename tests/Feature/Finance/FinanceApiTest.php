@@ -51,11 +51,11 @@ class FinanceApiTest extends CIUnitTestCase
 
         // 4. Verify Response
         $result->assertOK();
-        
+
         $json = json_decode($result->getJSON(), true);
         $this->assertArrayHasKey('data', $json);
         $this->assertNotEmpty($json['data']);
-        
+
         // Find the invoice in the data
         $invoice = null;
         foreach ($json['data'] as $item) {
@@ -64,7 +64,7 @@ class FinanceApiTest extends CIUnitTestCase
                 break;
             }
         }
-        
+
         $this->assertNotNull($invoice, 'Invoice not found in response');
         $this->assertEquals('5000.00', $invoice['amount']);
         $this->assertEquals('unpaid', $invoice['status']);
@@ -102,7 +102,7 @@ class FinanceApiTest extends CIUnitTestCase
 
         // 4. Verify Response
         $result->assertOK();
-        
+
         $json = json_decode($result->getJSON(), true);
         $this->assertArrayHasKey('data', $json);
         $this->assertEquals('INV-API-002', $json['data']['reference_number']);

@@ -17,6 +17,6 @@ class PosWebController extends BaseController
 
     public function sales()
     {
-        return "Sales History";
+        return 'Sales History';
     }
 }

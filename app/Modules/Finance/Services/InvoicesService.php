@@ -2,13 +2,15 @@
 
 namespace Modules\Finance\Services;
 
-use Modules\Finance\Models\InvoiceModel;
 use App\Models\UserModel;
+use Modules\Finance\Models\InvoiceModel;
 
 class InvoicesService
 {
     protected $invoiceModel;
+
     protected $userModel;
+
     protected $db;
 
     public function __construct()

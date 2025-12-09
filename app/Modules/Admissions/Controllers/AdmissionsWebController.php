@@ -9,7 +9,7 @@ class AdmissionsWebController extends BaseController
     public function index()
     {
         return view('Modules\Admissions\Views\index', [
-            'title' => 'Admissions Portal'
+            'title' => 'Admissions Portal',
         ]);
     }
 }

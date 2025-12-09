@@ -15,21 +15,34 @@ class InventoryWebTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = false;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = null;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Manual Cleanup
         $this->db->disableForeignKeyChecks();
-        if ($this->db->tableExists('inventory_transfers')) $this->db->table('inventory_transfers')->truncate();
-        if ($this->db->tableExists('inventory_stock')) $this->db->table('inventory_stock')->truncate();
-        if ($this->db->tableExists('inventory_items')) $this->db->table('inventory_items')->truncate();
-        if ($this->db->tableExists('inventory_categories')) $this->db->table('inventory_categories')->truncate();
-        if ($this->db->tableExists('inventory_locations')) $this->db->table('inventory_locations')->truncate();
+        if ($this->db->tableExists('inventory_transfers')) {
+            $this->db->table('inventory_transfers')->truncate();
+        }
+        if ($this->db->tableExists('inventory_stock')) {
+            $this->db->table('inventory_stock')->truncate();
+        }
+        if ($this->db->tableExists('inventory_items')) {
+            $this->db->table('inventory_items')->truncate();
+        }
+        if ($this->db->tableExists('inventory_categories')) {
+            $this->db->table('inventory_categories')->truncate();
+        }
+        if ($this->db->tableExists('inventory_locations')) {
+            $this->db->table('inventory_locations')->truncate();
+        }
         $this->db->enableForeignKeyChecks();
 
         $this->setupTenantContext();

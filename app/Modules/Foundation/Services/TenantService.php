@@ -4,17 +4,17 @@ namespace Modules\Foundation\Services;
 
 use App\Models\SchoolModel;
 use App\Models\UserModel;
-use CodeIgniter\Database\Exceptions\DatabaseException;
 
 class TenantService
 {
     protected $schoolModel;
+
     protected $userModel;
 
     public function __construct()
     {
         $this->schoolModel = new SchoolModel();
-        $this->userModel   = new UserModel();
+        $this->userModel = new UserModel();
     }
 
     /**
@@ -57,33 +57,33 @@ class TenantService
             // 2. Create Admin User
             // Note: Password generation should be handled securely. For now, using a default or random.
             $tempPassword = bin2hex(random_bytes(4)); // 8 char random password
-            
+
             $userData = [
                 'email'       => $data['admin_email'],
                 'username'    => explode('@', $data['admin_email'])[0],
-                'password'    => $tempPassword, 
+                'password'    => $tempPassword,
                 'first_name'  => 'Admin',
                 'last_name'   => 'User',
                 'school_id'   => $schoolId,
                 'is_active'   => 1,
             ];
 
-            // Check if user exists globally? 
+            // Check if user exists globally?
             // For now, assuming email is unique per system or handled by model.
             if (!$this->userModel->insert($userData)) {
-                // Rollback handled by transComplete/transStatus? 
+                // Rollback handled by transComplete/transStatus?
                 // No, insert() failure doesn't throw exception by default unless configured.
                 // But we are in a transaction.
                 $db->transRollback();
                 return ['success' => false, 'errors' => $this->userModel->errors()];
             }
-            
+
             $userId = $this->userModel->getInsertID();
 
             // 3. Assign Role
             // Get role ID for 'admin' (assuming 'admin' slug exists)
             $role = $db->table('roles')->where('role_slug', 'admin')->get()->getRow();
-            
+
             if ($role) {
                 $db->table('user_roles')->insert([
                     'user_id' => $userId,
@@ -103,9 +103,9 @@ class TenantService
             }
 
             return [
-                'success' => true, 
+                'success' => true,
                 'message' => "School created successfully. Admin Password: {$tempPassword}",
-                'school_id' => $schoolId
+                'school_id' => $schoolId,
             ];
 
         } catch (\Exception $e) {

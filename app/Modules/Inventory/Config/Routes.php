@@ -5,13 +5,13 @@ namespace Modules\Inventory\Config;
 use CodeIgniter\Router\RouteCollection;
 
 /**
- * Inventory Module Routes Configuration
+ * Inventory Module Routes Configuration.
  */
 class Routes
 {
     public static function map(RouteCollection $routes): void
     {
-        $routes->group('inventory', ['namespace' => 'App\Modules\Inventory\Controllers\Web'], function($routes) {
+        $routes->group('inventory', ['namespace' => 'App\Modules\Inventory\Controllers\Web'], function ($routes) {
             $routes->get('/', 'InventoryController::index');
             $routes->get('create', 'InventoryController::create');
             $routes->post('store', 'InventoryController::store');

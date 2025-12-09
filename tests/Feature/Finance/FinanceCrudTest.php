@@ -8,8 +8,8 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * FinanceCrudTest - Feature tests for Finance Transaction CRUD operations
- * 
+ * FinanceCrudTest - Feature tests for Finance Transaction CRUD operations.
+ *
  * Tests all CRUD endpoints for the Finance module:
  * - GET /finance/transactions (index)
  * - GET /finance/transactions/create (create form)
@@ -25,8 +25,11 @@ class FinanceCrudTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
@@ -36,7 +39,7 @@ class FinanceCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Index page displays transactions
+     * Test: Index page displays transactions.
      */
     public function testIndexDisplaysTransactions()
     {
@@ -77,7 +80,7 @@ class FinanceCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Index page shows empty state when no transactions
+     * Test: Index page shows empty state when no transactions.
      */
     public function testIndexShowsEmptyState()
     {
@@ -89,7 +92,7 @@ class FinanceCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Create page displays form
+     * Test: Create page displays form.
      */
     public function testCreatePageDisplaysForm()
     {
@@ -103,7 +106,7 @@ class FinanceCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Store creates a new transaction
+     * Test: Store creates a new transaction.
      */
     public function testStoreCreatesTransaction()
     {
@@ -131,7 +134,7 @@ class FinanceCrudTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirectTo('/finance/transactions');
-        
+
         $this->seeInDatabase('finance_payments', [
             'invoice_id'     => $invoiceId,
             'amount'         => 5000.00,
@@ -142,7 +145,7 @@ class FinanceCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Store validation fails with missing required fields
+     * Test: Store validation fails with missing required fields.
      */
     public function testStoreValidationFailsWithMissingFields()
     {
@@ -158,7 +161,7 @@ class FinanceCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Edit page displays transaction data
+     * Test: Edit page displays transaction data.
      */
     public function testEditPageDisplaysTransactionData()
     {
@@ -200,7 +203,7 @@ class FinanceCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Edit page redirects for non-existent transaction
+     * Test: Edit page redirects for non-existent transaction.
      */
     public function testEditPageRedirectsForNonExistentTransaction()
     {
@@ -212,7 +215,7 @@ class FinanceCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Update modifies existing transaction
+     * Test: Update modifies existing transaction.
      */
     public function testUpdateModifiesTransaction()
     {
@@ -254,7 +257,7 @@ class FinanceCrudTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirectTo('/finance/transactions');
-        
+
         $this->seeInDatabase('finance_payments', [
             'id'             => $transactionId,
             'amount'         => 5000.00,
@@ -264,7 +267,7 @@ class FinanceCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Delete removes a transaction
+     * Test: Delete removes a transaction.
      */
     public function testDeleteRemovesTransaction()
     {
@@ -303,7 +306,7 @@ class FinanceCrudTest extends CIUnitTestCase
                        ->get("finance/transactions/delete/{$transactionId}");
 
         $result->assertRedirectTo('/finance/transactions');
-        
+
         // Verify transaction is soft deleted
         $this->dontSeeInDatabase('finance_payments', [
             'id'         => $transactionId,
@@ -312,7 +315,7 @@ class FinanceCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Delete non-existent transaction redirects with error
+     * Test: Delete non-existent transaction redirects with error.
      */
     public function testDeleteNonExistentTransactionRedirects()
     {
@@ -323,7 +326,7 @@ class FinanceCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Tenant scoping - cannot access other school's transactions
+     * Test: Tenant scoping - cannot access other school's transactions.
      */
     public function testCannotAccessOtherSchoolTransactions()
     {

@@ -2,9 +2,9 @@
 
 namespace Modules\Scheduler\Services;
 
+use CodeIgniter\I18n\Time;
 use Modules\Scheduler\Models\JobRunModel;
 use Modules\Scheduler\Models\ScheduledJobModel;
-use CodeIgniter\I18n\Time;
 
 /**
  * Main scheduler service for managing and executing scheduled jobs.

@@ -29,11 +29,11 @@ class TransportController extends BaseController
     public function store()
     {
         $schoolId = session()->get('school_id') ?? 1;
-        
+
         if (!$this->validate([
             'registration_number' => 'required|min_length[3]',
             'capacity' => 'required|integer',
-            'driver_name' => 'required'
+            'driver_name' => 'required',
         ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
@@ -55,7 +55,7 @@ class TransportController extends BaseController
     {
         $schoolId = session()->get('school_id') ?? 1;
         $data['vehicle'] = $this->service->getById($id, $schoolId);
-        
+
         if (!$data['vehicle']) {
             return redirect()->to('/transport')->with('error', 'Vehicle not found');
         }
@@ -70,7 +70,7 @@ class TransportController extends BaseController
         if (!$this->validate([
             'registration_number' => 'required|min_length[3]',
             'capacity' => 'required|integer',
-            'driver_name' => 'required'
+            'driver_name' => 'required',
         ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }

@@ -104,7 +104,7 @@ class TeacherController extends BaseController
 
         $schoolId = $this->getSchoolId();
         $teacher = $this->service->getById($id, $schoolId);
-        
+
         if (!$teacher) {
             return redirect()->to('/teachers')->with('error', 'Teacher not found.');
         }

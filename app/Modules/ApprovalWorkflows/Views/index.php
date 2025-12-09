@@ -101,22 +101,22 @@
                                             'cancelled'   => 'secondary',
                                             'expired'     => 'dark',
                                         ];
-                                        $badgeClass = $statusBadges[$request['status']] ?? 'secondary';
-                                        ?>
+                                $badgeClass = $statusBadges[$request['status']] ?? 'secondary';
+                                ?>
                                         <span class="badge badge-<?= $badgeClass ?>">
                                             <?= esc(ucwords(str_replace('_', ' ', $request['status']))) ?>
                                         </span>
                                     </td>
                                     <td>
                                         <?php
-                                        $priorityBadges = [
-                                            'low'    => 'secondary',
-                                            'normal' => 'primary',
-                                            'high'   => 'warning',
-                                            'urgent' => 'danger',
-                                        ];
-                                        $priorityBadge = $priorityBadges[$request['priority']] ?? 'primary';
-                                        ?>
+                                $priorityBadges = [
+                                    'low'    => 'secondary',
+                                    'normal' => 'primary',
+                                    'high'   => 'warning',
+                                    'urgent' => 'danger',
+                                ];
+                                $priorityBadge = $priorityBadges[$request['priority']] ?? 'primary';
+                                ?>
                                         <span class="badge badge-<?= $priorityBadge ?>">
                                             <?= esc(ucfirst($request['priority'])) ?>
                                         </span>

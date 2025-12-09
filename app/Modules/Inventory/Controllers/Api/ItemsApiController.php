@@ -44,7 +44,7 @@ class ItemsApiController extends ResourceController
             return $this->respond([
                 'data' => $result,
                 'status' => 200,
-                'message' => 'Items retrieved successfully'
+                'message' => 'Items retrieved successfully',
             ]);
         } catch (\Throwable $e) {
             return $this->failServerError($e->getMessage());

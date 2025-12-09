@@ -6,13 +6,19 @@ use App\Models\TenantModel;
 
 class EmployeeModel extends TenantModel
 {
-    protected $table            = 'employees';
-    protected $primaryKey       = 'id';
+    protected $table = 'employees';
+
+    protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = [
+
+    protected $returnType = 'array';
+
+    protected $useSoftDeletes = false;
+
+    protected $protectFields = true;
+
+    protected $allowedFields = [
         'school_id',
         'user_id',
         'employee_number',
@@ -33,12 +39,15 @@ class EmployeeModel extends TenantModel
 
     // Dates
     protected $useTimestamps = true;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
+
+    protected $dateFormat = 'datetime';
+
+    protected $createdField = 'created_at';
+
+    protected $updatedField = 'updated_at';
 
     // Validation
-    protected $validationRules      = [
+    protected $validationRules = [
         'school_id'       => 'required|integer',
         'user_id'         => 'required|integer',
         'employee_number' => 'required|max_length[50]',
@@ -46,7 +55,10 @@ class EmployeeModel extends TenantModel
         'join_date'       => 'required|valid_date',
         'status'          => 'required|in_list[active,on_leave,suspended,terminated,resigned]',
     ];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
+
+    protected $validationMessages = [];
+
+    protected $skipValidation = false;
+
     protected $cleanValidationRules = true;
 }

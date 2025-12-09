@@ -5,8 +5,8 @@ namespace Modules\Scheduler\Config;
 use CodeIgniter\Router\RouteCollection;
 
 /**
- * Scheduler Module Routes Configuration
- * 
+ * Scheduler Module Routes Configuration.
+ *
  * Web Routes: /scheduler/*
  * API Routes: /api/scheduler/*
  */
@@ -34,4 +34,3 @@ class Routes
         });
     }
 }
-

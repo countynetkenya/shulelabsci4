@@ -17,9 +17,9 @@ class TenantController extends BaseController
     public function index()
     {
         $schools = $this->tenantService->getAllTenants();
-        
+
         // Map to view format
-        $viewData = array_map(function($school) {
+        $viewData = array_map(function ($school) {
             return [
                 'id' => $school['id'],
                 'name' => $school['school_name'],

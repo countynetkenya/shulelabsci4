@@ -17,6 +17,7 @@ class WalletsModuleTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $namespace = 'App';
+
     protected $migrateOnce = true;
 
     protected $seedOnce = true;

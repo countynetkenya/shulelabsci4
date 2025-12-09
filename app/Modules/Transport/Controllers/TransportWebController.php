@@ -17,11 +17,11 @@ class TransportWebController extends BaseController
 
     public function routes()
     {
-        return "Transport Routes";
+        return 'Transport Routes';
     }
 
     public function vehicles()
     {
-        return "Transport Vehicles";
+        return 'Transport Vehicles';
     }
 }

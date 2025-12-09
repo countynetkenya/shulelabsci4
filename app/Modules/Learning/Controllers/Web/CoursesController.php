@@ -19,7 +19,7 @@ class CoursesController extends BaseController
     {
         $schoolId = session()->get('current_school_id') ?? 1;
         $courses = $this->learningService->getSchoolCourses($schoolId);
-        
+
         return view('Modules\Learning\Views\learning\courses\index', ['courses' => $courses]);
     }
 
@@ -33,11 +33,11 @@ class CoursesController extends BaseController
         $data = $this->request->getPost();
         $data['school_id'] = session()->get('current_school_id') ?? 1;
         $data['teacher_id'] = session()->get('user_id') ?? 1;
-        
+
         if ($this->learningService->createCourse($data)) {
             return redirect()->to('/learning/courses')->with('success', 'Course created successfully.');
         }
-        
+
         return redirect()->back()->withInput()->with('error', 'Failed to create course.');
     }
 
@@ -52,7 +52,7 @@ class CoursesController extends BaseController
 
         return view('Modules\Learning\Views\learning\courses\show', [
             'course' => $course,
-            'lessons' => $lessons
+            'lessons' => $lessons,
         ]);
     }
 
@@ -60,7 +60,7 @@ class CoursesController extends BaseController
     {
         $schoolId = session()->get('current_school_id') ?? session()->get('school_id') ?? 1;
         $course = $this->learningService->getCourse($id);
-        
+
         if (!$course || $course['school_id'] != $schoolId) {
             return redirect()->to('/learning/courses')->with('error', 'Course not found.');
         }
@@ -72,17 +72,17 @@ class CoursesController extends BaseController
     {
         $schoolId = session()->get('current_school_id') ?? session()->get('school_id') ?? 1;
         $course = $this->learningService->getCourse($id);
-        
+
         if (!$course || $course['school_id'] != $schoolId) {
             return redirect()->to('/learning/courses')->with('error', 'Course not found.');
         }
 
         $data = $this->request->getPost();
-        
+
         if ($this->learningService->updateCourse($id, $data)) {
             return redirect()->to('/learning/courses')->with('success', 'Course updated successfully.');
         }
-        
+
         return redirect()->back()->withInput()->with('error', 'Failed to update course.');
     }
 
@@ -90,7 +90,7 @@ class CoursesController extends BaseController
     {
         $schoolId = session()->get('current_school_id') ?? session()->get('school_id') ?? 1;
         $course = $this->learningService->getCourse($id);
-        
+
         if (!$course || $course['school_id'] != $schoolId) {
             return redirect()->to('/learning/courses')->with('error', 'Course not found.');
         }
@@ -98,7 +98,7 @@ class CoursesController extends BaseController
         if ($this->learningService->deleteCourse($id)) {
             return redirect()->to('/learning/courses')->with('success', 'Course deleted successfully.');
         }
-        
+
         return redirect()->to('/learning/courses')->with('error', 'Failed to delete course.');
     }
 }

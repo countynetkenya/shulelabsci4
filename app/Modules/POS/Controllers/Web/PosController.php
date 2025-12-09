@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use App\Modules\POS\Services\PosService;
 
 /**
- * PosController - Handles CRUD operations for POS products
- * 
+ * PosController - Handles CRUD operations for POS products.
+ *
  * All data is tenant-scoped by school_id from session.
  */
 class PosController extends BaseController
@@ -20,14 +20,14 @@ class PosController extends BaseController
     }
 
     /**
-     * Check if user has permission to access POS module
+     * Check if user has permission to access POS module.
      */
     protected function checkAccess(): bool
     {
         // Allow admins
         $usertypeID = session()->get('usertypeID');
         $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
-        
+
         if ($isAdmin) {
             return true;
         }
@@ -47,7 +47,7 @@ class PosController extends BaseController
     }
 
     /**
-     * Get current school ID from session
+     * Get current school ID from session.
      */
     protected function getSchoolId(): int
     {
@@ -55,7 +55,7 @@ class PosController extends BaseController
     }
 
     /**
-     * List all products
+     * List all products.
      */
     public function index()
     {
@@ -64,7 +64,7 @@ class PosController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Get filter parameters
         $filters = [
             'search'   => $this->request->getGet('search'),
@@ -81,7 +81,7 @@ class PosController extends BaseController
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
@@ -98,7 +98,7 @@ class PosController extends BaseController
     }
 
     /**
-     * Store a new product
+     * Store a new product.
      */
     public function store()
     {
@@ -107,7 +107,7 @@ class PosController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Validation rules
         $rules = [
             'name'        => 'required|min_length[2]|max_length[255]',
@@ -143,7 +143,7 @@ class PosController extends BaseController
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit(int $id)
     {
@@ -153,7 +153,7 @@ class PosController extends BaseController
 
         $schoolId = $this->getSchoolId();
         $product = $this->service->getById($id, $schoolId);
-        
+
         if (!$product) {
             return redirect()->to('/pos')->with('error', 'Product not found.');
         }
@@ -167,7 +167,7 @@ class PosController extends BaseController
     }
 
     /**
-     * Update an existing product
+     * Update an existing product.
      */
     public function update(int $id)
     {
@@ -216,7 +216,7 @@ class PosController extends BaseController
     }
 
     /**
-     * Delete a product
+     * Delete a product.
      */
     public function delete(int $id)
     {
@@ -225,7 +225,7 @@ class PosController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Verify product exists
         $product = $this->service->getById($id, $schoolId);
         if (!$product) {

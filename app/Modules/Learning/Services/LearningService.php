@@ -3,15 +3,18 @@
 namespace Modules\Learning\Services;
 
 use Modules\Learning\Models\CourseModel;
-use Modules\Learning\Models\LessonModel;
 use Modules\Learning\Models\EnrollmentModel;
+use Modules\Learning\Models\LessonModel;
 use Modules\Learning\Models\ProgressModel;
 
 class LearningService
 {
     protected $courseModel;
+
     protected $lessonModel;
+
     protected $enrollmentModel;
+
     protected $progressModel;
 
     public function __construct()
@@ -25,11 +28,11 @@ class LearningService
     public function getSchoolCourses(int $schoolId, ?string $status = null)
     {
         $builder = $this->courseModel->where('school_id', $schoolId);
-        
+
         if ($status) {
             $builder->where('status', $status);
         }
-        
+
         return $builder->findAll();
     }
 
@@ -70,7 +73,7 @@ class LearningService
             'student_id' => $studentId,
             'course_id' => $courseId,
             'status' => 'active',
-            'enrolled_at' => date('Y-m-d H:i:s')
+            'enrolled_at' => date('Y-m-d H:i:s'),
         ]);
     }
 
@@ -84,7 +87,7 @@ class LearningService
 
     public function getCourseEnrollments(int $courseId)
     {
-         return $this->enrollmentModel->where('course_id', $courseId)->findAll();
+        return $this->enrollmentModel->where('course_id', $courseId)->findAll();
     }
 
     public function markLessonComplete(int $enrollmentId, int $lessonId)
@@ -99,7 +102,7 @@ class LearningService
         return $this->progressModel->insert([
             'enrollment_id' => $enrollmentId,
             'lesson_id' => $lessonId,
-            'completed_at' => date('Y-m-d H:i:s')
+            'completed_at' => date('Y-m-d H:i:s'),
         ]);
     }
 

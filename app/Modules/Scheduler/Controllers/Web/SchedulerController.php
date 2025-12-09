@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use App\Modules\Scheduler\Models\ScheduledJobModel;
 
 /**
- * SchedulerController - Handles CRUD operations for scheduled jobs
- * 
+ * SchedulerController - Handles CRUD operations for scheduled jobs.
+ *
  * All data is tenant-scoped by school_id from session.
  */
 class SchedulerController extends BaseController
@@ -20,14 +20,14 @@ class SchedulerController extends BaseController
     }
 
     /**
-     * Check if user has permission to access scheduler module
+     * Check if user has permission to access scheduler module.
      */
     protected function checkAccess(): bool
     {
         // Allow admins only
         $usertypeID = session()->get('usertypeID');
         $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
-        
+
         if ($isAdmin) {
             return true;
         }
@@ -47,7 +47,7 @@ class SchedulerController extends BaseController
     }
 
     /**
-     * Get current school ID from session
+     * Get current school ID from session.
      */
     protected function getSchoolId(): int
     {
@@ -55,7 +55,7 @@ class SchedulerController extends BaseController
     }
 
     /**
-     * List all scheduled jobs
+     * List all scheduled jobs.
      */
     public function index()
     {
@@ -64,7 +64,7 @@ class SchedulerController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         $data = [
             'jobs' => $this->model
                 ->where('school_id', $schoolId)
@@ -76,7 +76,7 @@ class SchedulerController extends BaseController
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
@@ -88,7 +88,7 @@ class SchedulerController extends BaseController
     }
 
     /**
-     * Store a new scheduled job
+     * Store a new scheduled job.
      */
     public function store()
     {
@@ -97,7 +97,7 @@ class SchedulerController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Validation rules
         $rules = [
             'name'            => 'required|min_length[3]|max_length[150]',
@@ -138,7 +138,7 @@ class SchedulerController extends BaseController
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit(int $id)
     {
@@ -150,7 +150,7 @@ class SchedulerController extends BaseController
         $job = $this->model
             ->where('school_id', $schoolId)
             ->find($id);
-        
+
         if (!$job) {
             return redirect()->to('/scheduler')->with('error', 'Scheduled job not found.');
         }
@@ -163,7 +163,7 @@ class SchedulerController extends BaseController
     }
 
     /**
-     * Update an existing scheduled job
+     * Update an existing scheduled job.
      */
     public function update(int $id)
     {
@@ -177,7 +177,7 @@ class SchedulerController extends BaseController
         $existingJob = $this->model
             ->where('school_id', $schoolId)
             ->find($id);
-            
+
         if (!$existingJob) {
             return redirect()->to('/scheduler')->with('error', 'Scheduled job not found.');
         }
@@ -220,7 +220,7 @@ class SchedulerController extends BaseController
     }
 
     /**
-     * Delete a scheduled job
+     * Delete a scheduled job.
      */
     public function delete(int $id)
     {
@@ -229,12 +229,12 @@ class SchedulerController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Verify job exists
         $job = $this->model
             ->where('school_id', $schoolId)
             ->find($id);
-            
+
         if (!$job) {
             return redirect()->to('/scheduler')->with('error', 'Scheduled job not found.');
         }

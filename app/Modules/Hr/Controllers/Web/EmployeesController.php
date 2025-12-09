@@ -35,7 +35,7 @@ class EmployeesController extends BaseController
     public function store()
     {
         $data = $this->request->getPost();
-        
+
         // Basic validation handled by service/model
         $errors = $this->service->validate($data);
         if (!empty($errors)) {
@@ -60,7 +60,7 @@ class EmployeesController extends BaseController
     public function update(int $id)
     {
         $data = $this->request->getPost();
-        
+
         $errors = $this->service->validate($data, $id);
         if (!empty($errors)) {
             return redirect()->back()->withInput()->with('errors', $errors);

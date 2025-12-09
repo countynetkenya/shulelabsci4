@@ -2,13 +2,13 @@
 
 namespace Tests\Inventory;
 
+use App\Database\Seeds\InventoryV2Seeder;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\DatabaseTestTrait;
-use Modules\Inventory\Services\InventoryService;
 use Modules\Inventory\Models\InventoryItemModel;
 use Modules\Inventory\Models\InventoryStockModel;
+use Modules\Inventory\Services\InventoryService;
 use Tests\Support\Traits\TenantTestTrait;
-use App\Database\Seeds\InventoryV2Seeder;
 
 /**
  * @internal
@@ -19,25 +19,38 @@ final class InventoryServiceTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected InventoryService $service;
+
     protected InventoryItemModel $itemModel;
+
     protected InventoryStockModel $stockModel;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Manual Cleanup
         $this->db->disableForeignKeyChecks();
-        if ($this->db->tableExists('inventory_transfers')) $this->db->table('inventory_transfers')->truncate();
-        if ($this->db->tableExists('inventory_stock')) $this->db->table('inventory_stock')->truncate();
-        if ($this->db->tableExists('inventory_items')) $this->db->table('inventory_items')->truncate();
-        if ($this->db->tableExists('inventory_categories')) $this->db->table('inventory_categories')->truncate();
-        if ($this->db->tableExists('inventory_locations')) $this->db->table('inventory_locations')->truncate();
+        if ($this->db->tableExists('inventory_transfers')) {
+            $this->db->table('inventory_transfers')->truncate();
+        }
+        if ($this->db->tableExists('inventory_stock')) {
+            $this->db->table('inventory_stock')->truncate();
+        }
+        if ($this->db->tableExists('inventory_items')) {
+            $this->db->table('inventory_items')->truncate();
+        }
+        if ($this->db->tableExists('inventory_categories')) {
+            $this->db->table('inventory_categories')->truncate();
+        }
+        if ($this->db->tableExists('inventory_locations')) {
+            $this->db->table('inventory_locations')->truncate();
+        }
         $this->db->enableForeignKeyChecks();
-        
+
         $this->setupTenantContext();
         // $this->seed(InventoryV2Seeder::class); // Removed: TenantTestTrait handles basic seeding, InventoryV2Seeder might conflict or be redundant if not scoped.
         // Actually, InventoryV2Seeder seeds categories and locations which TenantTestTrait does NOT.
@@ -62,7 +75,7 @@ final class InventoryServiceTest extends CIUnitTestCase
             'description' => 'High performance laptop',
             'unit_cost' => 50000.00,
             'reorder_level' => 5,
-            'type' => 'physical'
+            'type' => 'physical',
         ];
 
         $itemId = $this->service->createItem($data);
@@ -86,7 +99,7 @@ final class InventoryServiceTest extends CIUnitTestCase
             'sku' => 'DESK-001',
             'category_id' => $categoryId,
             'unit_cost' => 5000.00,
-            'type' => 'physical'
+            'type' => 'physical',
         ]);
 
         $items = $this->service->getItems();
@@ -99,10 +112,10 @@ final class InventoryServiceTest extends CIUnitTestCase
     {
         $category = $this->db->table('inventory_categories')->get()->getRow();
         $categoryId = $category->id;
-        
+
         $location = $this->db->table('inventory_locations')->where('is_default', 1)->get()->getRow();
         $locationId = $location->id;
-        
+
         $user = $this->db->table('users')->get()->getRow();
         $userId = $user->id;
 
@@ -111,7 +124,7 @@ final class InventoryServiceTest extends CIUnitTestCase
             'sku' => 'NOTE-001',
             'category_id' => $categoryId,
             'unit_cost' => 50.00,
-            'type' => 'physical'
+            'type' => 'physical',
         ]);
 
         $this->service->adjustStock($itemId, $locationId, 50, 'Restocking', $userId);
@@ -124,10 +137,10 @@ final class InventoryServiceTest extends CIUnitTestCase
     {
         $category = $this->db->table('inventory_categories')->get()->getRow();
         $categoryId = $category->id;
-        
+
         $location = $this->db->table('inventory_locations')->where('is_default', 1)->get()->getRow();
         $locationId = $location->id;
-        
+
         $user = $this->db->table('users')->get()->getRow();
         $userId = $user->id;
 
@@ -136,7 +149,7 @@ final class InventoryServiceTest extends CIUnitTestCase
             'sku' => 'PEN-001',
             'category_id' => $categoryId,
             'unit_cost' => 10.00,
-            'type' => 'physical'
+            'type' => 'physical',
         ]);
 
         // Add initial stock
@@ -153,10 +166,10 @@ final class InventoryServiceTest extends CIUnitTestCase
     {
         $category = $this->db->table('inventory_categories')->get()->getRow();
         $categoryId = $category->id;
-        
+
         $location = $this->db->table('inventory_locations')->where('is_default', 1)->get()->getRow();
         $locationId = $location->id;
-        
+
         $user = $this->db->table('users')->get()->getRow();
         $userId = $user->id;
 
@@ -165,7 +178,7 @@ final class InventoryServiceTest extends CIUnitTestCase
             'sku' => 'MARK-001',
             'category_id' => $categoryId,
             'unit_cost' => 20.00,
-            'type' => 'physical'
+            'type' => 'physical',
         ]);
 
         $this->expectException(\Exception::class);

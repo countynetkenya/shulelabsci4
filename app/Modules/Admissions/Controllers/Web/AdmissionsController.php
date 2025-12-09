@@ -29,11 +29,11 @@ class AdmissionsController extends BaseController
     public function store()
     {
         $schoolId = session()->get('school_id') ?? 1;
-        
+
         if (!$this->validate([
             'applicant_name' => 'required|min_length[3]',
             'grade_applied' => 'required',
-            'parent_contact' => 'required'
+            'parent_contact' => 'required',
         ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
@@ -56,7 +56,7 @@ class AdmissionsController extends BaseController
     {
         $schoolId = session()->get('school_id') ?? 1;
         $data['application'] = $this->service->getById($id, $schoolId);
-        
+
         if (!$data['application']) {
             return redirect()->to('/admissions')->with('error', 'Application not found');
         }
@@ -71,7 +71,7 @@ class AdmissionsController extends BaseController
         if (!$this->validate([
             'applicant_name' => 'required|min_length[3]',
             'grade_applied' => 'required',
-            'parent_contact' => 'required'
+            'parent_contact' => 'required',
         ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
