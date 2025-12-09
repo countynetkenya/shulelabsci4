@@ -1,0 +1,68 @@
+name: Auto-merge Copilot PRs
+
+on:
+  pull_request_review:
+    types: [submitted]
+  check_suite:
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    name: Auto-merge approved Copilot PRs
+    runs-on: ubuntu-latest
+    if: |
+      (github.event.pull_request.user.login == 'copilot-swe-agent' ||
+       github.event.pull_request.user.login == 'github-actions[bot]' ||
+       contains(github.event.pull_request.head.ref, 'copilot/'))
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Enable auto-merge for Copilot PRs
+        run: |
+          # Get PR number
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          
+          # Check if PR is from Copilot
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          
+          if [[ "$BRANCH_NAME" == copilot/* ]]; then
+            echo "This is a Copilot PR, attempting to enable auto-merge..."
+            
+            # Enable auto-merge (requires branch protection rules to be set up)
+            gh pr merge "$PR_NUMBER" --auto --squash || echo "Could not enable auto-merge. Please merge manually."
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  merge-ready:
+    name: Merge Ready Copilot PRs
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Find and merge ready Copilot PRs
+        run: |
+          echo "Checking for mergeable Copilot PRs..."
+          
+          # List all open PRs from copilot branches
+          gh pr list --state open --json number,headRefName,mergeable,statusCheckRollup --jq '.[] | select(.headRefName | startswith("copilot/"))' | while read -r pr; do
+            PR_NUM=$(echo "$pr" | jq -r '.number')
+            MERGEABLE=$(echo "$pr" | jq -r '.mergeable')
+            
+            if [[ "$MERGEABLE" == "MERGEABLE" ]]; then
+              echo "Attempting to merge PR #$PR_NUM..."
+              gh pr merge "$PR_NUM" --squash --delete-branch || echo "Failed to merge PR #$PR_NUM"
+            fi
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
