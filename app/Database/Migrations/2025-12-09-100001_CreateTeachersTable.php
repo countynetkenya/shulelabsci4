@@ -30,6 +30,7 @@ class CreateTeachersTable extends Migration
                 'type'       => 'INT',
                 'constraint' => 11,
                 'unsigned'   => true,
+                'null'       => true,
                 'comment'    => 'Reference to users.id',
             ],
             'first_name' => [

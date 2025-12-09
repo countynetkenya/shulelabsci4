@@ -106,7 +106,7 @@ trait TenantTestTrait
     {
         return [
             'user_id'     => $this->userId,
-            'username'    => 'testteacher',
+            'username'    => 'testadmin',
             'school_id'   => $this->schoolId,
             'schoolID'    => $this->schoolId,
             'usertypeID'  => 2, // Teacher user type
@@ -122,7 +122,7 @@ trait TenantTestTrait
     {
         return [
             'user_id'     => $this->userId,
-            'username'    => 'teststudent',
+            'username'    => 'testadmin',
             'school_id'   => $this->schoolId,
             'schoolID'    => $this->schoolId,
             'usertypeID'  => 3, // Student user type
