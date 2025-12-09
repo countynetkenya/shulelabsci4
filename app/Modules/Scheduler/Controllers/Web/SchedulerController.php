@@ -123,6 +123,8 @@ class SchedulerController extends BaseController
             'retry_delay_seconds' => (int) ($this->request->getPost('retry_delay_seconds') ?? 60),
             'timeout_seconds'     => (int) ($this->request->getPost('timeout_seconds') ?? 3600),
             'overlap_prevention'  => (int) ($this->request->getPost('overlap_prevention') ?? 1),
+            // TODO: Calculate next_run_at based on cron expression using CronExpressionParser
+            // For now, using a simple +1 hour as placeholder
             'next_run_at'         => date('Y-m-d H:i:s', strtotime('+1 hour')),
         ];
 

@@ -9,7 +9,12 @@ use CodeIgniter\Database\Seeder;
  */
 class PosSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Run the seeder to insert sample POS products
+     * 
+     * @return void
+     */
+    public function run(): void
     {
         // Clear existing data
         $this->db->table('pos_products')->truncate();

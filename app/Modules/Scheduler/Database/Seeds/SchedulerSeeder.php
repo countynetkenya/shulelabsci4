@@ -9,7 +9,12 @@ use CodeIgniter\Database\Seeder;
  */
 class SchedulerSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Run the seeder to insert sample scheduled jobs
+     * 
+     * @return void
+     */
+    public function run(): void
     {
         // Clear existing data
         $this->db->table('scheduled_jobs')->truncate();

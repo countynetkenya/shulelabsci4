@@ -50,7 +50,7 @@
                             <datalist id="categoryList">
                                 <?php if (!empty($categories)): ?>
                                     <?php foreach ($categories as $cat): ?>
-                                        <option value="<?= esc($cat['category']) ?>">
+                                        <option value="<?= esc($cat['category']) ?>"></option>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </datalist>
