@@ -79,6 +79,24 @@
         </li>
         
         <li style="padding: 10px 20px;">
+            <a href="<?= base_url('transport') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-bus"></i> Transport
+            </a>
+        </li>
+        
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('parent-engagement') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-users"></i> Parent Engagement
+            </a>
+        </li>
+        
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('lms') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-graduation-cap"></i> LMS
+            </a>
+        </li>
+        
+        <li style="padding: 10px 20px;">
             <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
                 <i class="fa fa-money"></i> Fees
             </a>
