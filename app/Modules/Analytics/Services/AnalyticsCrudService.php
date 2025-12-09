@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Modules\Admissions\Services;
+namespace App\Modules\Analytics\Services;
 
-use App\Modules\Admissions\Models\AdmissionsApplicationModel;
+use App\Modules\Analytics\Models\AnalyticsDashboardModel;
 use Modules\Foundation\Services\AuditService;
 
 /**
- * AdmissionsCrudService - Business logic for admissions management
+ * AnalyticsCrudService - Business logic for analytics dashboard management
  * 
  * All queries are tenant-scoped by school_id.
  * Integrates with AuditService for logging critical actions.
  */
-class AdmissionsCrudService
+class AnalyticsCrudService
 {
-    protected AdmissionsApplicationModel $model;
+    protected AnalyticsDashboardModel $model;
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
-        $this->model = new AdmissionsApplicationModel();
+        $this->model = new AnalyticsDashboardModel();
         
         // Try to inject AuditService
         try {
@@ -30,42 +30,42 @@ class AdmissionsCrudService
     }
 
     /**
-     * Get all applications for a school
+     * Get all dashboards for a school
      */
-    public function getAll(int $schoolId, array $filters = []): array
+    public function getAll(int $schoolId, ?int $userId = null): array
     {
-        return $this->model->getApplicationsBySchool($schoolId, $filters);
+        return $this->model->getDashboardsBySchool($schoolId, $userId);
     }
 
     /**
-     * Get a single application by ID (scoped to school)
+     * Get a single dashboard by ID (scoped to school)
      */
     public function getById(int $id, int $schoolId): ?array
     {
-        $application = $this->model
+        $dashboard = $this->model
             ->where('school_id', $schoolId)
             ->where('id', $id)
             ->first();
         
-        return $application ?: null;
+        return $dashboard ?: null;
     }
 
     /**
-     * Create a new application
+     * Create a new dashboard
      */
     public function create(array $data): int|false
     {
-        // Auto-generate application number if not provided
-        if (empty($data['application_number']) && !empty($data['school_id']) && !empty($data['academic_year'])) {
-            $data['application_number'] = $this->model->generateApplicationNumber(
-                $data['school_id'],
-                $data['academic_year']
-            );
+        // Set defaults
+        if (!isset($data['is_default'])) {
+            $data['is_default'] = 0;
         }
-
-        // Set default status if not provided
-        if (!isset($data['status'])) {
-            $data['status'] = 'submitted';
+        if (!isset($data['is_shared'])) {
+            $data['is_shared'] = 0;
+        }
+        if (!isset($data['layout'])) {
+            $data['layout'] = json_encode([]);
+        } elseif (is_array($data['layout'])) {
+            $data['layout'] = json_encode($data['layout']);
         }
 
         $id = $this->model->insert($data);
@@ -73,11 +73,11 @@ class AdmissionsCrudService
         if ($id && $this->auditService) {
             try {
                 $this->auditService->log(
-                    'admissions',
+                    'analytics',
                     'create',
                     $id,
                     $data,
-                    'Application created: ' . ($data['application_number'] ?? $id)
+                    'Dashboard created: ' . ($data['name'] ?? $id)
                 );
             } catch (\Throwable $e) {
                 log_message('error', 'Audit log failed: ' . $e->getMessage());
@@ -88,14 +88,19 @@ class AdmissionsCrudService
     }
 
     /**
-     * Update an existing application
+     * Update an existing dashboard
      */
     public function update(int $id, array $data, int $schoolId): bool
     {
-        // Ensure application belongs to school
+        // Ensure dashboard belongs to school
         $existing = $this->getById($id, $schoolId);
         if (!$existing) {
             return false;
+        }
+
+        // Handle layout encoding
+        if (isset($data['layout']) && is_array($data['layout'])) {
+            $data['layout'] = json_encode($data['layout']);
         }
 
         $success = $this->model->update($id, $data);
@@ -103,11 +108,11 @@ class AdmissionsCrudService
         if ($success && $this->auditService) {
             try {
                 $this->auditService->log(
-                    'admissions',
+                    'analytics',
                     'update',
                     $id,
                     $data,
-                    'Application updated: ' . ($existing['application_number'] ?? $id)
+                    'Dashboard updated: ' . ($existing['name'] ?? $id)
                 );
             } catch (\Throwable $e) {
                 log_message('error', 'Audit log failed: ' . $e->getMessage());
@@ -118,11 +123,11 @@ class AdmissionsCrudService
     }
 
     /**
-     * Delete an application
+     * Delete a dashboard
      */
     public function delete(int $id, int $schoolId): bool
     {
-        // Ensure application belongs to school
+        // Ensure dashboard belongs to school
         $existing = $this->getById($id, $schoolId);
         if (!$existing) {
             return false;
@@ -133,11 +138,11 @@ class AdmissionsCrudService
         if ($success && $this->auditService) {
             try {
                 $this->auditService->log(
-                    'admissions',
+                    'analytics',
                     'delete',
                     $id,
                     $existing,
-                    'Application deleted: ' . ($existing['application_number'] ?? $id)
+                    'Dashboard deleted: ' . ($existing['name'] ?? $id)
                 );
             } catch (\Throwable $e) {
                 log_message('error', 'Audit log failed: ' . $e->getMessage());
@@ -145,13 +150,5 @@ class AdmissionsCrudService
         }
 
         return $success;
-    }
-
-    /**
-     * Get application statistics
-     */
-    public function getStatistics(int $schoolId, ?string $academicYear = null): array
-    {
-        return $this->model->getStatistics($schoolId, $academicYear);
     }
 }
