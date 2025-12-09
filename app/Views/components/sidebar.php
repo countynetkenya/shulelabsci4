@@ -59,6 +59,18 @@
                 <i class="fa fa-book"></i> Library
             </a>
         </li>
+
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('pos') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-shopping-cart"></i> POS
+            </a>
+        </li>
+
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('scheduler') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-clock-o"></i> Scheduler
+            </a>
+        </li>
         
         <li style="padding: 10px 20px;">
             <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
