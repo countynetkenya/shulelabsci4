@@ -80,7 +80,7 @@
         <!-- MultiTenant Module - Super Admin Only -->
         <li style="padding: 10px 20px;">
             <a href="<?= base_url('multitenant') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-school"></i> Tenants
+                <i class="fa fa-building"></i> Tenants
             </a>
         </li>
         <?php endif; ?>
