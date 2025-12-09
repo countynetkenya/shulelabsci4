@@ -175,9 +175,17 @@ class ParentEngagementWebController extends BaseController
     public function campaigns()
     {
         $schoolId = session()->get('school_id') ?? 1;
+        $campaigns = $this->campaignModel->where('school_id', $schoolId)->orderBy('created_at', 'DESC')->findAll();
+        
+        // Calculate progress percentage for each campaign
+        foreach ($campaigns as &$campaign) {
+            $campaign['progress_percentage'] = ($campaign['target_amount'] > 0) ? 
+                min(100, ($campaign['raised_amount'] / $campaign['target_amount']) * 100) : 0;
+        }
+        
         $data = [
             'title' => 'Fundraising Campaigns',
-            'campaigns' => $this->campaignModel->where('school_id', $schoolId)->orderBy('created_at', 'DESC')->findAll(),
+            'campaigns' => $campaigns,
         ];
         return view('Modules\ParentEngagement\Views\campaigns_index', $data);
     }
