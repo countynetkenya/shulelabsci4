@@ -14,6 +14,9 @@ class Routes extends BaseConfig
             $routes->get('courses/create', 'CoursesController::create');
             $routes->post('courses', 'CoursesController::store');
             $routes->get('courses/(:num)', 'CoursesController::show/$1');
+            $routes->get('courses/(:num)/edit', 'CoursesController::edit/$1');
+            $routes->post('courses/(:num)/update', 'CoursesController::update/$1');
+            $routes->get('courses/(:num)/delete', 'CoursesController::delete/$1');
 
             // Lesson routes
             $routes->get('courses/(:num)/lessons/create', 'LessonsController::create/$1');
