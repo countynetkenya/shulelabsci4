@@ -59,6 +59,31 @@
                 <i class="fa fa-book"></i> Library
             </a>
         </li>
+
+        <?php if ($isAdmin) : ?>
+        <!-- Foundation Module - Core System Settings -->
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('system/settings') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-layer-group"></i> Foundation
+            </a>
+        </li>
+
+        <!-- Admin Module - System Administration -->
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('admin/settings') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-cog"></i> Admin Settings
+            </a>
+        </li>
+        <?php endif; ?>
+
+        <?php if (in_array($usertypeID, [0, '0'])) : ?>
+        <!-- MultiTenant Module - Super Admin Only -->
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('multitenant') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-school"></i> Tenants
+            </a>
+        </li>
+        <?php endif; ?>
         
         <li style="padding: 10px 20px;">
             <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
