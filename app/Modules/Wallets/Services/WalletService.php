@@ -22,22 +22,116 @@ class WalletService
      * Get all wallets for a school.
      *
      * @param int $schoolId
+     * @param array $filters Optional filters
      * @return array
      */
-    public function getWallets(int $schoolId): array
+    public function getWallets(int $schoolId, array $filters = []): array
     {
-        return $this->db->table('wallets')
-            ->where('school_id', $schoolId)
-            ->get()
-            ->getResultArray();
+        $builder = $this->db->table('wallets')
+            ->where('school_id', $schoolId);
+
+        // Apply filters
+        if (!empty($filters['search'])) {
+            $builder->like('user_id', $filters['search']);
+        }
+
+        if (!empty($filters['wallet_type'])) {
+            $builder->where('wallet_type', $filters['wallet_type']);
+        }
+
+        if (!empty($filters['status'])) {
+            $builder->where('status', $filters['status']);
+        }
+
+        return $builder->get()->getResultArray();
     }
 
     /**
-     * Create a wallet for a user.
+     * Get wallet by ID (scoped to school)
+     *
+     * @param int $id
+     * @param int $schoolId
+     * @return array|null
      */
-    public function createWallet(int $userId, string $walletType, ?int $schoolId = null): int
+    public function getWalletById(int $id, int $schoolId): ?array
     {
-        $schoolId = $schoolId ?? session('school_id');
+        $wallet = $this->db->table('wallets')
+            ->where('id', $id)
+            ->where('school_id', $schoolId)
+            ->get()
+            ->getRowArray();
+
+        return $wallet ?: null;
+    }
+
+    /**
+     * Get wallet summary for a school
+     *
+     * @param int $schoolId
+     * @return array
+     */
+    public function getSummary(int $schoolId): array
+    {
+        $result = $this->db->table('wallets')
+            ->select('
+                COUNT(*) as total_wallets,
+                SUM(balance) as total_balance,
+                AVG(balance) as average_balance,
+                SUM(CASE WHEN status = "active" THEN 1 ELSE 0 END) as active_count,
+                SUM(CASE WHEN status = "suspended" THEN 1 ELSE 0 END) as suspended_count
+            ')
+            ->where('school_id', $schoolId)
+            ->get()
+            ->getRowArray();
+
+        return $result ?: [
+            'total_wallets'    => 0,
+            'total_balance'    => 0,
+            'average_balance'  => 0,
+            'active_count'     => 0,
+            'suspended_count'  => 0,
+        ];
+    }
+
+    /**
+     * Update wallet
+     *
+     * @param int $id
+     * @param array $data
+     * @param int $schoolId
+     * @return bool
+     */
+    public function updateWallet(int $id, array $data, int $schoolId): bool
+    {
+        return $this->db->table('wallets')
+            ->where('id', $id)
+            ->where('school_id', $schoolId)
+            ->update($data);
+    }
+
+    /**
+     * Delete wallet
+     *
+     * @param int $id
+     * @param int $schoolId
+     * @return bool
+     */
+    public function deleteWallet(int $id, int $schoolId): bool
+    {
+        return $this->db->table('wallets')
+            ->where('id', $id)
+            ->where('school_id', $schoolId)
+            ->delete();
+    }
+
+    /**
+     * Create a wallet for a user (enhanced version).
+     */
+    public function createWallet(array $data): int
+    {
+        $schoolId = $data['school_id'] ?? session('school_id');
+        $userId = $data['user_id'];
+        $walletType = $data['wallet_type'];
 
         $existing = $this->db->table('wallets')
             ->where('school_id', $schoolId)
@@ -50,10 +144,12 @@ class WalletService
         }
 
         $this->db->table('wallets')->insert([
-            'school_id' => $schoolId,
-            'user_id' => $userId,
+            'school_id'   => $schoolId,
+            'user_id'     => $userId,
             'wallet_type' => $walletType,
-            'balance' => 0,
+            'balance'     => $data['balance'] ?? 0,
+            'currency'    => $data['currency'] ?? 'KES',
+            'status'      => $data['status'] ?? 'active',
         ]);
 
         return (int) $this->db->insertID();
