@@ -27,6 +27,16 @@ class Routes
             $routes->post('fee-structures', 'FinanceWebController::createFeeStructure');
         });
 
+        // Transactions CRUD Routes
+        $routes->group('finance/transactions', ['namespace' => 'App\Modules\Finance\Controllers\Web'], static function (RouteCollection $routes): void {
+            $routes->get('/', 'FinanceController::index');
+            $routes->get('create', 'FinanceController::create');
+            $routes->post('store', 'FinanceController::store');
+            $routes->get('edit/(:num)', 'FinanceController::edit/$1');
+            $routes->post('update/(:num)', 'FinanceController::update/$1');
+            $routes->get('delete/(:num)', 'FinanceController::delete/$1');
+        });
+
         // API Routes
         $routes->group('api/finance', ['filter' => 'auth', 'namespace' => 'Modules\Finance\Controllers\Api'], static function (RouteCollection $routes): void {
             $routes->get('invoices', 'InvoiceApiController::index');
