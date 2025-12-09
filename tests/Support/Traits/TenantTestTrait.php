@@ -3,25 +3,25 @@
 namespace Tests\Support\Traits;
 
 /**
- * TenantTestTrait - Provides standardized tenant context for feature tests
- * 
+ * TenantTestTrait - Provides standardized tenant context for feature tests.
+ *
  * This trait sets up a complete tenant context including:
  * - School record
  * - Admin user with role
  * - Session state
- * 
+ *
  * Usage:
  * ```php
  * class MyTest extends CIUnitTestCase
  * {
  *     use TenantTestTrait;
- *     
+ *
  *     protected function setUp(): void
  *     {
  *         parent::setUp();
  *         $this->setupTenantContext();
  *     }
- *     
+ *
  *     public function testSomething()
  *     {
  *         $this->withSession($this->getAdminSession())
@@ -33,11 +33,13 @@ namespace Tests\Support\Traits;
 trait TenantTestTrait
 {
     protected int $schoolId;
+
     protected int $userId;
+
     protected int $roleId;
 
     /**
-     * Set up complete tenant context for testing
+     * Set up complete tenant context for testing.
      */
     protected function setupTenantContext(): void
     {
@@ -84,7 +86,7 @@ trait TenantTestTrait
     }
 
     /**
-     * Get admin session data for authenticated requests
+     * Get admin session data for authenticated requests.
      */
     protected function getAdminSession(): array
     {
@@ -100,7 +102,7 @@ trait TenantTestTrait
     }
 
     /**
-     * Get teacher session data for authenticated requests
+     * Get teacher session data for authenticated requests.
      */
     protected function getTeacherSession(): array
     {
@@ -116,7 +118,7 @@ trait TenantTestTrait
     }
 
     /**
-     * Get student session data for authenticated requests
+     * Get student session data for authenticated requests.
      */
     protected function getStudentSession(): array
     {

@@ -8,8 +8,8 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * MultiTenantCrudTest - Feature tests for MultiTenant CRUD operations
- * 
+ * MultiTenantCrudTest - Feature tests for MultiTenant CRUD operations.
+ *
  * Tests all CRUD endpoints for the MultiTenant module.
  */
 class MultiTenantCrudTest extends CIUnitTestCase
@@ -19,15 +19,18 @@ class MultiTenantCrudTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->setupTenantContext();
-        
+
         // Override to use super admin (usertypeID = 0)
         $this->superAdminSession = [
             'logged_in'   => true,
@@ -38,7 +41,7 @@ class MultiTenantCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Index page displays tenants
+     * Test: Index page displays tenants.
      */
     public function testIndexDisplaysTenants()
     {
@@ -64,7 +67,7 @@ class MultiTenantCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Create page displays form
+     * Test: Create page displays form.
      */
     public function testCreatePageDisplaysForm()
     {
@@ -78,7 +81,7 @@ class MultiTenantCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Store creates a new tenant
+     * Test: Store creates a new tenant.
      */
     public function testStoreCreatesTenant()
     {
@@ -92,19 +95,19 @@ class MultiTenantCrudTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirectTo('/multitenant');
-        
+
         // Verify tenant was created
         $tenant = $this->db->table('tenants')
                            ->where('subdomain', 'new-school')
                            ->get()
                            ->getRowArray();
-        
+
         $this->assertNotNull($tenant);
         $this->assertEquals('New School', $tenant['name']);
     }
 
     /**
-     * Test: Edit page displays form with tenant data
+     * Test: Edit page displays form with tenant data.
      */
     public function testEditPageDisplaysFormWithData()
     {
@@ -131,7 +134,7 @@ class MultiTenantCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Update modifies an existing tenant
+     * Test: Update modifies an existing tenant.
      */
     public function testUpdateModifiesTenant()
     {
@@ -158,19 +161,19 @@ class MultiTenantCrudTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirectTo('/multitenant');
-        
+
         // Verify tenant was updated
         $tenant = $this->db->table('tenants')
                            ->where('id', $tenantId)
                            ->get()
                            ->getRowArray();
-        
+
         $this->assertEquals('Updated School Name', $tenant['name']);
         $this->assertEquals('active', $tenant['status']);
     }
 
     /**
-     * Test: Delete removes a tenant
+     * Test: Delete removes a tenant.
      */
     public function testDeleteRemovesTenant()
     {
@@ -191,18 +194,18 @@ class MultiTenantCrudTest extends CIUnitTestCase
                        ->get("multitenant/delete/{$tenantId}");
 
         $result->assertRedirectTo('/multitenant');
-        
+
         // Verify tenant was deleted
         $tenant = $this->db->table('tenants')
                            ->where('id', $tenantId)
                            ->get()
                            ->getRowArray();
-        
+
         $this->assertNull($tenant);
     }
 
     /**
-     * Test: Non-super-admin users cannot access multitenant
+     * Test: Non-super-admin users cannot access multitenant.
      */
     public function testNonSuperAdminCannotAccessTenants()
     {
@@ -221,7 +224,7 @@ class MultiTenantCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Activate tenant
+     * Test: Activate tenant.
      */
     public function testActivateTenant()
     {
@@ -242,13 +245,13 @@ class MultiTenantCrudTest extends CIUnitTestCase
                        ->get("multitenant/activate/{$tenantId}");
 
         $result->assertRedirectTo('/multitenant');
-        
+
         // Verify tenant was activated
         $tenant = $this->db->table('tenants')
                            ->where('id', $tenantId)
                            ->get()
                            ->getRowArray();
-        
+
         $this->assertEquals('active', $tenant['status']);
         $this->assertNotNull($tenant['activated_at']);
     }

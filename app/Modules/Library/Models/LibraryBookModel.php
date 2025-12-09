@@ -5,20 +5,25 @@ namespace App\Modules\Library\Models;
 use CodeIgniter\Model;
 
 /**
- * LibraryBookModel - Manages the library_books table
- * 
+ * LibraryBookModel - Manages the library_books table.
+ *
  * Columns (from migration):
  * - id, school_id, title, isbn, author, category, total_copies, available_copies, created_at, updated_at
  */
 class LibraryBookModel extends Model
 {
     protected $table = 'library_books';
+
     protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
+
     protected $returnType = 'array';
+
     protected $useSoftDeletes = false;
+
     protected $protectFields = true;
-    
+
     protected $allowedFields = [
         'school_id',
         'title',
@@ -30,8 +35,11 @@ class LibraryBookModel extends Model
     ];
 
     protected $useTimestamps = true;
+
     protected $dateFormat = 'datetime';
+
     protected $createdField = 'created_at';
+
     protected $updatedField = 'updated_at';
 
     // Validation rules
@@ -56,7 +64,7 @@ class LibraryBookModel extends Model
     ];
 
     /**
-     * Get books by school with optional filters
+     * Get books by school with optional filters.
      */
     public function getBooksBySchool(int $schoolId, array $filters = []): array
     {
@@ -82,7 +90,7 @@ class LibraryBookModel extends Model
     }
 
     /**
-     * Get book categories for a school
+     * Get book categories for a school.
      */
     public function getCategories(int $schoolId): array
     {
@@ -94,7 +102,7 @@ class LibraryBookModel extends Model
     }
 
     /**
-     * Update available copies count
+     * Update available copies count.
      */
     public function updateAvailableCopies(int $bookId, int $change): bool
     {

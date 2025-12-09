@@ -5,25 +5,34 @@ namespace App\Modules\Admin\Models;
 use CodeIgniter\Model;
 
 /**
- * AdminSettingModel - Manages system-wide and school-specific settings
- * 
+ * AdminSettingModel - Manages system-wide and school-specific settings.
+ *
  * Supports tenant-scoping through the settings table.
  */
 class AdminSettingModel extends Model
 {
-    protected $table            = 'settings';
-    protected $primaryKey       = 'id';
+    protected $table = 'settings';
+
+    protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = ['class', 'key', 'value', 'type', 'context'];
+
+    protected $returnType = 'array';
+
+    protected $useSoftDeletes = false;
+
+    protected $protectFields = true;
+
+    protected $allowedFields = ['class', 'key', 'value', 'type', 'context'];
 
     // Dates
     protected $useTimestamps = true;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
+
+    protected $dateFormat = 'datetime';
+
+    protected $createdField = 'created_at';
+
+    protected $updatedField = 'updated_at';
 
     // Validation
     protected $validationRules = [
@@ -34,12 +43,14 @@ class AdminSettingModel extends Model
         'context' => 'permit_empty|in_list[app,user,system]',
     ];
 
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
+    protected $validationMessages = [];
+
+    protected $skipValidation = false;
+
     protected $cleanValidationRules = true;
 
     /**
-     * Get settings by class (category)
+     * Get settings by class (category).
      */
     public function getByClass(string $class): array
     {
@@ -47,7 +58,7 @@ class AdminSettingModel extends Model
     }
 
     /**
-     * Get a single setting by class and key
+     * Get a single setting by class and key.
      */
     public function getSetting(string $class, string $key): ?array
     {
@@ -57,12 +68,12 @@ class AdminSettingModel extends Model
     }
 
     /**
-     * Set or update a setting
+     * Set or update a setting.
      */
     public function setSetting(string $class, string $key, $value, string $type = 'string', string $context = 'app'): bool
     {
         $existing = $this->getSetting($class, $key);
-        
+
         $data = [
             'class'   => $class,
             'key'     => $key,
@@ -79,7 +90,7 @@ class AdminSettingModel extends Model
     }
 
     /**
-     * Get all unique classes (categories)
+     * Get all unique classes (categories).
      */
     public function getClasses(): array
     {

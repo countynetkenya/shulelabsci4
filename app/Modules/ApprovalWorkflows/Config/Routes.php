@@ -5,8 +5,8 @@ namespace Modules\ApprovalWorkflows\Config;
 use CodeIgniter\Router\RouteCollection;
 
 /**
- * ApprovalWorkflows Module Routes Configuration
- * 
+ * ApprovalWorkflows Module Routes Configuration.
+ *
  * Web Routes: /approvals/*
  */
 class Routes

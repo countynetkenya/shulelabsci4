@@ -44,8 +44,8 @@
                         <div class="col-sm-6">
                             <?php
                                 $status = old('status', $course['status'] ?? 'draft');
-                                $options = ['draft' => 'Draft', 'published' => 'Published', 'archived' => 'Archived'];
-                            ?>
+$options = ['draft' => 'Draft', 'published' => 'Published', 'archived' => 'Archived'];
+?>
                             <select name="status" id="status" class="form-control">
                                 <?php foreach ($options as $key => $value): ?>
                                     <option value="<?= $key ?>" <?= $status == $key ? 'selected' : '' ?>><?= $value ?></option>

@@ -15,7 +15,7 @@ class EmployeeWebTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrateOnce = true;
-    // protected $seedOnce = true; 
+    // protected $seedOnce = true;
 
     protected function setUp(): void
     {
@@ -46,7 +46,7 @@ class EmployeeWebTest extends CIUnitTestCase
     public function testStoreEmployee()
     {
         $data = [
-            'user_id' => $this->userId, 
+            'user_id' => $this->userId,
             'employee_number' => 'EMP001',
             'join_date' => '2023-01-01',
             'basic_salary' => 5000.00,
@@ -60,7 +60,7 @@ class EmployeeWebTest extends CIUnitTestCase
                        ->post('/hr/employees/create', $data);
 
         $result->assertRedirectTo('/hr/employees');
-        
+
         $model = new EmployeeModel();
         $employee = $model->where('employee_number', 'EMP001')->first();
         $this->assertNotNull($employee);

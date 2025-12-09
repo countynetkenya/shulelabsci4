@@ -8,8 +8,8 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * SchedulerCrudTest - Feature tests for Scheduler CRUD operations
- * 
+ * SchedulerCrudTest - Feature tests for Scheduler CRUD operations.
+ *
  * Tests all CRUD endpoints for the Scheduler module:
  * - GET /scheduler (index)
  * - GET /scheduler/create (create form)
@@ -25,8 +25,11 @@ class SchedulerCrudTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
@@ -36,7 +39,7 @@ class SchedulerCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Index page displays scheduled jobs
+     * Test: Index page displays scheduled jobs.
      */
     public function testIndexDisplaysJobs()
     {
@@ -68,7 +71,7 @@ class SchedulerCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Index page shows empty state when no jobs
+     * Test: Index page shows empty state when no jobs.
      */
     public function testIndexShowsEmptyState()
     {
@@ -80,7 +83,7 @@ class SchedulerCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Create page displays form
+     * Test: Create page displays form.
      */
     public function testCreatePageDisplaysForm()
     {
@@ -94,7 +97,7 @@ class SchedulerCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Store creates a new scheduled job
+     * Test: Store creates a new scheduled job.
      */
     public function testStoreCreatesJob()
     {
@@ -123,7 +126,7 @@ class SchedulerCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Store validates required fields
+     * Test: Store validates required fields.
      */
     public function testStoreValidatesRequiredFields()
     {
@@ -135,7 +138,7 @@ class SchedulerCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Edit page displays form with job data
+     * Test: Edit page displays form with job data.
      */
     public function testEditPageDisplaysJob()
     {
@@ -168,7 +171,7 @@ class SchedulerCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Update modifies existing job
+     * Test: Update modifies existing job.
      */
     public function testUpdateModifiesJob()
     {
@@ -213,7 +216,7 @@ class SchedulerCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Delete removes scheduled job
+     * Test: Delete removes scheduled job.
      */
     public function testDeleteRemovesJob()
     {
@@ -249,7 +252,7 @@ class SchedulerCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Tenant scoping - cannot access other school's jobs
+     * Test: Tenant scoping - cannot access other school's jobs.
      */
     public function testTenantScopingPreventsAccessToOtherSchools()
     {
@@ -278,7 +281,7 @@ class SchedulerCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Access control - redirects when not logged in
+     * Test: Access control - redirects when not logged in.
      */
     public function testAccessControlRedirectsWhenNotLoggedIn()
     {

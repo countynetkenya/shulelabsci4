@@ -5,17 +5,22 @@ namespace App\Modules\Teacher\Models;
 use CodeIgniter\Model;
 
 /**
- * TeacherModel - Manages the teachers table
+ * TeacherModel - Manages the teachers table.
  */
 class TeacherModel extends Model
 {
     protected $table = 'teachers';
+
     protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
+
     protected $returnType = 'array';
+
     protected $useSoftDeletes = false;
+
     protected $protectFields = true;
-    
+
     protected $allowedFields = [
         'school_id',
         'teacher_id',
@@ -32,8 +37,11 @@ class TeacherModel extends Model
     ];
 
     protected $useTimestamps = true;
+
     protected $dateFormat = 'datetime';
+
     protected $createdField = 'created_at';
+
     protected $updatedField = 'updated_at';
 
     // Validation rules
@@ -59,7 +67,7 @@ class TeacherModel extends Model
     ];
 
     /**
-     * Get teachers by school with optional filters
+     * Get teachers by school with optional filters.
      */
     public function getTeachersBySchool(int $schoolId, array $filters = []): array
     {
@@ -88,19 +96,19 @@ class TeacherModel extends Model
     }
 
     /**
-     * Get teacher by ID scoped to school
+     * Get teacher by ID scoped to school.
      */
     public function getTeacherById(int $id, int $schoolId): ?array
     {
         $teacher = $this->where('school_id', $schoolId)
                        ->where('id', $id)
                        ->first();
-        
+
         return $teacher ?: null;
     }
 
     /**
-     * Get active teachers count for a school
+     * Get active teachers count for a school.
      */
     public function getActiveCount(int $schoolId): int
     {
@@ -110,7 +118,7 @@ class TeacherModel extends Model
     }
 
     /**
-     * Get unique departments from teachers in a school
+     * Get unique departments from teachers in a school.
      */
     public function getDepartments(int $schoolId): array
     {

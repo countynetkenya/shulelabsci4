@@ -5,8 +5,8 @@ namespace App\Modules\Foundation\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * FoundationSeeder - Populates core foundation settings
- * 
+ * FoundationSeeder - Populates core foundation settings.
+ *
  * Seeds essential configuration for the Foundation module including
  * general settings, mail configuration, payment settings, and security settings.
  */
@@ -38,7 +38,7 @@ class FoundationSeeder extends Seeder
                 'type'    => 'string',
                 'context' => 'system',
             ],
-            
+
             // Mail Settings
             [
                 'class'   => 'mail',
@@ -75,7 +75,7 @@ class FoundationSeeder extends Seeder
                 'type'    => 'string',
                 'context' => 'system',
             ],
-            
+
             // Payment Gateway Settings
             [
                 'class'   => 'payment',
@@ -98,7 +98,7 @@ class FoundationSeeder extends Seeder
                 'type'    => 'string',
                 'context' => 'app',
             ],
-            
+
             // Security Settings
             [
                 'class'   => 'security',

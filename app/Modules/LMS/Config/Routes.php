@@ -33,7 +33,7 @@ class Routes
             $routes->get('courses/(:num)', 'CoursesApiController::show/$1');
             $routes->get('lessons/(:num)', 'LessonsApiController::show/$1');
             $routes->post('lessons/(:num)/complete', 'LessonsApiController::complete/$1');
-            
+
             // Moodle Sync
             $routes->post('moodle/grades', 'MoodleSyncApiController::pushGrades');
             $routes->post('moodle/enrollments', 'MoodleSyncApiController::syncEnrollments');

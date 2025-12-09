@@ -39,7 +39,7 @@ class PayrollApprovalApiController extends ResourceController
     {
         $userId = (int) session()->get('user_id');
         $reason = $this->request->getJSON()->reason ?? 'No reason provided';
-        
+
         $this->approvalService->reject($id, $userId, $reason);
 
         return $this->respond(['message' => 'Rejected successfully']);

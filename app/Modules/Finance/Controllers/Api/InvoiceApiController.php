@@ -4,10 +4,10 @@ namespace Modules\Finance\Controllers\Api;
 
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\RESTful\ResourceController;
+use Modules\Finance\Models\InvoiceModel;
 use Modules\Finance\Services\InMemoryInvoiceRepository;
 use Modules\Finance\Services\InvoiceRepositoryInterface;
 use Modules\Finance\Services\InvoiceService;
-use Modules\Finance\Models\InvoiceModel;
 use Modules\Foundation\Services\AuditService;
 use Modules\Foundation\Services\LedgerService;
 use RuntimeException;

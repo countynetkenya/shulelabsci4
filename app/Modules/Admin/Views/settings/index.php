@@ -93,12 +93,12 @@
                                     <td>
                                         <?php
                                         $value = $setting['value'];
-                                        if (strlen($value) > 50) {
-                                            echo '<span title="' . esc($value) . '">' . esc(substr($value, 0, 50)) . '...</span>';
-                                        } else {
-                                            echo esc($value);
-                                        }
-                                        ?>
+                                if (strlen($value) > 50) {
+                                    echo '<span title="' . esc($value) . '">' . esc(substr($value, 0, 50)) . '...</span>';
+                                } else {
+                                    echo esc($value);
+                                }
+                                ?>
                                     </td>
                                     <td>
                                         <span class="badge badge-secondary"><?= esc($setting['type'] ?? 'string') ?></span>

@@ -2,27 +2,29 @@
 
 namespace App\Modules\Finance\Services;
 
-use App\Modules\Finance\Models\TransactionModel;
 use App\Modules\Finance\Models\InvoiceModel;
+use App\Modules\Finance\Models\TransactionModel;
 use Modules\Foundation\Services\AuditService;
 
 /**
- * FinanceService - Business logic for finance transaction management
- * 
+ * FinanceService - Business logic for finance transaction management.
+ *
  * All queries are tenant-scoped by school_id.
  * Integrates with AuditService for logging critical actions.
  */
 class FinanceService
 {
     protected TransactionModel $model;
+
     protected InvoiceModel $invoiceModel;
+
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
         $this->model = new TransactionModel();
         $this->invoiceModel = new InvoiceModel();
-        
+
         // Try to inject AuditService
         try {
             $this->auditService = $auditService ?? new AuditService();
@@ -33,8 +35,8 @@ class FinanceService
     }
 
     /**
-     * Get all transactions for a school
-     * 
+     * Get all transactions for a school.
+     *
      * @param int $schoolId
      * @param array $filters Optional filters
      * @return array
@@ -45,8 +47,8 @@ class FinanceService
     }
 
     /**
-     * Get a single transaction by ID (scoped to school)
-     * 
+     * Get a single transaction by ID (scoped to school).
+     *
      * @param int $id
      * @param int $schoolId
      * @return array|null
@@ -57,13 +59,13 @@ class FinanceService
             ->where('school_id', $schoolId)
             ->where('id', $id)
             ->first();
-        
+
         return $transaction ?: null;
     }
 
     /**
-     * Create a new transaction
-     * 
+     * Create a new transaction.
+     *
      * @param array $data
      * @return int|false Transaction ID or false on failure
      */
@@ -108,8 +110,8 @@ class FinanceService
     }
 
     /**
-     * Update an existing transaction
-     * 
+     * Update an existing transaction.
+     *
      * @param int $id
      * @param array $data
      * @param int $schoolId
@@ -119,7 +121,7 @@ class FinanceService
     {
         // Get before state for audit
         $before = $this->getById($id, $schoolId);
-        
+
         if (!$before) {
             return false;
         }
@@ -156,8 +158,8 @@ class FinanceService
     }
 
     /**
-     * Delete a transaction
-     * 
+     * Delete a transaction.
+     *
      * @param int $id
      * @param int $schoolId
      * @return bool
@@ -166,7 +168,7 @@ class FinanceService
     {
         // Get before state for audit
         $before = $this->getById($id, $schoolId);
-        
+
         if (!$before) {
             return false;
         }
@@ -202,8 +204,8 @@ class FinanceService
     }
 
     /**
-     * Get payment methods available in the school
-     * 
+     * Get payment methods available in the school.
+     *
      * @param int $schoolId
      * @return array
      */
@@ -213,8 +215,8 @@ class FinanceService
     }
 
     /**
-     * Get transaction summary
-     * 
+     * Get transaction summary.
+     *
      * @param int $schoolId
      * @param string|null $startDate
      * @param string|null $endDate
@@ -226,8 +228,8 @@ class FinanceService
     }
 
     /**
-     * Get transactions for a specific invoice
-     * 
+     * Get transactions for a specific invoice.
+     *
      * @param int $invoiceId
      * @param int $schoolId
      * @return array
@@ -238,8 +240,8 @@ class FinanceService
     }
 
     /**
-     * Update invoice balance after transaction changes
-     * 
+     * Update invoice balance after transaction changes.
+     *
      * @param int $invoiceId
      * @param int $schoolId
      * @return void
@@ -283,14 +285,14 @@ class FinanceService
     }
 
     /**
-     * Get request metadata for audit logging
-     * 
+     * Get request metadata for audit logging.
+     *
      * @return array
      */
     protected function getRequestMetadata(): array
     {
         $request = service('request');
-        
+
         return [
             'ip'          => $request->getIPAddress(),
             'user_agent'  => $request->getUserAgent()->getAgentString(),

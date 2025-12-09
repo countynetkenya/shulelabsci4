@@ -8,8 +8,8 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * PosCrudTest - Feature tests for POS Product CRUD operations
- * 
+ * PosCrudTest - Feature tests for POS Product CRUD operations.
+ *
  * Tests all CRUD endpoints for the POS module:
  * - GET /pos (index)
  * - GET /pos/create (create form)
@@ -25,8 +25,11 @@ class PosCrudTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
@@ -36,7 +39,7 @@ class PosCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Index page displays products
+     * Test: Index page displays products.
      */
     public function testIndexDisplaysProducts()
     {
@@ -63,7 +66,7 @@ class PosCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Index page shows empty state when no products
+     * Test: Index page shows empty state when no products.
      */
     public function testIndexShowsEmptyState()
     {
@@ -75,7 +78,7 @@ class PosCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Create page displays form
+     * Test: Create page displays form.
      */
     public function testCreatePageDisplaysForm()
     {
@@ -89,7 +92,7 @@ class PosCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Store creates a new product
+     * Test: Store creates a new product.
      */
     public function testStoreCreatesProduct()
     {
@@ -117,7 +120,7 @@ class PosCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Store validates required fields
+     * Test: Store validates required fields.
      */
     public function testStoreValidatesRequiredFields()
     {
@@ -129,7 +132,7 @@ class PosCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Edit page displays form with product data
+     * Test: Edit page displays form with product data.
      */
     public function testEditPageDisplaysProduct()
     {
@@ -156,7 +159,7 @@ class PosCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Update modifies existing product
+     * Test: Update modifies existing product.
      */
     public function testUpdateModifiesProduct()
     {
@@ -195,7 +198,7 @@ class PosCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Delete removes product
+     * Test: Delete removes product.
      */
     public function testDeleteRemovesProduct()
     {
@@ -225,7 +228,7 @@ class PosCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Tenant scoping - cannot access other school's products
+     * Test: Tenant scoping - cannot access other school's products.
      */
     public function testTenantScopingPreventsAccessToOtherSchools()
     {
@@ -248,7 +251,7 @@ class PosCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Access control - redirects when not logged in
+     * Test: Access control - redirects when not logged in.
      */
     public function testAccessControlRedirectsWhenNotLoggedIn()
     {

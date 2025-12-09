@@ -5,8 +5,8 @@ namespace App\Database\Migrations;
 use CodeIgniter\Database\Migration;
 
 /**
- * Create Teachers Table
- * 
+ * Create Teachers Table.
+ *
  * Stores teacher profile information separate from the users table.
  * Links to users table via teacher_id (which is a user_id).
  */

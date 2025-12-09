@@ -33,7 +33,7 @@ class InventoryController extends BaseController
     public function store()
     {
         $schoolId = session()->get('school_id');
-        
+
         if (!$this->validate([
             'name' => 'required|min_length[3]',
             'type' => 'required|in_list[physical,service,bundle]',

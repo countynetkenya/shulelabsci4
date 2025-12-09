@@ -3,9 +3,8 @@
 namespace Modules\Finance\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
-use Modules\Finance\Models\InvoiceModel;
 use Modules\Finance\Models\FinancePaymentModel;
+use Modules\Finance\Models\InvoiceModel;
 
 class FinanceWebController extends BaseController
 {
@@ -28,7 +27,7 @@ class FinanceWebController extends BaseController
     {
         $schoolId = session()->get('current_school_id');
         $db = \Config\Database::connect();
-        
+
         // Fetch students for dropdown
         // Ideally use a StudentService, but direct DB query is fine for now
         $students = $db->table('users')
@@ -41,12 +40,12 @@ class FinanceWebController extends BaseController
 
         // If no students found by role ID, just get all users linked to school for dev purposes
         if (empty($students)) {
-             $students = $db->table('users')
-                       ->join('school_users', 'school_users.user_id = users.id')
-                       ->where('school_users.school_id', $schoolId)
-                       ->select('users.id, users.full_name, users.username')
-                       ->get()
-                       ->getResultArray();
+            $students = $db->table('users')
+                      ->join('school_users', 'school_users.user_id = users.id')
+                      ->where('school_users.school_id', $schoolId)
+                      ->select('users.id, users.full_name, users.username')
+                      ->get()
+                      ->getResultArray();
         }
 
         // Fetch Fee Structures
@@ -94,7 +93,7 @@ class FinanceWebController extends BaseController
         }
 
         $data = $this->request->getPost();
-        
+
         // Get School ID from Session (TenantService should handle this, but for now we assume it's in session or we get it from service)
         // Since we are using TenantTestTrait, we know 'current_school_id' is in session.
         $schoolId = session()->get('current_school_id');
@@ -132,7 +131,7 @@ class FinanceWebController extends BaseController
         $reference = 'INV-' . date('Ymd') . '-' . rand(1000, 9999);
 
         $invoiceModel = new \Modules\Finance\Models\InvoiceModel();
-        
+
         $insertData = [
             'school_id' => $schoolId,
             'student_id' => $data['student_id'],
@@ -145,7 +144,7 @@ class FinanceWebController extends BaseController
         ];
 
         if (!$invoiceModel->insert($insertData)) {
-             return redirect()->back()->withInput()->with('errors', $invoiceModel->errors());
+            return redirect()->back()->withInput()->with('errors', $invoiceModel->errors());
         }
 
         return redirect()->to('/finance')->with('message', 'Invoice created successfully');

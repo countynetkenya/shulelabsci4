@@ -5,8 +5,8 @@ namespace Modules\Student\Config;
 use CodeIgniter\Router\RouteCollection;
 
 /**
- * Student Module Routes Configuration
- * 
+ * Student Module Routes Configuration.
+ *
  * Web Routes: /students/*
  */
 class Routes

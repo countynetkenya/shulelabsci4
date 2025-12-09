@@ -3,17 +3,18 @@
 namespace App\Modules\Finance\Controllers\Web;
 
 use App\Controllers\BaseController;
-use App\Modules\Finance\Services\FinanceService;
 use App\Modules\Finance\Models\InvoiceModel;
+use App\Modules\Finance\Services\FinanceService;
 
 /**
- * FinanceController - Handles CRUD operations for finance transactions
- * 
+ * FinanceController - Handles CRUD operations for finance transactions.
+ *
  * All data is tenant-scoped by school_id from session.
  */
 class FinanceController extends BaseController
 {
     protected FinanceService $service;
+
     protected InvoiceModel $invoiceModel;
 
     public function __construct()
@@ -23,14 +24,14 @@ class FinanceController extends BaseController
     }
 
     /**
-     * Check if user has permission to access finance module
+     * Check if user has permission to access finance module.
      */
     protected function checkAccess(): bool
     {
         // Allow admins and finance staff
         $usertypeID = session()->get('usertypeID');
         $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
-        
+
         if ($isAdmin) {
             return true;
         }
@@ -50,7 +51,7 @@ class FinanceController extends BaseController
     }
 
     /**
-     * Get current school ID from session
+     * Get current school ID from session.
      */
     protected function getSchoolId(): int
     {
@@ -58,7 +59,7 @@ class FinanceController extends BaseController
     }
 
     /**
-     * List all transactions
+     * List all transactions.
      */
     public function index()
     {
@@ -67,7 +68,7 @@ class FinanceController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Get filter parameters
         $filters = [
             'search'    => $this->request->getGet('search'),
@@ -87,7 +88,7 @@ class FinanceController extends BaseController
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
@@ -96,7 +97,7 @@ class FinanceController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Get unpaid/partial invoices for the dropdown
         $invoices = $this->invoiceModel
             ->where('school_id', $schoolId)
@@ -112,7 +113,7 @@ class FinanceController extends BaseController
     }
 
     /**
-     * Store a new transaction
+     * Store a new transaction.
      */
     public function store()
     {
@@ -121,7 +122,7 @@ class FinanceController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Validation rules
         $rules = [
             'invoice_id'     => 'required|integer',
@@ -155,7 +156,7 @@ class FinanceController extends BaseController
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit(int $id)
     {
@@ -165,7 +166,7 @@ class FinanceController extends BaseController
 
         $schoolId = $this->getSchoolId();
         $transaction = $this->service->getById($id, $schoolId);
-        
+
         if (!$transaction) {
             return redirect()->to('/finance/transactions')->with('error', 'Transaction not found.');
         }
@@ -185,7 +186,7 @@ class FinanceController extends BaseController
     }
 
     /**
-     * Update an existing transaction
+     * Update an existing transaction.
      */
     public function update(int $id)
     {
@@ -232,7 +233,7 @@ class FinanceController extends BaseController
     }
 
     /**
-     * Delete a transaction
+     * Delete a transaction.
      */
     public function delete(int $id)
     {
@@ -241,7 +242,7 @@ class FinanceController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Verify transaction exists
         $transaction = $this->service->getById($id, $schoolId);
         if (!$transaction) {

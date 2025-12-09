@@ -5,7 +5,7 @@ namespace App\Modules\Admin\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * AdminSeeder - Populates sample system settings
+ * AdminSeeder - Populates sample system settings.
  */
 class AdminSeeder extends Seeder
 {
@@ -34,7 +34,7 @@ class AdminSeeder extends Seeder
                 'type'    => 'string',
                 'context' => 'system',
             ],
-            
+
             // Payment settings
             [
                 'class'   => 'payment',
@@ -57,7 +57,7 @@ class AdminSeeder extends Seeder
                 'type'    => 'string',
                 'context' => 'app',
             ],
-            
+
             // General settings
             [
                 'class'   => 'general',
@@ -87,7 +87,7 @@ class AdminSeeder extends Seeder
                 'type'    => 'integer',
                 'context' => 'app',
             ],
-            
+
             // Security settings
             [
                 'class'   => 'security',

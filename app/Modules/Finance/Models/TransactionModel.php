@@ -5,23 +5,29 @@ namespace App\Modules\Finance\Models;
 use CodeIgniter\Model;
 
 /**
- * TransactionModel - Handles finance payment transactions
- * 
+ * TransactionModel - Handles finance payment transactions.
+ *
  * Manages all financial transactions including:
  * - Fee payments
  * - Invoice payments
  * - Transaction records
- * 
+ *
  * All data is tenant-scoped by school_id.
  */
 class TransactionModel extends Model
 {
     protected $table = 'finance_payments';
+
     protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
+
     protected $returnType = 'array';
+
     protected $useSoftDeletes = true;
+
     protected $protectFields = true;
+
     protected $allowedFields = [
         'school_id',
         'invoice_id',
@@ -34,9 +40,13 @@ class TransactionModel extends Model
 
     // Dates
     protected $useTimestamps = true;
+
     protected $dateFormat = 'datetime';
+
     protected $createdField = 'created_at';
+
     protected $updatedField = 'updated_at';
+
     protected $deletedField = 'deleted_at';
 
     // Validation
@@ -70,22 +80,31 @@ class TransactionModel extends Model
     ];
 
     protected $skipValidation = false;
+
     protected $cleanValidationRules = true;
 
     // Callbacks
     protected $allowCallbacks = true;
+
     protected $beforeInsert = [];
+
     protected $afterInsert = [];
+
     protected $beforeUpdate = [];
+
     protected $afterUpdate = [];
+
     protected $beforeFind = [];
+
     protected $afterFind = [];
+
     protected $beforeDelete = [];
+
     protected $afterDelete = [];
 
     /**
-     * Get all transactions for a school
-     * 
+     * Get all transactions for a school.
+     *
      * @param int $schoolId
      * @param array $filters Optional filters (search, method, date_from, date_to)
      * @return array
@@ -120,8 +139,8 @@ class TransactionModel extends Model
     }
 
     /**
-     * Get payment methods used in the school
-     * 
+     * Get payment methods used in the school.
+     *
      * @param int $schoolId
      * @return array Array of unique payment methods
      */
@@ -136,8 +155,8 @@ class TransactionModel extends Model
     }
 
     /**
-     * Get transaction summary for a school
-     * 
+     * Get transaction summary for a school.
+     *
      * @param int $schoolId
      * @param string|null $startDate
      * @param string|null $endDate
@@ -174,8 +193,8 @@ class TransactionModel extends Model
     }
 
     /**
-     * Get transactions by invoice
-     * 
+     * Get transactions by invoice.
+     *
      * @param int $invoiceId
      * @param int $schoolId
      * @return array
@@ -189,8 +208,8 @@ class TransactionModel extends Model
     }
 
     /**
-     * Get total amount paid for an invoice
-     * 
+     * Get total amount paid for an invoice.
+     *
      * @param int $invoiceId
      * @param int $schoolId
      * @return float

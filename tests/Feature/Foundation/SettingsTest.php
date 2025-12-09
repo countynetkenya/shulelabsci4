@@ -10,10 +10,13 @@ class SettingsTest extends CIUnitTestCase
 {
     use DatabaseTestTrait;
 
-    protected $migrate     = true;
+    protected $migrate = true;
+
     protected $migrateOnce = false;
-    protected $refresh     = true;
-    protected $namespace   = 'App';
+
+    protected $refresh = true;
+
+    protected $namespace = 'App';
 
     public function testSetAndGet()
     {

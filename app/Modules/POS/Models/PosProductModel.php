@@ -7,7 +7,9 @@ use CodeIgniter\Model;
 class PosProductModel extends Model
 {
     protected $table = 'pos_products';
+
     protected $primaryKey = 'id';
+
     protected $allowedFields = [
         'school_id',
         'name',
@@ -17,11 +19,14 @@ class PosProductModel extends Model
         'sku',
         'barcode',
         'category',
-        'is_active'
+        'is_active',
     ];
+
     protected $useTimestamps = true;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
+
+    protected $createdField = 'created_at';
+
+    protected $updatedField = 'updated_at';
 
     protected $validationRules = [
         'school_id' => 'required|integer',
@@ -40,4 +45,3 @@ class PosProductModel extends Model
         ],
     ];
 }
-

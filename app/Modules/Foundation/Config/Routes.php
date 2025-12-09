@@ -17,7 +17,7 @@ class Routes
             $routes->get('health', 'Modules\\Foundation\\Controllers\\HealthController::index');
             $routes->get('settings', 'Modules\\Foundation\\Controllers\\SettingsController::index');
             $routes->post('settings', 'Modules\\Foundation\\Controllers\\SettingsController::update');
-            
+
             // Tenant Management
             $routes->get('tenants', 'Modules\\Foundation\\Controllers\\TenantController::index');
             $routes->get('tenants/create', 'Modules\\Foundation\\Controllers\\TenantController::create');

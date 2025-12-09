@@ -25,7 +25,8 @@
                         <td><a href="<?= site_url('teachers/edit/' . $teacher['id']) ?>" class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>
                             <a href="<?= site_url('teachers/delete/' . $teacher['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this teacher?')"><i class="fas fa-trash"></i></a></td>
                     </tr>
-                    <?php endforeach; else: ?>
+                    <?php endforeach;
+                    else: ?>
                     <tr><td colspan="6" class="text-center py-4">No teachers found. <a href="<?= site_url('teachers/create') ?>" class="btn btn-primary mt-3"><i class="fas fa-plus"></i> Add First Teacher</a></td></tr>
                     <?php endif; ?>
                 </tbody>

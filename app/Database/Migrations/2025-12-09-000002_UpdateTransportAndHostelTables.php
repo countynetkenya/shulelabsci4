@@ -14,8 +14,8 @@ class UpdateTransportAndHostelTables extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 255,
                 'null' => true,
-                'after' => 'capacity'
-            ]
+                'after' => 'capacity',
+            ],
         ];
         $this->forge->addColumn('transport_vehicles', $fields);
 
@@ -26,20 +26,20 @@ class UpdateTransportAndHostelTables extends Migration
                 'constraint' => 11,
                 'unsigned' => true,
                 'null' => true,
-                'after' => 'id'
+                'after' => 'id',
             ],
             'type' => [
                 'type' => 'ENUM',
                 'constraint' => ['dorm', 'private'],
                 'default' => 'dorm',
-                'after' => 'capacity'
+                'after' => 'capacity',
             ],
             'status' => [
                 'type' => 'ENUM',
                 'constraint' => ['available', 'full', 'maintenance'],
                 'default' => 'available',
-                'after' => 'type'
-            ]
+                'after' => 'type',
+            ],
         ];
         $this->forge->addColumn('hostel_rooms', $hostelFields);
     }

@@ -9,7 +9,7 @@ class GamificationWebController extends BaseController
     public function index()
     {
         return view('Modules\Gamification\Views\index', [
-            'title' => 'Gamification Dashboard'
+            'title' => 'Gamification Dashboard',
         ]);
     }
 }

@@ -7,6 +7,7 @@ use Modules\Foundation\Models\SettingModel;
 class SettingsService
 {
     protected $model;
+
     protected $cache = [];
 
     public function __construct()

@@ -15,26 +15,41 @@ class InventoryApiTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = false;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = null;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Manual Cleanup
         $this->db->disableForeignKeyChecks();
-        if ($this->db->tableExists('inventory_transfers')) $this->db->table('inventory_transfers')->truncate();
-        if ($this->db->tableExists('inventory_stock')) $this->db->table('inventory_stock')->truncate();
-        if ($this->db->tableExists('inventory_items')) $this->db->table('inventory_items')->truncate();
-        if ($this->db->tableExists('inventory_categories')) $this->db->table('inventory_categories')->truncate();
-        if ($this->db->tableExists('inventory_locations')) $this->db->table('inventory_locations')->truncate();
-        if ($this->db->tableExists('audit_events')) $this->db->table('audit_events')->truncate();
+        if ($this->db->tableExists('inventory_transfers')) {
+            $this->db->table('inventory_transfers')->truncate();
+        }
+        if ($this->db->tableExists('inventory_stock')) {
+            $this->db->table('inventory_stock')->truncate();
+        }
+        if ($this->db->tableExists('inventory_items')) {
+            $this->db->table('inventory_items')->truncate();
+        }
+        if ($this->db->tableExists('inventory_categories')) {
+            $this->db->table('inventory_categories')->truncate();
+        }
+        if ($this->db->tableExists('inventory_locations')) {
+            $this->db->table('inventory_locations')->truncate();
+        }
+        if ($this->db->tableExists('audit_events')) {
+            $this->db->table('audit_events')->truncate();
+        }
         $this->db->enableForeignKeyChecks();
 
         $this->setupTenantContext();
-        
+
         // Mock AuditService to bypass DB issues
         $auditMock = $this->getMockBuilder(\Modules\Foundation\Services\AuditService::class)
                           ->disableOriginalConstructor()
@@ -53,12 +68,12 @@ class InventoryApiTest extends CIUnitTestCase
 
         // 2. Verify Response
         $result->assertOK();
-        
+
         // Check that the data array contains the seeded item
         $json = json_decode($result->getJSON(), true);
         $this->assertArrayHasKey('data', $json);
         $this->assertNotEmpty($json['data']);
-        
+
         // Find the item in the data
         $item = null;
         foreach ($json['data'] as $i) {
@@ -67,7 +82,7 @@ class InventoryApiTest extends CIUnitTestCase
                 break;
             }
         }
-        
+
         $this->assertNotNull($item, 'Seeded item not found in response');
         $this->assertEquals('Math Book', $item['name']);
     }

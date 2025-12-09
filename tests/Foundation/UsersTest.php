@@ -3,8 +3,8 @@
 namespace Tests\Foundation;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 
 class UsersTest extends CIUnitTestCase
 {
@@ -12,14 +12,17 @@ class UsersTest extends CIUnitTestCase
     use DatabaseTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Disable CSRF for testing
         $config = config('Filters');
         // Handle different structure of globals['before']
@@ -27,9 +30,9 @@ class UsersTest extends CIUnitTestCase
         foreach ($config->globals['before'] as $key => $value) {
             if ($value !== 'csrf' && $key !== 'csrf') {
                 if (is_array($value)) {
-                     // If it's an array (like 'csrf' => ['except' => ...])
-                     // we just skip it if the key is csrf
-                     $newBefore[$key] = $value;
+                    // If it's an array (like 'csrf' => ['except' => ...])
+                    // we just skip it if the key is csrf
+                    $newBefore[$key] = $value;
                 } else {
                     $newBefore[] = $value;
                 }
@@ -60,7 +63,7 @@ class UsersTest extends CIUnitTestCase
             'role_name' => 'Test Role',
             'role_slug' => 'test-role',
             'description' => 'Test Description',
-            'ci3_usertype_id' => 999
+            'ci3_usertype_id' => 999,
         ]);
         $roleId = $this->db->insertID();
 
@@ -69,13 +72,13 @@ class UsersTest extends CIUnitTestCase
             'username' => 'testuser',
             'email' => 'test@example.com',
             'password' => 'password123',
-            'role_id' => $roleId
+            'role_id' => $roleId,
         ]);
 
         $result->assertRedirectTo('/system/users');
         $this->seeInDatabase('users', ['username' => 'testuser']);
         // We can't easily check user_roles without knowing the user ID, but we can check if a record exists
-        // $this->seeInDatabase('user_roles', ['role_id' => $roleId]); 
+        // $this->seeInDatabase('user_roles', ['role_id' => $roleId]);
         // Actually seeInDatabase checks if ANY record matches.
         $this->seeInDatabase('user_roles', ['role_id' => $roleId]);
     }
@@ -88,23 +91,23 @@ class UsersTest extends CIUnitTestCase
             'email' => 'edit@example.com',
             'password_hash' => 'hash',
             'full_name' => 'Edit User',
-            'is_active' => 1
+            'is_active' => 1,
         ]);
         $userId = $this->db->insertID();
-        
+
         // Create role
         $this->db->table('roles')->insert([
             'role_name' => 'Edit Role',
             'role_slug' => 'edit-role',
             'description' => 'Desc',
-            'ci3_usertype_id' => 999
+            'ci3_usertype_id' => 999,
         ]);
         $roleId = $this->db->insertID();
-        
+
         // Assign role
         $this->db->table('user_roles')->insert([
             'user_id' => $userId,
-            'role_id' => $roleId
+            'role_id' => $roleId,
         ]);
 
         $result = $this->call('get', "/system/users/edit/$userId");
@@ -121,16 +124,16 @@ class UsersTest extends CIUnitTestCase
             'email' => 'update@example.com',
             'password_hash' => 'hash',
             'full_name' => 'Update User',
-            'is_active' => 1
+            'is_active' => 1,
         ]);
         $userId = $this->db->insertID();
-        
+
         // Create role
         $this->db->table('roles')->insert([
             'role_name' => 'Update Role',
             'role_slug' => 'update-role',
             'description' => 'Desc',
-            'ci3_usertype_id' => 999
+            'ci3_usertype_id' => 999,
         ]);
         $roleId = $this->db->insertID();
 
@@ -138,7 +141,7 @@ class UsersTest extends CIUnitTestCase
             'full_name' => 'Updated Name',
             'username' => 'updateuser',
             'email' => 'update@example.com',
-            'role_id' => $roleId
+            'role_id' => $roleId,
         ]);
 
         $result->assertRedirectTo('/system/users');
@@ -153,7 +156,7 @@ class UsersTest extends CIUnitTestCase
             'email' => 'delete@example.com',
             'password_hash' => 'hash',
             'full_name' => 'Delete User',
-            'is_active' => 1
+            'is_active' => 1,
         ]);
         $userId = $this->db->insertID();
 

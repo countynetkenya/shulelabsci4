@@ -71,7 +71,7 @@ class FinanceWebTest extends CIUnitTestCase
                        ->post('/finance/invoices', $data);
 
         $result->assertRedirect();
-        
+
         $this->seeInDatabase('finance_invoices', [
             'student_id' => $studentId,
             'amount' => 5000.00,

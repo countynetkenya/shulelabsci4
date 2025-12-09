@@ -2,9 +2,9 @@
 
 namespace Modules\Scheduler\Commands;
 
-use Modules\Scheduler\Services\SchedulerService;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use Modules\Scheduler\Services\SchedulerService;
 
 /**
  * CLI command to process scheduled jobs.

@@ -6,20 +6,21 @@ use App\Modules\Admin\Models\AdminSettingModel;
 use Modules\Foundation\Services\AuditService;
 
 /**
- * AdminService - Business logic for admin settings management
- * 
+ * AdminService - Business logic for admin settings management.
+ *
  * Manages system-wide configuration settings.
  * Integrates with AuditService for logging critical actions.
  */
 class AdminService
 {
     protected AdminSettingModel $model;
+
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
         $this->model = new AdminSettingModel();
-        
+
         // Try to inject AuditService
         try {
             $this->auditService = $auditService ?? new AuditService();
@@ -30,19 +31,19 @@ class AdminService
     }
 
     /**
-     * Get all settings, optionally filtered by class
+     * Get all settings, optionally filtered by class.
      */
     public function getAll(?string $class = null): array
     {
         if ($class) {
             return $this->model->getByClass($class);
         }
-        
+
         return $this->model->findAll();
     }
 
     /**
-     * Get a single setting by ID
+     * Get a single setting by ID.
      */
     public function getById(int $id): ?array
     {
@@ -50,7 +51,7 @@ class AdminService
     }
 
     /**
-     * Get a setting by class and key
+     * Get a setting by class and key.
      */
     public function getSetting(string $class, string $key): ?array
     {
@@ -58,7 +59,7 @@ class AdminService
     }
 
     /**
-     * Create a new setting
+     * Create a new setting.
      */
     public function create(array $data): int|false
     {
@@ -85,13 +86,13 @@ class AdminService
     }
 
     /**
-     * Update an existing setting
+     * Update an existing setting.
      */
     public function update(int $id, array $data): bool
     {
         // Get before state for audit
         $before = $this->getById($id);
-        
+
         if (!$before) {
             return false;
         }
@@ -119,13 +120,13 @@ class AdminService
     }
 
     /**
-     * Delete a setting
+     * Delete a setting.
      */
     public function delete(int $id): bool
     {
         // Get before state for audit
         $before = $this->getById($id);
-        
+
         if (!$before) {
             return false;
         }
@@ -153,7 +154,7 @@ class AdminService
     }
 
     /**
-     * Get all unique setting classes (categories)
+     * Get all unique setting classes (categories).
      */
     public function getClasses(): array
     {
@@ -161,7 +162,7 @@ class AdminService
     }
 
     /**
-     * Set or update a setting value
+     * Set or update a setting value.
      */
     public function setSetting(string $class, string $key, $value, string $type = 'string', string $context = 'app'): bool
     {
@@ -169,12 +170,12 @@ class AdminService
     }
 
     /**
-     * Get request metadata for audit logging
+     * Get request metadata for audit logging.
      */
     protected function getRequestMetadata(): array
     {
         $request = service('request');
-        
+
         return [
             'ip'          => $request->getIPAddress(),
             'user_agent'  => $request->getUserAgent()->getAgentString(),

@@ -9,7 +9,7 @@ class AnalyticsWebController extends BaseController
     public function index()
     {
         return view('Modules\Analytics\Views\index', [
-            'title' => 'Analytics Dashboard'
+            'title' => 'Analytics Dashboard',
         ]);
     }
 }

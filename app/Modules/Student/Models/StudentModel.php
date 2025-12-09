@@ -5,8 +5,8 @@ namespace App\Modules\Student\Models;
 use CodeIgniter\Model;
 
 /**
- * StudentModel - Manages the students table
- * 
+ * StudentModel - Manages the students table.
+ *
  * Columns (from migration):
  * - id, school_id, student_id, first_name, last_name, class_id, admission_number,
  *   date_of_birth, gender, status, parent_name, parent_phone, parent_email,
@@ -15,12 +15,17 @@ use CodeIgniter\Model;
 class StudentModel extends Model
 {
     protected $table = 'students';
+
     protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
+
     protected $returnType = 'array';
+
     protected $useSoftDeletes = false;
+
     protected $protectFields = true;
-    
+
     protected $allowedFields = [
         'school_id',
         'student_id',
@@ -37,8 +42,11 @@ class StudentModel extends Model
     ];
 
     protected $useTimestamps = true;
+
     protected $dateFormat = 'datetime';
+
     protected $createdField = 'created_at';
+
     protected $updatedField = 'updated_at';
 
     // Validation rules
@@ -65,7 +73,7 @@ class StudentModel extends Model
     ];
 
     /**
-     * Get students by school with optional filters
+     * Get students by school with optional filters.
      */
     public function getStudentsBySchool(int $schoolId, array $filters = []): array
     {
@@ -93,19 +101,19 @@ class StudentModel extends Model
     }
 
     /**
-     * Get student by ID scoped to school
+     * Get student by ID scoped to school.
      */
     public function getStudentById(int $id, int $schoolId): ?array
     {
         $student = $this->where('school_id', $schoolId)
                        ->where('id', $id)
                        ->first();
-        
+
         return $student ?: null;
     }
 
     /**
-     * Get active students count for a school
+     * Get active students count for a school.
      */
     public function getActiveCount(int $schoolId): int
     {
@@ -115,7 +123,7 @@ class StudentModel extends Model
     }
 
     /**
-     * Get unique classes from students in a school
+     * Get unique classes from students in a school.
      */
     public function getClasses(int $schoolId): array
     {

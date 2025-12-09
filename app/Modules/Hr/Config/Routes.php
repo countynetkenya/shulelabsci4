@@ -13,7 +13,7 @@ class Routes
         // Web Routes
         $routes->group('hr', ['namespace' => 'Modules\Hr\Controllers\Web'], static function (RouteCollection $routes): void {
             // $routes->get('', 'HrWebController::index'); // TODO: Move to Web/DashboardController
-            
+
             // Payroll Approvals Web
             // $routes->get('payroll/approvals', 'PayrollApprovalWebController::index'); // TODO: Move
 
@@ -31,7 +31,7 @@ class Routes
         // API Routes
         $routes->group('api/hr', ['namespace' => 'Modules\Hr\Controllers\Api'], static function (RouteCollection $routes): void {
             $routes->post('payroll/payslips', 'PayrollApiController::create');
-            
+
             // Payroll Approvals API
             $routes->get('payroll/approvals/pending', 'PayrollApprovalApiController::pending');
             $routes->post('payroll/approvals/(:num)/approve', 'PayrollApprovalApiController::approve/$1');

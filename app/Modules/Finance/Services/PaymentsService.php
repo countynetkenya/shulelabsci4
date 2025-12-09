@@ -2,13 +2,15 @@
 
 namespace Modules\Finance\Services;
 
-use Modules\Finance\Models\PaymentModel;
 use Modules\Finance\Models\InvoiceModel;
+use Modules\Finance\Models\PaymentModel;
 
 class PaymentsService
 {
     protected $paymentModel;
+
     protected $invoiceModel;
+
     protected $db;
 
     public function __construct()
@@ -51,17 +53,17 @@ class PaymentsService
             $data['reference_code'] = $data['reference_number'] ?? 'PAY-' . strtoupper(uniqid());
         }
         $data['paid_at'] = date('Y-m-d H:i:s');
-        
+
         if (empty($data['method'])) {
             $data['method'] = $data['payment_method'] ?? 'cash';
         }
-        
+
         $this->paymentModel->insert($data);
 
         // 2. Update Invoice Balance
         $newBalance = $invoice['balance'] - $data['amount'];
         $status = $invoice['status'];
-        
+
         if ($newBalance <= 0) {
             $newBalance = 0;
             $status = 'paid';
@@ -71,7 +73,7 @@ class PaymentsService
 
         $this->invoiceModel->update($data['invoice_id'], [
             'balance' => $newBalance,
-            'status' => $status
+            'status' => $status,
         ]);
 
         $this->db->transComplete();

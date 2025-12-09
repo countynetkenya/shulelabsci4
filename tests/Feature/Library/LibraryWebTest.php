@@ -41,9 +41,9 @@ class LibraryWebTest extends CIUnitTestCase
                 'Content-Type' => 'application/json',
             ])->withBody(json_encode([
                 'title' => 'Test Document',
-                'category' => 'Test Category'
+                'category' => 'Test Category',
             ]))->post('/api/library/documents');
-            
+
             $this->assertNotEquals(404, $result->response()->getStatusCode());
         } catch (\InvalidArgumentException $e) {
             // If we get here, it means the controller was reached and the service was called.

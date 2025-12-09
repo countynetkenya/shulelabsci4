@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use App\Modules\Student\Services\StudentService;
 
 /**
- * StudentController - Handles CRUD operations for students
- * 
+ * StudentController - Handles CRUD operations for students.
+ *
  * All data is tenant-scoped by school_id from session.
  */
 class StudentController extends BaseController
@@ -20,19 +20,19 @@ class StudentController extends BaseController
     }
 
     /**
-     * Check if user has permission to access student module
+     * Check if user has permission to access student module.
      */
     protected function checkAccess(): bool
     {
         // Allow admins
         $usertypeID = session()->get('usertypeID');
         $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
-        
+
         return $isAdmin;
     }
 
     /**
-     * Get current school ID from session
+     * Get current school ID from session.
      */
     protected function getSchoolId(): int
     {
@@ -40,7 +40,7 @@ class StudentController extends BaseController
     }
 
     /**
-     * List all students
+     * List all students.
      */
     public function index()
     {
@@ -49,7 +49,7 @@ class StudentController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Get filter parameters
         $filters = [
             'search'   => $this->request->getGet('search'),
@@ -66,7 +66,7 @@ class StudentController extends BaseController
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
@@ -80,7 +80,7 @@ class StudentController extends BaseController
     }
 
     /**
-     * Store a new student
+     * Store a new student.
      */
     public function store()
     {
@@ -89,7 +89,7 @@ class StudentController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Validation rules
         $rules = [
             'first_name'       => 'required|min_length[2]|max_length[100]',
@@ -129,7 +129,7 @@ class StudentController extends BaseController
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit(int $id)
     {
@@ -139,7 +139,7 @@ class StudentController extends BaseController
 
         $schoolId = $this->getSchoolId();
         $student = $this->service->getById($id, $schoolId);
-        
+
         if (!$student) {
             return redirect()->to('/students')->with('error', 'Student not found.');
         }
@@ -152,7 +152,7 @@ class StudentController extends BaseController
     }
 
     /**
-     * Update an existing student
+     * Update an existing student.
      */
     public function update(int $id)
     {
@@ -205,7 +205,7 @@ class StudentController extends BaseController
     }
 
     /**
-     * Delete a student
+     * Delete a student.
      */
     public function delete(int $id)
     {
@@ -214,7 +214,7 @@ class StudentController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Verify student exists
         $student = $this->service->getById($id, $schoolId);
         if (!$student) {
