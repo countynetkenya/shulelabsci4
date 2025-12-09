@@ -47,6 +47,18 @@
                 <i class="fa fa-calendar"></i> Attendance
             </a>
         </li>
+
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('inventory') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-cubes"></i> Inventory
+            </a>
+        </li>
+
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('library') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-book"></i> Library
+            </a>
+        </li>
         
         <li style="padding: 10px 20px;">
             <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">

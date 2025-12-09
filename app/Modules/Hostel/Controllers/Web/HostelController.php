@@ -1,106 +1,96 @@
 <?php
 
-namespace Modules\Hostel\Controllers\Web;
+namespace App\Modules\Hostel\Controllers\Web;
 
 use App\Controllers\BaseController;
-use Modules\Hostel\Services\HostelService;
+use App\Modules\Hostel\Services\HostelRoomService;
 
 class HostelController extends BaseController
 {
-    protected $hostelService;
+    protected $service;
 
     public function __construct()
     {
-        $this->hostelService = new HostelService();
+        $this->service = new HostelRoomService();
     }
 
     public function index()
     {
-        $schoolId = session()->get('school_id');
-        if (!$schoolId) {
-            $schoolId = 1;
-        }
-
-        $data['hostels'] = $this->hostelService->getHostels($schoolId);
-        
-        return view('Modules\Hostel\Views\hostel\index', $data);
+        $schoolId = session()->get('school_id') ?? 1;
+        $data['rooms'] = $this->service->getAll($schoolId);
+        return view('App\Modules\Hostel\Views\index', $data);
     }
 
     public function create()
     {
-        return view('Modules\Hostel\Views\hostel\create');
+        return view('App\Modules\Hostel\Views\create');
     }
 
     public function store()
     {
-        $rules = [
-            'name' => 'required|min_length[3]',
-            'type' => 'required',
+        $schoolId = session()->get('school_id') ?? 1;
+        
+        if (!$this->validate([
+            'room_number' => 'required',
             'capacity' => 'required|integer',
-            'location' => 'required',
-        ];
-
-        if (!$this->validate($rules)) {
+            'type' => 'required'
+        ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-        }
-
-        $schoolId = session()->get('school_id');
-        if (!$schoolId) {
-            $schoolId = 1;
         }
 
         $data = [
             'school_id' => $schoolId,
-            'name' => $this->request->getPost('name'),
-            'type' => $this->request->getPost('type'),
+            'room_number' => $this->request->getPost('room_number'),
             'capacity' => $this->request->getPost('capacity'),
-            'location' => $this->request->getPost('location'),
-            'description' => $this->request->getPost('description'),
+            'type' => $this->request->getPost('type'),
+            'status' => 'available',
         ];
 
-        $this->hostelService->createHostel($data);
+        $this->service->create($data);
 
-        return redirect()->to('hostel')->with('message', 'Hostel created successfully');
+        return redirect()->to('/hostel')->with('message', 'Room created successfully');
     }
 
     public function edit($id)
     {
-        $data['hostel'] = $this->hostelService->getHostel($id);
-        if (!$data['hostel']) {
-            return redirect()->to('hostel')->with('error', 'Hostel not found');
+        $schoolId = session()->get('school_id') ?? 1;
+        $data['room'] = $this->service->getById($id, $schoolId);
+        
+        if (!$data['room']) {
+            return redirect()->to('/hostel')->with('error', 'Room not found');
         }
-        return view('Modules\Hostel\Views\hostel\edit', $data);
+
+        return view('App\Modules\Hostel\Views\edit', $data);
     }
 
     public function update($id)
     {
-        $rules = [
-            'name' => 'required|min_length[3]',
-            'type' => 'required',
-            'capacity' => 'required|integer',
-            'location' => 'required',
-        ];
+        $schoolId = session()->get('school_id') ?? 1;
 
-        if (!$this->validate($rules)) {
+        if (!$this->validate([
+            'room_number' => 'required',
+            'capacity' => 'required|integer',
+            'type' => 'required'
+        ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
         $data = [
-            'name' => $this->request->getPost('name'),
-            'type' => $this->request->getPost('type'),
+            'room_number' => $this->request->getPost('room_number'),
             'capacity' => $this->request->getPost('capacity'),
-            'location' => $this->request->getPost('location'),
-            'description' => $this->request->getPost('description'),
+            'type' => $this->request->getPost('type'),
+            'status' => $this->request->getPost('status'),
         ];
 
-        $this->hostelService->updateHostel($id, $data);
+        $this->service->update($id, $data, $schoolId);
 
-        return redirect()->to('hostel')->with('message', 'Hostel updated successfully');
+        return redirect()->to('/hostel')->with('message', 'Room updated successfully');
     }
 
     public function delete($id)
     {
-        $this->hostelService->deleteHostel($id);
-        return redirect()->to('hostel')->with('message', 'Hostel deleted successfully');
+        $schoolId = session()->get('school_id') ?? 1;
+        $this->service->delete($id, $schoolId);
+        return redirect()->to('/hostel')->with('message', 'Room deleted successfully');
     }
 }

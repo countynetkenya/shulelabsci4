@@ -8,18 +8,13 @@ class Routes
 {
     public static function map(RouteCollection $routes): void
     {
-        // Web Routes
-        $routes->group('transport', ['namespace' => 'Modules\Transport\Controllers\Web', 'filter' => 'auth'], function ($routes) {
+        $routes->group('transport', ['namespace' => 'App\Modules\Transport\Controllers\Web', 'filter' => 'auth'], function ($routes) {
             $routes->get('/', 'TransportController::index');
-            // $routes->get('routes', 'TransportWebController::routes');
-            // $routes->get('vehicles', 'TransportWebController::vehicles');
-        });
-
-        // API Routes
-        $routes->group('api/transport', ['namespace' => 'Modules\Transport\Controllers\Api', 'filter' => 'auth'], function ($routes) {
-            $routes->get('routes', 'TransportApiController::routes');
-            $routes->get('vehicles', 'TransportApiController::vehicles');
-            $routes->post('routes', 'TransportApiController::createRoute');
+            $routes->get('create', 'TransportController::create');
+            $routes->post('store', 'TransportController::store');
+            $routes->get('edit/(:num)', 'TransportController::edit/$1');
+            $routes->post('update/(:num)', 'TransportController::update/$1');
+            $routes->get('delete/(:num)', 'TransportController::delete/$1');
         });
     }
 }

@@ -65,6 +65,23 @@ This document outlines the Lead Architect prompt for all existing modules in the
   - **DO NOT** manually seed `schools` or `users` tables in individual test files.
 - **Schema Verification**: Before writing any test seed data, explicitly READ the migration file to verify column names.
 
+## 🛣️ Route File Standards (CRITICAL)
+- **Class-Based Only**: All `app/Modules/{Module}/Config/Routes.php` files MUST use class-based pattern:
+  ```php
+  namespace Modules\{Module}\Config;
+  use CodeIgniter\Router\RouteCollection;
+  
+  class Routes
+  {
+      public static function map(RouteCollection $routes): void
+      {
+          // routes here
+      }
+  }
+  ```
+- **NEVER** use bare `$routes->group()` at file level - it breaks PHPUnit bootstrapping!
+- **Namespace Match**: The namespace must match how the route is imported in `app/Config/Routes.php`.
+
 ## Mobile-First API Design
 - Ensure all API endpoints are designed following mobile-first principles, prioritizing performance and minimal latency on mobile connections.
 - Use JSON structures that efficiently convey information for mobile consumers.

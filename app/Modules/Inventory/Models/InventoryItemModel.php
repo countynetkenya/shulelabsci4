@@ -19,7 +19,7 @@ class InventoryItemModel extends Model
     protected $protectFields = true;
 
     protected $allowedFields = [
-        'category_id', 'name', 'sku', 'description', 'type',
+        'school_id', 'category_id', 'name', 'sku', 'description', 'type',
         'unit_cost', 'reorder_level', 'location', 'is_billable',
     ];
 

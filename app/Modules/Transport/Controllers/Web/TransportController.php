@@ -1,103 +1,96 @@
 <?php
 
-namespace Modules\Transport\Controllers\Web;
+namespace App\Modules\Transport\Controllers\Web;
 
 use App\Controllers\BaseController;
-use Modules\Transport\Services\TransportService;
+use App\Modules\Transport\Services\TransportVehicleService;
 
 class TransportController extends BaseController
 {
-    protected $transportService;
+    protected $service;
 
     public function __construct()
     {
-        $this->transportService = new TransportService();
+        $this->service = new TransportVehicleService();
     }
 
     public function index()
     {
-        $schoolId = session()->get('school_id');
-        // Fallback for testing if session not set
-        if (!$schoolId) {
-            $schoolId = 1; 
-        }
-
-        $data['routes'] = $this->transportService->getRoutes($schoolId);
-        
-        return view('Modules\Transport\Views\transport\index', $data);
+        $schoolId = session()->get('school_id') ?? 1;
+        $data['vehicles'] = $this->service->getAll($schoolId);
+        return view('App\Modules\Transport\Views\index', $data);
     }
 
     public function create()
     {
-        return view('Modules\Transport\Views\transport\create');
+        return view('App\Modules\Transport\Views\create');
     }
 
     public function store()
     {
         $schoolId = session()->get('school_id') ?? 1;
         
-        $rules = [
-            'route_name' => 'required|min_length[3]',
-            'start_point' => 'required',
-            'end_point' => 'required',
-            'cost' => 'required|numeric',
-        ];
-
-        if (!$this->validate($rules)) {
+        if (!$this->validate([
+            'registration_number' => 'required|min_length[3]',
+            'capacity' => 'required|integer',
+            'driver_name' => 'required'
+        ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
         $data = [
             'school_id' => $schoolId,
-            'route_name' => $this->request->getPost('route_name'),
-            'start_point' => $this->request->getPost('start_point'),
-            'end_point' => $this->request->getPost('end_point'),
-            'cost' => $this->request->getPost('cost'),
-            'is_active' => 1
+            'registration_number' => $this->request->getPost('registration_number'),
+            'capacity' => $this->request->getPost('capacity'),
+            'driver_name' => $this->request->getPost('driver_name'),
+            'status' => 'active',
         ];
 
-        $this->transportService->createRoute($data);
+        $this->service->create($data);
 
-        return redirect()->to('/transport')->with('message', 'Route created successfully');
+        return redirect()->to('/transport')->with('message', 'Vehicle created successfully');
     }
 
     public function edit($id)
     {
-        $data['route'] = $this->transportService->getRoute($id);
-        if (!$data['route']) {
-            return redirect()->to('/transport')->with('error', 'Route not found');
+        $schoolId = session()->get('school_id') ?? 1;
+        $data['vehicle'] = $this->service->getById($id, $schoolId);
+        
+        if (!$data['vehicle']) {
+            return redirect()->to('/transport')->with('error', 'Vehicle not found');
         }
-        return view('Modules\Transport\Views\transport\edit', $data);
+
+        return view('App\Modules\Transport\Views\edit', $data);
     }
 
     public function update($id)
     {
-        $rules = [
-            'route_name' => 'required|min_length[3]',
-            'start_point' => 'required',
-            'end_point' => 'required',
-            'cost' => 'required|numeric',
-        ];
+        $schoolId = session()->get('school_id') ?? 1;
 
-        if (!$this->validate($rules)) {
+        if (!$this->validate([
+            'registration_number' => 'required|min_length[3]',
+            'capacity' => 'required|integer',
+            'driver_name' => 'required'
+        ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
         $data = [
-            'route_name' => $this->request->getPost('route_name'),
-            'start_point' => $this->request->getPost('start_point'),
-            'end_point' => $this->request->getPost('end_point'),
-            'cost' => $this->request->getPost('cost'),
+            'registration_number' => $this->request->getPost('registration_number'),
+            'capacity' => $this->request->getPost('capacity'),
+            'driver_name' => $this->request->getPost('driver_name'),
+            'status' => $this->request->getPost('status'),
         ];
 
-        $this->transportService->updateRoute($id, $data);
+        $this->service->update($id, $data, $schoolId);
 
-        return redirect()->to('/transport')->with('message', 'Route updated successfully');
+        return redirect()->to('/transport')->with('message', 'Vehicle updated successfully');
     }
 
     public function delete($id)
     {
-        $this->transportService->deleteRoute($id);
-        return redirect()->to('/transport')->with('message', 'Route deleted successfully');
+        $schoolId = session()->get('school_id') ?? 1;
+        $this->service->delete($id, $schoolId);
+        return redirect()->to('/transport')->with('message', 'Vehicle deleted successfully');
     }
 }
