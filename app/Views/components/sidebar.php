@@ -59,6 +59,24 @@
                 <i class="fa fa-book"></i> Library
             </a>
         </li>
+
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('finance/transactions') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-money-bill-wave"></i> Finance
+            </a>
+        </li>
+
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('approvals') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-clipboard-check"></i> Approvals
+            </a>
+        </li>
+
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('wallets') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-wallet"></i> Wallets
+            </a>
+        </li>
         
         <li style="padding: 10px 20px;">
             <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
