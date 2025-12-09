@@ -25,14 +25,20 @@
         <?php endif; ?>
         
         <li style="padding: 10px 20px;">
-            <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-users"></i> Students
+            <a href="<?= base_url('students') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-user-graduate"></i> Students
             </a>
         </li>
         
         <li style="padding: 10px 20px;">
-            <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-graduation-cap"></i> Teachers
+            <a href="<?= base_url('teachers') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-chalkboard-teacher"></i> Teachers
+            </a>
+        </li>
+        
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('learning/courses') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-book-reader"></i> Learning
             </a>
         </li>
         
@@ -61,20 +67,14 @@
         </li>
 
         <li style="padding: 10px 20px;">
-            <a href="<?= base_url('audit') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-history"></i> Audit
+            <a href="<?= base_url('pos') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-shopping-cart"></i> POS
             </a>
         </li>
 
         <li style="padding: 10px 20px;">
-            <a href="<?= base_url('monitoring') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-heartbeat"></i> Monitoring
-            </a>
-        </li>
-
-        <li style="padding: 10px 20px;">
-            <a href="<?= base_url('integrations') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-plug"></i> Integrations
+            <a href="<?= base_url('scheduler') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-clock-o"></i> Scheduler
             </a>
         </li>
         
