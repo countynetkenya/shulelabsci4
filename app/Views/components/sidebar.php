@@ -25,14 +25,20 @@
         <?php endif; ?>
         
         <li style="padding: 10px 20px;">
-            <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-users"></i> Students
+            <a href="<?= base_url('students') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-user-graduate"></i> Students
             </a>
         </li>
         
         <li style="padding: 10px 20px;">
-            <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-graduation-cap"></i> Teachers
+            <a href="<?= base_url('teachers') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-chalkboard-teacher"></i> Teachers
+            </a>
+        </li>
+        
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('learning/courses') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-book-reader"></i> Learning
             </a>
         </li>
         
@@ -60,30 +66,17 @@
             </a>
         </li>
 
-        <?php if ($isAdmin) : ?>
-        <!-- Foundation Module - Core System Settings -->
         <li style="padding: 10px 20px;">
-            <a href="<?= base_url('system/settings') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-layer-group"></i> Foundation
+            <a href="<?= base_url('pos') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-shopping-cart"></i> POS
             </a>
         </li>
 
-        <!-- Admin Module - System Administration -->
         <li style="padding: 10px 20px;">
-            <a href="<?= base_url('admin/settings') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-cog"></i> Admin Settings
+            <a href="<?= base_url('scheduler') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-clock-o"></i> Scheduler
             </a>
         </li>
-        <?php endif; ?>
-
-        <?php if (in_array($usertypeID, [0, '0'])) : ?>
-        <!-- MultiTenant Module - Super Admin Only -->
-        <li style="padding: 10px 20px;">
-            <a href="<?= base_url('multitenant') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-building"></i> Tenants
-            </a>
-        </li>
-        <?php endif; ?>
         
         <li style="padding: 10px 20px;">
             <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">

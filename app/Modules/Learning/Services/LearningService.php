@@ -107,4 +107,14 @@ class LearningService
     {
         return $this->progressModel->where('enrollment_id', $enrollmentId)->findAll();
     }
+
+    public function updateCourse(int $id, array $data): bool
+    {
+        return $this->courseModel->update($id, $data);
+    }
+
+    public function deleteCourse(int $id): bool
+    {
+        return $this->courseModel->delete($id);
+    }
 }
