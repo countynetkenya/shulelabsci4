@@ -11,6 +11,16 @@ class Routes
 {
     public static function map(RouteCollection $routes): void
     {
+        // Web Routes - CRUD for Integrations Management
+        $routes->group('integrations', ['namespace' => 'App\Modules\Integrations\Controllers\Web'], static function (RouteCollection $routes): void {
+            $routes->get('/', 'IntegrationsController::index');
+            $routes->get('create', 'IntegrationsController::create');
+            $routes->post('store', 'IntegrationsController::store');
+            $routes->get('edit/(:num)', 'IntegrationsController::edit/$1');
+            $routes->post('update/(:num)', 'IntegrationsController::update/$1');
+            $routes->get('delete/(:num)', 'IntegrationsController::delete/$1');
+        });
+
         // API Integration endpoints
         $routes->group('api/integrations', ['namespace' => 'Modules\Integrations\Controllers'], static function ($routes) {
             // Health check endpoint

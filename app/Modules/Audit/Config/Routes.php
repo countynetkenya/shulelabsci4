@@ -11,6 +11,16 @@ class Routes
 {
     public static function map(RouteCollection $routes): void
     {
+        // Web Routes - CRUD for Audit Logs Viewer
+        $routes->group('audit', ['namespace' => 'App\Modules\Audit\Controllers\Web'], static function (RouteCollection $routes): void {
+            $routes->get('/', 'AuditController::index');
+            $routes->get('create', 'AuditController::create');
+            $routes->post('store', 'AuditController::store');
+            $routes->get('edit/(:num)', 'AuditController::edit/$1');
+            $routes->post('update/(:num)', 'AuditController::update/$1');
+            $routes->get('delete/(:num)', 'AuditController::delete/$1');
+        });
+
         // API Routes
         $routes->group('api/v1/audit', ['namespace' => 'App\Modules\Audit\Controllers\Api', 'filter' => 'auth'], static function ($routes) {
             // Audit events

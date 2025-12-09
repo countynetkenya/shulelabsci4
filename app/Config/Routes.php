@@ -1,6 +1,7 @@
 <?php
 
 use CodeIgniter\Router\RouteCollection;
+use App\Modules\Audit\Config\Routes as AuditRoutes;
 use Modules\Admin\Config\Routes as AdminRoutes;
 use Modules\Admissions\Config\Routes as AdmissionsRoutes;
 use Modules\Analytics\Config\Routes as AnalyticsRoutes;
@@ -10,15 +11,19 @@ use Modules\Gamification\Config\Routes as GamificationRoutes;
 use Modules\Governance\Config\Routes as GovernanceRoutes;
 use Modules\Hostel\Config\Routes as HostelRoutes;
 use Modules\Hr\Config\Routes as HrRoutes;
+use Modules\Integrations\Config\Routes as IntegrationsRoutes;
 use Modules\Inventory\Config\Routes as InventoryRoutes;
 use Modules\Learning\Config\Routes as LearningRoutes;
 use Modules\Library\Config\Routes as LibraryRoutes;
 use Modules\Mobile\Config\Routes as MobileRoutes;
+use Modules\Monitoring\Config\Routes as MonitoringRoutes;
 use Modules\ParentEngagement\Config\Routes as ParentEngagementRoutes;
 use Modules\POS\Config\Routes as PosRoutes;
 use Modules\Reports\Config\Routes as ReportsRoutes;
 use Modules\Scheduler\Config\Routes as SchedulerRoutes;
 use Modules\Security\Config\Routes as SecurityRoutes;
+use Modules\Student\Config\Routes as StudentRoutes;
+use Modules\Teacher\Config\Routes as TeacherRoutes;
 use Modules\Threads\Config\Routes as ThreadsRoutes;
 use Modules\Transport\Config\Routes as TransportRoutes;
 use Modules\Wallets\Config\Routes as WalletsRoutes;
@@ -158,8 +163,11 @@ $routes->get('/', static function () {
 AdminRoutes::map($routes);
 AdmissionsRoutes::map($routes);
 AnalyticsRoutes::map($routes);
+AuditRoutes::map($routes);
 GamificationRoutes::map($routes);
 GovernanceRoutes::map($routes);
+IntegrationsRoutes::map($routes);
+MonitoringRoutes::map($routes);
 ParentEngagementRoutes::map($routes);
 SchedulerRoutes::map($routes);
 SecurityRoutes::map($routes);
@@ -170,6 +178,8 @@ LearningRoutes::map($routes);
 InventoryRoutes::map($routes);
 LibraryRoutes::map($routes);
 MobileRoutes::map($routes);
+StudentRoutes::map($routes);
+TeacherRoutes::map($routes);
 ThreadsRoutes::map($routes);
 TransportRoutes::map($routes);
 HostelRoutes::map($routes);
