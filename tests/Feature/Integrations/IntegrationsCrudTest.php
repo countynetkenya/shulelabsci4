@@ -2,14 +2,14 @@
 
 namespace Tests\Feature\Integrations;
 
-use Tests\Support\TestCase;
+use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * IntegrationsCrudTest - Feature tests for Integrations module CRUD operations
  * 
  * @group integrations
  */
-class IntegrationsCrudTest extends TestCase
+class IntegrationsCrudTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {
