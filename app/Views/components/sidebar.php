@@ -91,6 +91,18 @@
         </li>
         
         <li style="padding: 10px 20px;">
+            <a href="<?= base_url('reports') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-file-alt"></i> Reports
+            </a>
+        </li>
+        
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('security') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-shield-alt"></i> Security
+            </a>
+        </li>
+        
+        <li style="padding: 10px 20px;">
             <a href="<?= base_url('lms') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
                 <i class="fa fa-graduation-cap"></i> LMS
             </a>
@@ -99,12 +111,6 @@
         <li style="padding: 10px 20px;">
             <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
                 <i class="fa fa-money"></i> Fees
-            </a>
-        </li>
-        
-        <li style="padding: 10px 20px;">
-            <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-file-text"></i> Reports
             </a>
         </li>
         
