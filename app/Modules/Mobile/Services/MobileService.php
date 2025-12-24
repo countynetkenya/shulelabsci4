@@ -79,34 +79,23 @@ class MobileService
     {
         $db = \Config\Database::connect();
         
-        $totalDevices = $db->table('mobile_devices md')
-            ->join('users u', 'u.id = md.user_id', 'left')
-            ->where('u.school_id', $schoolId)
-            ->countAllResults();
-        
-        $activeDevices = $db->table('mobile_devices md')
-            ->join('users u', 'u.id = md.user_id', 'left')
-            ->where('u.school_id', $schoolId)
-            ->where('md.is_active', 1)
-            ->countAllResults();
-        
-        $iosDevices = $db->table('mobile_devices md')
-            ->join('users u', 'u.id = md.user_id', 'left')
-            ->where('u.school_id', $schoolId)
-            ->where('md.device_type', 'ios')
-            ->countAllResults();
-        
-        $androidDevices = $db->table('mobile_devices md')
-            ->join('users u', 'u.id = md.user_id', 'left')
-            ->where('u.school_id', $schoolId)
-            ->where('md.device_type', 'android')
-            ->countAllResults();
+        // Single optimized query with conditional counting
+        $result = $db->query("
+            SELECT 
+                COUNT(*) as total_devices,
+                SUM(CASE WHEN md.is_active = 1 THEN 1 ELSE 0 END) as active_devices,
+                SUM(CASE WHEN md.device_type = 'ios' THEN 1 ELSE 0 END) as ios_devices,
+                SUM(CASE WHEN md.device_type = 'android' THEN 1 ELSE 0 END) as android_devices
+            FROM mobile_devices md
+            LEFT JOIN users u ON u.id = md.user_id
+            WHERE u.school_id = ?
+        ", [$schoolId])->getRowArray();
 
         return [
-            'total_devices' => $totalDevices,
-            'active_devices' => $activeDevices,
-            'ios_devices' => $iosDevices,
-            'android_devices' => $androidDevices,
+            'total_devices' => (int)($result['total_devices'] ?? 0),
+            'active_devices' => (int)($result['active_devices'] ?? 0),
+            'ios_devices' => (int)($result['ios_devices'] ?? 0),
+            'android_devices' => (int)($result['android_devices'] ?? 0),
         ];
     }
 }

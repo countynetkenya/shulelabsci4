@@ -24,10 +24,24 @@ class OrchestrationService
         return $this->model->delete($id);
     }
     public function getStatistics(int $schoolId): array {
-        $total = $this->model->where('school_id', $schoolId)->countAllResults();
-        $completed = $this->model->where('school_id', $schoolId)->where('status', 'completed')->countAllResults();
-        $running = $this->model->where('school_id', $schoolId)->where('status', 'running')->countAllResults();
-        $failed = $this->model->where('school_id', $schoolId)->where('status', 'failed')->countAllResults();
-        return ['total_workflows' => $total, 'completed_workflows' => $completed, 'running_workflows' => $running, 'failed_workflows' => $failed];
+        $db = \Config\Database::connect();
+        
+        // Single optimized query with conditional counting
+        $result = $db->query("
+            SELECT 
+                COUNT(*) as total_workflows,
+                SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed_workflows,
+                SUM(CASE WHEN status = 'running' THEN 1 ELSE 0 END) as running_workflows,
+                SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as failed_workflows
+            FROM workflows 
+            WHERE school_id = ?
+        ", [$schoolId])->getRowArray();
+
+        return [
+            'total_workflows' => (int)($result['total_workflows'] ?? 0),
+            'completed_workflows' => (int)($result['completed_workflows'] ?? 0),
+            'running_workflows' => (int)($result['running_workflows'] ?? 0),
+            'failed_workflows' => (int)($result['failed_workflows'] ?? 0),
+        ];
     }
 }

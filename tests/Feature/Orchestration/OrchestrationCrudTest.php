@@ -98,6 +98,7 @@ class OrchestrationCrudTest extends CIUnitTestCase
             'school_id' => $this->schoolId,
             'workflow_id' => 'delete_wf_001',
             'name' => 'Delete Test',
+            'description' => 'Test workflow for deletion',
             'status' => 'failed',
             'current_step' => 1,
             'total_steps' => 3,
