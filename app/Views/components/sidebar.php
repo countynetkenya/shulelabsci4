@@ -95,6 +95,24 @@
                 <i class="fa fa-graduation-cap"></i> LMS
             </a>
         </li>
+
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('analytics') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-chart-bar"></i> Analytics
+            </a>
+        </li>
+
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('gamification') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-trophy"></i> Gamification
+            </a>
+        </li>
+
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('governance') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-gavel"></i> Governance
+            </a>
+        </li>
         
         <li style="padding: 10px 20px;">
             <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
@@ -109,8 +127,8 @@
         </li>
         
         <li style="padding: 10px 20px;">
-            <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-cog"></i> Settings
+            <a href="<?= base_url('system/settings') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-layer-group"></i> Settings
             </a>
         </li>
         
