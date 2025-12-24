@@ -2,103 +2,89 @@
 
 <?= $this->section('content') ?>
 <div class="container-fluid">
-    <h1 class="h3 mb-4 text-gray-800"><?= esc($title) ?></h1>
-    
-    <?php if (session()->getFlashdata('message')): ?>
-        <div class="alert alert-success"><?= session()->getFlashdata('message') ?></div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Parent Engagement - Surveys</h1>
+        <a href="<?= base_url('parent-engagement/create') ?>" class="btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-plus fa-sm text-white-50"></i> Create Survey
+        </a>
+    </div>
+
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success alert-dismissible fade show">
+            <?= session()->getFlashdata('success') ?>
+            <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+        </div>
     <?php endif; ?>
 
-    <div class="row">
-        <!-- Surveys -->
-        <div class="col-md-6 mb-4">
-            <div class="card shadow">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fa fa-poll"></i> Recent Surveys
-                        <a href="<?= base_url('parent-engagement/surveys/create') ?>" class="btn btn-sm btn-primary float-right">Create New</a>
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <?php if (!empty($surveys)): ?>
-                        <ul class="list-group">
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger alert-dismissible fade show">
+            <?= session()->getFlashdata('error') ?>
+            <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+        </div>
+    <?php endif; ?>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">All Surveys</h6>
+        </div>
+        <div class="card-body">
+            <?php if (empty($surveys)): ?>
+                <p class="text-center text-muted">No surveys found. <a href="<?= base_url('parent-engagement/create') ?>">Create your first survey</a>.</p>
+            <?php else: ?>
+                <div class="table-responsive">
+                    <table class="table table-bordered" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Type</th>
+                                <th>Audience</th>
+                                <th>Status</th>
+                                <th>Responses</th>
+                                <th>Period</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <?php foreach ($surveys as $survey): ?>
-                                <li class="list-group-item">
-                                    <strong><?= esc($survey['title']) ?></strong>
-                                    <span class="badge badge-<?= $survey['status'] === 'active' ? 'success' : 'secondary' ?> float-right">
-                                        <?= esc($survey['status']) ?>
-                                    </span>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                        <a href="<?= base_url('parent-engagement/surveys') ?>" class="btn btn-sm btn-link">View All</a>
-                    <?php else: ?>
-                        <p class="text-muted">No surveys available.</p>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-
-        <!-- Events -->
-        <div class="col-md-6 mb-4">
-            <div class="card shadow">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fa fa-calendar"></i> Upcoming Events
-                        <a href="<?= base_url('parent-engagement/events/create') ?>" class="btn btn-sm btn-primary float-right">Create New</a>
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <?php if (!empty($events)): ?>
-                        <ul class="list-group">
-                            <?php foreach ($events as $event): ?>
-                                <li class="list-group-item">
-                                    <strong><?= esc($event['title']) ?></strong>
-                                    <small class="text-muted d-block"><?= esc($event['start_datetime']) ?></small>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                        <a href="<?= base_url('parent-engagement/events') ?>" class="btn btn-sm btn-link">View All</a>
-                    <?php else: ?>
-                        <p class="text-muted">No upcoming events.</p>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-
-        <!-- Fundraising Campaigns -->
-        <div class="col-md-6 mb-4">
-            <div class="card shadow">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fa fa-donate"></i> Active Campaigns
-                        <a href="<?= base_url('parent-engagement/campaigns/create') ?>" class="btn btn-sm btn-primary float-right">Create New</a>
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <?php if (!empty($campaigns)): ?>
-                        <ul class="list-group">
-                            <?php foreach ($campaigns as $campaign): ?>
-                                <li class="list-group-item">
-                                    <strong><?= esc($campaign['name']) ?></strong>
-                                    <div class="progress mt-2" style="height: 20px;">
-                                        <?php 
-                                        $percentage = ($campaign['target_amount'] > 0) ? 
-                                            min(100, ($campaign['raised_amount'] / $campaign['target_amount']) * 100) : 0;
+                                <tr>
+                                    <td><?= esc($survey['title']) ?></td>
+                                    <td><span class="badge badge-info"><?= esc($survey['survey_type']) ?></span></td>
+                                    <td><?= esc($survey['target_audience']) ?></td>
+                                    <td>
+                                        <?php
+                                        $badge = match($survey['status']) {
+                                            'active' => 'success',
+                                            'draft' => 'secondary',
+                                            'closed' => 'warning',
+                                            'archived' => 'dark',
+                                            default => 'secondary'
+                                        };
                                         ?>
-                                        <div class="progress-bar" role="progressbar" 
-                                             style="width: <?= number_format($percentage, 0) ?>%">
-                                            <?= number_format($percentage, 0) ?>%
-                                        </div>
-                                    </div>
-                                </li>
+                                        <span class="badge badge-<?= $badge ?>"><?= esc($survey['status']) ?></span>
+                                    </td>
+                                    <td><?= $survey['response_count'] ?></td>
+                                    <td>
+                                        <?= $survey['start_date'] ? date('Y-m-d', strtotime($survey['start_date'])) : '' ?>
+                                        <?php if ($survey['end_date']): ?>
+                                            - <?= date('Y-m-d', strtotime($survey['end_date'])) ?>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <a href="<?= base_url('parent-engagement/' . $survey['id'] . '/edit') ?>" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                        <a href="<?= base_url('parent-engagement/' . $survey['id'] . '/delete') ?>" 
+                                           class="btn btn-sm btn-danger"
+                                           onclick="return confirm('Delete this survey?')">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </a>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
-                        </ul>
-                        <a href="<?= base_url('parent-engagement/campaigns') ?>" class="btn btn-sm btn-link">View All</a>
-                    <?php else: ?>
-                        <p class="text-muted">No active campaigns.</p>
-                    <?php endif; ?>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
