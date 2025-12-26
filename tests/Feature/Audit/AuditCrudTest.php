@@ -2,14 +2,14 @@
 
 namespace Tests\Feature\Audit;
 
-use Tests\Support\TestCase;
+use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * AuditCrudTest - Feature tests for Audit module CRUD operations
  * 
  * @group audit
  */
-class AuditCrudTest extends TestCase
+class AuditCrudTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

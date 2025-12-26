@@ -2,14 +2,14 @@
 
 namespace Tests\Feature\Monitoring;
 
-use Tests\Support\TestCase;
+use CodeIgniter\Test\CIUnitTestCase;
 
 /**
  * MonitoringCrudTest - Feature tests for Monitoring module CRUD operations
  * 
  * @group monitoring
  */
-class MonitoringCrudTest extends TestCase
+class MonitoringCrudTest extends CIUnitTestCase
 {
     protected function setUp(): void
     {

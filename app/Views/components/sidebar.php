@@ -13,8 +13,8 @@
         
         <?php
         $usertypeID = session()->get('usertypeID');
-            $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
-            ?>
+        $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
+        ?>
         
         <?php if ($isAdmin) : ?>
         <li style="padding: 10px 20px;">
@@ -42,18 +42,6 @@
             </a>
         </li>
         
-        <li style="padding: 10px 20px;">
-            <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-book"></i> Classes
-            </a>
-        </li>
-        
-        <li style="padding: 10px 20px;">
-            <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-calendar"></i> Attendance
-            </a>
-        </li>
-
         <li style="padding: 10px 20px;">
             <a href="<?= base_url('inventory') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
                 <i class="fa fa-cubes"></i> Inventory
@@ -103,19 +91,49 @@
         </li>
         
         <li style="padding: 10px 20px;">
-            <a href="<?= base_url('lms') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+            <a href="<?= base_url('lms/courses') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
                 <i class="fa fa-graduation-cap"></i> LMS
             </a>
         </li>
-        
+
         <li style="padding: 10px 20px;">
-            <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-money"></i> Fees
+            <a href="<?= base_url('analytics') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-chart-bar"></i> Analytics
+            </a>
+        </li>
+
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('gamification') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-trophy"></i> Gamification
+            </a>
+        </li>
+
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('governance') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-gavel"></i> Governance
             </a>
         </li>
         
         <li style="padding: 10px 20px;">
-            <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+            <a href="<?= base_url('database') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-database"></i> Database
+            </a>
+        </li>
+        
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('mobile/devices') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-mobile-alt"></i> Mobile
+            </a>
+        </li>
+        
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('orchestration') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-sitemap"></i> Orchestration
+            </a>
+        </li>
+        
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('system/settings') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
                 <i class="fa fa-cog"></i> Settings
             </a>
         </li>
