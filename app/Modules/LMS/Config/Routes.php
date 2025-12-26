@@ -14,6 +14,7 @@ class Routes
         $routes->group('lms', ['namespace' => 'Modules\LMS\Controllers', 'filter' => 'auth'], static function (RouteCollection $routes): void {
             $routes->get('', 'LMSWebController::index');
 
+            // Existing routes
             $routes->get('courses', 'CoursesWebController::index');
             $routes->get('courses/new', 'CoursesWebController::new');
             $routes->post('courses', 'CoursesWebController::create');
@@ -25,6 +26,16 @@ class Routes
             $routes->post('courses/(:num)/lessons', 'LessonsWebController::create/$1');
             $routes->get('lessons/(:num)/edit', 'LessonsWebController::edit/$1');
             $routes->post('lessons/(:num)', 'LessonsWebController::update/$1');
+        });
+
+        // LMS CRUD Routes (alternate management interface)
+        $routes->group('lms/courses', ['namespace' => 'Modules\LMS\Controllers\Web'], static function (RouteCollection $routes): void {
+            $routes->get('/', 'LMSCourseController::index');
+            $routes->get('create', 'LMSCourseController::create');
+            $routes->post('store', 'LMSCourseController::store');
+            $routes->get('edit/(:num)', 'LMSCourseController::edit/$1');
+            $routes->post('update/(:num)', 'LMSCourseController::update/$1');
+            $routes->get('delete/(:num)', 'LMSCourseController::delete/$1');
         });
 
         // API Routes
