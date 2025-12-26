@@ -5,7 +5,7 @@ namespace App\Modules\Integrations\Services;
 use Modules\Integrations\Models\IntegrationModel;
 
 /**
- * IntegrationsCrudService - CRUD operations for integrations management
+ * IntegrationsCrudService - CRUD operations for integrations management.
  */
 class IntegrationsCrudService
 {
@@ -17,7 +17,7 @@ class IntegrationsCrudService
     }
 
     /**
-     * Get all integrations (optionally filtered by tenant)
+     * Get all integrations (optionally filtered by tenant).
      */
     public function getAll(?string $tenantId = null, array $filters = []): array
     {
@@ -38,23 +38,23 @@ class IntegrationsCrudService
     }
 
     /**
-     * Get a single integration by ID
+     * Get a single integration by ID.
      */
     public function getById(int $id, ?string $tenantId = null): ?array
     {
         $builder = $this->model->where('id', $id);
-        
+
         if ($tenantId !== null) {
             $builder = $builder->where('tenant_id', $tenantId);
         }
 
         $integration = $builder->first();
-        
+
         return $integration ?: null;
     }
 
     /**
-     * Create a new integration
+     * Create a new integration.
      */
     public function create(array $data): int|false
     {
@@ -74,7 +74,7 @@ class IntegrationsCrudService
     }
 
     /**
-     * Update an integration
+     * Update an integration.
      */
     public function update(int $id, array $data): bool
     {
@@ -90,7 +90,7 @@ class IntegrationsCrudService
     }
 
     /**
-     * Delete an integration (soft delete)
+     * Delete an integration (soft delete).
      */
     public function delete(int $id): bool
     {
@@ -98,7 +98,7 @@ class IntegrationsCrudService
     }
 
     /**
-     * Get integration types
+     * Get integration types.
      */
     public function getIntegrationTypes(): array
     {
@@ -113,7 +113,7 @@ class IntegrationsCrudService
     }
 
     /**
-     * Get validation errors from model
+     * Get validation errors from model.
      */
     public function getErrors(): array
     {

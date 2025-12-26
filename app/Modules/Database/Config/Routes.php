@@ -5,8 +5,8 @@ namespace Modules\Database\Config;
 use CodeIgniter\Router\RouteCollection;
 
 /**
- * Database Module Routes Configuration
- * 
+ * Database Module Routes Configuration.
+ *
  * Web Routes: /database/*
  */
 class Routes

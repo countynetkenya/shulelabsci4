@@ -5,15 +5,20 @@ namespace Modules\Database\Models;
 use CodeIgniter\Model;
 
 /**
- * DatabaseBackupModel - Handles database backup records
+ * DatabaseBackupModel - Handles database backup records.
  */
 class DatabaseBackupModel extends Model
 {
     protected $table = 'db_backups';
+
     protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
+
     protected $returnType = 'array';
+
     protected $useSoftDeletes = false;
+
     protected $allowedFields = [
         'school_id',
         'backup_id',
@@ -28,7 +33,9 @@ class DatabaseBackupModel extends Model
     ];
 
     protected $useTimestamps = true;
+
     protected $createdField = 'created_at';
+
     protected $updatedField = 'updated_at';
 
     protected $validationRules = [
@@ -42,5 +49,6 @@ class DatabaseBackupModel extends Model
     ];
 
     protected $validationMessages = [];
+
     protected $skipValidation = false;
 }

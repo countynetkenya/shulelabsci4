@@ -5,7 +5,7 @@ namespace App\Modules\Monitoring\Services;
 use App\Modules\Monitoring\Models\MetricModel;
 
 /**
- * MonitoringCrudService - CRUD operations for metrics management
+ * MonitoringCrudService - CRUD operations for metrics management.
  */
 class MonitoringCrudService
 {
@@ -17,7 +17,7 @@ class MonitoringCrudService
     }
 
     /**
-     * Get all metrics for a school
+     * Get all metrics for a school.
      */
     public function getAll(int $schoolId, array $filters = []): array
     {
@@ -25,7 +25,7 @@ class MonitoringCrudService
     }
 
     /**
-     * Get a single metric by ID (scoped to school)
+     * Get a single metric by ID (scoped to school).
      */
     public function getById(int $id, int $schoolId): ?array
     {
@@ -33,12 +33,12 @@ class MonitoringCrudService
             ->where('school_id', $schoolId)
             ->where('id', $id)
             ->first();
-        
+
         return $metric ?: null;
     }
 
     /**
-     * Create a new metric
+     * Create a new metric.
      */
     public function create(array $data): int|false
     {
@@ -60,7 +60,7 @@ class MonitoringCrudService
     }
 
     /**
-     * Update a metric
+     * Update a metric.
      */
     public function update(int $id, array $data): bool
     {
@@ -73,7 +73,7 @@ class MonitoringCrudService
     }
 
     /**
-     * Delete a metric
+     * Delete a metric.
      */
     public function delete(int $id): bool
     {
@@ -81,7 +81,7 @@ class MonitoringCrudService
     }
 
     /**
-     * Get available metric names
+     * Get available metric names.
      */
     public function getMetricNames(int $schoolId): array
     {
@@ -89,7 +89,7 @@ class MonitoringCrudService
     }
 
     /**
-     * Get metric types
+     * Get metric types.
      */
     public function getMetricTypes(): array
     {

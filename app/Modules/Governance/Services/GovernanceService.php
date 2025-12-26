@@ -6,20 +6,21 @@ use App\Modules\Governance\Models\GovernancePolicyModel;
 use Modules\Foundation\Services\AuditService;
 
 /**
- * GovernanceService - Business logic for governance policy management
- * 
+ * GovernanceService - Business logic for governance policy management.
+ *
  * All queries are tenant-scoped by school_id.
  * Integrates with AuditService for logging critical actions.
  */
 class GovernanceService
 {
     protected GovernancePolicyModel $model;
+
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
         $this->model = new GovernancePolicyModel();
-        
+
         // Try to inject AuditService
         try {
             $this->auditService = $auditService ?? new AuditService();
@@ -30,7 +31,7 @@ class GovernanceService
     }
 
     /**
-     * Get all policies for a school
+     * Get all policies for a school.
      */
     public function getAll(int $schoolId, array $filters = []): array
     {
@@ -38,7 +39,7 @@ class GovernanceService
     }
 
     /**
-     * Get a single policy by ID (scoped to school)
+     * Get a single policy by ID (scoped to school).
      */
     public function getById(int $id, int $schoolId): ?array
     {
@@ -46,12 +47,12 @@ class GovernanceService
             ->where('school_id', $schoolId)
             ->where('id', $id)
             ->first();
-        
+
         return $policy ?: null;
     }
 
     /**
-     * Create a new policy
+     * Create a new policy.
      */
     public function create(array $data): int|false
     {
@@ -91,7 +92,7 @@ class GovernanceService
     }
 
     /**
-     * Update an existing policy
+     * Update an existing policy.
      */
     public function update(int $id, array $data, int $schoolId): bool
     {
@@ -121,7 +122,7 @@ class GovernanceService
     }
 
     /**
-     * Delete a policy
+     * Delete a policy.
      */
     public function delete(int $id, int $schoolId): bool
     {
@@ -151,7 +152,7 @@ class GovernanceService
     }
 
     /**
-     * Get policy categories
+     * Get policy categories.
      */
     public function getCategories(int $schoolId): array
     {
@@ -159,7 +160,7 @@ class GovernanceService
     }
 
     /**
-     * Get policy statistics
+     * Get policy statistics.
      */
     public function getStatistics(int $schoolId): array
     {

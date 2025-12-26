@@ -68,10 +68,10 @@
                                             'silver' => 'light',
                                             'gold' => 'warning',
                                             'platinum' => 'primary',
-                                            'diamond' => 'info'
+                                            'diamond' => 'info',
                                         ];
-                                        $color = $tierColors[$badge['tier']] ?? 'secondary';
-                                        ?>
+                                $color = $tierColors[$badge['tier']] ?? 'secondary';
+                                ?>
                                         <span class="badge badge-<?= $color ?>"><?= esc($badge['tier']) ?></span>
                                     </td>
                                     <td><?= esc($badge['points_reward']) ?> pts</td>

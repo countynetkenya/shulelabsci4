@@ -5,7 +5,7 @@ namespace App\Modules\Student\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * StudentSeeder - Seeds sample student records
+ * StudentSeeder - Seeds sample student records.
  */
 class StudentSeeder extends Seeder
 {

@@ -20,7 +20,7 @@ class ParentEngagementCrudTest extends CIUnitTestCase
     }
 
     // ============= EVENTS TESTS =============
-    
+
     public function testCanViewEventsIndex()
     {
         $response = $this->withSession($this->getAdminSession())
@@ -73,7 +73,7 @@ class ParentEngagementCrudTest extends CIUnitTestCase
     }
 
     // ============= SURVEYS TESTS =============
-    
+
     public function testCanViewSurveysIndex()
     {
         $response = $this->withSession($this->getAdminSession())
@@ -93,7 +93,7 @@ class ParentEngagementCrudTest extends CIUnitTestCase
     }
 
     // ============= CAMPAIGNS TESTS =============
-    
+
     public function testCanViewCampaignsIndex()
     {
         $response = $this->withSession($this->getAdminSession())

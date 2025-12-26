@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use Modules\Mobile\Services\MobileService;
 
 /**
- * MobileDeviceController - Web CRUD for mobile device management
+ * MobileDeviceController - Web CRUD for mobile device management.
  */
 class MobileDeviceController extends BaseController
 {
@@ -24,7 +24,7 @@ class MobileDeviceController extends BaseController
         }
 
         $schoolId = session()->get('school_id') ?? 1;
-        
+
         $data = [
             'title' => 'Mobile Devices',
             'devices' => $this->service->getAll($schoolId),

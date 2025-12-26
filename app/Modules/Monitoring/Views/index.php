@@ -144,7 +144,8 @@
 
 <?php
 // Helper function for badge colors
-function getMetricTypeBadgeClass($type) {
+function getMetricTypeBadgeClass($type)
+{
     $classes = [
         'counter' => 'success',
         'gauge' => 'info',

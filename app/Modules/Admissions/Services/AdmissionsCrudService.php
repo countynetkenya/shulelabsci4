@@ -6,20 +6,21 @@ use App\Modules\Admissions\Models\AdmissionsApplicationModel;
 use Modules\Foundation\Services\AuditService;
 
 /**
- * AdmissionsCrudService - Business logic for admissions management
- * 
+ * AdmissionsCrudService - Business logic for admissions management.
+ *
  * All queries are tenant-scoped by school_id.
  * Integrates with AuditService for logging critical actions.
  */
 class AdmissionsCrudService
 {
     protected AdmissionsApplicationModel $model;
+
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
         $this->model = new AdmissionsApplicationModel();
-        
+
         // Try to inject AuditService
         try {
             $this->auditService = $auditService ?? new AuditService();
@@ -30,7 +31,7 @@ class AdmissionsCrudService
     }
 
     /**
-     * Get all applications for a school
+     * Get all applications for a school.
      */
     public function getAll(int $schoolId, array $filters = []): array
     {
@@ -38,7 +39,7 @@ class AdmissionsCrudService
     }
 
     /**
-     * Get a single application by ID (scoped to school)
+     * Get a single application by ID (scoped to school).
      */
     public function getById(int $id, int $schoolId): ?array
     {
@@ -46,12 +47,12 @@ class AdmissionsCrudService
             ->where('school_id', $schoolId)
             ->where('id', $id)
             ->first();
-        
+
         return $application ?: null;
     }
 
     /**
-     * Create a new application
+     * Create a new application.
      */
     public function create(array $data): int|false
     {
@@ -88,7 +89,7 @@ class AdmissionsCrudService
     }
 
     /**
-     * Update an existing application
+     * Update an existing application.
      */
     public function update(int $id, array $data, int $schoolId): bool
     {
@@ -118,7 +119,7 @@ class AdmissionsCrudService
     }
 
     /**
-     * Delete an application
+     * Delete an application.
      */
     public function delete(int $id, int $schoolId): bool
     {
@@ -148,7 +149,7 @@ class AdmissionsCrudService
     }
 
     /**
-     * Get application statistics
+     * Get application statistics.
      */
     public function getStatistics(int $schoolId, ?string $academicYear = null): array
     {

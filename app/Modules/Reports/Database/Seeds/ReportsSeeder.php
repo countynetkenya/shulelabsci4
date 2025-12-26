@@ -5,7 +5,7 @@ namespace Modules\Reports\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * ReportsSeeder - Populates sample reports data
+ * ReportsSeeder - Populates sample reports data.
  */
 class ReportsSeeder extends Seeder
 {
@@ -85,7 +85,7 @@ class ReportsSeeder extends Seeder
         ];
 
         $this->db->table('reports')->insertBatch($data);
-        
-        echo "Inserted " . count($data) . " sample reports.\n";
+
+        echo 'Inserted ' . count($data) . " sample reports.\n";
     }
 }

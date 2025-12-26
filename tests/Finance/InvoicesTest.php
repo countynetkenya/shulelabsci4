@@ -3,8 +3,8 @@
 namespace Tests\Finance;
 
 use CodeIgniter\Test\CIUnitTestCase;
-use CodeIgniter\Test\FeatureTestTrait;
 use CodeIgniter\Test\DatabaseTestTrait;
+use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 class InvoicesTest extends CIUnitTestCase
@@ -14,22 +14,25 @@ class InvoicesTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->setupTenantContext();
-        
+
         // Robust CSRF Disable (Fixing TenantTestTrait limitation)
         $config = config('Filters');
         $newBefore = [];
         foreach ($config->globals['before'] as $key => $value) {
             if ($value !== 'csrf' && $key !== 'csrf') {
                 if (is_array($value)) {
-                     $newBefore[$key] = $value;
+                    $newBefore[$key] = $value;
                 } else {
                     $newBefore[] = $value;
                 }
@@ -43,11 +46,11 @@ class InvoicesTest extends CIUnitTestCase
     {
         $result = $this->withSession($this->getAdminSession())
                        ->call('get', '/finance/invoices');
-        
+
         if (!$result->isOK()) {
-             // Debug info if needed
+            // Debug info if needed
         }
-        
+
         $result->assertOK();
         $result->assertSee('Invoices');
     }
@@ -68,7 +71,7 @@ class InvoicesTest extends CIUnitTestCase
             'email' => 'student1@example.com',
             'password_hash' => 'hash',
             'full_name' => 'Student One',
-            'is_active' => 1
+            'is_active' => 1,
         ]);
         $studentId = $this->db->insertID();
 
@@ -77,7 +80,7 @@ class InvoicesTest extends CIUnitTestCase
             'student_id' => $studentId,
             'amount' => 1000,
             'due_date' => date('Y-m-d', strtotime('+30 days')),
-            'description' => 'Tuition Fee'
+            'description' => 'Tuition Fee',
         ]);
 
         $result->assertRedirectTo('/finance/invoices');

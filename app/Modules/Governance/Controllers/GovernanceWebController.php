@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use App\Modules\Governance\Services\GovernanceService;
 
 /**
- * GovernanceWebController - Handles CRUD operations for governance policies
- * 
+ * GovernanceWebController - Handles CRUD operations for governance policies.
+ *
  * All data is tenant-scoped by school_id from session.
  */
 class GovernanceWebController extends BaseController
@@ -20,7 +20,7 @@ class GovernanceWebController extends BaseController
     }
 
     /**
-     * Get current school ID from session
+     * Get current school ID from session.
      */
     protected function getSchoolId(): int
     {
@@ -28,7 +28,7 @@ class GovernanceWebController extends BaseController
     }
 
     /**
-     * Get current user ID from session
+     * Get current user ID from session.
      */
     protected function getUserId(): int
     {
@@ -36,42 +36,42 @@ class GovernanceWebController extends BaseController
     }
 
     /**
-     * List all policies
+     * List all policies.
      */
     public function index()
     {
         $schoolId = $this->getSchoolId();
-        
+
         $data = [
             'title' => 'Governance Dashboard',
             'policies' => $this->service->getAll($schoolId),
             'statistics' => $this->service->getStatistics($schoolId),
             'categories' => $this->service->getCategories($schoolId),
         ];
-        
+
         return view('Modules\Governance\Views\index', $data);
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
         $data = [
             'title' => 'Create Policy',
         ];
-        
+
         return view('Modules\Governance\Views\create', $data);
     }
 
     /**
-     * Store new policy
+     * Store new policy.
      */
     public function store()
     {
         $schoolId = $this->getSchoolId();
         $userId = $this->getUserId();
-        
+
         $validationRules = [
             'title' => 'required|min_length[3]|max_length[255]',
             'category' => 'required|max_length[50]',
@@ -100,18 +100,18 @@ class GovernanceWebController extends BaseController
         if ($id) {
             return redirect()->to('/governance')->with('message', 'Policy created successfully');
         }
-        
+
         return redirect()->back()->withInput()->with('error', 'Failed to create policy');
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit($id)
     {
         $schoolId = $this->getSchoolId();
         $policy = $this->service->getById($id, $schoolId);
-        
+
         if (!$policy) {
             return redirect()->to('/governance')->with('error', 'Policy not found');
         }
@@ -125,7 +125,7 @@ class GovernanceWebController extends BaseController
     }
 
     /**
-     * Update existing policy
+     * Update existing policy.
      */
     public function update($id)
     {
@@ -157,22 +157,22 @@ class GovernanceWebController extends BaseController
         if ($success) {
             return redirect()->to('/governance')->with('message', 'Policy updated successfully');
         }
-        
+
         return redirect()->back()->withInput()->with('error', 'Failed to update policy');
     }
 
     /**
-     * Delete policy
+     * Delete policy.
      */
     public function delete($id)
     {
         $schoolId = $this->getSchoolId();
         $success = $this->service->delete($id, $schoolId);
-        
+
         if ($success) {
             return redirect()->to('/governance')->with('message', 'Policy deleted successfully');
         }
-        
+
         return redirect()->to('/governance')->with('error', 'Failed to delete policy');
     }
 }

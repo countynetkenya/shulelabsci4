@@ -81,13 +81,13 @@
                 <div class="form-group">
                     <label for="labels">Labels (JSON)</label>
                     <textarea name="labels" id="labels" class="form-control" rows="3" 
-                              placeholder='{"environment": "production", "server": "web-01"}'><?php 
+                              placeholder='{"environment": "production", "server": "web-01"}'><?php
                         $labelsValue = old('labels');
-                        if (!$labelsValue && isset($metric['labels'])) {
-                            $labelsValue = is_array($metric['labels']) ? json_encode($metric['labels']) : $metric['labels'];
-                        }
-                        echo esc($labelsValue);
-                    ?></textarea>
+if (!$labelsValue && isset($metric['labels'])) {
+    $labelsValue = is_array($metric['labels']) ? json_encode($metric['labels']) : $metric['labels'];
+}
+echo esc($labelsValue);
+?></textarea>
                     <small class="form-text text-muted">Optional metadata in JSON format.</small>
                 </div>
 

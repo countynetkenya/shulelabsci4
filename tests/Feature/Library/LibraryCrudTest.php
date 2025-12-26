@@ -8,8 +8,8 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * LibraryCrudTest - Feature tests for Library Book CRUD operations
- * 
+ * LibraryCrudTest - Feature tests for Library Book CRUD operations.
+ *
  * Tests all CRUD endpoints for the Library module:
  * - GET /library (index)
  * - GET /library/create (create form)
@@ -25,8 +25,11 @@ class LibraryCrudTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
@@ -36,7 +39,7 @@ class LibraryCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Index page displays books
+     * Test: Index page displays books.
      */
     public function testIndexDisplaysBooks()
     {
@@ -63,7 +66,7 @@ class LibraryCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Index page shows empty state when no books
+     * Test: Index page shows empty state when no books.
      */
     public function testIndexShowsEmptyState()
     {
@@ -75,7 +78,7 @@ class LibraryCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Create page displays form
+     * Test: Create page displays form.
      */
     public function testCreatePageDisplaysForm()
     {
@@ -89,7 +92,7 @@ class LibraryCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Store creates a new book
+     * Test: Store creates a new book.
      */
     public function testStoreCreatesBook()
     {
@@ -104,7 +107,7 @@ class LibraryCrudTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirectTo('/library');
-        
+
         $this->seeInDatabase('library_books', [
             'title'     => 'New Library Book',
             'author'    => 'New Author',
@@ -113,7 +116,7 @@ class LibraryCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Store validation fails with missing required fields
+     * Test: Store validation fails with missing required fields.
      */
     public function testStoreValidationFailsWithMissingFields()
     {
@@ -129,7 +132,7 @@ class LibraryCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Edit page displays book data
+     * Test: Edit page displays book data.
      */
     public function testEditPageDisplaysBookData()
     {
@@ -157,7 +160,7 @@ class LibraryCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Edit page returns 404 for non-existent book
+     * Test: Edit page returns 404 for non-existent book.
      */
     public function testEditPageRedirectsForNonExistentBook()
     {
@@ -169,7 +172,7 @@ class LibraryCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Update modifies existing book
+     * Test: Update modifies existing book.
      */
     public function testUpdateModifiesBook()
     {
@@ -199,7 +202,7 @@ class LibraryCrudTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirectTo('/library');
-        
+
         $this->seeInDatabase('library_books', [
             'id'     => $bookId,
             'title'  => 'Updated Title',
@@ -208,7 +211,7 @@ class LibraryCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Delete removes a book
+     * Test: Delete removes a book.
      */
     public function testDeleteRemovesBook()
     {
@@ -233,13 +236,13 @@ class LibraryCrudTest extends CIUnitTestCase
                        ->get("library/delete/{$bookId}");
 
         $result->assertRedirectTo('/library');
-        
+
         // Verify book is deleted
         $this->dontSeeInDatabase('library_books', ['id' => $bookId]);
     }
 
     /**
-     * Test: Delete non-existent book redirects with error
+     * Test: Delete non-existent book redirects with error.
      */
     public function testDeleteNonExistentBookRedirects()
     {
@@ -250,7 +253,7 @@ class LibraryCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Tenant scoping - cannot access other school's books
+     * Test: Tenant scoping - cannot access other school's books.
      */
     public function testCannotAccessOtherSchoolBooks()
     {
@@ -277,7 +280,7 @@ class LibraryCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Search functionality filters books
+     * Test: Search functionality filters books.
      */
     public function testSearchFiltersBooks()
     {
@@ -316,7 +319,7 @@ class LibraryCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Category filter works
+     * Test: Category filter works.
      */
     public function testCategoryFilterWorks()
     {

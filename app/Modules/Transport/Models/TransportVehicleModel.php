@@ -6,21 +6,29 @@ use CodeIgniter\Model;
 
 class TransportVehicleModel extends Model
 {
-    protected $table            = 'transport_vehicles';
-    protected $primaryKey       = 'id';
+    protected $table = 'transport_vehicles';
+
+    protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = [
-        'school_id', 'registration_number', 'make', 'model', 'year', 
-        'capacity', 'fuel_type', 'insurance_expiry', 'fitness_expiry', 
-        'status', 'gps_device_id', 'driver_name'
+
+    protected $returnType = 'array';
+
+    protected $useSoftDeletes = false;
+
+    protected $protectFields = true;
+
+    protected $allowedFields = [
+        'school_id', 'registration_number', 'make', 'model', 'year',
+        'capacity', 'fuel_type', 'insurance_expiry', 'fitness_expiry',
+        'status', 'gps_device_id', 'driver_name',
     ];
 
     protected $useTimestamps = true;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
+
+    protected $createdField = 'created_at';
+
+    protected $updatedField = 'updated_at';
 
     protected $validationRules = [
         'school_id'           => 'required|integer',
@@ -31,7 +39,8 @@ class TransportVehicleModel extends Model
     ];
 
     protected $validationMessages = [];
-    protected $skipValidation     = false;
+
+    protected $skipValidation = false;
+
     protected $cleanValidationRules = true;
 }
-

@@ -8,7 +8,7 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * LMSCourseCrudTest - Feature tests for LMS Course CRUD operations
+ * LMSCourseCrudTest - Feature tests for LMS Course CRUD operations.
  */
 class LMSCourseCrudTest extends CIUnitTestCase
 {
@@ -17,8 +17,11 @@ class LMSCourseCrudTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
@@ -28,7 +31,7 @@ class LMSCourseCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Index page displays courses
+     * Test: Index page displays courses.
      */
     public function testIndexDisplaysCourses()
     {
@@ -52,7 +55,7 @@ class LMSCourseCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Create page displays form
+     * Test: Create page displays form.
      */
     public function testCreatePageDisplaysForm()
     {
@@ -65,7 +68,7 @@ class LMSCourseCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Store creates a new course
+     * Test: Store creates a new course.
      */
     public function testStoreCreatesCourse()
     {
@@ -80,19 +83,19 @@ class LMSCourseCrudTest extends CIUnitTestCase
                        ->post('lms/courses/store', $data);
 
         $result->assertRedirectTo('/lms/courses');
-        
+
         $course = $this->db->table('learning_courses')
                           ->where('school_id', $this->schoolId)
                           ->where('title', 'New Test Course')
                           ->get()
                           ->getRowArray();
-        
+
         $this->assertNotNull($course);
         $this->assertEquals('draft', $course['status']);
     }
 
     /**
-     * Test: Edit page displays course
+     * Test: Edit page displays course.
      */
     public function testEditPageDisplaysCourse()
     {
@@ -115,7 +118,7 @@ class LMSCourseCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Update modifies existing course
+     * Test: Update modifies existing course.
      */
     public function testUpdateModifiesCourse()
     {
@@ -140,18 +143,18 @@ class LMSCourseCrudTest extends CIUnitTestCase
                        ->post('lms/courses/update/' . $courseId, $data);
 
         $result->assertRedirectTo('/lms/courses');
-        
+
         $course = $this->db->table('learning_courses')
                           ->where('id', $courseId)
                           ->get()
                           ->getRowArray();
-        
+
         $this->assertEquals('Updated Title', $course['title']);
         $this->assertEquals('published', $course['status']);
     }
 
     /**
-     * Test: Delete removes course (soft delete)
+     * Test: Delete removes course (soft delete).
      */
     public function testDeleteRemovesCourse()
     {
@@ -170,13 +173,13 @@ class LMSCourseCrudTest extends CIUnitTestCase
                        ->get('lms/courses/delete/' . $courseId);
 
         $result->assertRedirectTo('/lms/courses');
-        
+
         // Check soft delete
         $course = $this->db->table('learning_courses')
                           ->where('id', $courseId)
                           ->get()
                           ->getRowArray();
-        
+
         $this->assertNotNull($course['deleted_at']);
     }
 }

@@ -5,7 +5,7 @@ namespace Modules\Mobile\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * MobileSeeder - Seed sample mobile device records
+ * MobileSeeder - Seed sample mobile device records.
  */
 class MobileSeeder extends Seeder
 {

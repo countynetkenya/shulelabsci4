@@ -6,20 +6,28 @@ use CodeIgniter\Model;
 
 class FundraisingCampaignModel extends Model
 {
-    protected $table            = 'fundraising_campaigns';
-    protected $primaryKey       = 'id';
+    protected $table = 'fundraising_campaigns';
+
+    protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = [
+
+    protected $returnType = 'array';
+
+    protected $useSoftDeletes = false;
+
+    protected $protectFields = true;
+
+    protected $allowedFields = [
         'school_id', 'name', 'description', 'target_amount', 'raised_amount',
-        'start_date', 'end_date', 'status', 'donor_count', 'created_by'
+        'start_date', 'end_date', 'status', 'donor_count', 'created_by',
     ];
 
     protected $useTimestamps = true;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
+
+    protected $createdField = 'created_at';
+
+    protected $updatedField = 'updated_at';
 
     protected $validationRules = [
         'school_id'     => 'required|integer',
@@ -31,7 +39,9 @@ class FundraisingCampaignModel extends Model
     ];
 
     protected $validationMessages = [];
-    protected $skipValidation     = false;
+
+    protected $skipValidation = false;
+
     protected $cleanValidationRules = true;
 
     protected $casts = [

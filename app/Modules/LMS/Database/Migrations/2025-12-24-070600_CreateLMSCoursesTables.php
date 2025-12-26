@@ -5,7 +5,7 @@ namespace Modules\LMS\Database\Migrations;
 use CodeIgniter\Database\Migration;
 
 /**
- * Creates LMS courses and related tables
+ * Creates LMS courses and related tables.
  */
 class CreateLMSCoursesTables extends Migration
 {

@@ -29,11 +29,11 @@ class HostelController extends BaseController
     public function store()
     {
         $schoolId = session()->get('school_id') ?? 1;
-        
+
         if (!$this->validate([
             'room_number' => 'required',
             'capacity' => 'required|integer',
-            'type' => 'required'
+            'type' => 'required',
         ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
@@ -55,7 +55,7 @@ class HostelController extends BaseController
     {
         $schoolId = session()->get('school_id') ?? 1;
         $data['room'] = $this->service->getById($id, $schoolId);
-        
+
         if (!$data['room']) {
             return redirect()->to('/hostel')->with('error', 'Room not found');
         }
@@ -70,7 +70,7 @@ class HostelController extends BaseController
         if (!$this->validate([
             'room_number' => 'required',
             'capacity' => 'required|integer',
-            'type' => 'required'
+            'type' => 'required',
         ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }

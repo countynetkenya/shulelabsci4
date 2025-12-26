@@ -5,19 +5,24 @@ namespace App\Modules\Governance\Models;
 use CodeIgniter\Model;
 
 /**
- * GovernancePolicyModel - Manages the policies table
- * 
+ * GovernancePolicyModel - Manages the policies table.
+ *
  * Schema: policy_number, title, category, content, summary, version, status, effective_date, etc.
  */
 class GovernancePolicyModel extends Model
 {
     protected $table = 'policies';
+
     protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
+
     protected $returnType = 'array';
+
     protected $useSoftDeletes = false;
+
     protected $protectFields = true;
-    
+
     protected $allowedFields = [
         'school_id',
         'policy_number',
@@ -35,8 +40,11 @@ class GovernancePolicyModel extends Model
     ];
 
     protected $useTimestamps = true;
+
     protected $dateFormat = 'datetime';
+
     protected $createdField = 'created_at';
+
     protected $updatedField = 'updated_at';
 
     // Validation rules
@@ -62,7 +70,7 @@ class GovernancePolicyModel extends Model
     ];
 
     /**
-     * Get policies by school with optional filters
+     * Get policies by school with optional filters.
      */
     public function getPoliciesBySchool(int $schoolId, array $filters = []): array
     {
@@ -90,7 +98,7 @@ class GovernancePolicyModel extends Model
     }
 
     /**
-     * Generate next policy number for school
+     * Generate next policy number for school.
      */
     public function generatePolicyNumber(int $schoolId, string $category): string
     {
@@ -99,11 +107,11 @@ class GovernancePolicyModel extends Model
             ->countAllResults();
 
         $categoryCode = strtoupper(substr($category, 0, 3));
-        return 'POL-' . $schoolId . '-' . $categoryCode . '-' . str_pad((string)($count + 1), 3, '0', STR_PAD_LEFT);
+        return 'POL-' . $schoolId . '-' . $categoryCode . '-' . str_pad((string) ($count + 1), 3, '0', STR_PAD_LEFT);
     }
 
     /**
-     * Get policy categories for a school
+     * Get policy categories for a school.
      */
     public function getCategories(int $schoolId): array
     {
@@ -115,7 +123,7 @@ class GovernancePolicyModel extends Model
     }
 
     /**
-     * Get statistics for policies
+     * Get statistics for policies.
      */
     public function getStatistics(int $schoolId): array
     {

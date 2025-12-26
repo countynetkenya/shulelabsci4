@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use App\Modules\Gamification\Services\GamificationCrudService;
 
 /**
- * GamificationWebController - Handles CRUD operations for gamification (badges & achievements)
- * 
+ * GamificationWebController - Handles CRUD operations for gamification (badges & achievements).
+ *
  * All data is tenant-scoped by school_id from session.
  */
 class GamificationWebController extends BaseController
@@ -20,7 +20,7 @@ class GamificationWebController extends BaseController
     }
 
     /**
-     * Get current school ID from session
+     * Get current school ID from session.
      */
     protected function getSchoolId(): int
     {
@@ -28,41 +28,41 @@ class GamificationWebController extends BaseController
     }
 
     /**
-     * List all badges and achievements
+     * List all badges and achievements.
      */
     public function index()
     {
         $schoolId = $this->getSchoolId();
-        
+
         $data = [
             'title' => 'Gamification Dashboard',
             'badges' => $this->service->getAllBadges($schoolId),
             'achievements' => $this->service->getAllAchievements($schoolId),
             'recentPoints' => $this->service->getRecentPoints($schoolId, 10),
         ];
-        
+
         return view('Modules\Gamification\Views\index', $data);
     }
 
     /**
-     * Show create badge form
+     * Show create badge form.
      */
     public function create()
     {
         $data = [
             'title' => 'Create Badge',
         ];
-        
+
         return view('Modules\Gamification\Views\create', $data);
     }
 
     /**
-     * Store new badge
+     * Store new badge.
      */
     public function store()
     {
         $schoolId = $this->getSchoolId();
-        
+
         $validationRules = [
             'name' => 'required|min_length[2]|max_length[100]',
             'code' => 'required|min_length[2]|max_length[50]',
@@ -81,7 +81,7 @@ class GamificationWebController extends BaseController
             'description' => $this->request->getPost('description'),
             'category' => $this->request->getPost('category'),
             'tier' => $this->request->getPost('tier') ?: 'bronze',
-            'points_reward' => (int)$this->request->getPost('points_reward') ?: 0,
+            'points_reward' => (int) $this->request->getPost('points_reward') ?: 0,
             'is_secret' => $this->request->getPost('is_secret') ? 1 : 0,
             'is_active' => 1,
         ];
@@ -91,18 +91,18 @@ class GamificationWebController extends BaseController
         if ($id) {
             return redirect()->to('/gamification')->with('message', 'Badge created successfully');
         }
-        
+
         return redirect()->back()->withInput()->with('error', 'Failed to create badge');
     }
 
     /**
-     * Show edit badge form
+     * Show edit badge form.
      */
     public function edit($id)
     {
         $schoolId = $this->getSchoolId();
         $badge = $this->service->getBadgeById($id, $schoolId);
-        
+
         if (!$badge) {
             return redirect()->to('/gamification')->with('error', 'Badge not found');
         }
@@ -116,7 +116,7 @@ class GamificationWebController extends BaseController
     }
 
     /**
-     * Update existing badge
+     * Update existing badge.
      */
     public function update($id)
     {
@@ -139,7 +139,7 @@ class GamificationWebController extends BaseController
             'description' => $this->request->getPost('description'),
             'category' => $this->request->getPost('category'),
             'tier' => $this->request->getPost('tier') ?: 'bronze',
-            'points_reward' => (int)$this->request->getPost('points_reward') ?: 0,
+            'points_reward' => (int) $this->request->getPost('points_reward') ?: 0,
             'is_secret' => $this->request->getPost('is_secret') ? 1 : 0,
             'is_active' => $this->request->getPost('is_active') ? 1 : 0,
         ];
@@ -149,22 +149,22 @@ class GamificationWebController extends BaseController
         if ($success) {
             return redirect()->to('/gamification')->with('message', 'Badge updated successfully');
         }
-        
+
         return redirect()->back()->withInput()->with('error', 'Failed to update badge');
     }
 
     /**
-     * Delete badge
+     * Delete badge.
      */
     public function delete($id)
     {
         $schoolId = $this->getSchoolId();
         $success = $this->service->deleteBadge($id, $schoolId);
-        
+
         if ($success) {
             return redirect()->to('/gamification')->with('message', 'Badge deleted successfully');
         }
-        
+
         return redirect()->to('/gamification')->with('error', 'Failed to delete badge or badge is global');
     }
 }

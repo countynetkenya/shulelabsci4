@@ -5,17 +5,22 @@ namespace App\Modules\Analytics\Models;
 use CodeIgniter\Model;
 
 /**
- * AnalyticsDashboardModel - Manages analytics_dashboards table
+ * AnalyticsDashboardModel - Manages analytics_dashboards table.
  */
 class AnalyticsDashboardModel extends Model
 {
     protected $table = 'analytics_dashboards';
+
     protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
+
     protected $returnType = 'array';
+
     protected $useSoftDeletes = false;
+
     protected $protectFields = true;
-    
+
     protected $allowedFields = [
         'school_id',
         'name',
@@ -28,8 +33,11 @@ class AnalyticsDashboardModel extends Model
     ];
 
     protected $useTimestamps = true;
+
     protected $dateFormat = 'datetime';
+
     protected $createdField = 'created_at';
+
     protected $updatedField = 'updated_at';
 
     // Validation rules
@@ -48,7 +56,7 @@ class AnalyticsDashboardModel extends Model
     ];
 
     /**
-     * Get dashboards by school
+     * Get dashboards by school.
      */
     public function getDashboardsBySchool(int $schoolId, ?int $userId = null): array
     {

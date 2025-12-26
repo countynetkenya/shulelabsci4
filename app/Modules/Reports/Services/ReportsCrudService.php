@@ -2,24 +2,25 @@
 
 namespace Modules\Reports\Services;
 
-use Modules\Reports\Models\ReportModel;
 use Modules\Foundation\Services\AuditService;
+use Modules\Reports\Models\ReportModel;
 
 /**
- * ReportsService - Business logic for report management
- * 
+ * ReportsService - Business logic for report management.
+ *
  * All queries are tenant-scoped by school_id.
  * Integrates with AuditService for logging critical actions.
  */
 class ReportsService
 {
     protected ReportModel $model;
+
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
         $this->model = new ReportModel();
-        
+
         // Try to inject AuditService
         try {
             $this->auditService = $auditService ?? new AuditService();
@@ -30,7 +31,7 @@ class ReportsService
     }
 
     /**
-     * Get all reports for a school
+     * Get all reports for a school.
      */
     public function getAll(int $schoolId, array $filters = []): array
     {
@@ -38,7 +39,7 @@ class ReportsService
     }
 
     /**
-     * Get a single report by ID (scoped to school)
+     * Get a single report by ID (scoped to school).
      */
     public function getById(int $id, int $schoolId): ?array
     {
@@ -46,12 +47,12 @@ class ReportsService
             ->where('school_id', $schoolId)
             ->where('id', $id)
             ->first();
-        
+
         return $report ?: null;
     }
 
     /**
-     * Create a new report
+     * Create a new report.
      */
     public function create(array $data): int|false
     {
@@ -79,7 +80,7 @@ class ReportsService
     }
 
     /**
-     * Update an existing report
+     * Update an existing report.
      */
     public function update(int $id, array $data): bool
     {
@@ -107,7 +108,7 @@ class ReportsService
     }
 
     /**
-     * Delete a report
+     * Delete a report.
      */
     public function delete(int $id): bool
     {
@@ -132,7 +133,7 @@ class ReportsService
     }
 
     /**
-     * Get available templates
+     * Get available templates.
      */
     public function getTemplates(): array
     {
@@ -140,7 +141,7 @@ class ReportsService
     }
 
     /**
-     * Get request metadata for auditing
+     * Get request metadata for auditing.
      */
     protected function getRequestMetadata(): array
     {

@@ -8,7 +8,7 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * ApprovalCrudTest - Feature tests for Approval Workflows CRUD operations
+ * ApprovalCrudTest - Feature tests for Approval Workflows CRUD operations.
  */
 class ApprovalCrudTest extends CIUnitTestCase
 {
@@ -17,8 +17,11 @@ class ApprovalCrudTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
@@ -95,7 +98,7 @@ class ApprovalCrudTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirectTo('/approvals');
-        
+
         $this->seeInDatabase('approval_requests', [
             'entity_type' => 'purchase_request',
             'entity_id'   => 100,
@@ -203,7 +206,7 @@ class ApprovalCrudTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirectTo('/approvals');
-        
+
         $this->seeInDatabase('approval_requests', [
             'id'          => $requestId,
             'entity_type' => 'updated_type',
@@ -248,7 +251,7 @@ class ApprovalCrudTest extends CIUnitTestCase
                        ->get("approvals/delete/{$requestId}");
 
         $result->assertRedirectTo('/approvals');
-        
+
         $this->dontSeeInDatabase('approval_requests', ['id' => $requestId]);
     }
 

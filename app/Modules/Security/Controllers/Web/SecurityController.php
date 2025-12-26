@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use Modules\Security\Services\SecurityService;
 
 /**
- * SecurityController - Handles CRUD operations for security logs
- * 
+ * SecurityController - Handles CRUD operations for security logs.
+ *
  * Displays and manages access logs and security monitoring.
  */
 class SecurityController extends BaseController
@@ -20,14 +20,14 @@ class SecurityController extends BaseController
     }
 
     /**
-     * Check if user has permission to access security module
+     * Check if user has permission to access security module.
      */
     protected function checkAccess(): bool
     {
         // Allow admins only
         $usertypeID = session()->get('usertypeID');
         $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
-        
+
         if ($isAdmin) {
             return true;
         }
@@ -47,7 +47,7 @@ class SecurityController extends BaseController
     }
 
     /**
-     * List all security logs
+     * List all security logs.
      */
     public function index()
     {
@@ -74,7 +74,7 @@ class SecurityController extends BaseController
     }
 
     /**
-     * Show create form (for manual log entry)
+     * Show create form (for manual log entry).
      */
     public function create()
     {
@@ -86,7 +86,7 @@ class SecurityController extends BaseController
     }
 
     /**
-     * Store new security log entry
+     * Store new security log entry.
      */
     public function store()
     {
@@ -123,7 +123,7 @@ class SecurityController extends BaseController
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit(int $id)
     {
@@ -145,7 +145,7 @@ class SecurityController extends BaseController
     }
 
     /**
-     * Delete security log
+     * Delete security log.
      */
     public function delete(int $id)
     {

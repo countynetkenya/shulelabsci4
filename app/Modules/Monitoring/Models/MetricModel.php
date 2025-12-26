@@ -5,15 +5,20 @@ namespace App\Modules\Monitoring\Models;
 use CodeIgniter\Model;
 
 /**
- * MetricModel - Stores application metrics and performance data
+ * MetricModel - Stores application metrics and performance data.
  */
 class MetricModel extends Model
 {
     protected $table = 'metrics';
+
     protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
+
     protected $returnType = 'array';
+
     protected $useSoftDeletes = false;
+
     protected $protectFields = true;
 
     protected $allowedFields = [
@@ -21,7 +26,9 @@ class MetricModel extends Model
     ];
 
     protected $useTimestamps = false;
+
     protected $createdField = 'recorded_at';
+
     protected $updatedField = '';
 
     protected $casts = [
@@ -47,7 +54,7 @@ class MetricModel extends Model
     ];
 
     /**
-     * Get metrics by school and filters
+     * Get metrics by school and filters.
      */
     public function getBySchool(int $schoolId, array $filters = [], int $limit = 50, int $offset = 0): array
     {
@@ -72,7 +79,7 @@ class MetricModel extends Model
     }
 
     /**
-     * Get distinct metric names for a school
+     * Get distinct metric names for a school.
      */
     public function getMetricNames(int $schoolId): array
     {

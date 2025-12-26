@@ -47,7 +47,7 @@ class WalletService
     }
 
     /**
-     * Get wallet by ID (scoped to school)
+     * Get wallet by ID (scoped to school).
      *
      * @param int $id
      * @param int $schoolId
@@ -65,7 +65,7 @@ class WalletService
     }
 
     /**
-     * Get wallet summary for a school
+     * Get wallet summary for a school.
      *
      * @param int $schoolId
      * @return array
@@ -94,7 +94,7 @@ class WalletService
     }
 
     /**
-     * Update wallet
+     * Update wallet.
      *
      * @param int $id
      * @param array $data
@@ -110,7 +110,7 @@ class WalletService
     }
 
     /**
-     * Delete wallet
+     * Delete wallet.
      *
      * @param int $id
      * @param int $schoolId

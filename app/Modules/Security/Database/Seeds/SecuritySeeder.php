@@ -5,7 +5,7 @@ namespace Modules\Security\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * SecuritySeeder - Populates sample security log data
+ * SecuritySeeder - Populates sample security log data.
  */
 class SecuritySeeder extends Seeder
 {
@@ -78,7 +78,7 @@ class SecuritySeeder extends Seeder
         ];
 
         $this->db->table('login_attempts')->insertBatch($data);
-        
-        echo "Inserted " . count($data) . " sample security logs.\n";
+
+        echo 'Inserted ' . count($data) . " sample security logs.\n";
     }
 }

@@ -5,15 +5,20 @@ namespace Modules\Mobile\Models;
 use CodeIgniter\Model;
 
 /**
- * MobileDeviceModel - Handles mobile device records
+ * MobileDeviceModel - Handles mobile device records.
  */
 class MobileDeviceModel extends Model
 {
     protected $table = 'mobile_devices';
+
     protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
+
     protected $returnType = 'array';
+
     protected $useSoftDeletes = false;
+
     protected $allowedFields = [
         'user_id',
         'device_id',
@@ -26,7 +31,9 @@ class MobileDeviceModel extends Model
     ];
 
     protected $useTimestamps = true;
+
     protected $createdField = 'created_at';
+
     protected $updatedField = 'updated_at';
 
     protected $validationRules = [
@@ -36,5 +43,6 @@ class MobileDeviceModel extends Model
     ];
 
     protected $validationMessages = [];
+
     protected $skipValidation = false;
 }

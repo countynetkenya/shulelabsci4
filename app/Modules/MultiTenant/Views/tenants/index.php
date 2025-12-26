@@ -101,29 +101,29 @@
                                             'suspended' => 'danger',
                                             'cancelled' => 'secondary',
                                         ];
-                                        $badgeClass = $statusBadges[$tenant['status']] ?? 'secondary';
-                                        ?>
+                                $badgeClass = $statusBadges[$tenant['status']] ?? 'secondary';
+                                ?>
                                         <span class="badge badge-<?= $badgeClass ?>"><?= esc(ucfirst($tenant['status'])) ?></span>
                                     </td>
                                     <td>
                                         <?php
-                                        $tierBadges = [
-                                            'free' => 'light',
-                                            'starter' => 'info',
-                                            'professional' => 'primary',
-                                            'enterprise' => 'dark',
-                                        ];
-                                        $tierClass = $tierBadges[$tenant['tier']] ?? 'light';
-                                        ?>
+                                $tierBadges = [
+                                    'free' => 'light',
+                                    'starter' => 'info',
+                                    'professional' => 'primary',
+                                    'enterprise' => 'dark',
+                                ];
+                                $tierClass = $tierBadges[$tenant['tier']] ?? 'light';
+                                ?>
                                         <span class="badge badge-<?= $tierClass ?>"><?= esc(ucfirst($tenant['tier'])) ?></span>
                                     </td>
                                     <td>
                                         <?= number_format($tenant['storage_used_mb']) ?> / <?= number_format($tenant['storage_quota_mb']) ?> MB
                                         <?php
-                                        $usagePercent = $tenant['storage_quota_mb'] > 0
-                                            ? ($tenant['storage_used_mb'] / $tenant['storage_quota_mb']) * 100
-                                            : 0;
-                                        ?>
+                                $usagePercent = $tenant['storage_quota_mb'] > 0
+                                    ? ($tenant['storage_used_mb'] / $tenant['storage_quota_mb']) * 100
+                                    : 0;
+                                ?>
                                         <div class="progress" style="height: 5px;">
                                             <div class="progress-bar <?= $usagePercent > 80 ? 'bg-danger' : 'bg-success' ?>" 
                                                  role="progressbar" 

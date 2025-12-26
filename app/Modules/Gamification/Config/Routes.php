@@ -5,8 +5,8 @@ namespace Modules\Gamification\Config;
 use CodeIgniter\Router\RouteCollection;
 
 /**
- * Gamification Module Routes Configuration
- * 
+ * Gamification Module Routes Configuration.
+ *
  * Web Routes: /gamification/*
  * API Routes: /api/gamification/*
  */

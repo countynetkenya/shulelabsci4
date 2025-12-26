@@ -5,8 +5,8 @@ namespace Tests\Feature\Monitoring;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
- * MonitoringCrudTest - Feature tests for Monitoring module CRUD operations
- * 
+ * MonitoringCrudTest - Feature tests for Monitoring module CRUD operations.
+ *
  * @group monitoring
  */
 class MonitoringCrudTest extends CIUnitTestCase

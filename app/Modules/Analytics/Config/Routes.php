@@ -5,8 +5,8 @@ namespace Modules\Analytics\Config;
 use CodeIgniter\Router\RouteCollection;
 
 /**
- * Analytics Module Routes Configuration
- * 
+ * Analytics Module Routes Configuration.
+ *
  * Web Routes: /analytics/*
  * API Routes: /api/analytics/*
  */

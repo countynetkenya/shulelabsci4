@@ -5,8 +5,8 @@ namespace App\Modules\Library\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * LibrarySeeder - Seeds library_books table with realistic sample data
- * 
+ * LibrarySeeder - Seeds library_books table with realistic sample data.
+ *
  * Run with: php spark db:seed App\Modules\Library\Database\Seeds\LibrarySeeder
  */
 class LibrarySeeder extends Seeder
@@ -81,7 +81,7 @@ class LibrarySeeder extends Seeder
 
         if ($existing === 0) {
             $this->db->table('library_books')->insertBatch($books);
-            echo "Seeded " . count($books) . " library books for school_id = {$schoolId}\n";
+            echo 'Seeded ' . count($books) . " library books for school_id = {$schoolId}\n";
         } else {
             echo "Library books already exist for school_id = {$schoolId}. Skipping.\n";
         }

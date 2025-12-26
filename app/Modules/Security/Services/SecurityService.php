@@ -6,20 +6,21 @@ use App\Modules\Security\Models\LoginAttemptModel;
 use Modules\Foundation\Services\AuditService;
 
 /**
- * SecurityService - Business logic for security management
- * 
+ * SecurityService - Business logic for security management.
+ *
  * Handles security logs, access attempts, and monitoring.
  * Integrates with AuditService for logging critical actions.
  */
 class SecurityService
 {
     protected LoginAttemptModel $model;
+
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
         $this->model = new LoginAttemptModel();
-        
+
         // Try to inject AuditService
         try {
             $this->auditService = $auditService ?? new AuditService();
@@ -30,7 +31,7 @@ class SecurityService
     }
 
     /**
-     * Get all access logs with filters
+     * Get all access logs with filters.
      */
     public function getAll(array $filters = []): array
     {
@@ -63,7 +64,7 @@ class SecurityService
     }
 
     /**
-     * Get a single access log by ID
+     * Get a single access log by ID.
      */
     public function getById(int $id): ?array
     {
@@ -72,7 +73,7 @@ class SecurityService
     }
 
     /**
-     * Create a new access log (manual entry)
+     * Create a new access log (manual entry).
      */
     public function create(array $data): int|false
     {
@@ -99,7 +100,7 @@ class SecurityService
     }
 
     /**
-     * Delete an access log
+     * Delete an access log.
      */
     public function delete(int $id): bool
     {
@@ -124,12 +125,12 @@ class SecurityService
     }
 
     /**
-     * Get security statistics
+     * Get security statistics.
      */
     public function getStatistics(int $days = 7): array
     {
         $since = date('Y-m-d H:i:s', strtotime("-{$days} days"));
-        
+
         $total = $this->model->where('created_at >=', $since)->countAllResults(false);
         $successful = $this->model->where('was_successful', 1)->countAllResults(false);
         $failed = $this->model->where('was_successful', 0)->countAllResults();
@@ -143,7 +144,7 @@ class SecurityService
     }
 
     /**
-     * Get request metadata for auditing
+     * Get request metadata for auditing.
      */
     protected function getRequestMetadata(): array
     {

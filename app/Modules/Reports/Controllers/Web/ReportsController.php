@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use Modules\Reports\Services\ReportsCrudService;
 
 /**
- * ReportsController - Handles CRUD operations for reports
- * 
+ * ReportsController - Handles CRUD operations for reports.
+ *
  * All data is tenant-scoped by school_id from session.
  */
 class ReportsController extends BaseController
@@ -20,14 +20,14 @@ class ReportsController extends BaseController
     }
 
     /**
-     * Check if user has permission to access reports module
+     * Check if user has permission to access reports module.
      */
     protected function checkAccess(): bool
     {
         // Allow admins
         $usertypeID = session()->get('usertypeID');
         $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
-        
+
         if ($isAdmin) {
             return true;
         }
@@ -47,7 +47,7 @@ class ReportsController extends BaseController
     }
 
     /**
-     * Get current school ID from session
+     * Get current school ID from session.
      */
     protected function getSchoolId(): int
     {
@@ -55,7 +55,7 @@ class ReportsController extends BaseController
     }
 
     /**
-     * List all reports
+     * List all reports.
      */
     public function index()
     {
@@ -64,7 +64,7 @@ class ReportsController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Get filter parameters
         $filters = [
             'search'   => $this->request->getGet('search'),
@@ -82,7 +82,7 @@ class ReportsController extends BaseController
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
@@ -98,7 +98,7 @@ class ReportsController extends BaseController
     }
 
     /**
-     * Store new report
+     * Store new report.
      */
     public function store()
     {
@@ -147,7 +147,7 @@ class ReportsController extends BaseController
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit(int $id)
     {
@@ -171,7 +171,7 @@ class ReportsController extends BaseController
     }
 
     /**
-     * Update existing report
+     * Update existing report.
      */
     public function update(int $id)
     {
@@ -215,7 +215,7 @@ class ReportsController extends BaseController
     }
 
     /**
-     * Delete report
+     * Delete report.
      */
     public function delete(int $id)
     {

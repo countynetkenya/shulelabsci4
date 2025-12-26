@@ -5,14 +5,14 @@ namespace App\Modules\Gamification\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * GamificationSeeder - Seed sample badges and achievements
+ * GamificationSeeder - Seed sample badges and achievements.
  */
 class GamificationSeeder extends Seeder
 {
     public function run()
     {
         $db = \Config\Database::connect();
-        
+
         // Sample badges for school_id = 1
         $badges = [
             [
@@ -171,6 +171,6 @@ class GamificationSeeder extends Seeder
             $db->table('achievements')->insert($achievement);
         }
 
-        echo "Inserted " . count($badges) . " sample badges and " . count($achievements) . " sample achievements.\n";
+        echo 'Inserted ' . count($badges) . ' sample badges and ' . count($achievements) . " sample achievements.\n";
     }
 }

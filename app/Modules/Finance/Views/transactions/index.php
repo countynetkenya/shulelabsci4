@@ -174,8 +174,8 @@
                                             'mobile_money'  => 'warning',
                                             'cheque'        => 'secondary',
                                         ];
-                                        $badgeClass = $methodBadges[$transaction['method']] ?? 'secondary';
-                                        ?>
+                                $badgeClass = $methodBadges[$transaction['method']] ?? 'secondary';
+                                ?>
                                         <span class="badge badge-<?= $badgeClass ?>">
                                             <?= esc(ucwords(str_replace('_', ' ', $transaction['method']))) ?>
                                         </span>

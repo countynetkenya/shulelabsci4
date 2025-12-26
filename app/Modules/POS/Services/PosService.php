@@ -6,20 +6,21 @@ use App\Modules\POS\Models\PosProductModel;
 use Modules\Foundation\Services\AuditService;
 
 /**
- * PosService - Business logic for POS product management
- * 
+ * PosService - Business logic for POS product management.
+ *
  * All queries are tenant-scoped by school_id.
  * Integrates with AuditService for logging critical actions.
  */
 class PosService
 {
     protected PosProductModel $model;
+
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
         $this->model = new PosProductModel();
-        
+
         // Try to inject AuditService
         try {
             $this->auditService = $auditService ?? new AuditService();
@@ -30,7 +31,7 @@ class PosService
     }
 
     /**
-     * Get all products for a school
+     * Get all products for a school.
      */
     public function getAll(int $schoolId, array $filters = []): array
     {
@@ -57,7 +58,7 @@ class PosService
     }
 
     /**
-     * Get a single product by ID (scoped to school)
+     * Get a single product by ID (scoped to school).
      */
     public function getById(int $id, int $schoolId): ?array
     {
@@ -65,12 +66,12 @@ class PosService
             ->where('school_id', $schoolId)
             ->where('id', $id)
             ->first();
-        
+
         return $product ?: null;
     }
 
     /**
-     * Create a new product
+     * Create a new product.
      */
     public function create(array $data): int|false
     {
@@ -98,13 +99,13 @@ class PosService
     }
 
     /**
-     * Update an existing product
+     * Update an existing product.
      */
     public function update(int $id, array $data, int $schoolId): bool
     {
         // Get before state for audit
         $before = $this->getById($id, $schoolId);
-        
+
         if (!$before) {
             return false;
         }
@@ -135,13 +136,13 @@ class PosService
     }
 
     /**
-     * Delete a product
+     * Delete a product.
      */
     public function delete(int $id, int $schoolId): bool
     {
         // Get before state for audit
         $before = $this->getById($id, $schoolId);
-        
+
         if (!$before) {
             return false;
         }
@@ -172,7 +173,7 @@ class PosService
     }
 
     /**
-     * Get all categories for a school
+     * Get all categories for a school.
      */
     public function getCategories(int $schoolId): array
     {
@@ -186,12 +187,12 @@ class PosService
     }
 
     /**
-     * Update stock quantity
+     * Update stock quantity.
      */
     public function updateStock(int $id, int $quantity, int $schoolId): bool
     {
         $product = $this->getById($id, $schoolId);
-        
+
         if (!$product) {
             return false;
         }
@@ -202,12 +203,12 @@ class PosService
     }
 
     /**
-     * Get request metadata for audit logging
+     * Get request metadata for audit logging.
      */
     protected function getRequestMetadata(): array
     {
         $request = service('request');
-        
+
         return [
             'ip'          => $request->getIPAddress(),
             'user_agent'  => $request->getUserAgent()->getAgentString(),

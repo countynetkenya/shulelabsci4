@@ -5,23 +5,29 @@ namespace App\Modules\ApprovalWorkflows\Models;
 use CodeIgniter\Model;
 
 /**
- * WorkflowModel - Handles approval workflow requests
- * 
+ * WorkflowModel - Handles approval workflow requests.
+ *
  * Manages approval request records including:
  * - Workflow-based approvals
  * - Multi-level approval tracking
  * - Request status management
- * 
+ *
  * All data is tenant-scoped by school_id.
  */
 class WorkflowModel extends Model
 {
     protected $table = 'approval_requests';
+
     protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
+
     protected $returnType = 'array';
+
     protected $useSoftDeletes = false;
+
     protected $protectFields = true;
+
     protected $allowedFields = [
         'school_id',
         'workflow_id',
@@ -39,9 +45,13 @@ class WorkflowModel extends Model
 
     // Dates
     protected $useTimestamps = true;
+
     protected $dateFormat = 'datetime';
+
     protected $createdField = 'created_at';
+
     protected $updatedField = false; // No updated_at field in this table
+
     protected $deletedField = false; // No soft deletes
 
     // Validation
@@ -76,22 +86,31 @@ class WorkflowModel extends Model
     ];
 
     protected $skipValidation = false;
+
     protected $cleanValidationRules = true;
 
     // Callbacks
     protected $allowCallbacks = true;
+
     protected $beforeInsert = [];
+
     protected $afterInsert = [];
+
     protected $beforeUpdate = [];
+
     protected $afterUpdate = [];
+
     protected $beforeFind = [];
+
     protected $afterFind = [];
+
     protected $beforeDelete = [];
+
     protected $afterDelete = [];
 
     /**
-     * Get all approval requests for a school
-     * 
+     * Get all approval requests for a school.
+     *
      * @param int $schoolId
      * @param array $filters Optional filters (search, status, priority)
      * @return array
@@ -122,8 +141,8 @@ class WorkflowModel extends Model
     }
 
     /**
-     * Get approval request statuses used in the school
-     * 
+     * Get approval request statuses used in the school.
+     *
      * @param int $schoolId
      * @return array Array of unique statuses
      */
@@ -138,8 +157,8 @@ class WorkflowModel extends Model
     }
 
     /**
-     * Get approval request summary for a school
-     * 
+     * Get approval request summary for a school.
+     *
      * @param int $schoolId
      * @return array
      */
@@ -166,8 +185,8 @@ class WorkflowModel extends Model
     }
 
     /**
-     * Get requests by workflow
-     * 
+     * Get requests by workflow.
+     *
      * @param int $workflowId
      * @param int $schoolId
      * @return array
@@ -181,8 +200,8 @@ class WorkflowModel extends Model
     }
 
     /**
-     * Get pending requests for a user
-     * 
+     * Get pending requests for a user.
+     *
      * @param int $userId
      * @param int $schoolId
      * @return array

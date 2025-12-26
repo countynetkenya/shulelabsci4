@@ -6,20 +6,21 @@ use App\Modules\ApprovalWorkflows\Models\WorkflowModel;
 use Modules\Foundation\Services\AuditService;
 
 /**
- * ApprovalService - Business logic for approval workflow management
- * 
+ * ApprovalService - Business logic for approval workflow management.
+ *
  * All queries are tenant-scoped by school_id.
  * Integrates with AuditService for logging critical actions.
  */
 class ApprovalService
 {
     protected WorkflowModel $model;
+
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
         $this->model = new WorkflowModel();
-        
+
         // Try to inject AuditService
         try {
             $this->auditService = $auditService ?? new AuditService();
@@ -30,8 +31,8 @@ class ApprovalService
     }
 
     /**
-     * Get all approval requests for a school
-     * 
+     * Get all approval requests for a school.
+     *
      * @param int $schoolId
      * @param array $filters Optional filters
      * @return array
@@ -42,8 +43,8 @@ class ApprovalService
     }
 
     /**
-     * Get a single approval request by ID (scoped to school)
-     * 
+     * Get a single approval request by ID (scoped to school).
+     *
      * @param int $id
      * @param int $schoolId
      * @return array|null
@@ -54,13 +55,13 @@ class ApprovalService
             ->where('school_id', $schoolId)
             ->where('id', $id)
             ->first();
-        
+
         return $request ?: null;
     }
 
     /**
-     * Create a new approval request
-     * 
+     * Create a new approval request.
+     *
      * @param array $data
      * @return int|false Request ID or false on failure
      */
@@ -115,8 +116,8 @@ class ApprovalService
     }
 
     /**
-     * Update an existing approval request
-     * 
+     * Update an existing approval request.
+     *
      * @param int $id
      * @param array $data
      * @param int $schoolId
@@ -126,7 +127,7 @@ class ApprovalService
     {
         // Get before state for audit
         $before = $this->getById($id, $schoolId);
-        
+
         if (!$before) {
             return false;
         }
@@ -162,8 +163,8 @@ class ApprovalService
     }
 
     /**
-     * Delete an approval request
-     * 
+     * Delete an approval request.
+     *
      * @param int $id
      * @param int $schoolId
      * @return bool
@@ -172,7 +173,7 @@ class ApprovalService
     {
         // Get before state for audit
         $before = $this->getById($id, $schoolId);
-        
+
         if (!$before) {
             return false;
         }
@@ -203,8 +204,8 @@ class ApprovalService
     }
 
     /**
-     * Get available statuses
-     * 
+     * Get available statuses.
+     *
      * @param int $schoolId
      * @return array
      */
@@ -214,8 +215,8 @@ class ApprovalService
     }
 
     /**
-     * Get approval request summary
-     * 
+     * Get approval request summary.
+     *
      * @param int $schoolId
      * @return array
      */
@@ -225,8 +226,8 @@ class ApprovalService
     }
 
     /**
-     * Get requests by workflow
-     * 
+     * Get requests by workflow.
+     *
      * @param int $workflowId
      * @param int $schoolId
      * @return array
@@ -237,8 +238,8 @@ class ApprovalService
     }
 
     /**
-     * Get pending requests for a user
-     * 
+     * Get pending requests for a user.
+     *
      * @param int $userId
      * @param int $schoolId
      * @return array
@@ -249,8 +250,8 @@ class ApprovalService
     }
 
     /**
-     * Approve a request
-     * 
+     * Approve a request.
+     *
      * @param int $id
      * @param int $schoolId
      * @param string $comments
@@ -265,8 +266,8 @@ class ApprovalService
     }
 
     /**
-     * Reject a request
-     * 
+     * Reject a request.
+     *
      * @param int $id
      * @param int $schoolId
      * @param string $comments
@@ -281,14 +282,14 @@ class ApprovalService
     }
 
     /**
-     * Get request metadata for audit logging
-     * 
+     * Get request metadata for audit logging.
+     *
      * @return array
      */
     protected function getRequestMetadata(): array
     {
         $request = service('request');
-        
+
         return [
             'ip'          => $request->getIPAddress(),
             'user_agent'  => $request->getUserAgent()->getAgentString(),

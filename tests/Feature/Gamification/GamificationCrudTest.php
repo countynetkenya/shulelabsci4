@@ -15,15 +15,19 @@ class GamificationCrudTest extends CIUnitTestCase
     use FeatureTestTrait;
 
     protected $namespace = 'App\Modules\Gamification';
+
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $seed = '';
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Mock session for authenticated admin user
         $_SESSION['school_id'] = 1;
         $_SESSION['schoolID'] = 1;
@@ -67,7 +71,7 @@ class GamificationCrudTest extends CIUnitTestCase
             ->post('gamification/store', $data);
 
         $result->assertRedirectTo('/gamification');
-        
+
         // Verify data was inserted
         $this->seeInDatabase('badges', [
             'name' => 'Test Badge',
@@ -106,7 +110,7 @@ class GamificationCrudTest extends CIUnitTestCase
             ->post("gamification/update/{$badgeId}", $data);
 
         $result->assertRedirectTo('/gamification');
-        
+
         $this->seeInDatabase('badges', [
             'id' => $badgeId,
             'name' => 'Updated Badge',
@@ -121,7 +125,7 @@ class GamificationCrudTest extends CIUnitTestCase
             ->get("gamification/delete/{$badgeId}");
 
         $result->assertRedirectTo('/gamification');
-        
+
         $this->dontSeeInDatabase('badges', [
             'id' => $badgeId,
         ]);
@@ -149,7 +153,7 @@ class GamificationCrudTest extends CIUnitTestCase
             ->get("gamification/delete/{$badgeId}");
 
         $result->assertRedirectTo('/gamification');
-        
+
         // Should still exist
         $this->seeInDatabase('badges', [
             'id' => $badgeId,
@@ -171,7 +175,7 @@ class GamificationCrudTest extends CIUnitTestCase
             'is_active' => 1,
             'created_at' => date('Y-m-d H:i:s'),
         ];
-        
+
         $db->table('badges')->insert($data);
         return (int) $db->insertID();
     }

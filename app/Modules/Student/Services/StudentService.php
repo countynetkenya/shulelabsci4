@@ -6,20 +6,21 @@ use App\Modules\Student\Models\StudentModel;
 use Modules\Foundation\Services\AuditService;
 
 /**
- * StudentService - Business logic for student management
- * 
+ * StudentService - Business logic for student management.
+ *
  * All queries are tenant-scoped by school_id.
  * Integrates with AuditService for logging critical actions.
  */
 class StudentService
 {
     protected StudentModel $model;
+
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
         $this->model = new StudentModel();
-        
+
         // Try to inject AuditService
         try {
             $this->auditService = $auditService ?? new AuditService();
@@ -30,7 +31,7 @@ class StudentService
     }
 
     /**
-     * Get all students for a school
+     * Get all students for a school.
      */
     public function getAll(int $schoolId, array $filters = []): array
     {
@@ -38,7 +39,7 @@ class StudentService
     }
 
     /**
-     * Get a single student by ID (scoped to school)
+     * Get a single student by ID (scoped to school).
      */
     public function getById(int $id, int $schoolId): ?array
     {
@@ -46,7 +47,7 @@ class StudentService
     }
 
     /**
-     * Create a new student
+     * Create a new student.
      */
     public function create(array $data): int|false
     {
@@ -79,13 +80,13 @@ class StudentService
     }
 
     /**
-     * Update an existing student
+     * Update an existing student.
      */
     public function update(int $id, array $data, int $schoolId): bool
     {
         // Get before state for audit
         $before = $this->getById($id, $schoolId);
-        
+
         if (!$before) {
             return false;
         }
@@ -116,13 +117,13 @@ class StudentService
     }
 
     /**
-     * Delete a student
+     * Delete a student.
      */
     public function delete(int $id, int $schoolId): bool
     {
         // Get before state for audit
         $before = $this->getById($id, $schoolId);
-        
+
         if (!$before) {
             return false;
         }
@@ -153,7 +154,7 @@ class StudentService
     }
 
     /**
-     * Get active students count
+     * Get active students count.
      */
     public function getActiveCount(int $schoolId): int
     {
@@ -161,7 +162,7 @@ class StudentService
     }
 
     /**
-     * Search students by name or admission number
+     * Search students by name or admission number.
      */
     public function search(int $schoolId, string $query): array
     {
@@ -169,12 +170,12 @@ class StudentService
     }
 
     /**
-     * Get request metadata for audit logging
+     * Get request metadata for audit logging.
      */
     protected function getRequestMetadata(): array
     {
         $request = service('request');
-        
+
         return [
             'ip'          => $request->getIPAddress(),
             'user_agent'  => $request->getUserAgent()->getAgentString(),

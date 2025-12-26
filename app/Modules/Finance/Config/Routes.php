@@ -11,18 +11,18 @@ class Routes
         // Web Routes
         $routes->group('finance', ['filter' => 'auth', 'namespace' => 'Modules\Finance\Controllers'], static function (RouteCollection $routes): void {
             $routes->get('', 'FinanceWebController::index');
-            
+
             // Invoices
             $routes->get('invoices', 'InvoicesController::index');
             $routes->get('invoices/create', 'InvoicesController::create');
             $routes->post('invoices', 'InvoicesController::store');
             $routes->get('invoices/show/(:num)', 'InvoicesController::show/$1');
-            
+
             // Payments
             $routes->get('payments', 'PaymentsController::index');
             $routes->get('payments/create', 'PaymentsController::create');
             $routes->post('payments', 'PaymentsController::store');
-            
+
             // Fee Structures
             $routes->post('fee-structures', 'FinanceWebController::createFeeStructure');
         });

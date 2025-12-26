@@ -29,11 +29,11 @@ class UsersController extends BaseController
     public function store()
     {
         $data = $this->request->getPost();
-        
+
         if ($this->usersService->createUser($data)) {
             return redirect()->to('/system/users')->with('success', 'User created successfully.');
         }
-        
+
         return redirect()->back()->withInput()->with('error', 'Failed to create user.');
     }
 
@@ -43,7 +43,7 @@ class UsersController extends BaseController
         if (!$user) {
             return redirect()->to('/system/users')->with('error', 'User not found.');
         }
-        
+
         $roles = $this->usersService->getAllRoles();
         return view('Modules\Foundation\Views\users\edit', ['user' => $user, 'roles' => $roles]);
     }
@@ -51,11 +51,11 @@ class UsersController extends BaseController
     public function update($id)
     {
         $data = $this->request->getPost();
-        
+
         if ($this->usersService->updateUser($id, $data)) {
             return redirect()->to('/system/users')->with('success', 'User updated successfully.');
         }
-        
+
         return redirect()->back()->withInput()->with('error', 'Failed to update user.');
     }
 
@@ -64,7 +64,7 @@ class UsersController extends BaseController
         if ($this->usersService->deleteUser($id)) {
             return redirect()->to('/system/users')->with('success', 'User deleted successfully.');
         }
-        
+
         return redirect()->to('/system/users')->with('error', 'Failed to delete user.');
     }
 }

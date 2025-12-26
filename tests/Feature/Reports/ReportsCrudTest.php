@@ -8,7 +8,7 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * ReportsCrudTest - Tests CRUD operations for Reports module
+ * ReportsCrudTest - Tests CRUD operations for Reports module.
  *
  * @internal
  */
@@ -22,7 +22,7 @@ class ReportsCrudTest extends CIUnitTestCase
     {
         parent::setUp();
         $this->setupTenantContext();
-        
+
         // Run migrations for Reports module
         $this->migrateDatabase();
     }
@@ -59,7 +59,7 @@ class ReportsCrudTest extends CIUnitTestCase
             ->post('reports', $data);
 
         $result->assertRedirectTo('/reports');
-        
+
         $this->seeInDatabase('reports', [
             'name'      => 'Test Report',
             'school_id' => $this->schoolId,
@@ -78,7 +78,7 @@ class ReportsCrudTest extends CIUnitTestCase
             ->post('reports', $data);
 
         $result->assertRedirect();
-        
+
         $this->dontSeeInDatabase('reports', [
             'name' => '',
         ]);
@@ -109,7 +109,7 @@ class ReportsCrudTest extends CIUnitTestCase
             ->post("reports/{$reportId}", $data);
 
         $result->assertRedirectTo('/reports');
-        
+
         $this->seeInDatabase('reports', [
             'id'     => $reportId,
             'name'   => 'Updated Report',
@@ -135,7 +135,7 @@ class ReportsCrudTest extends CIUnitTestCase
             ->get("reports/{$reportId}/delete");
 
         $result->assertRedirectTo('/reports');
-        
+
         $this->dontSeeInDatabase('reports', [
             'id' => $reportId,
         ]);

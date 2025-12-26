@@ -141,7 +141,8 @@
 
 <?php
 // Helper function for badge colors
-function getEventTypeBadgeClass($type) {
+function getEventTypeBadgeClass($type)
+{
     $classes = [
         'create' => 'success',
         'update' => 'info',

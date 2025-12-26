@@ -5,7 +5,7 @@ namespace Modules\Database\Services;
 use Modules\Database\Models\DatabaseBackupModel;
 
 /**
- * DatabaseService - Business logic for database backup management
+ * DatabaseService - Business logic for database backup management.
  */
 class DatabaseService
 {
@@ -17,7 +17,7 @@ class DatabaseService
     }
 
     /**
-     * Get all backups for a school
+     * Get all backups for a school.
      */
     public function getAll(int $schoolId): array
     {
@@ -28,7 +28,7 @@ class DatabaseService
     }
 
     /**
-     * Get a single backup by ID
+     * Get a single backup by ID.
      */
     public function getById(int $id, int $schoolId): ?array
     {
@@ -39,7 +39,7 @@ class DatabaseService
     }
 
     /**
-     * Create a new backup record
+     * Create a new backup record.
      */
     public function create(array $data): int|false
     {
@@ -52,7 +52,7 @@ class DatabaseService
     }
 
     /**
-     * Update an existing backup
+     * Update an existing backup.
      */
     public function update(int $id, array $data): bool
     {
@@ -60,7 +60,7 @@ class DatabaseService
     }
 
     /**
-     * Delete a backup
+     * Delete a backup.
      */
     public function delete(int $id): bool
     {
@@ -68,21 +68,21 @@ class DatabaseService
     }
 
     /**
-     * Get backup statistics for a school
+     * Get backup statistics for a school.
      */
     public function getStatistics(int $schoolId): array
     {
         $db = \Config\Database::connect();
-        
+
         $totalBackups = $this->model
             ->where('school_id', $schoolId)
             ->countAllResults();
-        
+
         $completedBackups = $this->model
             ->where('school_id', $schoolId)
             ->where('status', 'completed')
             ->countAllResults();
-        
+
         $totalSize = $db->table('db_backups')
             ->selectSum('size', 'total_size')
             ->where('school_id', $schoolId)

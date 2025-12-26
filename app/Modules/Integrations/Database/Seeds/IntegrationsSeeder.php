@@ -5,7 +5,7 @@ namespace App\Modules\Integrations\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * IntegrationsSeeder - Creates sample integration configurations for testing
+ * IntegrationsSeeder - Creates sample integration configurations for testing.
  */
 class IntegrationsSeeder extends Seeder
 {
@@ -89,7 +89,7 @@ class IntegrationsSeeder extends Seeder
         ];
 
         $this->db->table('integration_integrations')->insertBatch($data);
-        
-        echo "Created " . count($data) . " integration configuration records.\n";
+
+        echo 'Created ' . count($data) . " integration configuration records.\n";
     }
 }

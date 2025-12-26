@@ -1,7 +1,7 @@
 <?php
 
-use CodeIgniter\Router\RouteCollection;
 use App\Modules\Audit\Config\Routes as AuditRoutes;
+use CodeIgniter\Router\RouteCollection;
 use Modules\Admin\Config\Routes as AdminRoutes;
 use Modules\Admissions\Config\Routes as AdmissionsRoutes;
 use Modules\Analytics\Config\Routes as AnalyticsRoutes;

@@ -5,17 +5,23 @@ namespace Modules\Reports\Models;
 use CodeIgniter\Model;
 
 /**
- * ReportModel - Manages report definitions
+ * ReportModel - Manages report definitions.
  */
 class ReportModel extends Model
 {
-    protected $table            = 'reports';
-    protected $primaryKey       = 'id';
+    protected $table = 'reports';
+
+    protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = [
+
+    protected $returnType = 'array';
+
+    protected $useSoftDeletes = false;
+
+    protected $protectFields = true;
+
+    protected $allowedFields = [
         'school_id',
         'name',
         'description',
@@ -32,10 +38,14 @@ class ReportModel extends Model
 
     // Dates
     protected $useTimestamps = true;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+
+    protected $dateFormat = 'datetime';
+
+    protected $createdField = 'created_at';
+
+    protected $updatedField = 'updated_at';
+
+    protected $deletedField = 'deleted_at';
 
     // Validation
     protected $validationRules = [
@@ -59,22 +69,31 @@ class ReportModel extends Model
         ],
     ];
 
-    protected $skipValidation       = false;
+    protected $skipValidation = false;
+
     protected $cleanValidationRules = true;
 
     // Callbacks
     protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+
+    protected $beforeInsert = [];
+
+    protected $afterInsert = [];
+
+    protected $beforeUpdate = [];
+
+    protected $afterUpdate = [];
+
+    protected $beforeFind = [];
+
+    protected $afterFind = [];
+
+    protected $beforeDelete = [];
+
+    protected $afterDelete = [];
 
     /**
-     * Get reports for a specific school
+     * Get reports for a specific school.
      */
     public function getReportsBySchool(int $schoolId, array $filters = []): array
     {
@@ -99,7 +118,7 @@ class ReportModel extends Model
     }
 
     /**
-     * Get available templates
+     * Get available templates.
      */
     public function getTemplates(): array
     {

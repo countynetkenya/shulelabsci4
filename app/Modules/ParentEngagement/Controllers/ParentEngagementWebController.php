@@ -4,17 +4,21 @@ namespace Modules\ParentEngagement\Controllers;
 
 use App\Controllers\BaseController;
 use App\Modules\ParentEngagement\Services\ParentEngagementService;
-use Modules\ParentEngagement\Models\SurveyModel;
-use Modules\ParentEngagement\Models\EventModel;
 use Modules\ParentEngagement\Models\ConferenceModel;
+use Modules\ParentEngagement\Models\EventModel;
 use Modules\ParentEngagement\Models\FundraisingCampaignModel;
+use Modules\ParentEngagement\Models\SurveyModel;
 
 class ParentEngagementWebController extends BaseController
 {
     protected $service;
+
     protected $surveyModel;
+
     protected $eventModel;
+
     protected $conferenceModel;
+
     protected $campaignModel;
 
     public function __construct()
@@ -29,7 +33,7 @@ class ParentEngagementWebController extends BaseController
     public function index()
     {
         $schoolId = session()->get('school_id') ?? 1;
-        
+
         $data = [
             'title' => 'Parent Engagement Dashboard',
             'surveys' => $this->surveyModel->where('school_id', $schoolId)->findAll(5),
@@ -41,7 +45,7 @@ class ParentEngagementWebController extends BaseController
     }
 
     // ============= SURVEYS =============
-    
+
     public function surveys()
     {
         $schoolId = session()->get('school_id') ?? 1;
@@ -83,7 +87,7 @@ class ParentEngagementWebController extends BaseController
     }
 
     // ============= EVENTS =============
-    
+
     public function events()
     {
         $schoolId = session()->get('school_id') ?? 1;
@@ -129,7 +133,7 @@ class ParentEngagementWebController extends BaseController
     {
         $schoolId = session()->get('school_id') ?? 1;
         $event = $this->eventModel->where('id', $id)->where('school_id', $schoolId)->first();
-        
+
         if (!$event) {
             return redirect()->to('/parent-engagement/events')->with('error', 'Event not found');
         }
@@ -171,18 +175,18 @@ class ParentEngagementWebController extends BaseController
     }
 
     // ============= CAMPAIGNS =============
-    
+
     public function campaigns()
     {
         $schoolId = session()->get('school_id') ?? 1;
         $campaigns = $this->campaignModel->where('school_id', $schoolId)->orderBy('created_at', 'DESC')->findAll();
-        
+
         // Calculate progress percentage for each campaign
         foreach ($campaigns as &$campaign) {
-            $campaign['progress_percentage'] = ($campaign['target_amount'] > 0) ? 
+            $campaign['progress_percentage'] = ($campaign['target_amount'] > 0) ?
                 min(100, ($campaign['raised_amount'] / $campaign['target_amount']) * 100) : 0;
         }
-        
+
         $data = [
             'title' => 'Fundraising Campaigns',
             'campaigns' => $campaigns,

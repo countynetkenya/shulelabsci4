@@ -5,7 +5,7 @@ namespace Modules\Orchestration\Config;
 use CodeIgniter\Router\RouteCollection;
 
 /**
- * Orchestration Module Routes Configuration
+ * Orchestration Module Routes Configuration.
  */
 class Routes
 {

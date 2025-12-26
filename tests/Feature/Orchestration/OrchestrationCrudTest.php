@@ -8,7 +8,7 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * OrchestrationCrudTest - Feature tests for Orchestration Workflow CRUD operations
+ * OrchestrationCrudTest - Feature tests for Orchestration Workflow CRUD operations.
  */
 class OrchestrationCrudTest extends CIUnitTestCase
 {
@@ -17,8 +17,11 @@ class OrchestrationCrudTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
@@ -63,7 +66,7 @@ class OrchestrationCrudTest extends CIUnitTestCase
 
         $result = $this->withSession($this->getAdminSession())->post('orchestration/store', $data);
         $result->assertRedirectTo('/orchestration');
-        
+
         $workflow = $this->db->table('workflows')->where('school_id', $this->schoolId)->where('name', 'New Test Workflow')->get()->getRowArray();
         $this->assertNotNull($workflow);
         $this->assertEquals(3, $workflow['total_steps']);
@@ -86,7 +89,7 @@ class OrchestrationCrudTest extends CIUnitTestCase
         $data = ['name' => 'Updated Name', 'description' => 'Updated description', 'status' => 'running'];
         $result = $this->withSession($this->getAdminSession())->post('orchestration/update/' . $workflowId, $data);
         $result->assertRedirectTo('/orchestration');
-        
+
         $workflow = $this->db->table('workflows')->where('id', $workflowId)->get()->getRowArray();
         $this->assertEquals('Updated Name', $workflow['name']);
         $this->assertEquals('running', $workflow['status']);
@@ -108,7 +111,7 @@ class OrchestrationCrudTest extends CIUnitTestCase
 
         $result = $this->withSession($this->getAdminSession())->get('orchestration/delete/' . $workflowId);
         $result->assertRedirectTo('/orchestration');
-        
+
         $workflow = $this->db->table('workflows')->where('id', $workflowId)->get()->getRowArray();
         $this->assertNull($workflow);
     }

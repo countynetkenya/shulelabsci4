@@ -5,14 +5,14 @@ namespace App\Modules\Admissions\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * AdmissionsSeeder - Seed sample admissions applications
+ * AdmissionsSeeder - Seed sample admissions applications.
  */
 class AdmissionsSeeder extends Seeder
 {
     public function run()
     {
         $db = \Config\Database::connect();
-        
+
         // Sample applications for school_id = 1
         $applications = [
             [
@@ -142,6 +142,6 @@ class AdmissionsSeeder extends Seeder
             $db->table('applications')->insert($application);
         }
 
-        echo "Inserted " . count($applications) . " sample applications.\n";
+        echo 'Inserted ' . count($applications) . " sample applications.\n";
     }
 }

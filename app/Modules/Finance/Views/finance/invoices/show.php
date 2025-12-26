@@ -24,7 +24,7 @@
                         'overdue' => 'text-gray-600',
                         default => 'text-gray-600'
                     };
-                ?>
+?>
                 <p class="text-lg font-bold uppercase <?= $statusClass ?>"><?= esc($invoice['status']) ?></p>
             </div>
         </div>

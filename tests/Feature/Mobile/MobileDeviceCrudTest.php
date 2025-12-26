@@ -8,7 +8,7 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * MobileDeviceCrudTest - Feature tests for Mobile Device CRUD operations
+ * MobileDeviceCrudTest - Feature tests for Mobile Device CRUD operations.
  */
 class MobileDeviceCrudTest extends CIUnitTestCase
 {
@@ -17,8 +17,11 @@ class MobileDeviceCrudTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
@@ -61,7 +64,7 @@ class MobileDeviceCrudTest extends CIUnitTestCase
 
         $result = $this->withSession($this->getAdminSession())->post('mobile/devices/store', $data);
         $result->assertRedirectTo('/mobile/devices');
-        
+
         $device = $this->db->table('mobile_devices')->where('device_id', 'new_device_001')->get()->getRowArray();
         $this->assertNotNull($device);
         $this->assertEquals('android', $device['device_type']);
@@ -82,7 +85,7 @@ class MobileDeviceCrudTest extends CIUnitTestCase
         $data = ['device_name' => 'Updated Name', 'is_active' => 0];
         $result = $this->withSession($this->getAdminSession())->post('mobile/devices/update/' . $deviceId, $data);
         $result->assertRedirectTo('/mobile/devices');
-        
+
         $device = $this->db->table('mobile_devices')->where('id', $deviceId)->get()->getRowArray();
         $this->assertEquals('Updated Name', $device['device_name']);
         $this->assertEquals(0, $device['is_active']);
@@ -102,7 +105,7 @@ class MobileDeviceCrudTest extends CIUnitTestCase
 
         $result = $this->withSession($this->getAdminSession())->get('mobile/devices/delete/' . $deviceId);
         $result->assertRedirectTo('/mobile/devices');
-        
+
         $device = $this->db->table('mobile_devices')->where('id', $deviceId)->get()->getRowArray();
         $this->assertNull($device);
     }

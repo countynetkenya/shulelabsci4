@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use Modules\Wallets\Services\WalletService;
 
 /**
- * WalletsController - Handles CRUD operations for wallets
- * 
+ * WalletsController - Handles CRUD operations for wallets.
+ *
  * All data is tenant-scoped by school_id from session.
  */
 class WalletsController extends BaseController
@@ -20,13 +20,13 @@ class WalletsController extends BaseController
     }
 
     /**
-     * Check if user has permission to access wallets module
+     * Check if user has permission to access wallets module.
      */
     protected function checkAccess(): bool
     {
         $usertypeID = session()->get('usertypeID');
         $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
-        
+
         if ($isAdmin) {
             return true;
         }
@@ -44,7 +44,7 @@ class WalletsController extends BaseController
     }
 
     /**
-     * Get current school ID from session
+     * Get current school ID from session.
      */
     protected function getSchoolId(): int
     {
@@ -52,7 +52,7 @@ class WalletsController extends BaseController
     }
 
     /**
-     * List all wallets
+     * List all wallets.
      */
     public function index()
     {
@@ -61,7 +61,7 @@ class WalletsController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         $filters = [
             'search'      => $this->request->getGet('search'),
             'wallet_type' => $this->request->getGet('wallet_type'),
@@ -78,7 +78,7 @@ class WalletsController extends BaseController
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
@@ -90,7 +90,7 @@ class WalletsController extends BaseController
     }
 
     /**
-     * Store a new wallet
+     * Store a new wallet.
      */
     public function store()
     {
@@ -99,7 +99,7 @@ class WalletsController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         $rules = [
             'user_id'     => 'required|integer',
             'wallet_type' => 'required|in_list[student,parent,staff]',
@@ -129,7 +129,7 @@ class WalletsController extends BaseController
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit(int $id)
     {
@@ -139,7 +139,7 @@ class WalletsController extends BaseController
 
         $schoolId = $this->getSchoolId();
         $wallet = $this->service->getWalletById($id, $schoolId);
-        
+
         if (!$wallet) {
             return redirect()->to('/wallets')->with('error', 'Wallet not found.');
         }
@@ -150,7 +150,7 @@ class WalletsController extends BaseController
     }
 
     /**
-     * Update an existing wallet
+     * Update an existing wallet.
      */
     public function update(int $id)
     {
@@ -191,7 +191,7 @@ class WalletsController extends BaseController
     }
 
     /**
-     * Delete a wallet
+     * Delete a wallet.
      */
     public function delete(int $id)
     {
@@ -200,7 +200,7 @@ class WalletsController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         $wallet = $this->service->getWalletById($id, $schoolId);
         if (!$wallet) {
             return redirect()->to('/wallets')->with('error', 'Wallet not found.');
@@ -216,7 +216,7 @@ class WalletsController extends BaseController
     }
 
     /**
-     * Show topup form (legacy)
+     * Show topup form (legacy).
      */
     public function topup($id)
     {
@@ -225,7 +225,7 @@ class WalletsController extends BaseController
     }
 
     /**
-     * Process topup (legacy)
+     * Process topup (legacy).
      */
     public function processTopup($id)
     {

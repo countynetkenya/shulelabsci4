@@ -4,23 +4,23 @@ namespace App\Modules\Library\Services;
 
 use App\Modules\Library\Models\LibraryBookModel;
 use Modules\Foundation\Services\AuditService;
-use CodeIgniter\HTTP\RequestInterface;
 
 /**
- * LibraryService - Business logic for library book management
- * 
+ * LibraryService - Business logic for library book management.
+ *
  * All queries are tenant-scoped by school_id.
  * Integrates with AuditService for logging critical actions.
  */
 class LibraryService
 {
     protected LibraryBookModel $model;
+
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
         $this->model = new LibraryBookModel();
-        
+
         // Try to inject AuditService
         try {
             $this->auditService = $auditService ?? new AuditService();
@@ -31,7 +31,7 @@ class LibraryService
     }
 
     /**
-     * Get all books for a school
+     * Get all books for a school.
      */
     public function getAll(int $schoolId, array $filters = []): array
     {
@@ -39,7 +39,7 @@ class LibraryService
     }
 
     /**
-     * Get a single book by ID (scoped to school)
+     * Get a single book by ID (scoped to school).
      */
     public function getById(int $id, int $schoolId): ?array
     {
@@ -47,12 +47,12 @@ class LibraryService
             ->where('school_id', $schoolId)
             ->where('id', $id)
             ->first();
-        
+
         return $book ?: null;
     }
 
     /**
-     * Create a new book
+     * Create a new book.
      */
     public function create(array $data): int|false
     {
@@ -88,13 +88,13 @@ class LibraryService
     }
 
     /**
-     * Update an existing book
+     * Update an existing book.
      */
     public function update(int $id, array $data, int $schoolId): bool
     {
         // Get before state for audit
         $before = $this->getById($id, $schoolId);
-        
+
         if (!$before) {
             return false;
         }
@@ -125,13 +125,13 @@ class LibraryService
     }
 
     /**
-     * Delete a book
+     * Delete a book.
      */
     public function delete(int $id, int $schoolId): bool
     {
         // Get before state for audit
         $before = $this->getById($id, $schoolId);
-        
+
         if (!$before) {
             return false;
         }
@@ -162,7 +162,7 @@ class LibraryService
     }
 
     /**
-     * Get all categories for a school
+     * Get all categories for a school.
      */
     public function getCategories(int $schoolId): array
     {
@@ -170,7 +170,7 @@ class LibraryService
     }
 
     /**
-     * Search books by title, author, or ISBN
+     * Search books by title, author, or ISBN.
      */
     public function search(int $schoolId, string $query): array
     {
@@ -178,7 +178,7 @@ class LibraryService
     }
 
     /**
-     * Get available books only
+     * Get available books only.
      */
     public function getAvailable(int $schoolId): array
     {
@@ -186,12 +186,12 @@ class LibraryService
     }
 
     /**
-     * Borrow a book (decrease available copies)
+     * Borrow a book (decrease available copies).
      */
     public function borrowBook(int $bookId, int $schoolId): bool
     {
         $book = $this->getById($bookId, $schoolId);
-        
+
         if (!$book || $book['available_copies'] <= 0) {
             return false;
         }
@@ -200,12 +200,12 @@ class LibraryService
     }
 
     /**
-     * Return a book (increase available copies)
+     * Return a book (increase available copies).
      */
     public function returnBook(int $bookId, int $schoolId): bool
     {
         $book = $this->getById($bookId, $schoolId);
-        
+
         if (!$book || $book['available_copies'] >= $book['total_copies']) {
             return false;
         }
@@ -214,12 +214,12 @@ class LibraryService
     }
 
     /**
-     * Get request metadata for audit logging
+     * Get request metadata for audit logging.
      */
     protected function getRequestMetadata(): array
     {
         $request = service('request');
-        
+
         return [
             'ip'          => $request->getIPAddress(),
             'user_agent'  => $request->getUserAgent()->getAgentString(),

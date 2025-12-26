@@ -5,8 +5,8 @@ namespace Modules\Governance\Config;
 use CodeIgniter\Router\RouteCollection;
 
 /**
- * Governance Module Routes Configuration
- * 
+ * Governance Module Routes Configuration.
+ *
  * Web Routes: /governance/*
  * API Routes: /api/governance/*
  */

@@ -5,7 +5,7 @@ namespace App\Modules\MultiTenant\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * MultiTenantSeeder - Populates sample tenant data
+ * MultiTenantSeeder - Populates sample tenant data.
  */
 class MultiTenantSeeder extends Seeder
 {
@@ -130,7 +130,7 @@ class MultiTenantSeeder extends Seeder
     }
 
     /**
-     * Generate a v4 UUID using cryptographically secure random
+     * Generate a v4 UUID using cryptographically secure random.
      */
     protected function generateUuid(): string
     {
@@ -138,17 +138,20 @@ class MultiTenantSeeder extends Seeder
             $data = random_bytes(16);
             $data[6] = chr(ord($data[6]) & 0x0f | 0x40); // version 4
             $data[8] = chr(ord($data[8]) & 0x3f | 0x80); // variant
-            
+
             return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
         } catch (\Exception $e) {
             // Fallback to less secure method if random_bytes fails
             return sprintf(
                 '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-                random_int(0, 0xffff), random_int(0, 0xffff),
+                random_int(0, 0xffff),
+                random_int(0, 0xffff),
                 random_int(0, 0xffff),
                 random_int(0, 0x0fff) | 0x4000,
                 random_int(0, 0x3fff) | 0x8000,
-                random_int(0, 0xffff), random_int(0, 0xffff), random_int(0, 0xffff)
+                random_int(0, 0xffff),
+                random_int(0, 0xffff),
+                random_int(0, 0xffff)
             );
         }
     }

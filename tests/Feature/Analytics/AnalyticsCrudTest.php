@@ -15,15 +15,19 @@ class AnalyticsCrudTest extends CIUnitTestCase
     use FeatureTestTrait;
 
     protected $namespace = 'App\Modules\Analytics';
+
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $seed = '';
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Mock session for authenticated admin user
         $_SESSION['school_id'] = 1;
         $_SESSION['schoolID'] = 1;
@@ -64,7 +68,7 @@ class AnalyticsCrudTest extends CIUnitTestCase
             ->post('analytics/store', $data);
 
         $result->assertRedirectTo('/analytics');
-        
+
         // Verify data was inserted
         $this->seeInDatabase('analytics_dashboards', [
             'name' => 'Test Dashboard',
@@ -99,7 +103,7 @@ class AnalyticsCrudTest extends CIUnitTestCase
             ->post("analytics/update/{$dashboardId}", $data);
 
         $result->assertRedirectTo('/analytics');
-        
+
         $this->seeInDatabase('analytics_dashboards', [
             'id' => $dashboardId,
             'name' => 'Updated Dashboard',
@@ -114,7 +118,7 @@ class AnalyticsCrudTest extends CIUnitTestCase
             ->get("analytics/delete/{$dashboardId}");
 
         $result->assertRedirectTo('/analytics');
-        
+
         $this->dontSeeInDatabase('analytics_dashboards', [
             'id' => $dashboardId,
         ]);
@@ -133,7 +137,7 @@ class AnalyticsCrudTest extends CIUnitTestCase
             'created_by' => 1,
             'created_at' => date('Y-m-d H:i:s'),
         ];
-        
+
         $db->table('analytics_dashboards')->insert($data);
         return (int) $db->insertID();
     }

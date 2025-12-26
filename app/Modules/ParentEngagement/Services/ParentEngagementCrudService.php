@@ -2,24 +2,25 @@
 
 namespace Modules\ParentEngagement\Services;
 
-use Modules\ParentEngagement\Models\SurveyModel;
 use Modules\Foundation\Services\AuditService;
+use Modules\ParentEngagement\Models\SurveyModel;
 
 /**
- * ParentEngagementCrudService - Business logic for parent engagement CRUD
- * 
+ * ParentEngagementCrudService - Business logic for parent engagement CRUD.
+ *
  * All queries are tenant-scoped by school_id.
  * Integrates with AuditService for logging critical actions.
  */
 class ParentEngagementCrudService
 {
     protected SurveyModel $model;
+
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
         $this->model = new SurveyModel();
-        
+
         // Try to inject AuditService
         try {
             $this->auditService = $auditService ?? new AuditService();
@@ -30,7 +31,7 @@ class ParentEngagementCrudService
     }
 
     /**
-     * Get all surveys for a school
+     * Get all surveys for a school.
      */
     public function getAll(int $schoolId, array $filters = []): array
     {
@@ -55,7 +56,7 @@ class ParentEngagementCrudService
     }
 
     /**
-     * Get a single survey by ID (scoped to school)
+     * Get a single survey by ID (scoped to school).
      */
     public function getById(int $id, int $schoolId): ?array
     {
@@ -63,12 +64,12 @@ class ParentEngagementCrudService
             ->where('school_id', $schoolId)
             ->where('id', $id)
             ->first();
-        
+
         return $survey ?: null;
     }
 
     /**
-     * Create a new survey
+     * Create a new survey.
      */
     public function create(array $data): int|false
     {
@@ -107,7 +108,7 @@ class ParentEngagementCrudService
     }
 
     /**
-     * Update an existing survey
+     * Update an existing survey.
      */
     public function update(int $id, array $data): bool
     {
@@ -135,7 +136,7 @@ class ParentEngagementCrudService
     }
 
     /**
-     * Delete a survey
+     * Delete a survey.
      */
     public function delete(int $id): bool
     {
@@ -160,7 +161,7 @@ class ParentEngagementCrudService
     }
 
     /**
-     * Get request metadata for auditing
+     * Get request metadata for auditing.
      */
     protected function getRequestMetadata(): array
     {

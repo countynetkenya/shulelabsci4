@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use Modules\Database\Services\DatabaseService;
 
 /**
- * DatabaseController - Web CRUD for database backup management
+ * DatabaseController - Web CRUD for database backup management.
  */
 class DatabaseController extends BaseController
 {
@@ -18,7 +18,7 @@ class DatabaseController extends BaseController
     }
 
     /**
-     * Display all backups
+     * Display all backups.
      */
     public function index()
     {
@@ -28,7 +28,7 @@ class DatabaseController extends BaseController
         }
 
         $schoolId = session()->get('school_id') ?? 1;
-        
+
         $data = [
             'title' => 'Database Backups',
             'backups' => $this->service->getAll($schoolId),
@@ -39,7 +39,7 @@ class DatabaseController extends BaseController
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
@@ -55,7 +55,7 @@ class DatabaseController extends BaseController
     }
 
     /**
-     * Store a new backup
+     * Store a new backup.
      */
     public function store()
     {
@@ -93,7 +93,7 @@ class DatabaseController extends BaseController
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit($id)
     {
@@ -117,7 +117,7 @@ class DatabaseController extends BaseController
     }
 
     /**
-     * Update a backup
+     * Update a backup.
      */
     public function update($id)
     {
@@ -149,7 +149,7 @@ class DatabaseController extends BaseController
     }
 
     /**
-     * Delete a backup
+     * Delete a backup.
      */
     public function delete($id)
     {

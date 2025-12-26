@@ -18,7 +18,7 @@ class ProgressController extends ResourceController
     {
         $rules = [
             'enrollment_id' => 'required|integer',
-            'lesson_id' => 'required|integer'
+            'lesson_id' => 'required|integer',
         ];
 
         if (!$this->validate($rules)) {
@@ -33,7 +33,7 @@ class ProgressController extends ResourceController
         if ($this->learningService->markLessonComplete($enrollmentId, $lessonId)) {
             return $this->respondCreated([
                 'status' => 201,
-                'message' => 'Lesson marked as complete'
+                'message' => 'Lesson marked as complete',
             ]);
         }
 
@@ -50,7 +50,7 @@ class ProgressController extends ResourceController
 
         return $this->respond([
             'status' => 200,
-            'data' => $progress
+            'data' => $progress,
         ]);
     }
 }

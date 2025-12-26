@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use App\Modules\MultiTenant\Services\MultiTenantService;
 
 /**
- * TenantController - Handles CRUD operations for tenants/schools
- * 
+ * TenantController - Handles CRUD operations for tenants/schools.
+ *
  * Manages tenant provisioning and lifecycle in SaaS environment.
  */
 class TenantController extends BaseController
@@ -21,7 +21,7 @@ class TenantController extends BaseController
 
     /**
      * Check if user has permission to access multitenant module
-     * (Super Admin only)
+     * (Super Admin only).
      */
     protected function checkAccess(): bool
     {
@@ -31,7 +31,7 @@ class TenantController extends BaseController
     }
 
     /**
-     * List all tenants
+     * List all tenants.
      */
     public function index()
     {
@@ -51,7 +51,7 @@ class TenantController extends BaseController
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
@@ -63,7 +63,7 @@ class TenantController extends BaseController
     }
 
     /**
-     * Store a new tenant
+     * Store a new tenant.
      */
     public function store()
     {
@@ -108,7 +108,7 @@ class TenantController extends BaseController
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit(int $id)
     {
@@ -117,7 +117,7 @@ class TenantController extends BaseController
         }
 
         $tenant = $this->service->getById($id);
-        
+
         if (!$tenant) {
             return redirect()->to('/multitenant')->with('error', 'Tenant not found.');
         }
@@ -130,7 +130,7 @@ class TenantController extends BaseController
     }
 
     /**
-     * Update an existing tenant
+     * Update an existing tenant.
      */
     public function update(int $id)
     {
@@ -181,7 +181,7 @@ class TenantController extends BaseController
     }
 
     /**
-     * Delete a tenant
+     * Delete a tenant.
      */
     public function delete(int $id)
     {
@@ -205,7 +205,7 @@ class TenantController extends BaseController
     }
 
     /**
-     * Activate a tenant
+     * Activate a tenant.
      */
     public function activate(int $id)
     {
@@ -223,7 +223,7 @@ class TenantController extends BaseController
     }
 
     /**
-     * Suspend a tenant
+     * Suspend a tenant.
      */
     public function suspend(int $id)
     {

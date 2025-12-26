@@ -131,7 +131,7 @@
                                             'under_review' => 'warning',
                                             default => 'light'
                                         };
-                                        ?>
+                                ?>
                                         <span class="badge badge-<?= $statusBadge ?>">
                                             <?= esc(ucwords(str_replace('_', ' ', $policy['status'] ?? 'draft'))) ?>
                                         </span>

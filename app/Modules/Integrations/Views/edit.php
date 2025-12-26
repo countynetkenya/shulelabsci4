@@ -78,16 +78,16 @@
 
                 <div class="form-group">
                     <label for="config_json">Configuration (JSON) <span class="text-danger">*</span></label>
-                    <textarea name="config_json" id="config_json" class="form-control" rows="8"><?php 
+                    <textarea name="config_json" id="config_json" class="form-control" rows="8"><?php
                         $configValue = old('config_json', $integration['config_json'] ?? '{}');
-                        // Pretty print if it's valid JSON
-                        $decoded = json_decode($configValue, true);
-                        if ($decoded !== null) {
-                            echo esc(json_encode($decoded, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-                        } else {
-                            echo esc($configValue);
-                        }
-                    ?></textarea>
+// Pretty print if it's valid JSON
+$decoded = json_decode($configValue, true);
+if ($decoded !== null) {
+    echo esc(json_encode($decoded, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+} else {
+    echo esc($configValue);
+}
+?></textarea>
                     <small class="form-text text-muted">Integration-specific configuration in JSON format. Credentials will be encrypted.</small>
                 </div>
 

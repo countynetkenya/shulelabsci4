@@ -8,7 +8,7 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * AnalyticsWebTest - Feature tests for Analytics CRUD
+ * AnalyticsWebTest - Feature tests for Analytics CRUD.
  */
 class AnalyticsWebTest extends CIUnitTestCase
 {

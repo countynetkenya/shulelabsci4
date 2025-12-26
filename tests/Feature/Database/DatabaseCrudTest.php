@@ -8,7 +8,7 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * DatabaseCrudTest - Feature tests for Database Backup CRUD operations
+ * DatabaseCrudTest - Feature tests for Database Backup CRUD operations.
  */
 class DatabaseCrudTest extends CIUnitTestCase
 {
@@ -17,8 +17,11 @@ class DatabaseCrudTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
@@ -28,7 +31,7 @@ class DatabaseCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Index page displays backups
+     * Test: Index page displays backups.
      */
     public function testIndexDisplaysBackups()
     {
@@ -54,7 +57,7 @@ class DatabaseCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Index page shows empty state when no backups
+     * Test: Index page shows empty state when no backups.
      */
     public function testIndexShowsEmptyState()
     {
@@ -66,7 +69,7 @@ class DatabaseCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Create page displays form
+     * Test: Create page displays form.
      */
     public function testCreatePageDisplaysForm()
     {
@@ -79,7 +82,7 @@ class DatabaseCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Store creates a new backup
+     * Test: Store creates a new backup.
      */
     public function testStoreCreatesBackup()
     {
@@ -92,20 +95,20 @@ class DatabaseCrudTest extends CIUnitTestCase
                        ->post('database/store', $data);
 
         $result->assertRedirectTo('/database');
-        
+
         $backup = $this->db->table('db_backups')
                           ->where('school_id', $this->schoolId)
                           ->where('name', 'New Test Backup')
                           ->get()
                           ->getRowArray();
-        
+
         $this->assertNotNull($backup);
         $this->assertEquals('full', $backup['type']);
         $this->assertEquals('pending', $backup['status']);
     }
 
     /**
-     * Test: Store validation fails with missing data
+     * Test: Store validation fails with missing data.
      */
     public function testStoreValidationFails()
     {
@@ -122,7 +125,7 @@ class DatabaseCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Edit page displays backup
+     * Test: Edit page displays backup.
      */
     public function testEditPageDisplaysBackup()
     {
@@ -147,7 +150,7 @@ class DatabaseCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Update modifies existing backup
+     * Test: Update modifies existing backup.
      */
     public function testUpdateModifiesBackup()
     {
@@ -172,18 +175,18 @@ class DatabaseCrudTest extends CIUnitTestCase
                        ->post('database/update/' . $backupId, $data);
 
         $result->assertRedirectTo('/database');
-        
+
         $backup = $this->db->table('db_backups')
                           ->where('id', $backupId)
                           ->get()
                           ->getRowArray();
-        
+
         $this->assertEquals('Updated Name', $backup['name']);
         $this->assertEquals('completed', $backup['status']);
     }
 
     /**
-     * Test: Delete removes backup
+     * Test: Delete removes backup.
      */
     public function testDeleteRemovesBackup()
     {
@@ -203,17 +206,17 @@ class DatabaseCrudTest extends CIUnitTestCase
                        ->get('database/delete/' . $backupId);
 
         $result->assertRedirectTo('/database');
-        
+
         $backup = $this->db->table('db_backups')
                           ->where('id', $backupId)
                           ->get()
                           ->getRowArray();
-        
+
         $this->assertNull($backup);
     }
 
     /**
-     * Test: Tenant isolation - cannot see other school's backups
+     * Test: Tenant isolation - cannot see other school's backups.
      */
     public function testTenantIsolation()
     {

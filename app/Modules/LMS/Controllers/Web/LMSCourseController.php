@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use Modules\LMS\Services\LMSCourseService;
 
 /**
- * LMSCourseController - Web CRUD for LMS course management
+ * LMSCourseController - Web CRUD for LMS course management.
  */
 class LMSCourseController extends BaseController
 {
@@ -18,7 +18,7 @@ class LMSCourseController extends BaseController
     }
 
     /**
-     * Display all courses
+     * Display all courses.
      */
     public function index()
     {
@@ -27,7 +27,7 @@ class LMSCourseController extends BaseController
         }
 
         $schoolId = session()->get('school_id') ?? 1;
-        
+
         $data = [
             'title' => 'LMS Courses',
             'courses' => $this->service->getAll($schoolId),
@@ -38,7 +38,7 @@ class LMSCourseController extends BaseController
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
@@ -54,7 +54,7 @@ class LMSCourseController extends BaseController
     }
 
     /**
-     * Store a new course
+     * Store a new course.
      */
     public function store()
     {
@@ -95,7 +95,7 @@ class LMSCourseController extends BaseController
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit($id)
     {
@@ -119,7 +119,7 @@ class LMSCourseController extends BaseController
     }
 
     /**
-     * Update a course
+     * Update a course.
      */
     public function update($id)
     {
@@ -152,7 +152,7 @@ class LMSCourseController extends BaseController
     }
 
     /**
-     * Delete a course
+     * Delete a course.
      */
     public function delete($id)
     {

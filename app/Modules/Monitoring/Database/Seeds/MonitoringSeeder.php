@@ -5,7 +5,7 @@ namespace App\Modules\Monitoring\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * MonitoringSeeder - Creates sample metrics for testing
+ * MonitoringSeeder - Creates sample metrics for testing.
  */
 class MonitoringSeeder extends Seeder
 {
@@ -71,7 +71,7 @@ class MonitoringSeeder extends Seeder
         ];
 
         $this->db->table('metrics')->insertBatch($data);
-        
-        echo "Created " . count($data) . " metric records.\n";
+
+        echo 'Created ' . count($data) . " metric records.\n";
     }
 }

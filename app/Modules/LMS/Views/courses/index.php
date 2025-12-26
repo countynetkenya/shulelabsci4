@@ -117,8 +117,8 @@
                                             'published' => 'success',
                                             'archived' => 'secondary',
                                         ];
-                                        $class = $statusClass[$course['status']] ?? 'secondary';
-                                        ?>
+                                $class = $statusClass[$course['status']] ?? 'secondary';
+                                ?>
                                         <span class="badge badge-<?= $class ?>"><?= esc($course['status']) ?></span>
                                     </td>
                                     <td><?= date('Y-m-d H:i', strtotime($course['created_at'])) ?></td>

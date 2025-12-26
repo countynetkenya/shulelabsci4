@@ -29,11 +29,11 @@ class ThreadsController extends BaseController
     public function store()
     {
         $schoolId = session()->get('school_id') ?? 1;
-        
+
         if (!$this->validate([
             'recipient_id' => 'required|integer',
             'subject' => 'required|min_length[3]',
-            'body' => 'required'
+            'body' => 'required',
         ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
@@ -56,7 +56,7 @@ class ThreadsController extends BaseController
     {
         $schoolId = session()->get('school_id') ?? 1;
         $data['message'] = $this->service->getById($id, $schoolId);
-        
+
         if (!$data['message']) {
             return redirect()->to('/threads')->with('error', 'Message not found');
         }
@@ -70,7 +70,7 @@ class ThreadsController extends BaseController
 
         if (!$this->validate([
             'subject' => 'required|min_length[3]',
-            'body' => 'required'
+            'body' => 'required',
         ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }

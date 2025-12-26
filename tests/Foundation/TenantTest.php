@@ -43,7 +43,7 @@ class TenantTest extends CIUnitTestCase
             // Seed test data for multi-school tenant tests
             $this->seedTestData();
         }
-        
+
         // Ensure clean state for each test
         service('tenant')->clearCurrentSchool();
     }

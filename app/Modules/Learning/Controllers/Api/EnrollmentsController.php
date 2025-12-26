@@ -25,14 +25,14 @@ class EnrollmentsController extends ResourceController
 
         return $this->respond([
             'status' => 200,
-            'data' => $enrollments
+            'data' => $enrollments,
         ]);
     }
 
     public function create()
     {
         $rules = [
-            'course_id' => 'required|integer'
+            'course_id' => 'required|integer',
         ];
 
         if (!$this->validate($rules)) {
@@ -49,7 +49,7 @@ class EnrollmentsController extends ResourceController
             return $this->respondCreated([
                 'status' => 201,
                 'message' => 'Enrolled successfully',
-                'id' => $enrollmentId
+                'id' => $enrollmentId,
             ]);
         }
 

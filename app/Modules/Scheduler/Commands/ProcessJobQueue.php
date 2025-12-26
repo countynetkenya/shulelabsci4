@@ -2,9 +2,9 @@
 
 namespace Modules\Scheduler\Commands;
 
-use Modules\Scheduler\Services\JobRunner;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
+use Modules\Scheduler\Services\JobRunner;
 
 /**
  * CLI command to process the job queue.

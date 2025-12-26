@@ -17,7 +17,7 @@ class CoursesController extends ResourceController
     public function index()
     {
         $schoolId = $this->request->getVar('school_id'); // In real app, get from token
-        
+
         if (!$schoolId) {
             return $this->fail('School ID is required');
         }

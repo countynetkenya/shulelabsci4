@@ -15,14 +15,17 @@ class LearningWebTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = false;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = null;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->setupTenantContext();
 
         // Ensure clean slate for Learning tables
@@ -52,7 +55,7 @@ class LearningWebTest extends CIUnitTestCase
                            'status' => 'draft',
                            'csrf_test_name' => csrf_hash(), // CSRF is disabled in TenantTestTrait but good practice
                        ]);
-        
+
         $result->assertRedirectTo('lms/courses');
         $this->seeInDatabase('learning_courses', ['title' => 'New Course']);
     }
@@ -60,7 +63,7 @@ class LearningWebTest extends CIUnitTestCase
     public function testShowCourse()
     {
         $course = $this->db->table('learning_courses')->get()->getRow();
-        
+
         $result = $this->withSession($this->getAdminSession())
                        ->get("lms/courses/{$course->id}");
 

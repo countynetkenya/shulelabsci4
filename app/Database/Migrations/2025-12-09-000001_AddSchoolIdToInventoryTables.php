@@ -14,7 +14,7 @@ class AddSchoolIdToInventoryTables extends Migration
             'inventory_items',
             'inventory_locations',
             'inventory_stock',
-            'inventory_transactions'
+            'inventory_transactions',
         ];
 
         foreach ($tables as $table) {
@@ -25,8 +25,8 @@ class AddSchoolIdToInventoryTables extends Migration
                         'constraint' => 11,
                         'unsigned' => true,
                         'null' => true, // Nullable for existing data, strictly should be NOT NULL
-                        'after' => 'id'
-                    ]
+                        'after' => 'id',
+                    ],
                 ]);
                 // Ideally add index
                 // $this->db->query("CREATE INDEX idx_{$table}_school_id ON {$table}(school_id)");
@@ -42,7 +42,7 @@ class AddSchoolIdToInventoryTables extends Migration
             'inventory_items',
             'inventory_locations',
             'inventory_stock',
-            'inventory_transactions'
+            'inventory_transactions',
         ];
 
         foreach ($tables as $table) {

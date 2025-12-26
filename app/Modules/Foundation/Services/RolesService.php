@@ -16,7 +16,7 @@ class RolesService
     public function getAllRoles()
     {
         $roles = $this->roleModel->findAll();
-        
+
         // Get user counts
         $db = \Config\Database::connect();
         foreach ($roles as &$role) {
@@ -25,7 +25,7 @@ class RolesService
                         ->countAllResults();
             $role['users_count'] = $count;
         }
-        
+
         return $roles;
     }
 
@@ -40,7 +40,7 @@ class RolesService
         if (!isset($data['ci3_usertype_id'])) {
             $data['ci3_usertype_id'] = 999; // Custom role
         }
-        
+
         return $this->roleModel->insert($data);
     }
 

@@ -5,7 +5,7 @@ namespace Modules\Orchestration\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * OrchestrationSeeder - Seed sample workflow records
+ * OrchestrationSeeder - Seed sample workflow records.
  */
 class OrchestrationSeeder extends Seeder
 {

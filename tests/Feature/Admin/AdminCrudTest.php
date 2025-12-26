@@ -8,8 +8,8 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * AdminCrudTest - Feature tests for Admin Settings CRUD operations
- * 
+ * AdminCrudTest - Feature tests for Admin Settings CRUD operations.
+ *
  * Tests all CRUD endpoints for the Admin Settings module:
  * - GET /admin/settings (index)
  * - GET /admin/settings/create (create form)
@@ -25,8 +25,11 @@ class AdminCrudTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
@@ -36,7 +39,7 @@ class AdminCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Index page displays settings
+     * Test: Index page displays settings.
      */
     public function testIndexDisplaysSettings()
     {
@@ -61,7 +64,7 @@ class AdminCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Index page shows empty state when no settings
+     * Test: Index page shows empty state when no settings.
      */
     public function testIndexShowsEmptyState()
     {
@@ -73,7 +76,7 @@ class AdminCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Create page displays form
+     * Test: Create page displays form.
      */
     public function testCreatePageDisplaysForm()
     {
@@ -87,7 +90,7 @@ class AdminCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Store creates a new setting
+     * Test: Store creates a new setting.
      */
     public function testStoreCreatesSetting()
     {
@@ -101,20 +104,20 @@ class AdminCrudTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirectTo('/admin/settings');
-        
+
         // Verify setting was created
         $setting = $this->db->table('settings')
                             ->where('class', 'mail')
                             ->where('key', 'smtp_host')
                             ->get()
                             ->getRowArray();
-        
+
         $this->assertNotNull($setting);
         $this->assertEquals('smtp.example.com', $setting['value']);
     }
 
     /**
-     * Test: Store validation fails with missing class
+     * Test: Store validation fails with missing class.
      */
     public function testStoreValidationFailsWithMissingClass()
     {
@@ -129,7 +132,7 @@ class AdminCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Edit page displays form with setting data
+     * Test: Edit page displays form with setting data.
      */
     public function testEditPageDisplaysFormWithData()
     {
@@ -155,7 +158,7 @@ class AdminCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Update modifies an existing setting
+     * Test: Update modifies an existing setting.
      */
     public function testUpdateModifiesSetting()
     {
@@ -180,18 +183,18 @@ class AdminCrudTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirectTo('/admin/settings');
-        
+
         // Verify setting was updated
         $setting = $this->db->table('settings')
                             ->where('id', $settingId)
                             ->get()
                             ->getRowArray();
-        
+
         $this->assertEquals('Africa/Nairobi', $setting['value']);
     }
 
     /**
-     * Test: Delete removes a setting
+     * Test: Delete removes a setting.
      */
     public function testDeleteRemovesSetting()
     {
@@ -210,18 +213,18 @@ class AdminCrudTest extends CIUnitTestCase
                        ->get("admin/settings/delete/{$settingId}");
 
         $result->assertRedirectTo('/admin/settings');
-        
+
         // Verify setting was deleted
         $setting = $this->db->table('settings')
                             ->where('id', $settingId)
                             ->get()
                             ->getRowArray();
-        
+
         $this->assertNull($setting);
     }
 
     /**
-     * Test: Non-admin users cannot access admin settings
+     * Test: Non-admin users cannot access admin settings.
      */
     public function testNonAdminCannotAccessSettings()
     {
@@ -240,7 +243,7 @@ class AdminCrudTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Filter settings by class
+     * Test: Filter settings by class.
      */
     public function testFilterByClass()
     {

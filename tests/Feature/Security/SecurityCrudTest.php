@@ -8,7 +8,7 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * SecurityCrudTest - Tests CRUD operations for Security module
+ * SecurityCrudTest - Tests CRUD operations for Security module.
  */
 class SecurityCrudTest extends CIUnitTestCase
 {
@@ -53,7 +53,7 @@ class SecurityCrudTest extends CIUnitTestCase
             ->post('security', $data);
 
         $result->assertRedirectTo('/security');
-        
+
         $this->seeInDatabase('login_attempts', [
             'identifier' => 'test@example.com',
         ]);

@@ -8,7 +8,7 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * GovernanceWebTest - Feature tests for Governance CRUD
+ * GovernanceWebTest - Feature tests for Governance CRUD.
  */
 class GovernanceWebTest extends CIUnitTestCase
 {

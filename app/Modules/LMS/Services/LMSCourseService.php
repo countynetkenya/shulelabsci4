@@ -5,7 +5,7 @@ namespace Modules\LMS\Services;
 use Modules\LMS\Models\CourseModel;
 
 /**
- * LMSCourseService - Business logic for LMS course management
+ * LMSCourseService - Business logic for LMS course management.
  */
 class LMSCourseService
 {
@@ -17,7 +17,7 @@ class LMSCourseService
     }
 
     /**
-     * Get all courses for a school
+     * Get all courses for a school.
      */
     public function getAll(int $schoolId): array
     {
@@ -28,7 +28,7 @@ class LMSCourseService
     }
 
     /**
-     * Get a single course by ID
+     * Get a single course by ID.
      */
     public function getById(int $id, int $schoolId): ?array
     {
@@ -39,7 +39,7 @@ class LMSCourseService
     }
 
     /**
-     * Create a new course
+     * Create a new course.
      */
     public function create(array $data): int|false
     {
@@ -47,7 +47,7 @@ class LMSCourseService
     }
 
     /**
-     * Update an existing course
+     * Update an existing course.
      */
     public function update(int $id, array $data): bool
     {
@@ -55,7 +55,7 @@ class LMSCourseService
     }
 
     /**
-     * Delete a course (soft delete)
+     * Delete a course (soft delete).
      */
     public function delete(int $id): bool
     {
@@ -63,19 +63,19 @@ class LMSCourseService
     }
 
     /**
-     * Get course statistics for a school
+     * Get course statistics for a school.
      */
     public function getStatistics(int $schoolId): array
     {
         $totalCourses = $this->model
             ->where('school_id', $schoolId)
             ->countAllResults();
-        
+
         $publishedCourses = $this->model
             ->where('school_id', $schoolId)
             ->where('status', 'published')
             ->countAllResults();
-        
+
         $draftCourses = $this->model
             ->where('school_id', $schoolId)
             ->where('status', 'draft')

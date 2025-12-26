@@ -120,8 +120,8 @@
                                             'completed' => 'success',
                                             'failed' => 'danger',
                                         ];
-                                        $class = $statusClass[$backup['status']] ?? 'secondary';
-                                        ?>
+                                $class = $statusClass[$backup['status']] ?? 'secondary';
+                                ?>
                                         <span class="badge badge-<?= $class ?>"><?= esc($backup['status']) ?></span>
                                     </td>
                                     <td><?= date('Y-m-d H:i', strtotime($backup['created_at'])) ?></td>

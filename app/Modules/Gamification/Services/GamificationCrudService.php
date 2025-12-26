@@ -2,17 +2,19 @@
 
 namespace App\Modules\Gamification\Services;
 
-use App\Modules\Gamification\Models\BadgeModel;
 use App\Modules\Gamification\Models\AchievementModel;
+use App\Modules\Gamification\Models\BadgeModel;
 use App\Modules\Gamification\Models\PointModel;
 
 /**
- * GamificationCrudService - Handles CRUD operations for gamification
+ * GamificationCrudService - Handles CRUD operations for gamification.
  */
 class GamificationCrudService
 {
     protected BadgeModel $badgeModel;
+
     protected AchievementModel $achievementModel;
+
     protected PointModel $pointModel;
 
     public function __construct()
@@ -23,7 +25,7 @@ class GamificationCrudService
     }
 
     /**
-     * Get all badges for a school
+     * Get all badges for a school.
      */
     public function getAllBadges(int $schoolId): array
     {
@@ -35,18 +37,18 @@ class GamificationCrudService
     }
 
     /**
-     * Get a single badge by ID
+     * Get a single badge by ID.
      */
     public function getBadgeById(int $id, int $schoolId): ?array
     {
         $badge = $this->badgeModel->find($id);
-        
+
         if (!$badge) {
             return null;
         }
 
         // Allow access if badge is global or belongs to school
-        if ($badge['school_id'] === null || (int)$badge['school_id'] === $schoolId) {
+        if ($badge['school_id'] === null || (int) $badge['school_id'] === $schoolId) {
             return $badge;
         }
 
@@ -54,7 +56,7 @@ class GamificationCrudService
     }
 
     /**
-     * Create a new badge
+     * Create a new badge.
      */
     public function createBadge(array $data): int|false
     {
@@ -62,12 +64,12 @@ class GamificationCrudService
     }
 
     /**
-     * Update an existing badge
+     * Update an existing badge.
      */
     public function updateBadge(int $id, array $data, int $schoolId): bool
     {
         $badge = $this->getBadgeById($id, $schoolId);
-        
+
         if (!$badge) {
             return false;
         }
@@ -76,12 +78,12 @@ class GamificationCrudService
     }
 
     /**
-     * Delete a badge
+     * Delete a badge.
      */
     public function deleteBadge(int $id, int $schoolId): bool
     {
         $badge = $this->getBadgeById($id, $schoolId);
-        
+
         if (!$badge || $badge['school_id'] === null) {
             // Don't delete global badges
             return false;
@@ -91,7 +93,7 @@ class GamificationCrudService
     }
 
     /**
-     * Get all achievements for a school
+     * Get all achievements for a school.
      */
     public function getAllAchievements(int $schoolId): array
     {
@@ -103,18 +105,18 @@ class GamificationCrudService
     }
 
     /**
-     * Get a single achievement by ID
+     * Get a single achievement by ID.
      */
     public function getAchievementById(int $id, int $schoolId): ?array
     {
         $achievement = $this->achievementModel->find($id);
-        
+
         if (!$achievement) {
             return null;
         }
 
         // Allow access if achievement is global or belongs to school
-        if ($achievement['school_id'] === null || (int)$achievement['school_id'] === $schoolId) {
+        if ($achievement['school_id'] === null || (int) $achievement['school_id'] === $schoolId) {
             return $achievement;
         }
 
@@ -122,7 +124,7 @@ class GamificationCrudService
     }
 
     /**
-     * Create a new achievement
+     * Create a new achievement.
      */
     public function createAchievement(array $data): int|false
     {
@@ -130,12 +132,12 @@ class GamificationCrudService
     }
 
     /**
-     * Update an existing achievement
+     * Update an existing achievement.
      */
     public function updateAchievement(int $id, array $data, int $schoolId): bool
     {
         $achievement = $this->getAchievementById($id, $schoolId);
-        
+
         if (!$achievement) {
             return false;
         }
@@ -144,12 +146,12 @@ class GamificationCrudService
     }
 
     /**
-     * Delete an achievement
+     * Delete an achievement.
      */
     public function deleteAchievement(int $id, int $schoolId): bool
     {
         $achievement = $this->getAchievementById($id, $schoolId);
-        
+
         if (!$achievement || $achievement['school_id'] === null) {
             // Don't delete global achievements
             return false;
@@ -159,7 +161,7 @@ class GamificationCrudService
     }
 
     /**
-     * Get recent point transactions
+     * Get recent point transactions.
      */
     public function getRecentPoints(int $schoolId, int $limit = 50): array
     {

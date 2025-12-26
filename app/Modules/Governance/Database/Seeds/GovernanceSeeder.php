@@ -5,14 +5,14 @@ namespace App\Modules\Governance\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * GovernanceSeeder - Seed sample governance policies
+ * GovernanceSeeder - Seed sample governance policies.
  */
 class GovernanceSeeder extends Seeder
 {
     public function run()
     {
         $db = \Config\Database::connect();
-        
+
         // Sample policies for school_id = 1
         $policies = [
             [
@@ -92,6 +92,6 @@ class GovernanceSeeder extends Seeder
             $db->table('policies')->insert($policy);
         }
 
-        echo "Inserted " . count($policies) . " sample governance policies.\n";
+        echo 'Inserted ' . count($policies) . " sample governance policies.\n";
     }
 }

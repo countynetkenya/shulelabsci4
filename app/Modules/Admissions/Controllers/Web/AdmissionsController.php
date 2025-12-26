@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use App\Modules\Admissions\Services\AdmissionsCrudService;
 
 /**
- * AdmissionsController - Handles CRUD operations for student applications
- * 
+ * AdmissionsController - Handles CRUD operations for student applications.
+ *
  * All data is tenant-scoped by school_id from session.
  */
 class AdmissionsController extends BaseController
@@ -20,7 +20,7 @@ class AdmissionsController extends BaseController
     }
 
     /**
-     * Get current school ID from session
+     * Get current school ID from session.
      */
     protected function getSchoolId(): int
     {
@@ -28,7 +28,7 @@ class AdmissionsController extends BaseController
     }
 
     /**
-     * Get current user ID from session
+     * Get current user ID from session.
      */
     protected function getUserId(): int
     {
@@ -36,39 +36,39 @@ class AdmissionsController extends BaseController
     }
 
     /**
-     * List all applications
+     * List all applications.
      */
     public function index()
     {
         $schoolId = $this->getSchoolId();
-        
+
         $data = [
             'applications' => $this->service->getAll($schoolId),
             'statistics' => $this->service->getStatistics($schoolId),
         ];
-        
+
         return view('App\Modules\Admissions\Views\index', $data);
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
         $data = [
             'currentYear' => date('Y'),
         ];
-        
+
         return view('App\Modules\Admissions\Views\create', $data);
     }
 
     /**
-     * Store new application
+     * Store new application.
      */
     public function store()
     {
         $schoolId = $this->getSchoolId();
-        
+
         $validationRules = [
             'student_first_name' => 'required|min_length[2]|max_length[100]',
             'student_last_name' => 'required|min_length[2]|max_length[100]',
@@ -111,18 +111,18 @@ class AdmissionsController extends BaseController
         if ($id) {
             return redirect()->to('/admissions')->with('message', 'Application submitted successfully');
         }
-        
+
         return redirect()->back()->withInput()->with('error', 'Failed to create application');
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit($id)
     {
         $schoolId = $this->getSchoolId();
         $application = $this->service->getById($id, $schoolId);
-        
+
         if (!$application) {
             return redirect()->to('/admissions')->with('error', 'Application not found');
         }
@@ -135,7 +135,7 @@ class AdmissionsController extends BaseController
     }
 
     /**
-     * Update existing application
+     * Update existing application.
      */
     public function update($id)
     {
@@ -173,22 +173,22 @@ class AdmissionsController extends BaseController
         if ($success) {
             return redirect()->to('/admissions')->with('message', 'Application updated successfully');
         }
-        
+
         return redirect()->back()->withInput()->with('error', 'Failed to update application');
     }
 
     /**
-     * Delete application
+     * Delete application.
      */
     public function delete($id)
     {
         $schoolId = $this->getSchoolId();
         $success = $this->service->delete($id, $schoolId);
-        
+
         if ($success) {
             return redirect()->to('/admissions')->with('message', 'Application deleted successfully');
         }
-        
+
         return redirect()->to('/admissions')->with('error', 'Failed to delete application');
     }
 }

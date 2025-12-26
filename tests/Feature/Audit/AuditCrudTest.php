@@ -5,8 +5,8 @@ namespace Tests\Feature\Audit;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
- * AuditCrudTest - Feature tests for Audit module CRUD operations
- * 
+ * AuditCrudTest - Feature tests for Audit module CRUD operations.
+ *
  * @group audit
  */
 class AuditCrudTest extends CIUnitTestCase

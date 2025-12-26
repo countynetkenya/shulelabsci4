@@ -6,20 +6,21 @@ use App\Modules\MultiTenant\Models\TenantModel;
 use Modules\Foundation\Services\AuditService;
 
 /**
- * MultiTenantService - Business logic for tenant/school management
- * 
+ * MultiTenantService - Business logic for tenant/school management.
+ *
  * Manages SaaS tenant provisioning and lifecycle.
  * Integrates with AuditService for logging critical actions.
  */
 class MultiTenantService
 {
     protected TenantModel $model;
+
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
         $this->model = new TenantModel();
-        
+
         // Try to inject AuditService
         try {
             $this->auditService = $auditService ?? new AuditService();
@@ -30,19 +31,19 @@ class MultiTenantService
     }
 
     /**
-     * Get all tenants, optionally filtered by status
+     * Get all tenants, optionally filtered by status.
      */
     public function getAll(?string $status = null): array
     {
         if ($status) {
             return $this->model->where('status', $status)->findAll();
         }
-        
+
         return $this->model->findAll();
     }
 
     /**
-     * Get a single tenant by ID
+     * Get a single tenant by ID.
      */
     public function getById(int $id): ?array
     {
@@ -50,7 +51,7 @@ class MultiTenantService
     }
 
     /**
-     * Get tenant by subdomain
+     * Get tenant by subdomain.
      */
     public function getBySubdomain(string $subdomain): ?array
     {
@@ -58,7 +59,7 @@ class MultiTenantService
     }
 
     /**
-     * Get active tenants
+     * Get active tenants.
      */
     public function getActive(): array
     {
@@ -66,7 +67,7 @@ class MultiTenantService
     }
 
     /**
-     * Create a new tenant
+     * Create a new tenant.
      */
     public function create(array $data): int|false
     {
@@ -115,13 +116,13 @@ class MultiTenantService
     }
 
     /**
-     * Update an existing tenant
+     * Update an existing tenant.
      */
     public function update(int $id, array $data): bool
     {
         // Get before state for audit
         $before = $this->getById($id);
-        
+
         if (!$before) {
             return false;
         }
@@ -157,13 +158,13 @@ class MultiTenantService
     }
 
     /**
-     * Delete a tenant
+     * Delete a tenant.
      */
     public function delete(int $id): bool
     {
         // Get before state for audit
         $before = $this->getById($id);
-        
+
         if (!$before) {
             return false;
         }
@@ -191,7 +192,7 @@ class MultiTenantService
     }
 
     /**
-     * Activate a tenant
+     * Activate a tenant.
      */
     public function activate(int $id): bool
     {
@@ -202,7 +203,7 @@ class MultiTenantService
     }
 
     /**
-     * Suspend a tenant
+     * Suspend a tenant.
      */
     public function suspend(int $id): bool
     {
@@ -213,7 +214,7 @@ class MultiTenantService
     }
 
     /**
-     * Cancel a tenant
+     * Cancel a tenant.
      */
     public function cancel(int $id): bool
     {
@@ -224,12 +225,12 @@ class MultiTenantService
     }
 
     /**
-     * Get request metadata for audit logging
+     * Get request metadata for audit logging.
      */
     protected function getRequestMetadata(): array
     {
         $request = service('request');
-        
+
         return [
             'ip'          => $request->getIPAddress(),
             'user_agent'  => $request->getUserAgent()->getAgentString(),

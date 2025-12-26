@@ -106,8 +106,8 @@
                                             'suspended' => 'warning',
                                             'closed'    => 'danger',
                                         ];
-                                        $badgeClass = $statusBadges[$wallet['status']] ?? 'secondary';
-                                        ?>
+                                $badgeClass = $statusBadges[$wallet['status']] ?? 'secondary';
+                                ?>
                                         <span class="badge badge-<?= $badgeClass ?>">
                                             <?= esc(ucfirst($wallet['status'])) ?>
                                         </span>

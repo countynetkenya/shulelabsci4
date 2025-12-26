@@ -15,14 +15,17 @@ class LearningApiTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = false;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = null;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->setupTenantContext();
 
         // Ensure clean slate for Learning tables
@@ -125,8 +128,8 @@ class LearningApiTest extends CIUnitTestCase
         // Note: We need to cast IDs to strings because SQLite returns them as strings in some contexts
         // or the assertion might be strict on types.
         $this->seeInDatabase('learning_progress', [
-            'enrollment_id' => (string)$enrollmentId,
-            'lesson_id'     => (string)$lesson->id,
+            'enrollment_id' => (string) $enrollmentId,
+            'lesson_id'     => (string) $lesson->id,
         ]);
     }
 }

@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use App\Modules\Library\Services\LibraryService;
 
 /**
- * LibraryController - Handles CRUD operations for library books
- * 
+ * LibraryController - Handles CRUD operations for library books.
+ *
  * All data is tenant-scoped by school_id from session.
  */
 class LibraryController extends BaseController
@@ -20,14 +20,14 @@ class LibraryController extends BaseController
     }
 
     /**
-     * Check if user has permission to access library module
+     * Check if user has permission to access library module.
      */
     protected function checkAccess(): bool
     {
         // Allow admins and librarians
         $usertypeID = session()->get('usertypeID');
         $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
-        
+
         if ($isAdmin) {
             return true;
         }
@@ -47,7 +47,7 @@ class LibraryController extends BaseController
     }
 
     /**
-     * Get current school ID from session
+     * Get current school ID from session.
      */
     protected function getSchoolId(): int
     {
@@ -55,7 +55,7 @@ class LibraryController extends BaseController
     }
 
     /**
-     * List all books
+     * List all books.
      */
     public function index()
     {
@@ -64,7 +64,7 @@ class LibraryController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Get filter parameters
         $filters = [
             'search'   => $this->request->getGet('search'),
@@ -81,7 +81,7 @@ class LibraryController extends BaseController
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
@@ -98,7 +98,7 @@ class LibraryController extends BaseController
     }
 
     /**
-     * Store a new book
+     * Store a new book.
      */
     public function store()
     {
@@ -107,7 +107,7 @@ class LibraryController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Validation rules
         $rules = [
             'title'           => 'required|min_length[2]|max_length[255]',
@@ -122,7 +122,7 @@ class LibraryController extends BaseController
         }
 
         $totalCopies = (int) ($this->request->getPost('total_copies') ?: 1);
-        
+
         $data = [
             'school_id'        => $schoolId,
             'title'            => $this->request->getPost('title'),
@@ -143,7 +143,7 @@ class LibraryController extends BaseController
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit(int $id)
     {
@@ -153,7 +153,7 @@ class LibraryController extends BaseController
 
         $schoolId = $this->getSchoolId();
         $book = $this->service->getById($id, $schoolId);
-        
+
         if (!$book) {
             return redirect()->to('/library')->with('error', 'Book not found.');
         }
@@ -167,7 +167,7 @@ class LibraryController extends BaseController
     }
 
     /**
-     * Update an existing book
+     * Update an existing book.
      */
     public function update(int $id)
     {
@@ -199,7 +199,7 @@ class LibraryController extends BaseController
 
         $totalCopies = (int) ($this->request->getPost('total_copies') ?: $existingBook['total_copies']);
         $availableCopies = (int) ($this->request->getPost('available_copies') ?? $existingBook['available_copies']);
-        
+
         // Ensure available copies doesn't exceed total
         $availableCopies = min($availableCopies, $totalCopies);
 
@@ -222,7 +222,7 @@ class LibraryController extends BaseController
     }
 
     /**
-     * Delete a book
+     * Delete a book.
      */
     public function delete(int $id)
     {
@@ -231,7 +231,7 @@ class LibraryController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Verify book exists
         $book = $this->service->getById($id, $schoolId);
         if (!$book) {

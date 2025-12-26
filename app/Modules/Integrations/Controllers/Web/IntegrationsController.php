@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use App\Modules\Integrations\Services\IntegrationsCrudService;
 
 /**
- * IntegrationsController - Handles CRUD operations for third-party integrations
- * 
+ * IntegrationsController - Handles CRUD operations for third-party integrations.
+ *
  * Data can be scoped by tenant_id (school_id) from session.
  */
 class IntegrationsController extends BaseController
@@ -20,14 +20,14 @@ class IntegrationsController extends BaseController
     }
 
     /**
-     * Check if user has permission to access integrations module
+     * Check if user has permission to access integrations module.
      */
     protected function checkAccess(): bool
     {
         // Allow admins only
         $usertypeID = session()->get('usertypeID');
         $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
-        
+
         if ($isAdmin) {
             return true;
         }
@@ -47,7 +47,7 @@ class IntegrationsController extends BaseController
     }
 
     /**
-     * Get current tenant ID from session (using school_id)
+     * Get current tenant ID from session (using school_id).
      */
     protected function getTenantId(): ?string
     {
@@ -56,7 +56,7 @@ class IntegrationsController extends BaseController
     }
 
     /**
-     * List all integrations
+     * List all integrations.
      */
     public function index()
     {
@@ -65,7 +65,7 @@ class IntegrationsController extends BaseController
         }
 
         $tenantId = $this->getTenantId();
-        
+
         // Get filter parameters
         $filters = [
             'type'      => $this->request->getGet('type'),
@@ -82,7 +82,7 @@ class IntegrationsController extends BaseController
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
@@ -98,7 +98,7 @@ class IntegrationsController extends BaseController
     }
 
     /**
-     * Store a new integration
+     * Store a new integration.
      */
     public function store()
     {
@@ -137,7 +137,7 @@ class IntegrationsController extends BaseController
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit(int $id)
     {
@@ -161,7 +161,7 @@ class IntegrationsController extends BaseController
     }
 
     /**
-     * Update an integration
+     * Update an integration.
      */
     public function update(int $id)
     {
@@ -205,7 +205,7 @@ class IntegrationsController extends BaseController
     }
 
     /**
-     * Delete an integration
+     * Delete an integration.
      */
     public function delete(int $id)
     {

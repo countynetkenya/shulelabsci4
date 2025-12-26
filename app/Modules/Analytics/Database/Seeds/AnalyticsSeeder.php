@@ -5,14 +5,14 @@ namespace App\Modules\Analytics\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * AnalyticsSeeder - Seed sample analytics dashboards
+ * AnalyticsSeeder - Seed sample analytics dashboards.
  */
 class AnalyticsSeeder extends Seeder
 {
     public function run()
     {
         $db = \Config\Database::connect();
-        
+
         // Sample dashboards for school_id = 1
         $dashboards = [
             [
@@ -24,7 +24,7 @@ class AnalyticsSeeder extends Seeder
                         ['type' => 'metric', 'title' => 'Total Students', 'position' => ['row' => 1, 'col' => 1]],
                         ['type' => 'chart', 'title' => 'Attendance Trends', 'position' => ['row' => 1, 'col' => 2]],
                         ['type' => 'chart', 'title' => 'Academic Performance', 'position' => ['row' => 2, 'col' => 1]],
-                    ]
+                    ],
                 ]),
                 'is_default' => 1,
                 'is_shared' => 1,
@@ -41,7 +41,7 @@ class AnalyticsSeeder extends Seeder
                         ['type' => 'metric', 'title' => 'Total Revenue', 'position' => ['row' => 1, 'col' => 1]],
                         ['type' => 'metric', 'title' => 'Outstanding Fees', 'position' => ['row' => 1, 'col' => 2]],
                         ['type' => 'chart', 'title' => 'Monthly Revenue', 'position' => ['row' => 2, 'col' => 1]],
-                    ]
+                    ],
                 ]),
                 'is_default' => 0,
                 'is_shared' => 1,
@@ -58,7 +58,7 @@ class AnalyticsSeeder extends Seeder
                         ['type' => 'table', 'title' => 'Top Performers', 'position' => ['row' => 1, 'col' => 1]],
                         ['type' => 'chart', 'title' => 'Subject Performance', 'position' => ['row' => 1, 'col' => 2]],
                         ['type' => 'list', 'title' => 'At-Risk Students', 'position' => ['row' => 2, 'col' => 1]],
-                    ]
+                    ],
                 ]),
                 'is_default' => 0,
                 'is_shared' => 1,
@@ -75,7 +75,7 @@ class AnalyticsSeeder extends Seeder
                         ['type' => 'metric', 'title' => 'Attendance Rate', 'position' => ['row' => 1, 'col' => 1]],
                         ['type' => 'chart', 'title' => 'Daily Attendance', 'position' => ['row' => 1, 'col' => 2]],
                         ['type' => 'list', 'title' => 'Recent Incidents', 'position' => ['row' => 2, 'col' => 1]],
-                    ]
+                    ],
                 ]),
                 'is_default' => 0,
                 'is_shared' => 1,
@@ -92,7 +92,7 @@ class AnalyticsSeeder extends Seeder
                         ['type' => 'chart', 'title' => 'Enrollment by Year', 'position' => ['row' => 1, 'col' => 1]],
                         ['type' => 'chart', 'title' => 'Class Size Distribution', 'position' => ['row' => 1, 'col' => 2]],
                         ['type' => 'metric', 'title' => 'Current Capacity', 'position' => ['row' => 2, 'col' => 1]],
-                    ]
+                    ],
                 ]),
                 'is_default' => 0,
                 'is_shared' => 0,
@@ -107,6 +107,6 @@ class AnalyticsSeeder extends Seeder
             $db->table('analytics_dashboards')->insert($dashboard);
         }
 
-        echo "Inserted " . count($dashboards) . " sample analytics dashboards.\n";
+        echo 'Inserted ' . count($dashboards) . " sample analytics dashboards.\n";
     }
 }

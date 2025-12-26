@@ -5,13 +5,13 @@ namespace Modules\POS\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * PosSeeder - Seeds sample POS products for testing
+ * PosSeeder - Seeds sample POS products for testing.
  */
 class PosSeeder extends Seeder
 {
     /**
-     * Run the seeder to insert sample POS products
-     * 
+     * Run the seeder to insert sample POS products.
+     *
      * @return void
      */
     public function run(): void
@@ -89,6 +89,6 @@ class PosSeeder extends Seeder
 
         $this->db->table('pos_products')->insertBatch($data);
 
-        echo "Inserted " . count($data) . " POS products.\n";
+        echo 'Inserted ' . count($data) . " POS products.\n";
     }
 }

@@ -8,7 +8,7 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * WalletCrudTest - Feature tests for Wallets CRUD operations
+ * WalletCrudTest - Feature tests for Wallets CRUD operations.
  */
 class WalletCrudTest extends CIUnitTestCase
 {
@@ -17,8 +17,11 @@ class WalletCrudTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
@@ -79,7 +82,7 @@ class WalletCrudTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirectTo('/wallets');
-        
+
         $this->seeInDatabase('wallets', [
             'user_id'     => $this->userId,
             'wallet_type' => 'student',
@@ -154,7 +157,7 @@ class WalletCrudTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirectTo('/wallets');
-        
+
         $this->seeInDatabase('wallets', [
             'id'          => $walletId,
             'wallet_type' => 'staff',
@@ -183,7 +186,7 @@ class WalletCrudTest extends CIUnitTestCase
                        ->get("wallets/delete/{$walletId}");
 
         $result->assertRedirectTo('/wallets');
-        
+
         $this->dontSeeInDatabase('wallets', ['id' => $walletId]);
     }
 

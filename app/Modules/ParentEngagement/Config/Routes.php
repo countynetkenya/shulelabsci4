@@ -26,7 +26,7 @@ class Routes
             $routes->get('surveys', 'ParentEngagementWebController::surveys');
             $routes->get('surveys/create', 'ParentEngagementWebController::createSurvey');
             $routes->post('surveys/store', 'ParentEngagementWebController::storeSurvey');
-            
+
             // Events
             $routes->get('events', 'ParentEngagementWebController::events');
             $routes->get('events/create', 'ParentEngagementWebController::createEvent');
@@ -34,7 +34,7 @@ class Routes
             $routes->get('events/edit/(:num)', 'ParentEngagementWebController::editEvent/$1');
             $routes->post('events/update/(:num)', 'ParentEngagementWebController::updateEvent/$1');
             $routes->get('events/delete/(:num)', 'ParentEngagementWebController::deleteEvent/$1');
-            
+
             // Campaigns
             $routes->get('campaigns', 'ParentEngagementWebController::campaigns');
             $routes->get('campaigns/create', 'ParentEngagementWebController::createCampaign');

@@ -5,8 +5,8 @@ namespace Tests\Feature\Integrations;
 use CodeIgniter\Test\CIUnitTestCase;
 
 /**
- * IntegrationsCrudTest - Feature tests for Integrations module CRUD operations
- * 
+ * IntegrationsCrudTest - Feature tests for Integrations module CRUD operations.
+ *
  * @group integrations
  */
 class IntegrationsCrudTest extends CIUnitTestCase

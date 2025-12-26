@@ -115,7 +115,7 @@
                                             'suspended' => 'danger',
                                             default => 'secondary'
                                         };
-                                        ?>
+                                ?>
                                         <span class="badge badge-<?= $badgeClass ?>"><?= ucfirst(esc($student['status'])) ?></span>
                                     </td>
                                     <td class="text-center">

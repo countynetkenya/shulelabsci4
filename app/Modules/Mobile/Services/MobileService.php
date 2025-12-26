@@ -5,7 +5,7 @@ namespace Modules\Mobile\Services;
 use Modules\Mobile\Models\MobileDeviceModel;
 
 /**
- * MobileService - Business logic for mobile device management
+ * MobileService - Business logic for mobile device management.
  */
 class MobileService
 {
@@ -17,12 +17,12 @@ class MobileService
     }
 
     /**
-     * Get all devices for a school (via users)
+     * Get all devices for a school (via users).
      */
     public function getAll(int $schoolId): array
     {
         $db = \Config\Database::connect();
-        
+
         return $db->table('mobile_devices md')
             ->select('md.*, u.username, u.email')
             ->join('users u', 'u.id = md.user_id', 'left')
@@ -33,12 +33,12 @@ class MobileService
     }
 
     /**
-     * Get a single device by ID
+     * Get a single device by ID.
      */
     public function getById(int $id, int $schoolId): ?array
     {
         $db = \Config\Database::connect();
-        
+
         return $db->table('mobile_devices md')
             ->select('md.*, u.username, u.email')
             ->join('users u', 'u.id = md.user_id', 'left')
@@ -49,7 +49,7 @@ class MobileService
     }
 
     /**
-     * Create a new device record
+     * Create a new device record.
      */
     public function create(array $data): int|false
     {
@@ -57,7 +57,7 @@ class MobileService
     }
 
     /**
-     * Update an existing device
+     * Update an existing device.
      */
     public function update(int $id, array $data): bool
     {
@@ -65,7 +65,7 @@ class MobileService
     }
 
     /**
-     * Delete a device
+     * Delete a device.
      */
     public function delete(int $id): bool
     {
@@ -73,12 +73,12 @@ class MobileService
     }
 
     /**
-     * Get device statistics for a school
+     * Get device statistics for a school.
      */
     public function getStatistics(int $schoolId): array
     {
         $db = \Config\Database::connect();
-        
+
         // Single optimized query with conditional counting
         $result = $db->query("
             SELECT 
@@ -92,10 +92,10 @@ class MobileService
         ", [$schoolId])->getRowArray();
 
         return [
-            'total_devices' => (int)($result['total_devices'] ?? 0),
-            'active_devices' => (int)($result['active_devices'] ?? 0),
-            'ios_devices' => (int)($result['ios_devices'] ?? 0),
-            'android_devices' => (int)($result['android_devices'] ?? 0),
+            'total_devices' => (int) ($result['total_devices'] ?? 0),
+            'active_devices' => (int) ($result['active_devices'] ?? 0),
+            'ios_devices' => (int) ($result['ios_devices'] ?? 0),
+            'android_devices' => (int) ($result['android_devices'] ?? 0),
         ];
     }
 }

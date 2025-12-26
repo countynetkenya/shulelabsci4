@@ -5,7 +5,7 @@ namespace Modules\Orchestration\Database\Migrations;
 use CodeIgniter\Database\Migration;
 
 /**
- * Creates Orchestration workflow tables
+ * Creates Orchestration workflow tables.
  */
 class CreateOrchestrationWorkflowsTables extends Migration
 {

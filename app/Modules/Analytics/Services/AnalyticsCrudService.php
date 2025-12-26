@@ -6,20 +6,21 @@ use App\Modules\Analytics\Models\AnalyticsDashboardModel;
 use Modules\Foundation\Services\AuditService;
 
 /**
- * AnalyticsCrudService - Business logic for analytics dashboard management
- * 
+ * AnalyticsCrudService - Business logic for analytics dashboard management.
+ *
  * All queries are tenant-scoped by school_id.
  * Integrates with AuditService for logging critical actions.
  */
 class AnalyticsCrudService
 {
     protected AnalyticsDashboardModel $model;
+
     protected ?AuditService $auditService = null;
 
     public function __construct(?AuditService $auditService = null)
     {
         $this->model = new AnalyticsDashboardModel();
-        
+
         // Try to inject AuditService
         try {
             $this->auditService = $auditService ?? new AuditService();
@@ -30,7 +31,7 @@ class AnalyticsCrudService
     }
 
     /**
-     * Get all dashboards for a school
+     * Get all dashboards for a school.
      */
     public function getAll(int $schoolId, ?int $userId = null): array
     {
@@ -38,7 +39,7 @@ class AnalyticsCrudService
     }
 
     /**
-     * Get a single dashboard by ID (scoped to school)
+     * Get a single dashboard by ID (scoped to school).
      */
     public function getById(int $id, int $schoolId): ?array
     {
@@ -46,12 +47,12 @@ class AnalyticsCrudService
             ->where('school_id', $schoolId)
             ->where('id', $id)
             ->first();
-        
+
         return $dashboard ?: null;
     }
 
     /**
-     * Create a new dashboard
+     * Create a new dashboard.
      */
     public function create(array $data): int|false
     {
@@ -88,7 +89,7 @@ class AnalyticsCrudService
     }
 
     /**
-     * Update an existing dashboard
+     * Update an existing dashboard.
      */
     public function update(int $id, array $data, int $schoolId): bool
     {
@@ -123,7 +124,7 @@ class AnalyticsCrudService
     }
 
     /**
-     * Delete a dashboard
+     * Delete a dashboard.
      */
     public function delete(int $id, int $schoolId): bool
     {

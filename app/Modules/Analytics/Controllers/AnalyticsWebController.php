@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use App\Modules\Analytics\Services\AnalyticsCrudService;
 
 /**
- * AnalyticsWebController - Handles CRUD operations for analytics dashboards
- * 
+ * AnalyticsWebController - Handles CRUD operations for analytics dashboards.
+ *
  * All data is tenant-scoped by school_id from session.
  */
 class AnalyticsWebController extends BaseController
@@ -20,7 +20,7 @@ class AnalyticsWebController extends BaseController
     }
 
     /**
-     * Get current school ID from session
+     * Get current school ID from session.
      */
     protected function getSchoolId(): int
     {
@@ -28,7 +28,7 @@ class AnalyticsWebController extends BaseController
     }
 
     /**
-     * Get current user ID from session
+     * Get current user ID from session.
      */
     protected function getUserId(): int
     {
@@ -36,41 +36,41 @@ class AnalyticsWebController extends BaseController
     }
 
     /**
-     * List all dashboards
+     * List all dashboards.
      */
     public function index()
     {
         $schoolId = $this->getSchoolId();
         $userId = $this->getUserId();
-        
+
         $data = [
             'title' => 'Analytics Dashboard',
             'dashboards' => $this->service->getAll($schoolId, $userId),
         ];
-        
+
         return view('Modules\Analytics\Views\index', $data);
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
         $data = [
             'title' => 'Create Dashboard',
         ];
-        
+
         return view('Modules\Analytics\Views\create', $data);
     }
 
     /**
-     * Store new dashboard
+     * Store new dashboard.
      */
     public function store()
     {
         $schoolId = $this->getSchoolId();
         $userId = $this->getUserId();
-        
+
         $validationRules = [
             'name' => 'required|min_length[2]|max_length[150]',
             'description' => 'permit_empty|max_length[1000]',
@@ -95,18 +95,18 @@ class AnalyticsWebController extends BaseController
         if ($id) {
             return redirect()->to('/analytics')->with('message', 'Dashboard created successfully');
         }
-        
+
         return redirect()->back()->withInput()->with('error', 'Failed to create dashboard');
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit($id)
     {
         $schoolId = $this->getSchoolId();
         $dashboard = $this->service->getById($id, $schoolId);
-        
+
         if (!$dashboard) {
             return redirect()->to('/analytics')->with('error', 'Dashboard not found');
         }
@@ -120,7 +120,7 @@ class AnalyticsWebController extends BaseController
     }
 
     /**
-     * Update existing dashboard
+     * Update existing dashboard.
      */
     public function update($id)
     {
@@ -147,22 +147,22 @@ class AnalyticsWebController extends BaseController
         if ($success) {
             return redirect()->to('/analytics')->with('message', 'Dashboard updated successfully');
         }
-        
+
         return redirect()->back()->withInput()->with('error', 'Failed to update dashboard');
     }
 
     /**
-     * Delete dashboard
+     * Delete dashboard.
      */
     public function delete($id)
     {
         $schoolId = $this->getSchoolId();
         $success = $this->service->delete($id, $schoolId);
-        
+
         if ($success) {
             return redirect()->to('/analytics')->with('message', 'Dashboard deleted successfully');
         }
-        
+
         return redirect()->to('/analytics')->with('error', 'Failed to delete dashboard');
     }
 }

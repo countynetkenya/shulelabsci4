@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use Modules\ParentEngagement\Services\ParentEngagementCrudService;
 
 /**
- * ParentEngagementController - Handles CRUD operations for parent engagement surveys
- * 
+ * ParentEngagementController - Handles CRUD operations for parent engagement surveys.
+ *
  * All data is tenant-scoped by school_id from session.
  */
 class ParentEngagementController extends BaseController
@@ -20,14 +20,14 @@ class ParentEngagementController extends BaseController
     }
 
     /**
-     * Check if user has permission to access parent engagement module
+     * Check if user has permission to access parent engagement module.
      */
     protected function checkAccess(): bool
     {
         // Allow admins
         $usertypeID = session()->get('usertypeID');
         $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
-        
+
         if ($isAdmin) {
             return true;
         }
@@ -47,7 +47,7 @@ class ParentEngagementController extends BaseController
     }
 
     /**
-     * Get current school ID from session
+     * Get current school ID from session.
      */
     protected function getSchoolId(): int
     {
@@ -55,7 +55,7 @@ class ParentEngagementController extends BaseController
     }
 
     /**
-     * List all surveys
+     * List all surveys.
      */
     public function index()
     {
@@ -64,7 +64,7 @@ class ParentEngagementController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Get filter parameters
         $filters = [
             'search'      => $this->request->getGet('search'),
@@ -81,7 +81,7 @@ class ParentEngagementController extends BaseController
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
@@ -93,7 +93,7 @@ class ParentEngagementController extends BaseController
     }
 
     /**
-     * Store new survey
+     * Store new survey.
      */
     public function store()
     {
@@ -121,7 +121,7 @@ class ParentEngagementController extends BaseController
         }
         if (!$questions) {
             $questions = [
-                ['text' => 'Default question', 'type' => 'text']
+                ['text' => 'Default question', 'type' => 'text'],
             ];
         }
 
@@ -149,7 +149,7 @@ class ParentEngagementController extends BaseController
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit(int $id)
     {
@@ -172,7 +172,7 @@ class ParentEngagementController extends BaseController
     }
 
     /**
-     * Update existing survey
+     * Update existing survey.
      */
     public function update(int $id)
     {
@@ -197,7 +197,7 @@ class ParentEngagementController extends BaseController
         }
         if (!$questions) {
             $questions = [
-                ['text' => 'Default question', 'type' => 'text']
+                ['text' => 'Default question', 'type' => 'text'],
             ];
         }
 
@@ -223,7 +223,7 @@ class ParentEngagementController extends BaseController
     }
 
     /**
-     * Delete survey
+     * Delete survey.
      */
     public function delete(int $id)
     {

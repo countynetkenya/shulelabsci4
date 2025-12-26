@@ -6,21 +6,29 @@ use CodeIgniter\Model;
 
 class ConferenceModel extends Model
 {
-    protected $table            = 'conferences';
-    protected $primaryKey       = 'id';
+    protected $table = 'conferences';
+
+    protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = [
+
+    protected $returnType = 'array';
+
+    protected $useSoftDeletes = false;
+
+    protected $protectFields = true;
+
+    protected $allowedFields = [
         'school_id', 'name', 'description', 'conference_date', 'start_time',
         'end_time', 'slot_duration_minutes', 'venue', 'is_virtual',
-        'meeting_link', 'status', 'created_by'
+        'meeting_link', 'status', 'created_by',
     ];
 
     protected $useTimestamps = true;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = '';
+
+    protected $createdField = 'created_at';
+
+    protected $updatedField = '';
 
     protected $validationRules = [
         'school_id'       => 'required|integer',
@@ -32,7 +40,9 @@ class ConferenceModel extends Model
     ];
 
     protected $validationMessages = [];
-    protected $skipValidation     = false;
+
+    protected $skipValidation = false;
+
     protected $cleanValidationRules = true;
 
     protected $casts = [

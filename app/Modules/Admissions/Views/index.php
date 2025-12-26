@@ -144,7 +144,7 @@
                                             'enrolled' => 'primary',
                                             default => 'light'
                                         };
-                                        ?>
+                                ?>
                                         <span class="badge badge-<?= $statusBadge ?>">
                                             <?= esc(ucwords(str_replace('_', ' ', $app['status'] ?? 'submitted'))) ?>
                                         </span>

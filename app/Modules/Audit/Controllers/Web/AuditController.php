@@ -3,17 +3,18 @@
 namespace App\Modules\Audit\Controllers\Web;
 
 use App\Controllers\BaseController;
-use App\Modules\Audit\Services\AuditService;
 use App\Modules\Audit\Models\AuditEventModel;
+use App\Modules\Audit\Services\AuditService;
 
 /**
- * AuditController - Handles CRUD operations for audit events viewer
- * 
+ * AuditController - Handles CRUD operations for audit events viewer.
+ *
  * All data is tenant-scoped by school_id from session.
  */
 class AuditController extends BaseController
 {
     protected AuditService $service;
+
     protected AuditEventModel $model;
 
     public function __construct()
@@ -23,14 +24,14 @@ class AuditController extends BaseController
     }
 
     /**
-     * Check if user has permission to access audit module
+     * Check if user has permission to access audit module.
      */
     protected function checkAccess(): bool
     {
         // Allow admins only
         $usertypeID = session()->get('usertypeID');
         $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
-        
+
         if ($isAdmin) {
             return true;
         }
@@ -50,7 +51,7 @@ class AuditController extends BaseController
     }
 
     /**
-     * Get current school ID from session
+     * Get current school ID from session.
      */
     protected function getSchoolId(): int
     {
@@ -58,7 +59,7 @@ class AuditController extends BaseController
     }
 
     /**
-     * List all audit events
+     * List all audit events.
      */
     public function index()
     {
@@ -67,7 +68,7 @@ class AuditController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Get filter parameters
         $filters = [
             'school_id' => $schoolId,
@@ -88,7 +89,7 @@ class AuditController extends BaseController
     }
 
     /**
-     * Show create form (audit events are typically auto-generated, but we allow manual entry)
+     * Show create form (audit events are typically auto-generated, but we allow manual entry).
      */
     public function create()
     {
@@ -105,7 +106,7 @@ class AuditController extends BaseController
     }
 
     /**
-     * Store a new audit event
+     * Store a new audit event.
      */
     public function store()
     {
@@ -146,7 +147,7 @@ class AuditController extends BaseController
     }
 
     /**
-     * Show edit form (typically audit logs are immutable, but we allow viewing/editing metadata)
+     * Show edit form (typically audit logs are immutable, but we allow viewing/editing metadata).
      */
     public function edit(int $id)
     {
@@ -171,7 +172,7 @@ class AuditController extends BaseController
     }
 
     /**
-     * Update an audit event (limited fields for compliance)
+     * Update an audit event (limited fields for compliance).
      */
     public function update(int $id)
     {
@@ -207,7 +208,7 @@ class AuditController extends BaseController
     }
 
     /**
-     * Delete an audit event (soft delete or archival only)
+     * Delete an audit event (soft delete or archival only).
      */
     public function delete(int $id)
     {
@@ -228,24 +229,24 @@ class AuditController extends BaseController
     }
 
     /**
-     * Get available event types
+     * Get available event types.
      */
     protected function getEventTypes(): array
     {
         return [
-            'create', 'update', 'delete', 'view', 'access', 
-            'login', 'logout', 'export', 'import', 'configure'
+            'create', 'update', 'delete', 'view', 'access',
+            'login', 'logout', 'export', 'import', 'configure',
         ];
     }
 
     /**
-     * Get available entity types
+     * Get available entity types.
      */
     protected function getEntityTypes(): array
     {
         return [
-            'user', 'student', 'teacher', 'class', 'book', 
-            'inventory', 'payment', 'invoice', 'report'
+            'user', 'student', 'teacher', 'class', 'book',
+            'inventory', 'payment', 'invoice', 'report',
         ];
     }
 }

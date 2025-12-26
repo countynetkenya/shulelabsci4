@@ -9,6 +9,7 @@ use Modules\LMS\Models\LessonModel;
 class CoursesWebController extends BaseController
 {
     protected $courseModel;
+
     protected $lessonModel;
 
     public function __construct()

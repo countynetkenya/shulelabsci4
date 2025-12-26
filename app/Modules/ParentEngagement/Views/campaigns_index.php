@@ -37,10 +37,10 @@
                                     <td>KES <?= number_format($campaign['raised_amount'], 2) ?></td>
                                     <td>
                                         <div class="progress" style="height: 25px;">
-                                            <?php 
+                                            <?php
                                             $percentage = $campaign['progress_percentage'];
-                                            $colorClass = $percentage >= 75 ? 'success' : ($percentage >= 50 ? 'warning' : 'danger');
-                                            ?>
+                                $colorClass = $percentage >= 75 ? 'success' : ($percentage >= 50 ? 'warning' : 'danger');
+                                ?>
                                             <div class="progress-bar bg-<?= $colorClass ?>" 
                                                  role="progressbar" style="width: <?= number_format($percentage, 0) ?>%">
                                                 <?= number_format($percentage, 0) ?>%

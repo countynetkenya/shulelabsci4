@@ -8,8 +8,8 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * FoundationTest - Feature tests for Foundation Settings
- * 
+ * FoundationTest - Feature tests for Foundation Settings.
+ *
  * Tests the Foundation module's settings management functionality.
  */
 class FoundationTest extends CIUnitTestCase
@@ -19,8 +19,11 @@ class FoundationTest extends CIUnitTestCase
     use TenantTestTrait;
 
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $namespace = 'App';
 
     protected function setUp(): void
@@ -30,7 +33,7 @@ class FoundationTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Settings index page loads
+     * Test: Settings index page loads.
      */
     public function testSettingsIndexPageLoads()
     {
@@ -64,7 +67,7 @@ class FoundationTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Settings can be updated
+     * Test: Settings can be updated.
      */
     public function testSettingsCanBeUpdated()
     {
@@ -86,19 +89,19 @@ class FoundationTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirect();
-        
+
         // Verify settings were updated
         $setting = $this->db->table('settings')
                             ->where('class', 'general')
                             ->where('key', 'platform_name')
                             ->get()
                             ->getRowArray();
-        
+
         $this->assertEquals('NewPlatformName', $setting['value']);
     }
 
     /**
-     * Test: Mail settings can be updated
+     * Test: Mail settings can be updated.
      */
     public function testMailSettingsCanBeUpdated()
     {
@@ -111,20 +114,20 @@ class FoundationTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirect();
-        
+
         // Verify mail host was created/updated
         $setting = $this->db->table('settings')
                             ->where('class', 'mail')
                             ->where('key', 'host')
                             ->get()
                             ->getRowArray();
-        
+
         $this->assertNotNull($setting);
         $this->assertEquals('smtp.gmail.com', $setting['value']);
     }
 
     /**
-     * Test: Payment settings can be updated
+     * Test: Payment settings can be updated.
      */
     public function testPaymentSettingsCanBeUpdated()
     {
@@ -135,20 +138,20 @@ class FoundationTest extends CIUnitTestCase
                        ]);
 
         $result->assertRedirect();
-        
+
         // Verify pesapal key was created/updated
         $setting = $this->db->table('settings')
                             ->where('class', 'payment')
                             ->where('key', 'pesapal_key')
                             ->get()
                             ->getRowArray();
-        
+
         $this->assertNotNull($setting);
         $this->assertEquals('test_key_123', $setting['value']);
     }
 
     /**
-     * Test: Roles index page loads
+     * Test: Roles index page loads.
      */
     public function testRolesIndexPageLoads()
     {
@@ -160,7 +163,7 @@ class FoundationTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Users index page loads
+     * Test: Users index page loads.
      */
     public function testUsersIndexPageLoads()
     {
@@ -172,7 +175,7 @@ class FoundationTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Tenants index page loads (Foundation tenant management)
+     * Test: Tenants index page loads (Foundation tenant management).
      */
     public function testTenantsIndexPageLoads()
     {
@@ -184,7 +187,7 @@ class FoundationTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Operations dashboard loads
+     * Test: Operations dashboard loads.
      */
     public function testOperationsDashboardLoads()
     {
@@ -196,7 +199,7 @@ class FoundationTest extends CIUnitTestCase
     }
 
     /**
-     * Test: Health check endpoint works
+     * Test: Health check endpoint works.
      */
     public function testHealthCheckWorks()
     {

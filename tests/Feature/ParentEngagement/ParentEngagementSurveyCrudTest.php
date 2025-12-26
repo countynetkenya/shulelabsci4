@@ -8,7 +8,7 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * ParentEngagementSurveyCrudTest - Tests CRUD operations for Parent Engagement module
+ * ParentEngagementSurveyCrudTest - Tests CRUD operations for Parent Engagement module.
  */
 class ParentEngagementSurveyCrudTest extends CIUnitTestCase
 {
@@ -53,7 +53,7 @@ class ParentEngagementSurveyCrudTest extends CIUnitTestCase
             ->post('parent-engagement', $data);
 
         $result->assertRedirectTo('/parent-engagement');
-        
+
         $this->seeInDatabase('surveys', [
             'title'     => 'Test Survey',
             'school_id' => $this->schoolId,

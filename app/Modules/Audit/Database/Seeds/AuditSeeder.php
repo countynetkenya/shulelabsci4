@@ -5,7 +5,7 @@ namespace App\Modules\Audit\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * AuditSeeder - Creates sample audit events for testing
+ * AuditSeeder - Creates sample audit events for testing.
  */
 class AuditSeeder extends Seeder
 {
@@ -110,7 +110,7 @@ class AuditSeeder extends Seeder
         ];
 
         $this->db->table('audit_events')->insertBatch($data);
-        
-        echo "Created " . count($data) . " audit event records.\n";
+
+        echo 'Created ' . count($data) . " audit event records.\n";
     }
 }

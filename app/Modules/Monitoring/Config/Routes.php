@@ -5,8 +5,8 @@ namespace Modules\Monitoring\Config;
 use CodeIgniter\Router\RouteCollection;
 
 /**
- * Monitoring Module Routes Configuration
- * 
+ * Monitoring Module Routes Configuration.
+ *
  * Web Routes: /monitoring/*
  * API Routes: /api/monitoring/*
  */

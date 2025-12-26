@@ -5,7 +5,7 @@ namespace Modules\LMS\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * LMSSeeder - Seed sample LMS course records
+ * LMSSeeder - Seed sample LMS course records.
  */
 class LMSSeeder extends Seeder
 {

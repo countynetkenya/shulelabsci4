@@ -5,19 +5,24 @@ namespace App\Modules\Admissions\Models;
 use CodeIgniter\Model;
 
 /**
- * AdmissionsApplicationModel - Manages the applications table
- * 
+ * AdmissionsApplicationModel - Manages the applications table.
+ *
  * Schema: application_number, academic_year, term, class_applied, student info, parent info, status, etc.
  */
 class AdmissionsApplicationModel extends Model
 {
     protected $table = 'applications';
+
     protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
+
     protected $returnType = 'array';
+
     protected $useSoftDeletes = false;
+
     protected $protectFields = true;
-    
+
     protected $allowedFields = [
         'school_id',
         'application_number',
@@ -45,8 +50,11 @@ class AdmissionsApplicationModel extends Model
     ];
 
     protected $useTimestamps = true;
+
     protected $dateFormat = 'datetime';
+
     protected $createdField = 'created_at';
+
     protected $updatedField = 'updated_at';
 
     // Validation rules
@@ -78,7 +86,7 @@ class AdmissionsApplicationModel extends Model
     ];
 
     /**
-     * Get applications by school with optional filters
+     * Get applications by school with optional filters.
      */
     public function getApplicationsBySchool(int $schoolId, array $filters = []): array
     {
@@ -104,7 +112,7 @@ class AdmissionsApplicationModel extends Model
     }
 
     /**
-     * Generate next application number for school
+     * Generate next application number for school.
      */
     public function generateApplicationNumber(int $schoolId, string $academicYear): string
     {
@@ -113,11 +121,11 @@ class AdmissionsApplicationModel extends Model
             ->countAllResults();
 
         $prefix = 'APP-' . $schoolId . '-' . $academicYear . '-';
-        return $prefix . str_pad((string)($count + 1), 4, '0', STR_PAD_LEFT);
+        return $prefix . str_pad((string) ($count + 1), 4, '0', STR_PAD_LEFT);
     }
 
     /**
-     * Get application statistics for a school
+     * Get application statistics for a school.
      */
     public function getStatistics(int $schoolId, ?string $academicYear = null): array
     {

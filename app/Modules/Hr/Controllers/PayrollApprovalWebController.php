@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Modules\Hr\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
-use InvalidArgumentException;
 use Modules\Hr\Services\PayrollApprovalService;
-use RuntimeException;
 
 class PayrollApprovalWebController extends BaseController
 {
@@ -35,4 +32,3 @@ class PayrollApprovalWebController extends BaseController
         ]);
     }
 }
-

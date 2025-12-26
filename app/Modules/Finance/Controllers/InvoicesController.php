@@ -18,7 +18,7 @@ class InvoicesController extends BaseController
     {
         $schoolId = session()->get('current_school_id') ?? 1; // Default to 1 for dev
         $invoices = $this->invoicesService->getAllInvoices($schoolId);
-        
+
         return view('Modules\Finance\Views\finance\invoices\index', ['invoices' => $invoices]);
     }
 
@@ -26,7 +26,7 @@ class InvoicesController extends BaseController
     {
         $schoolId = session()->get('current_school_id') ?? 1;
         $students = $this->invoicesService->getStudentsForSchool($schoolId);
-        
+
         return view('Modules\Finance\Views\finance\invoices\create', ['students' => $students]);
     }
 
@@ -34,11 +34,11 @@ class InvoicesController extends BaseController
     {
         $data = $this->request->getPost();
         $data['school_id'] = session()->get('current_school_id') ?? 1;
-        
+
         if ($this->invoicesService->createInvoice($data)) {
             return redirect()->to('/finance/invoices')->with('success', 'Invoice created successfully.');
         }
-        
+
         return redirect()->back()->withInput()->with('error', 'Failed to create invoice.');
     }
 
@@ -48,7 +48,7 @@ class InvoicesController extends BaseController
         if (!$invoice) {
             return redirect()->to('/finance/invoices')->with('error', 'Invoice not found.');
         }
-        
+
         return view('Modules\Finance\Views\finance\invoices\show', ['invoice' => $invoice]);
     }
 }

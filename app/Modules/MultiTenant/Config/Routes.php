@@ -5,8 +5,8 @@ namespace Modules\MultiTenant\Config;
 use CodeIgniter\Router\RouteCollection;
 
 /**
- * MultiTenant Module Routes Configuration
- * 
+ * MultiTenant Module Routes Configuration.
+ *
  * Web Routes: /multitenant/*
  */
 class Routes

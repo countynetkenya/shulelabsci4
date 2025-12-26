@@ -15,15 +15,19 @@ class GovernanceCrudTest extends CIUnitTestCase
     use FeatureTestTrait;
 
     protected $namespace = 'App\Modules\Governance';
+
     protected $migrate = true;
+
     protected $migrateOnce = false;
+
     protected $refresh = true;
+
     protected $seed = '';
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Mock session for authenticated admin user
         $_SESSION['school_id'] = 1;
         $_SESSION['schoolID'] = 1;
@@ -67,7 +71,7 @@ class GovernanceCrudTest extends CIUnitTestCase
             ->post('governance/store', $data);
 
         $result->assertRedirectTo('/governance');
-        
+
         // Verify data was inserted
         $this->seeInDatabase('policies', [
             'policy_number' => 'POL-TEST-001',
@@ -105,7 +109,7 @@ class GovernanceCrudTest extends CIUnitTestCase
             ->post("governance/update/{$policyId}", $data);
 
         $result->assertRedirectTo('/governance');
-        
+
         $this->seeInDatabase('policies', [
             'id' => $policyId,
             'title' => 'Updated Policy',
@@ -120,7 +124,7 @@ class GovernanceCrudTest extends CIUnitTestCase
             ->get("governance/delete/{$policyId}");
 
         $result->assertRedirectTo('/governance');
-        
+
         $this->dontSeeInDatabase('policies', [
             'id' => $policyId,
         ]);
@@ -141,7 +145,7 @@ class GovernanceCrudTest extends CIUnitTestCase
             'created_by' => 1,
             'created_at' => date('Y-m-d H:i:s'),
         ];
-        
+
         $db->table('policies')->insert($data);
         return (int) $db->insertID();
     }

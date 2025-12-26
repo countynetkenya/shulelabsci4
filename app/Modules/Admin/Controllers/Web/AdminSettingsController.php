@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use App\Modules\Admin\Services\AdminService;
 
 /**
- * AdminSettingsController - Handles CRUD operations for system settings
- * 
+ * AdminSettingsController - Handles CRUD operations for system settings.
+ *
  * Manages global application configuration and settings.
  */
 class AdminSettingsController extends BaseController
@@ -20,7 +20,7 @@ class AdminSettingsController extends BaseController
     }
 
     /**
-     * Check if user has permission to access admin module
+     * Check if user has permission to access admin module.
      */
     protected function checkAccess(): bool
     {
@@ -30,7 +30,7 @@ class AdminSettingsController extends BaseController
     }
 
     /**
-     * List all settings
+     * List all settings.
      */
     public function index()
     {
@@ -51,7 +51,7 @@ class AdminSettingsController extends BaseController
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
@@ -67,7 +67,7 @@ class AdminSettingsController extends BaseController
     }
 
     /**
-     * Store a new setting
+     * Store a new setting.
      */
     public function store()
     {
@@ -106,7 +106,7 @@ class AdminSettingsController extends BaseController
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit(int $id)
     {
@@ -115,7 +115,7 @@ class AdminSettingsController extends BaseController
         }
 
         $setting = $this->service->getById($id);
-        
+
         if (!$setting) {
             return redirect()->to('/admin/settings')->with('error', 'Setting not found.');
         }
@@ -129,7 +129,7 @@ class AdminSettingsController extends BaseController
     }
 
     /**
-     * Update an existing setting
+     * Update an existing setting.
      */
     public function update(int $id)
     {
@@ -174,7 +174,7 @@ class AdminSettingsController extends BaseController
     }
 
     /**
-     * Delete a setting
+     * Delete a setting.
      */
     public function delete(int $id)
     {

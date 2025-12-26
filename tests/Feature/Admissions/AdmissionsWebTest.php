@@ -8,7 +8,7 @@ use CodeIgniter\Test\FeatureTestTrait;
 use Tests\Support\Traits\TenantTestTrait;
 
 /**
- * AdmissionsWebTest - Feature tests for Admissions CRUD
+ * AdmissionsWebTest - Feature tests for Admissions CRUD.
  */
 class AdmissionsWebTest extends CIUnitTestCase
 {

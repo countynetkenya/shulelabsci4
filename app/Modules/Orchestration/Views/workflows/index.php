@@ -28,7 +28,7 @@
                                 <tr>
                                     <td><?= esc($wf['workflow_id']) ?></td>
                                     <td><?= esc($wf['name']) ?></td>
-                                    <td><span class="badge badge-<?= ['pending'=>'warning','running'=>'info','completed'=>'success','failed'=>'danger','paused'=>'secondary'][$wf['status']] ?? 'secondary' ?>"><?= esc($wf['status']) ?></span></td>
+                                    <td><span class="badge badge-<?= ['pending'=>'warning', 'running'=>'info', 'completed'=>'success', 'failed'=>'danger', 'paused'=>'secondary'][$wf['status']] ?? 'secondary' ?>"><?= esc($wf['status']) ?></span></td>
                                     <td><?= $wf['current_step'] ?> / <?= $wf['total_steps'] ?></td>
                                     <td><?= date('Y-m-d H:i', strtotime($wf['created_at'])) ?></td>
                                     <td>

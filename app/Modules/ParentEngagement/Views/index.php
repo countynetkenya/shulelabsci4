@@ -59,7 +59,7 @@
                                             'archived' => 'dark',
                                             default => 'secondary'
                                         };
-                                        ?>
+                                ?>
                                         <span class="badge badge-<?= $badge ?>"><?= esc($survey['status']) ?></span>
                                     </td>
                                     <td><?= $survey['response_count'] ?></td>

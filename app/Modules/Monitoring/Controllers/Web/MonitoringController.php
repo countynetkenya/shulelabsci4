@@ -6,8 +6,8 @@ use App\Controllers\BaseController;
 use App\Modules\Monitoring\Services\MonitoringCrudService;
 
 /**
- * MonitoringController - Handles CRUD operations for system metrics
- * 
+ * MonitoringController - Handles CRUD operations for system metrics.
+ *
  * All data is tenant-scoped by school_id from session.
  */
 class MonitoringController extends BaseController
@@ -20,14 +20,14 @@ class MonitoringController extends BaseController
     }
 
     /**
-     * Check if user has permission to access monitoring module
+     * Check if user has permission to access monitoring module.
      */
     protected function checkAccess(): bool
     {
         // Allow admins only
         $usertypeID = session()->get('usertypeID');
         $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
-        
+
         if ($isAdmin) {
             return true;
         }
@@ -47,7 +47,7 @@ class MonitoringController extends BaseController
     }
 
     /**
-     * Get current school ID from session
+     * Get current school ID from session.
      */
     protected function getSchoolId(): int
     {
@@ -55,7 +55,7 @@ class MonitoringController extends BaseController
     }
 
     /**
-     * List all metrics
+     * List all metrics.
      */
     public function index()
     {
@@ -64,7 +64,7 @@ class MonitoringController extends BaseController
         }
 
         $schoolId = $this->getSchoolId();
-        
+
         // Get filter parameters
         $filters = [
             'metric_name' => $this->request->getGet('metric_name'),
@@ -84,7 +84,7 @@ class MonitoringController extends BaseController
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create()
     {
@@ -100,7 +100,7 @@ class MonitoringController extends BaseController
     }
 
     /**
-     * Store a new metric
+     * Store a new metric.
      */
     public function store()
     {
@@ -137,7 +137,7 @@ class MonitoringController extends BaseController
     }
 
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit(int $id)
     {
@@ -161,7 +161,7 @@ class MonitoringController extends BaseController
     }
 
     /**
-     * Update a metric
+     * Update a metric.
      */
     public function update(int $id)
     {
@@ -202,7 +202,7 @@ class MonitoringController extends BaseController
     }
 
     /**
-     * Delete a metric
+     * Delete a metric.
      */
     public function delete(int $id)
     {

@@ -6,21 +6,29 @@ use CodeIgniter\Model;
 
 class SurveyModel extends Model
 {
-    protected $table            = 'surveys';
-    protected $primaryKey       = 'id';
+    protected $table = 'surveys';
+
+    protected $primaryKey = 'id';
+
     protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = [
+
+    protected $returnType = 'array';
+
+    protected $useSoftDeletes = false;
+
+    protected $protectFields = true;
+
+    protected $allowedFields = [
         'school_id', 'title', 'description', 'survey_type', 'target_audience',
         'target_ids', 'questions', 'is_anonymous', 'start_date', 'end_date',
-        'status', 'response_count', 'created_by'
+        'status', 'response_count', 'created_by',
     ];
 
     protected $useTimestamps = true;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
+
+    protected $createdField = 'created_at';
+
+    protected $updatedField = 'updated_at';
 
     protected $validationRules = [
         'school_id'    => 'required|integer',
@@ -32,7 +40,9 @@ class SurveyModel extends Model
     ];
 
     protected $validationMessages = [];
-    protected $skipValidation     = false;
+
+    protected $skipValidation = false;
+
     protected $cleanValidationRules = true;
 
     protected $casts = [

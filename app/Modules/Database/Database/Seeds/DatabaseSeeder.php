@@ -5,7 +5,7 @@ namespace Modules\Database\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * DatabaseSeeder - Seed sample backup records
+ * DatabaseSeeder - Seed sample backup records.
  */
 class DatabaseSeeder extends Seeder
 {
