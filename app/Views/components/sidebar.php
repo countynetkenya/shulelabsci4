@@ -13,8 +13,8 @@
         
         <?php
         $usertypeID = session()->get('usertypeID');
-            $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
-            ?>
+        $isAdmin = in_array($usertypeID, [0, 1, '0', '1']);
+        ?>
         
         <?php if ($isAdmin) : ?>
         <li style="padding: 10px 20px;">
@@ -42,18 +42,6 @@
             </a>
         </li>
         
-        <li style="padding: 10px 20px;">
-            <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-book"></i> Classes
-            </a>
-        </li>
-        
-        <li style="padding: 10px 20px;">
-            <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-calendar"></i> Attendance
-            </a>
-        </li>
-
         <li style="padding: 10px 20px;">
             <a href="<?= base_url('inventory') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
                 <i class="fa fa-cubes"></i> Inventory
@@ -91,7 +79,19 @@
         </li>
         
         <li style="padding: 10px 20px;">
-            <a href="<?= base_url('lms') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+            <a href="<?= base_url('reports') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-file-alt"></i> Reports
+            </a>
+        </li>
+        
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('security') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
+                <i class="fa fa-shield-alt"></i> Security
+            </a>
+        </li>
+        
+        <li style="padding: 10px 20px;">
+            <a href="<?= base_url('lms/courses') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
                 <i class="fa fa-graduation-cap"></i> LMS
             </a>
         </li>
@@ -121,12 +121,6 @@
         </li>
         
         <li style="padding: 10px 20px;">
-            <a href="<?= base_url('lms/courses') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-graduation-cap"></i> LMS Courses
-            </a>
-        </li>
-        
-        <li style="padding: 10px 20px;">
             <a href="<?= base_url('mobile/devices') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
                 <i class="fa fa-mobile-alt"></i> Mobile
             </a>
@@ -139,20 +133,8 @@
         </li>
         
         <li style="padding: 10px 20px;">
-            <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-money"></i> Fees
-            </a>
-        </li>
-        
-        <li style="padding: 10px 20px;">
-            <a href="#" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-file-text"></i> Reports
-            </a>
-        </li>
-        
-        <li style="padding: 10px 20px;">
             <a href="<?= base_url('system/settings') ?>" style="color: #fff; text-decoration: none; display: block; padding: 10px; border-radius: 5px;">
-                <i class="fa fa-layer-group"></i> Settings
+                <i class="fa fa-cog"></i> Settings
             </a>
         </li>
         
